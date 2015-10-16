@@ -6,7 +6,7 @@
 #    By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/16 16:58:38 by rcargou          ###   ########.fr        #
+#    Updated: 2015/10/16 17:09:00 by rcargou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,10 +36,12 @@ SDL_INCLUDE =	`sdl2-config --cflags`
 SDL_LIB =		`sdl2-config --libs`
 
 HEAD = 			includes/ft42.class.hpp \
-	 			includes/main.hpp
+	 			includes/main.hpp \
+				includes/Matrix.hpp \
 
 SRC = 			src/ft42.class.cpp \
-				src/main.cpp
+				src/main.cpp \
+				src/Matrix.cpp \
 
 OBJ = 			$(SRC:.cpp=.cpp.o)
 
