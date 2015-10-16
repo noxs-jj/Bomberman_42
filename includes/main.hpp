@@ -19,6 +19,4 @@
 # include <unistd.h>
 # include <vector>
 
-# include "rc_math.h"
-
 #endif

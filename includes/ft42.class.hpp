@@ -17,8 +17,6 @@
 # include <algorithm>
 # include <list>
 
-# include "rc_math.h"
-
 # define LOG_PATH	"log/debugg.log"
 
 # define SIZE 19

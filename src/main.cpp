@@ -12,6 +12,5 @@ int main( int ac, char **av ) {
 	catch (std::exception & e){
 		return (EXIT_FAILURE);
 	}
-	rcm_rotmat(0, 0, 0);
 	return (EXIT_SUCCESS);
 }

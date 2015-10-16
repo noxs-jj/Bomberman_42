@@ -6,7 +6,7 @@
 #    By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/16 16:54:50 by rcargou          ###   ########.fr        #
+#    Updated: 2015/10/16 16:58:38 by rcargou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,12 @@ PLATFORM := $(shell uname)
 #Mac --	brew install sdl2
 ifeq "$(PLATFORM)" "Darwin"
 	GLUT = -framework GLUT -framework OpenGL -framework Cocoa
-	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME) $(LIBRC_MATH)
+	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
 endif
 #Linux -- apt-get install libsdl2-dev libsdl2-gfx-dev freeglut3 freeglut3-dev
 ifeq "$(PLATFORM)" "Linux"
 	GLUT = -lGL -lGLU -lglut
-	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) $(LIBRC_MATH) -o $(NAME)
+	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
 endif
 
 CXX = 			clang++
@@ -30,8 +30,6 @@ NAME =			binaire
 CFLAGS =		-Wall -Werror -Wextra -std=gnu++11
 
 INCLUDE =		-I includes/ -I rc_lib/rc_math/
-
-LIBRC_MATH =	-L./rc_lib/rc_math/ -lrcmath
 
 SDL_INCLUDE =	`sdl2-config --cflags`
 
