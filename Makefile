@@ -6,7 +6,7 @@
 #    By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/16 16:38:02 by rcargou          ###   ########.fr        #
+#    Updated: 2015/10/16 16:54:50 by rcargou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ PLATFORM := $(shell uname)
 #Mac --	brew install sdl2
 ifeq "$(PLATFORM)" "Darwin"
 	GLUT = -framework GLUT -framework OpenGL -framework Cocoa
-	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) $(LIBRC_MATH) -o $(NAME)
+	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME) $(LIBRC_MATH)
 endif
 #Linux -- apt-get install libsdl2-dev libsdl2-gfx-dev freeglut3 freeglut3-dev
 ifeq "$(PLATFORM)" "Linux"
@@ -31,7 +31,7 @@ CFLAGS =		-Wall -Werror -Wextra -std=gnu++11
 
 INCLUDE =		-I includes/ -I rc_lib/rc_math/
 
-LIBRC_MATH =	rc_lib/rc_math/librcmath.a
+LIBRC_MATH =	-L./rc_lib/rc_math/ -lrcmath
 
 SDL_INCLUDE =	`sdl2-config --cflags`
 
@@ -47,7 +47,7 @@ OBJ = 			$(SRC:.cpp=.cpp.o)
 
 %.cpp.o: %.cpp $(HEAD)
 	clear
-	@$(CXX) $(CFLAGS)  $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) $(LIBRC_MATH) -c $< -o $@
+	@$(CXX) $(CFLAGS)  $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 	@echo "./gomoku -iathink -log -depth=[1-10]"

@@ -19,6 +19,6 @@
 # include <unistd.h>
 # include <vector>
 
-# include "rc_lib/rc_math/rc_math.h"
+# include "rc_math.h"
 
 #endif
