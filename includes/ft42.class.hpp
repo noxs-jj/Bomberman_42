@@ -21,7 +21,47 @@
 
 # define SIZE 19
 
-typedef std::vector< std::vector<int> > Map;
+enum ID {
+	WALL,
+	BOMB,
+	FIRE,
+	PLAYER,
+	BOSS,
+	BONUS
+}
+
+enum STATUS {
+
+	FIRE_1,			// avant Disparition
+	FIRE_2, 		// Grosse flamme
+
+	BOMB_SEC_0, 	// Bombe disparition
+	BOMB_SEC_1,		// Avant Explosion
+	BOMB_SEC_2,
+	BOMB_SEC_3,		// Premiere pose
+
+	WALL_INDESTRUCTIBLE,
+	WALL_HP_1,		// va tombe prochaine explosion
+	WALL_HP_3,
+	WALL_HP_4,		// solide
+
+	PLAYER_NUM_1,
+	PLAYER_NUM_2,
+	PLAYER_NUM_3,
+	PLAYER_NUM_4,
+	PLAYER_NUM_5,
+
+	BOSS_1,
+	BOSS_2,
+	BOSS_3,
+
+	MOB_1,
+	MOB_2,
+	MOB_3,
+	MOB_4,
+	MOB_5,
+
+}
 
 
 class ft42 {
