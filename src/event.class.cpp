@@ -2,7 +2,7 @@
 #include <main.hpp>
 
 Event::Event( void ) : run(true) {
-
+	this->map == NULL;
 }
 
 Event::Event( Event const & src ) { *this = src; }
@@ -44,4 +44,36 @@ void	Event::lauchGame( void ) {
 
 	}
 
+}
+
+void	Event::fill_border_map(void) {
+	int 	y = 0,
+			x = 0;
+
+	this->map = (Entity **)std::malloc(sizeof(Entity *) * MAP_Y_SIZE);
+	if (this-map == NULL) {
+		this->w_error("fill_border_map:: this->map Malloc error");
+		throw std::exception();
+	}
+
+	while (y < MAP_Y_SIZE) {
+		this->map[y] == NULL;
+		this->map[y] = (Entity *)std::malloc(sizeof(Entity) * MAP_X_SIZE);
+		if (this-map[y] == NULL) {
+			this->w_error("fill_border_map:: this->map[y] Malloc error");
+			throw std::exception();
+		}
+		x = 0;
+		while (x < MAP_X_SIZE) {
+			if (y == 0 || y == MAP_Y_SIZE - 1 || x == 0 || x == MAP_X_SIZE - 1) {
+				this->map[y][x] = new Entity(WALL, 0, x, y, WALL_INDESTRUCTIBLE)
+				if (this-map[y][x] == NULL) {
+					this->w_error("fill_border_map:: this->map[y][x] Malloc error");
+					throw std::exception();
+				}
+			}
+			x++;
+		}
+		y++;
+	}
 }

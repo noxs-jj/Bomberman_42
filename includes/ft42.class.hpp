@@ -21,12 +21,15 @@
 
 # define SIZE 19
 
-enum ID {
+enum TYPE {
 	WALL,
 	BOMB,
 	FIRE,
 	PLAYER,
-	BOSS,
+	BOSS_A,
+	BOSS_B,
+	BOSS_C,
+	ENEMY,
 	BONUS
 }
 
@@ -45,23 +48,9 @@ enum STATUS {
 	WALL_HP_3,
 	WALL_HP_4,		// solide
 
-	PLAYER_NUM_1,
-	PLAYER_NUM_2,
-	PLAYER_NUM_3,
-	PLAYER_NUM_4,
-	PLAYER_NUM_5,
-
-	BOSS_1,
-	BOSS_2,
-	BOSS_3,
-
-	MOB_1,
-	MOB_2,
-	MOB_3,
-	MOB_4,
-	MOB_5,
-
+	NO_STATUS
 }
+
 
 
 class ft42 {

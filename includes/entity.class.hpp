@@ -3,6 +3,7 @@
 
 # include <main.hpp>
 # include <ft42.class.hpp>
+# include <entity.class.hpp>
 
 class Entity : public ft42 {
 public:
@@ -16,10 +17,14 @@ public:
     int	speed;
 
 
-	Entity( void );
+	
+	Entity( int type, int id, int x, int y, int status );
 	Entity( Entity const & src );
 	Entity & operator=( Entity const & rhs );
 	virtual ~Entity( void );
+
+private:
+	Entity( void );
 };
 
 #endif
