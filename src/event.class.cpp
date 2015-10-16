@@ -21,7 +21,6 @@ void	Event::parse_command(int ac, char **av) {
 	while ( i < ac ) {
 		if ( 0 == strcmp(av[i], "-log") )
 			ft42::logg = true;
-
 		i++;
 	}
 }
