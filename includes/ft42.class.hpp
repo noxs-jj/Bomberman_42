@@ -31,7 +31,7 @@ enum TYPE {
 	BOSS_C,
 	ENEMY,
 	BONUS
-}
+};
 
 enum STATUS {
 
@@ -49,7 +49,7 @@ enum STATUS {
 	WALL_HP_4,		// solide
 
 	NO_STATUS
-}
+};
 
 
 
