@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/16 17:40:12 by rcargou          ###   ########.fr       //
+/*   Updated: 2015/10/17 20:52:03 by rcargou          ###   ########.fr       */
 //                                                                            //
 // ************************************************************************** //
 
@@ -19,7 +19,7 @@ Matrix::Matrix(void)
 
 Matrix::~Matrix(void)
 {
-	delete _matrix;
+	//delete [] _matrix;
 }
 
 void Matrix::rot_matrix(float rotx, float roty, float rotz)
@@ -49,26 +49,32 @@ void Matrix::rot_matrix(float rotx, float roty, float rotz)
 	new3[6] = -sin(rotx);
 	new3[9] = sin(rotx);
 	new3[10] = cos(rotx);
+	*this = *this * a * b * c;
 }
 
 void Matrix::trans_matrix(float x, float y, float z)
 {
-	_matrix[3] = x;
-	_matrix[7] = y;
-	_matrix[11] = z;
+	Matrix	tmp;
+
+	tmp._matrix[3] = x;
+	tmp._matrix[7] = y;
+	tmp._matrix[11] = z;
+	*this = *this * tmp;
 }
 
-void Matrix::mul_matrix(Matrix a, Matrix b)
+Matrix Matrix::operator*(Matrix & b)
 {
+
+	Matrix tmp;
 
 	float *dst;
 	float *s;
 	float *t;
 
-	dst = a._matrix;
+	dst = _matrix;
 	s = b._matrix;
-	t = _matrix;
-	memcpy(t, dst, 16 * sizeof(float));
+	t = new float [16];
+
 	t[0] = dst[0] * s[0] + dst[4] * s[1] + dst[8] * s[2] + dst[12] * s[3];
 	t[1] = dst[1] * s[0] + dst[5] * s[1] + dst[9] * s[2] + dst[13] * s[3];
 	t[2] = dst[2] * s[0] + dst[6] * s[1] + dst[10] * s[2] + dst[14] * s[3];
@@ -85,52 +91,97 @@ void Matrix::mul_matrix(Matrix a, Matrix b)
 	t[13] = dst[1] * s[12] + dst[5] * s[13] + dst[9] * s[14] + dst[13] * s[15];
 	t[14] = dst[2] * s[12] + dst[6] * s[13] + dst[10] * s[14] + dst[14] * s[15];
 	t[15] = dst[3] * s[12] + dst[7] * s[13] + dst[11] * s[14] + dst[15] * s[15];
+
+	memcpy(tmp._matrix, t, sizeof(float) * 16);
+	return (tmp);
+}
+
+Matrix Matrix::operator=(Matrix src)
+{
+	memcpy(_matrix, src._matrix, sizeof(float) * 16);
+	return (*this);
 }
 
 void Matrix::scale_matrix(float zoom)
 {
+	Matrix tmp;
+	float *m;
 
+	m = tmp._matrix;
+	m[0] = zoom;
+	m[5] = zoom;
+	m[10] = zoom;
+	*this = *this * tmp;
 }
 
-void Matrix::projection_matrix(float fov, float near, float far, float aspect)
+Matrix Matrix::projection_matrix(float fov, float near, float far, float aspect)
 {
 	float   x_scale;
 	float   y_scale;
 	float   frustrum;
+	Matrix	n;
+	float *m;
 
-	identity_matrix();
+	m = n._matrix;
 	y_scale = (float)((1.0f / tan((fov / 2.0f) / 57.295)) * aspect);
 	x_scale = y_scale / aspect;
 	frustrum = far - near;
-	_matrix[0] = x_scale;
-	_matrix[5] = y_scale;
-	_matrix[10] = -((far + near) / frustrum);
-	_matrix[11] = -((2 * near * far) / frustrum);
-	_matrix[14] = -1;
-	_matrix[15] = 0;
+	m[0] = x_scale;
+	m[5] = y_scale;
+	m[10] = -((far + near) / frustrum);
+	m[11] = -((2 * near * far) / frustrum);
+	m[14] = -1;
+	m[15] = 0;
+	return (n);
+}
+
+Matrix Matrix::view_matrix(t_point pos, t_point dir)
+{
+	Matrix n;
+
+	n.rot_matrix(0, atan2(dir.z, dir.x), 0);
+	n.trans_matrix(pos.x, pos.y, pos.z);
+	return (n);
+}
+
+Matrix Matrix::model_matrix(t_point pos, t_point dir)
+{
+	Matrix n;
+
+	n.trans_matrix(-pos.x, -pos.y, -pos.z);
+	n.rot_matrix(0, -atan2(dir.z, dir.x), 0);
+	return (n);
 }
 
 void Matrix::identity_matrix(void)
 {
-	float	*m;
+	_matrix = new float[16];
+	_matrix[0] = 1;
+	_matrix[1] = 0;
+	_matrix[2] = 0;
+	_matrix[3] = 0;
+	_matrix[4] = 0;
+	_matrix[5] = 1;
+	_matrix[6] = 0;
+	_matrix[7] = 0;
+	_matrix[8] = 0;
+	_matrix[9] = 0;
+	_matrix[10] = 1;
+	_matrix[11] = 0;
+	_matrix[12] = 0;
+	_matrix[13] = 0;
+	_matrix[14] = 0;
+	_matrix[15] = 1;
+}
 
-	_matrix = new float(16);
-	m = _matrix;
-	m[0] = 1;
-	m[1] = 0;
-	m[2] = 0;
-	m[3] = 0;
-	m[4] = 0;
-	m[5] = 1;
-	m[6] = 0;
-	m[7] = 0;
-	m[8] = 0;
-	m[9] = 0;
-	m[10] = 1;
-	m[11] = 0;
-	m[12] = 0;
-	m[13] = 0;
-	m[14] = 0;
-	m[15] = 1;
+std::ostream & operator<<(std::ostream & o, Matrix & src)
+{
+	for (int i = 0; i < 16; i++)
+	{
+		o << src._matrix[i] << " ";
+		if (!((i + 1) % 4))
+			o << "\n";
+	}
+	return (o);
 }
 

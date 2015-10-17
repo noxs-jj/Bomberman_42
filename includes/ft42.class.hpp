@@ -25,6 +25,13 @@
 # define MAP_Y_SIZE 20
 # define MAP_X_SIZE 20
 
+typedef struct	t_point
+{
+	float x;
+	float y;
+	float z;
+}				t_point;
+
 enum TYPE {
 	WALL,
 	BOMB,

@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/16 17:26:46 by rcargou          ###   ########.fr       //
+/*   Updated: 2015/10/17 20:51:57 by rcargou          ###   ########.fr       */
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,6 +15,7 @@
 
 # include <cmath>
 # include <cstring>
+# include "ft42.class.hpp"
 
 class Matrix {
 
@@ -24,14 +25,22 @@ public :
 
 	~Matrix(void);
 
-	void	rot_matrix(float x, float y, float z);
-	void	trans_matrix(float x, float y, float z);
-	void	mul_matrix(Matrix a, Matrix b);
-	void	scale_matrix(float zoom);
-	void	projection_matrix(float fov, float near, float fat, float aspect);
-	void	identity_matrix(void);
+	void			rot_matrix(float x, float y, float z);
+	void			trans_matrix(float x, float y, float z);
+	void			scale_matrix(float zoom);
+
+	static Matrix	projection_matrix(float fov, float near, float fat, float aspect);
+	static Matrix	view_matrix(t_point pos, t_point dir);
+	static Matrix	model_matrix(t_point pos, t_point dir);
+
+	void			identity_matrix(void);
+
+	Matrix operator*(Matrix & src);
+	Matrix operator=(Matrix src);
 
 	float *_matrix;
 };
+
+std::ostream & operator<<(std::ostream  & o, Matrix & src);
 
 #endif
