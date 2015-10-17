@@ -16,10 +16,14 @@
 # include <set>
 # include <algorithm>
 # include <list>
+# include <stdexcept>
+# include <time.h>
 
 # define LOG_PATH	"log/debugg.log"
 
 # define SIZE 19
+# define MAP_Y_SIZE 20
+# define MAP_X_SIZE 20
 
 enum TYPE {
 	WALL,
@@ -48,7 +52,12 @@ enum STATUS {
 	WALL_HP_3,
 	WALL_HP_4,		// solide
 
-	NO_STATUS
+	NO_STATUS,
+
+	DIR_UP,
+	DIR_BOTTOM,
+	DIR_LEFT,
+	DIR_RIGHT
 };
 
 

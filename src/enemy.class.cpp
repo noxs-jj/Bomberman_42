@@ -1,8 +1,9 @@
 #include <enemy.class.hpp>
-#include <main.hpp>
 
 Enemy::~Enemy( void ) {}
 
-Enemy::Enemy( void ) {}
-
-Enemy( int id, int x, int y, int status ) : id(id), type(ENEMY), pos_x(x), pos_y(y), dir(2), status(status), frame(0), speed(1) {}
+Enemy::Enemy( int id, int x, int y, int status ) : Entity( ENEMY, id, x, y, status ) {
+	this->frame = 0;
+	this->speed = 1;
+	this->dir = DIR_BOTTOM;
+}

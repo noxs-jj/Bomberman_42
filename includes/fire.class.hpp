@@ -3,16 +3,18 @@
 
 # include <entity.class.hpp>
 
-class fire : public Entity {
+class Entity;
+
+class Fire : public Entity {
 public:
 	
-	fire( int x, int y, int status );
-	fire( fire const & src );
-	fire & operator=( fire const & rhs );
-	virtual ~fire( void );
+	Fire( int x, int y, int status );
+	Fire( Fire const & src );
+	Fire & operator=( Fire const & rhs );
+	virtual ~Fire( void );
 
 private:
-	fire( void );
+	Fire( void );
 };
 
 #endif

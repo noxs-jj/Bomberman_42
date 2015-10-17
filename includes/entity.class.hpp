@@ -1,9 +1,8 @@
 #ifndef ENTITY_CLASS_HPP
 # define ENTITY_CLASS_HPP
 
-# include <main.hpp>
+// # include <main.hpp>
 # include <ft42.class.hpp>
-# include <entity.class.hpp>
 
 class Entity : public ft42 {
 public:
