@@ -43,7 +43,8 @@ HEAD = 			includes/ft42.class.hpp \
 				includes/fire.class.hpp \
 				includes/player.class.hpp \
 				includes/bomb.class.hpp \
-				includes/enemy.class.hpp
+				includes/enemy.class.hpp \
+				includes/boss.class.hpp
 
 
 SRC = 			src/ft42.class.cpp \
@@ -54,7 +55,8 @@ SRC = 			src/ft42.class.cpp \
 				src/fire.class.cpp \
 				src/player.class.cpp \
 				src/bomb.class.cpp \
-				src/enemy.class.cpp
+				src/enemy.class.cpp \
+				src/boss.class.cpp
 
 
 OBJ = 			$(SRC:.cpp=.cpp.o)

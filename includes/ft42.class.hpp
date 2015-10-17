@@ -30,9 +30,7 @@ enum TYPE {
 	BOMB,
 	FIRE,
 	PLAYER,
-	BOSS_A,
-	BOSS_B,
-	BOSS_C,
+	BOSS,
 	ENEMY,
 	BONUS
 };
@@ -58,6 +56,12 @@ enum STATUS {
 	DIR_BOTTOM,
 	DIR_LEFT,
 	DIR_RIGHT
+};
+
+enum NAME {
+	BOSS_A,
+	BOSS_B,
+	BOSS_C
 };
 
 

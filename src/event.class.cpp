@@ -16,7 +16,6 @@ Event::~Event( void ) {}
 void	Event::parse_command(int ac, char **av) {
 	int i = 0;
 
-
 	while ( i < ac ) {
 		if ( 0 == strcmp(av[i], "-log") )
 			ft42::logg = true;
@@ -29,20 +28,17 @@ void	Event::init( int ac, char **av ) {
 
 }
 
-
 void	Event::exit_free( void ) {	// free here
 
 	this->w_log("Event::exit_free ==> End of free gomoku");
 
 }
 
-
 void	Event::lauchGame( void ) {
 	// Loop Game
 	while (this->run == true) {
 
 	}
-
 }
 
 Wall *	Event::create_wall(int status, int x, int y) {
@@ -93,6 +89,16 @@ Enemy *	Event::create_enemy(int id, int status, int x, int y) {
 	}
 
 	return enemy;
+}
+
+Boss *	Event::create_boss(int status, int x, int y, int name) {
+	Boss * boss = new Boss(x, y, status, name);
+	if (boss == NULL) {
+		this->w_error("create_enemy:: enemy Malloc error");
+		throw std::exception();
+	}
+
+	return boss;
 }
 
 void	Event::fill_border_map(void) {
