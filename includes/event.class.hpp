@@ -50,10 +50,10 @@ public:
 
 	void	fill_border_map(void);
 	Wall *	create_wall(int status, int x, int y);
-	// Bomb *	create_bomb(int status, int x, int y);
-	// Fire *	create_fire(int status, int x, int y);
-	// Player *	create_player(int status, int x, int y);
-	// Enemy *	create_enemy(int status, int x, int y);
+	Bomb *	create_bomb(int status, int x, int y);
+	Fire *	create_fire(int status, int x, int y);
+	Player *	create_player(int id, int status, int x, int y);
+	Enemy *	create_enemy(int id, int status, int x, int y);
 
 
 	void	init( int ac, char **av );

@@ -39,22 +39,22 @@ HEAD = 			includes/ft42.class.hpp \
 				includes/entity.class.hpp \
 				includes/event.class.hpp \
 	 			includes/main.hpp \
-				includes/wall.class.hpp
-				# includes/fire.class.hpp \
-				# includes/player.class.hpp \
-				# includes/bomb.class.hpp \
-				# includes/enemy.class.hpp
+				includes/wall.class.hpp \
+				includes/fire.class.hpp \
+				includes/player.class.hpp \
+				includes/bomb.class.hpp \
+				includes/enemy.class.hpp
 
 
 SRC = 			src/ft42.class.cpp \
 				src/entity.class.cpp \
 				src/event.class.cpp \
 				src/main.cpp \
-				src/wall.class.cpp
-				# src/fire.class.cpp \
-				# src/player.class.cpp \
-				# src/bomb.class.cpp \
-				# src/enemy.class.cpp
+				src/wall.class.cpp \
+				src/fire.class.cpp \
+				src/player.class.cpp \
+				src/bomb.class.cpp \
+				src/enemy.class.cpp
 
 
 OBJ = 			$(SRC:.cpp=.cpp.o)

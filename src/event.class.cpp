@@ -55,45 +55,45 @@ Wall *	Event::create_wall(int status, int x, int y) {
 	return wall;
 }
 
-// Bomb *	Event::create_bomb(int status, int x, int y) {
-// 	Bomb * bomb = new Bomb(x, y, status);
-// 	if (bomb == NULL) {
-// 		this->w_error("create_bomb:: bomb Malloc error");
-// 		throw std::exception();
-// 	}
+Bomb *	Event::create_bomb(int status, int x, int y) {
+	Bomb * bomb = new Bomb(x, y, status);
+	if (bomb == NULL) {
+		this->w_error("create_bomb:: bomb Malloc error");
+		throw std::exception();
+	}
 
-// 	return bomb;
-// }
+	return bomb;
+}
 
-// Fire *	Event::create_fire(int status, int x, int y) {
-// 	Fire * fire = new Fire(x, y, status);
-// 	if (fire == NULL) {
-// 		this->w_error("create_fire:: fire Malloc error");
-// 		throw std::exception();
-// 	}
+Fire *	Event::create_fire(int status, int x, int y) {
+	Fire * fire = new Fire(x, y, status);
+	if (fire == NULL) {
+		this->w_error("create_fire:: fire Malloc error");
+		throw std::exception();
+	}
 
-// 	return fire;
-// }
+	return fire;
+}
 
-// Player *	Event::create_player(int status, int x, int y) {
-// 	Player * player = new Player(x, y, status);
-// 	if (player == NULL) {
-// 		this->w_error("create_player:: player Malloc error");
-// 		throw std::exception();
-// 	}
+Player *	Event::create_player(int id, int status, int x, int y) {
+	Player * player = new Player(id, x, y, status);
+	if (player == NULL) {
+		this->w_error("create_player:: player Malloc error");
+		throw std::exception();
+	}
 
-// 	return player;
-// }
+	return player;
+}
 
-// Enemy *	Event::create_enemy(int status, int x, int y) {
-// 	Enemy * enemy = new Enemy(x, y, status);
-// 	if (enemy == NULL) {
-// 		this->w_error("create_enemy:: enemy Malloc error");
-// 		throw std::exception();
-// 	}
+Enemy *	Event::create_enemy(int id, int status, int x, int y) {
+	Enemy * enemy = new Enemy(id, x, y, status);
+	if (enemy == NULL) {
+		this->w_error("create_enemy:: enemy Malloc error");
+		throw std::exception();
+	}
 
-// 	return enemy;
-// }
+	return enemy;
+}
 
 void	Event::fill_border_map(void) {
 	int 	y = 0,
