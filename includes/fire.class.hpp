@@ -6,7 +6,7 @@
 class fire : public Entity {
 public:
 	
-	fire( int type, int id, int x, int y, int status );
+	fire( int x, int y, int status );
 	fire( fire const & src );
 	fire & operator=( fire const & rhs );
 	virtual ~fire( void );
