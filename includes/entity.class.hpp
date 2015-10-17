@@ -16,8 +16,6 @@ public:
     int	frame;
     int	speed;
 
-
-	
 	Entity( int type, int id, int x, int y, int status );
 	Entity( Entity const & src );
 	Entity & operator=( Entity const & rhs );

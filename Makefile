@@ -38,10 +38,14 @@ SDL_LIB =		`sdl2-config --libs`
 HEAD = 			includes/ft42.class.hpp \
 	 			includes/main.hpp \
 				includes/Matrix.hpp \
+				includes/wall.class.hpp \
+				includes/bomb.class.hpp
 
 SRC = 			src/ft42.class.cpp \
 				src/main.cpp \
 				src/Matrix.cpp \
+				src/wall.class.cpp \
+				src/bomb.class.cpp
 
 OBJ = 			$(SRC:.cpp=.cpp.o)
 

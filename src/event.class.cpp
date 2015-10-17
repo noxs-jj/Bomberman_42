@@ -46,6 +46,26 @@ void	Event::lauchGame( void ) {
 
 }
 
+void	Event::create_wall(int status, int x, int y,) {
+	wall = new Wall(WALL, 0, x, y, status)
+	if (wall == NULL) {
+		this->w_error("create_wall:: wall Malloc error");
+		throw std::exception();
+	}
+
+	return wall;
+}
+
+void	Event::create_bomb(int status, int x, int y,) {
+	bomb = new Bomb(BOMB, 0, x, y, status)
+	if (bomb == NULL) {
+		this->w_error("create_bomb:: bomb Malloc error");
+		throw std::exception();
+	}
+
+	return bomb;
+}
+
 void	Event::fill_border_map(void) {
 	int 	y = 0,
 			x = 0;
