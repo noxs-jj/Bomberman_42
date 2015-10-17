@@ -3,8 +3,6 @@
 
 # include <entity.class.hpp>
 
-class Entity;
-
 class Enemy : public Entity {
 public:
 	

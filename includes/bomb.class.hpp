@@ -2,9 +2,6 @@
 # define BOMB_CLASS_HPP
 
 # include <entity.class.hpp>
-# include <ft42.class.hpp>
-
-// class Entity;
 
 class Bomb : public Entity {
 public:

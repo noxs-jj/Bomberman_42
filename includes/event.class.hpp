@@ -6,17 +6,17 @@
 
 // #ifndef BOMB_CLASS_HPP
 // # define BOMB_CLASS_HPP
-// # include <bomb.class.hpp>
+# include <bomb.class.hpp>
 // #endif
 
 // #ifndef PLAYER_CLASS_HPP
 // # define PLAYER_CLASS_HPP
-// # include <player.class.hpp>
+# include <player.class.hpp>
 // #endif
 
 // #ifndef ENEMY_CLASS_HPP
 // # define ENEMY_CLASS_HPP
-// # include <enemy.class.hpp>
+# include <enemy.class.hpp>
 // #endif
 
 // #ifndef WALL_CLASS_HPP
@@ -26,7 +26,7 @@
 
 // #ifndef FIRE_CLASS_HPP
 // # define FIRE_CLASS_HPP
-// # include <fire.class.hpp>
+# include <fire.class.hpp>
 // #endif
 
 
