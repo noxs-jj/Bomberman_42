@@ -6,7 +6,7 @@
 class Wall : public Entity {
 public:
 	
-	Wall( int type, int id, int x, int y, int status );
+	Wall( int x, int y, int status );
 	Wall( Wall const & src );
 	Wall & operator=( Wall const & rhs );
 	virtual ~Wall( void );
