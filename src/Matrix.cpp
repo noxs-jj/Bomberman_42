@@ -6,11 +6,11 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-/*   Updated: 2015/10/17 20:52:03 by rcargou          ###   ########.fr       */
+/*   Updated: 2015/10/18 18:51:18 by rcargou          ###   ########.fr       */
 //                                                                            //
 // ************************************************************************** //
 
-# include "Matrix.hpp"
+# include <Matrix.hpp>
 
 Matrix::Matrix(void)
 {
@@ -135,11 +135,11 @@ Matrix Matrix::projection_matrix(float fov, float near, float far, float aspect)
 	return (n);
 }
 
-Matrix Matrix::view_matrix(t_point pos, t_point dir)
+Matrix Matrix::view_matrix(t_point pos, t_point rot)
 {
 	Matrix n;
 
-	n.rot_matrix(0, atan2(dir.z, dir.x), 0);
+	n.rot_matrix(rot.x, rot.y, rot.z);
 	n.trans_matrix(pos.x, pos.y, pos.z);
 	return (n);
 }

@@ -18,6 +18,7 @@
 # include <list>
 # include <stdexcept>
 # include <time.h>
+# include <GLES3/gl3.h>
 
 # define LOG_PATH	"log/debugg.log"
 
@@ -25,7 +26,7 @@
 # define MAP_Y_SIZE 20
 # define MAP_X_SIZE 20
 
-typedef struct	t_point
+typedef struct	s_point
 {
 	float x;
 	float y;
@@ -33,7 +34,7 @@ typedef struct	t_point
 }				t_point;
 
 enum TYPE {
-	WALL,
+	WALL = 0,
 	BOMB,
 	FIRE,
 	PLAYER,

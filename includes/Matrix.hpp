@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-/*   Updated: 2015/10/17 20:51:57 by rcargou          ###   ########.fr       */
+/*   Updated: 2015/10/18 18:55:38 by rcargou          ###   ########.fr       */
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,7 +15,7 @@
 
 # include <cmath>
 # include <cstring>
-# include "ft42.class.hpp"
+# include <ft42.class.hpp>
 
 class Matrix {
 

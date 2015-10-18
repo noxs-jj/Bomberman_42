@@ -6,7 +6,7 @@
 #    By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/17 21:21:40 by rcargou          ###   ########.fr        #
+#    Updated: 2015/10/18 20:32:51 by rcargou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,11 @@ ifeq "$(PLATFORM)" "Linux"
 	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
 endif
 
-CXX = 			clang++
+CXX = 			g++
 
 NAME =			binaire
 
-CFLAGS =		-Wall -Werror -Wextra -std=gnu++11
+CFLAGS =		-std=gnu++11
 
 INCLUDE =		-I includes/ -I rc_lib/rc_math/
 
@@ -44,8 +44,10 @@ HEAD = 			includes/ft42.class.hpp \
 				includes/player.class.hpp \
 				includes/bomb.class.hpp \
 				includes/enemy.class.hpp \
-				includes/boss.class.hpp
-
+				includes/boss.class.hpp \
+				includes/globject.class.hpp \
+				includes/Matrix.hpp \
+				includes/parser.class.hpp \
 
 SRC = 			src/ft42.class.cpp \
 				src/entity.class.cpp \
@@ -56,8 +58,10 @@ SRC = 			src/ft42.class.cpp \
 				src/player.class.cpp \
 				src/bomb.class.cpp \
 				src/enemy.class.cpp \
-				src/boss.class.cpp
-
+				src/boss.class.cpp \
+				src/globject.class.cpp \
+				src/Matrix.cpp \
+				src/parser.class.cpp \
 
 OBJ = 			$(SRC:.cpp=.cpp.o)
 

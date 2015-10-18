@@ -19,6 +19,8 @@
 // # include <unistd.h>
 // # include <vector>
 
+# include <globject.class.hpp>
 # include <event.class.hpp>
+# include <parser.class.hpp>
 
 #endif
