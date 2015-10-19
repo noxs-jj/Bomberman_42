@@ -19,8 +19,6 @@ public:
 	Entity( Entity const & src );
 	Entity & operator=( Entity const & rhs );
 	virtual ~Entity( void );
-
-private:
 	Entity( void );
 };
 

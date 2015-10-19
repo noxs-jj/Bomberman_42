@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-/*   Updated: 2015/10/18 18:55:38 by rcargou          ###   ########.fr       */
+//   Updated: 2015/10/19 17:02:30 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -30,8 +30,8 @@ public :
 	void			scale_matrix(float zoom);
 
 	static Matrix	projection_matrix(float fov, float near, float fat, float aspect);
-	static Matrix	view_matrix(t_point pos, t_point dir);
-	static Matrix	model_matrix(t_point pos, t_point dir);
+	static Matrix	view_matrix(t_point pos, t_point dir, float zoom);
+	static Matrix	model_matrix(t_point pos, t_point dir, float zoom);
 
 	void			identity_matrix(void);
 

@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/19 15:05:07 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/19 18:48:59 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -27,7 +27,10 @@ globject::globject(void)
 
 globject::globject(std::string path, GLuint ID) : _ID(ID)
 {
-	parser.parse(path);
+	int neg;
+
+	neg = (ID == WALL);
+	parser.parse(path, neg);
 	fill_vao();
 }
 
@@ -41,15 +44,21 @@ globject::~globject(void)
 
 }
 
+void globject::resize(int x, int y)
+{
+	SDL_SetWindowSize(globject::_displayWindow, x, y);
+}
+
 void		globject::init(void)
 {
+
 	/* Init SDL */
 
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	globject::_displayWindow = SDL_CreateWindow("Lukas", SDL_WINDOWPOS_CENTERED,
+	globject::_displayWindow = SDL_CreateWindow("Bomberman", SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
 
 	/* Init OpenGL */
@@ -64,26 +73,82 @@ void		globject::init(void)
 	globject::load_shaders();
 
 	/* load Models */
-    globject n("models/cube.obj", WALL);
+	globject n("models/cube.obj", WALL);
 	globject::_object[n._ID] = n;
 
 	/* Load Uniform Variable */
 
-		glProgramUniformMatrix4fv(_progid, 
+	glProgramUniformMatrix4fv(_progid, 
 		glGetUniformLocation(_progid, "P"),
-		1, GL_FALSE, (GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, 1)._matrix));
-		globject::_modelMatID = glGetUniformLocation(_progid, "M");
-		globject::_viewMatID =glGetUniformLocation(_progid, "V");
+			1, GL_FALSE, (GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, 1)._matrix));
+	globject::_viewMatID = glGetUniformLocation(_progid, "V");
+	globject::_modelMatID = glGetUniformLocation(_progid, "M");
 }
 
-void		globject::render(GLuint ID, int status, Matrix model)
+void		globject::render(int status)
 {
-
+	glBindVertexArray(_vaoID);
+	glDrawArrays(GL_TRIANGLES, 0, parser._finalVertexSize / 3);
 }
 
 void		globject::render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*> players)
 {
+	t_point		modelPos;
+	t_point		modelDir;
+	Matrix		Model;
+    t_point     viewPos;
+    t_point     viewDir;
+    Matrix      view;
+	static		float time = 0;
+	static float o = 0;
+	if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
+		return ;
 
+	o += 0.1;
+	viewDir.x = 0.7;
+	viewDir.y = 1.57;
+	viewDir.z = 0;
+	viewPos.x = 0;
+	viewPos.y = 0;
+	viewPos.z = -27;
+
+	view = Matrix::view_matrix(viewPos, viewDir, 1);
+	time = clock();
+	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
+	modelPos.z = 0;
+	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
+	for (int i = 0; i < MAP_Y_SIZE; i++)
+	{
+		for (int j = 0; j < MAP_X_SIZE; j++)
+		{
+			modelDir.x = 1;
+			modelDir.z = 0;
+			modelDir.y = 0;
+			modelPos.x = (i - MAP_Y_SIZE / 2);
+			modelPos.z = (j - MAP_X_SIZE / 2);
+			modelPos.y = -1;
+			Model = Matrix::model_matrix(modelPos, modelDir, 1);
+			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
+			globject::_object[WALL].render(0);
+		}
+	}
+
+	for (int i = 0; i < MAP_Y_SIZE; i++)
+	{
+		for (int j = 0; j < MAP_X_SIZE; j++)
+		{
+			modelDir.x = 1;
+			modelDir.z = 0;
+			modelDir.y = 0;
+			modelPos.y = 0;
+			modelPos.x = (i - MAP_Y_SIZE / 2);
+			modelPos.z = (j - MAP_X_SIZE / 2);
+			Model = Matrix::model_matrix(modelPos, modelDir, 1);
+			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
+			globject::_object[WALL].render(0);
+		}
+	}
+	SDL_GL_SwapWindow(globject::_displayWindow);
 }
 
 char        *globject::filetobuff(char *path)
@@ -119,28 +184,28 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader)
     glCompileShader(vshaderid);
 
 
-    int Result;
-    int InfoLogLength;
-    char FragmentShaderErrorMessage[1000];
+	int Result;
+	int InfoLogLength;
+	char FragmentShaderErrorMessage[1000];
 
     glGetShaderiv(vshaderid, GL_COMPILE_STATUS, &Result);
     glGetShaderiv(vshaderid, GL_INFO_LOG_LENGTH, &InfoLogLength);
     glGetShaderInfoLog(vshaderid, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
 	std::cout << FragmentShaderErrorMessage << std::endl;
 
-    buff = filetobuff(fragshader);
-    glShaderSource(fshaderid, 1, (const char *const *)(&buff), NULL);
-    glCompileShader(fshaderid);
+	buff = filetobuff(fragshader);
+	glShaderSource(fshaderid, 1, (const char *const *)(&buff), NULL);
+	glCompileShader(fshaderid);
 
-    glGetShaderiv(fshaderid, GL_COMPILE_STATUS, &Result);
-    glGetShaderiv(fshaderid, GL_INFO_LOG_LENGTH, &InfoLogLength);
-    glGetShaderInfoLog(fshaderid, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
+	glGetShaderiv(fshaderid, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(fshaderid, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	glGetShaderInfoLog(fshaderid, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
 	std::cout << FragmentShaderErrorMessage << std::endl;
 
-    progid = glCreateProgram();
-    glAttachShader(progid, vshaderid);
-    glAttachShader(progid, fshaderid);
-    glLinkProgram(progid);
+	progid = glCreateProgram();
+	glAttachShader(progid, vshaderid);
+	glAttachShader(progid, fshaderid);
+	glLinkProgram(progid);
 	globject::_progid = progid;
 	return (progid);
 }

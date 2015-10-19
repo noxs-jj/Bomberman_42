@@ -11,7 +11,7 @@ public :
 	parser(std::string path);
 	~parser(void);
 
-	void parse(std::string path);
+	void parse(std::string path, int Neg);
 
 	GLfloat _vertex[1000];
 	GLfloat _text[1000];
@@ -23,7 +23,7 @@ public :
 	GLuint  _finalTextSize;
 private :
 
-	void add_indice(std::string str);
+	void add_indice(std::string str, float neg);
 	void add_vertex(std::string str);
 	void add_text(std::string str);
 };

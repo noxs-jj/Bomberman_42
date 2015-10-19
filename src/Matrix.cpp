@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-/*   Updated: 2015/10/18 18:51:18 by rcargou          ###   ########.fr       */
+//   Updated: 2015/10/19 18:44:04 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -135,21 +135,23 @@ Matrix Matrix::projection_matrix(float fov, float near, float far, float aspect)
 	return (n);
 }
 
-Matrix Matrix::view_matrix(t_point pos, t_point rot)
+Matrix Matrix::view_matrix(t_point pos, t_point rot, float zoom)
 {
 	Matrix n;
 
+	n.scale_matrix(zoom);
 	n.rot_matrix(rot.x, rot.y, rot.z);
 	n.trans_matrix(pos.x, pos.y, pos.z);
 	return (n);
 }
 
-Matrix Matrix::model_matrix(t_point pos, t_point dir)
+Matrix Matrix::model_matrix(t_point pos, t_point dir, float zoom)
 {
 	Matrix n;
 
-	n.trans_matrix(-pos.x, -pos.y, -pos.z);
+	n.scale_matrix(zoom);
 	n.rot_matrix(0, -atan2(dir.z, dir.x), 0);
+	n.trans_matrix(pos.x, pos.y, pos.z);
 	return (n);
 }
 

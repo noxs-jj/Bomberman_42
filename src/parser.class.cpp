@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/19 10:57:52 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/19 18:31:37 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -19,7 +19,7 @@ parser::parser(void)
 
 parser::parser(std::string path)
 {
-	parse(path);
+	parse(path, 0);
 }
 
 parser::~parser()
@@ -27,7 +27,7 @@ parser::~parser()
 
 }
 
-void parser::parse(std::string path)
+void parser::parse(std::string path, int neg)
 {
 	_textSize = 0;
 	_vertexSize = 0;
@@ -45,7 +45,7 @@ void parser::parse(std::string path)
 			else if (!line.compare(0, 2, "vt"))
 				add_text(line);
 			else if (!line.compare(0, 2, "f "))
-				add_indice(line);
+				add_indice(line, neg);
 			std::cout << line << '\n';
 		}
 		myfile.close();
@@ -98,7 +98,7 @@ void parser::add_text(std::string str)
 	_textSize++;
 }
 
-void parser::add_indice(std::string str)
+void parser::add_indice(std::string str, float neg)
 {
 	int i;
 	int text[3];
@@ -132,15 +132,14 @@ void parser::add_indice(std::string str)
 		i++;
 	i++;
 	text[2] = std::atoi(str.c_str() + i) - 1;
-
 	for (int e = 0; e < 3; e++)
 	{
-		_finalVertex[_finalVertexSize] = _vertex[3 * vertex[e]];
-		_finalVertexSize++;
-		_finalVertex[_finalVertexSize] = _vertex[3 * vertex[e] + 1];
-		_finalVertexSize++;
-		_finalVertex[_finalVertexSize] = _vertex[3 * vertex[e] + 2];
-		_finalVertexSize++;
+		_finalVertex[_finalVertexSize] = _vertex[3 * vertex[e]] - 0.5 * neg;
+        _finalVertexSize++;
+        _finalVertex[_finalVertexSize] = _vertex[3 * vertex[e] + 1] - 0.5 * neg;
+        _finalVertexSize++;
+        _finalVertex[_finalVertexSize] = _vertex[3 * vertex[e] + 2] - 0.5 * neg;
+        _finalVertexSize++;
 
 		_finalText[_finalTextSize] = _text[2 * text[e]];
 		_finalTextSize++;

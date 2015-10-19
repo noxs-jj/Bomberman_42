@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/19 14:51:28 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/19 17:54:55 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -34,8 +34,9 @@ class globject {
 		~globject(void);
 
 		static void		init(void);
-		void			render(GLuint ID, int status, Matrix model);
+		void			render (int status);
 		static void		render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*> players);
+		static void		resize(int x, int y);
 		GLuint						_vaoID;
 		GLuint						_vertexBufferSize;
 		GLuint						_textBufferSize;
