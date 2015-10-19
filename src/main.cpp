@@ -12,5 +12,6 @@ int main( int ac, char **av ) {
 	catch (std::exception & e){
 		return (EXIT_FAILURE);
 	}
+	globject::init();
 	return (EXIT_SUCCESS);
 }

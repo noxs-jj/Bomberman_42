@@ -7,8 +7,11 @@ class parser {
 
 public :
 
+	parser(void);
 	parser(std::string path);
 	~parser(void);
+
+	void parse(std::string path);
 
 	GLfloat _vertex[1000];
 	GLfloat _text[1000];
@@ -23,7 +26,6 @@ private :
 	void add_indice(std::string str);
 	void add_vertex(std::string str);
 	void add_text(std::string str);
-	parser(void);
 };
 
 #endif

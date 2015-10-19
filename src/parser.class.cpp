@@ -6,15 +6,29 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-/*   Updated: 2015/10/19 00:34:50 by rcargou          ###   ########.fr       */
+//   Updated: 2015/10/19 10:57:52 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 # include <parser.class.hpp>
 
-parser::parser(std::string path)
+parser::parser(void)
 {
 
+}
+
+parser::parser(std::string path)
+{
+	parse(path);
+}
+
+parser::~parser()
+{
+
+}
+
+void parser::parse(std::string path)
+{
 	_textSize = 0;
 	_vertexSize = 0;
 	_finalVertexSize = 0;
@@ -39,14 +53,9 @@ parser::parser(std::string path)
 	else
 	{
 		std::cout << "Error in class gl_object: unable to open "
-		<< path << ". Exiting program...\n";
+					<< path << ". Exiting program...\n";
 		exit(0);
 	}
-}
-
-parser::~parser()
-{
-
 }
 
 void parser::add_vertex(std::string str)
