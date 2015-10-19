@@ -43,7 +43,8 @@ enum TYPE {
 	PLAYER,
 	BOSS,
 	ENEMY,
-	BONUS
+	BONUS,
+	EMPTY
 };
 
 enum STATUS {

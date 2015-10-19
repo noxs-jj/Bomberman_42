@@ -2,6 +2,7 @@
 
 Event::Event( void ) : run(true) {
 	this->map = NULL;
+	srand(time(NULL));
 }
 
 Event::Event( Event const & src ) { *this = src; }
@@ -23,9 +24,82 @@ void	Event::parse_command(int ac, char **av) {
 	}
 }
 
+void	Event::gen_obstacle(int difficulty) {
+	int block = ((MAP_X_SIZE - 2) * (MAP_Y_SIZE - 2));
+	int tmpx = 0, tmpy = 0;
+
+	while (block >= 0) {
+		tmpx = 2 + (rand() % (MAP_X_SIZE - 4));
+		tmpy = 2 + (rand() % (MAP_Y_SIZE - 4));
+		if (check_coord(1, (float)tmpx, (float)tmpy) == true) {
+			delete this->map[tmpy][tmpx];
+			this->map[tmpy][tmpx] = create_wall(WALL_HP_1 + difficulty, (float)tmpx, (float)tmpy);
+		}
+		block--;
+	}
+}
+
+bool	Event::check_coord(int mode, float x, float y) {
+	std::list<Entity *>::iterator it = this->char_list.begin();
+	std::list<Entity *>::iterator end = this->char_list.end();
+
+	while (it != end) {
+		if (mode == 0 && (*it)->pos_x == x && (*it)->pos_y == y)
+			return false;
+		else if (mode == 1) {
+			if (x >= (*it)->pos_x - 1 && x <= (*it)->pos_x + 1
+				&& y >= (*it)->pos_y - 1 && y <= (*it)->pos_y + 1)
+				return false;
+		}
+		it++;
+	}
+	if (this->map[(int)y][(int)x]->type != EMPTY)
+		return false;
+	return true;
+}
+
+void	Event::gen_level(int level, int boss) {
+	int tmpx = 0, tmpy = 0;
+	int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
+	int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+
+	this->char_list.push_back(create_player(0, 0, (float)p_x, (float)p_y));
+	// delete this->map[p_y][p_x];
+
+	int i = 0;
+	while (i != level % 3) {
+		tmpx = 2 + (rand() % (MAP_X_SIZE - 4));
+		tmpy = 2 + (rand() % (MAP_Y_SIZE - 4));
+		if (check_coord(0, (float)tmpx, (float)tmpy) == true) {
+			if (boss == 1)
+				this->char_list.push_back(create_boss(0, (float)tmpx, (float)tmpy, BOSS_A));
+			else
+				this->char_list.push_back(create_enemy(i, 0, (float)tmpx, (float)tmpy));
+			i++;
+		}
+	}
+	gen_obstacle((level % 3));
+}
+
+void	Event::print_map( void ) {
+	int y = 0, x;
+	std::cout << "print_map" << std::endl;
+	while (y < MAP_Y_SIZE) {
+		x = 0;
+		while (x < MAP_X_SIZE) {
+			std::cout << this->map[y][x]->type << " ";
+			x++;
+		}
+		std::cout << std::endl;
+		y++;
+	}
+}
+
 void	Event::init( int ac, char **av ) {
 	this->parse_command(ac, av);
-
+	fill_border_map();
+	gen_level(1, 0);
+	// print_map(); // DEBUGG
 }
 
 void	Event::exit_free( void ) {	// free here
@@ -41,7 +115,9 @@ void	Event::lauchGame( void ) {
 	}
 }
 
-Wall *	Event::create_wall(int status, int x, int y) {
+
+
+Wall *	Event::create_wall(int status, float x, float y) {
 	Wall * wall = new Wall(x, y, status);
 	if (wall == NULL) {
 		this->w_error("create_wall:: wall Malloc error");
@@ -51,7 +127,7 @@ Wall *	Event::create_wall(int status, int x, int y) {
 	return wall;
 }
 
-Bomb *	Event::create_bomb(int status, int x, int y) {
+Bomb *	Event::create_bomb(int status, float x, float y) {
 	Bomb * bomb = new Bomb(x, y, status);
 	if (bomb == NULL) {
 		this->w_error("create_bomb:: bomb Malloc error");
@@ -61,7 +137,7 @@ Bomb *	Event::create_bomb(int status, int x, int y) {
 	return bomb;
 }
 
-Fire *	Event::create_fire(int status, int x, int y) {
+Fire *	Event::create_fire(int status, float x, float y) {
 	Fire * fire = new Fire(x, y, status);
 	if (fire == NULL) {
 		this->w_error("create_fire:: fire Malloc error");
@@ -71,7 +147,7 @@ Fire *	Event::create_fire(int status, int x, int y) {
 	return fire;
 }
 
-Player *	Event::create_player(int id, int status, int x, int y) {
+Player *	Event::create_player(int id, int status, float x, float y) {
 	Player * player = new Player(id, x, y, status);
 	if (player == NULL) {
 		this->w_error("create_player:: player Malloc error");
@@ -81,7 +157,7 @@ Player *	Event::create_player(int id, int status, int x, int y) {
 	return player;
 }
 
-Enemy *	Event::create_enemy(int id, int status, int x, int y) {
+Enemy *	Event::create_enemy(int id, int status, float x, float y) {
 	Enemy * enemy = new Enemy(id, x, y, status);
 	if (enemy == NULL) {
 		this->w_error("create_enemy:: enemy Malloc error");
@@ -91,7 +167,7 @@ Enemy *	Event::create_enemy(int id, int status, int x, int y) {
 	return enemy;
 }
 
-Boss *	Event::create_boss(int status, int x, int y, int name) {
+Boss *	Event::create_boss(int status, float x, float y, int name) {
 	Boss * boss = new Boss(x, y, status, name);
 	if (boss == NULL) {
 		this->w_error("create_enemy:: enemy Malloc error");
@@ -121,12 +197,14 @@ void	Event::fill_border_map(void) {
 		x = 0;
 		while (x < MAP_X_SIZE) {
 			if (y == 0 || y == MAP_Y_SIZE - 1 || x == 0 || x == MAP_X_SIZE - 1) {
-				this->map[y][x] = new Entity(WALL, 0, x, y, WALL_INDESTRUCTIBLE);
+				this->map[y][x] = create_wall(WALL_INDESTRUCTIBLE, (float)x, (float)y);
 				if (this->map[y][x] == NULL) {
 					this->w_error("fill_border_map:: this->map[y][x] Malloc error");
 					throw std::exception();
 				}
 			}
+			else
+				this->map[y][x] = new Entity(EMPTY, 0, (float)x, (float)y, 0);
 			x++;
 		}
 		y++;

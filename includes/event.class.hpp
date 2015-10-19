@@ -23,12 +23,15 @@ public:
 	virtual ~Event( void );
 
 	void		fill_border_map(void);
-	Wall *		create_wall(int status, int x, int y);
-	Bomb *		create_bomb(int status, int x, int y);
-	Fire *		create_fire(int status, int x, int y);
-	Player *	create_player(int id, int status, int x, int y);
-	Enemy *		create_enemy(int id, int status, int x, int y);
-	Boss *		create_boss(int id, int status, int x, int y);
+	void		gen_level(int level, int boss);
+	bool		check_coord(int mode, float x, float y);
+	void		gen_obstacle(int difficulty);
+	Wall *		create_wall(int status, float x, float y);
+	Bomb *		create_bomb(int status, float x, float y);
+	Fire *		create_fire(int status, float x, float y);
+	Player *	create_player(int id, int status, float x, float y);
+	Enemy *		create_enemy(int id, int status, float x, float y);
+	Boss *		create_boss(int status, float x, float y, int name);
 
 
 	void	init( int ac, char **av );
@@ -37,6 +40,7 @@ public:
 	void	lauchGame( void );
 	void	parse_command(int ac, char **av);
 
+	void	print_map( void ); // DEBUGG
 };
 
 #endif
