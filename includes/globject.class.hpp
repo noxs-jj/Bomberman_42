@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/19 12:09:01 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/19 13:23:46 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -22,6 +22,7 @@
 # include <fstream>
 # include <string>
 # include <parser.class.hpp>
+# include <fcntl.h>
 
 class globject {
 
@@ -34,7 +35,7 @@ class globject {
 
 		static void		init(void);
 		void			render(GLuint ID, int status, Matrix model);
-		static void		render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player> players);
+		static void		render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*> players);
 		GLuint						_vaoID;
 		GLuint						_vertexBufferSize;
 		GLuint						_textBufferSize;
@@ -48,6 +49,9 @@ class globject {
 		parser						parser;
 	
 	private :
+		char *filetobuff(char *path);
+		GLuint loadshaders(char *a, char *b);
+		void load_shaders();
 		void fill_vao(void);
 
 };
