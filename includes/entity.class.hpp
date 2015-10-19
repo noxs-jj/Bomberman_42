@@ -5,14 +5,15 @@
 
 class Entity : public ft42 {
 public:
-	int type;
-	int	id;
-    int pos_x;
-    int pos_y;  
-    int dir;
-    int status;
-    int	frame;
-    int	speed;
+	int		type;
+	int		id;
+    float	pos_x;
+    float	pos_y;  
+    int 	dir;
+    int 	status;
+    int		frame;
+    int		speed;
+    float	zoom_m;
 
 	Entity( int type, int id, int x, int y, int status );
 	Entity( Entity const & src );

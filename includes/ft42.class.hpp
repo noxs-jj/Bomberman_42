@@ -77,6 +77,7 @@ enum NAME {
 class ft42 {
 public:
 	static bool					logg;
+	float						zoom;
 
 	ft42();
 	virtual ~ft42();

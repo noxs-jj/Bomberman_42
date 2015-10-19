@@ -6,7 +6,7 @@
 class Enemy : public Entity {
 public:
 	
-	Enemy( int id, int x, int y, int status );
+	Enemy( int id, float x, float y, int status );
 	Enemy( Enemy const & src );
 	Enemy & operator=( Enemy const & rhs );
 	virtual ~Enemy( void );

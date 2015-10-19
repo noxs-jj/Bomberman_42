@@ -48,6 +48,6 @@ std::string		ft42::logTime( std::string const & sentence ) {
 
 std::ofstream &	ft42::getLogFD( void ) { return ( ft42::lodFD ); }
 
-ft42::ft42() {}
+ft42::ft42() : zoom(1) {}
 
 ft42::~ft42() {}

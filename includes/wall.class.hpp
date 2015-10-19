@@ -5,7 +5,7 @@
 
 class Wall : public Entity {
 public:
-	Wall( int x, int y, int status );
+	Wall( float x, float y, int status );
 	Wall( Wall const & src );
 	Wall & operator=( Wall const & rhs );
 	virtual ~Wall( void );
