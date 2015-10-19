@@ -18,7 +18,10 @@
 # include <list>
 # include <stdexcept>
 # include <time.h>
-# include <GLES3/gl3.h>
+# include <OpenGL/gl3.h>
+
+#include <SDL.h>
+
 
 # define LOG_PATH	"log/debugg.log"
 
