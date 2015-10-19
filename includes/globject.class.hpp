@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/19 13:23:46 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/19 14:51:28 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -42,6 +42,9 @@ class globject {
 		GLuint						_elemBufferID;
 		GLuint						_elemBufferSize;
 		GLuint						_ID;
+		static GLuint				_modelMatID;
+		static GLuint				_viewMatID;
+		static GLuint				_progid;
 		static SDL_Window			*_displayWindow;
 		static SDL_Renderer			*_displayRenderer;
 		static SDL_RendererInfo		_displayRendererInfo;
@@ -49,9 +52,9 @@ class globject {
 		parser						parser;
 	
 	private :
-		char *filetobuff(char *path);
-		GLuint loadshaders(char *a, char *b);
-		void load_shaders();
+		static char *filetobuff(char *path);
+		static GLuint loadshaders(char *a, char *b);
+		static void load_shaders();
 		void fill_vao(void);
 
 };

@@ -6,7 +6,7 @@
 #    By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/19 12:02:52 by rcargou          ###   ########.fr        #
+#    Updated: 2015/10/19 13:58:57 by rcargou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ PLATFORM := $(shell uname)
 
 #Mac --	brew install sdl2
 ifeq "$(PLATFORM)" "Darwin"
-	GLUT = -framework GLUT -framework OpenGL -framework Cocoa
+	GLUT = -framework Appkit -framework OpenGL
 	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
 endif
 #Linux -- apt-get install libsdl2-dev libsdl2-gfx-dev freeglut3 freeglut3-dev

@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/19 13:30:46 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/19 15:05:07 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -16,6 +16,9 @@ globject			globject::_object[100];
 SDL_Window			*globject::_displayWindow;
 SDL_Renderer		*globject::_displayRenderer;
 SDL_RendererInfo	globject::_displayRendererInfo;
+GLuint				globject::_progid;
+GLuint				globject::_modelMatID;
+GLuint				globject::_viewMatID;
 
 globject::globject(void)
 {
@@ -43,20 +46,34 @@ void		globject::init(void)
 	/* Init SDL */
 
 	SDL_Init(SDL_INIT_VIDEO);
-    SDL_CreateWindowAndRenderer(1200, 900, SDL_WINDOW_OPENGL, &globject::_displayWindow, &globject::_displayRenderer);
-    SDL_GetRendererInfo(globject::_displayRenderer, &globject::_displayRendererInfo);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	globject::_displayWindow = SDL_CreateWindow("Lukas", SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
 
 	/* Init OpenGL */
 
+	SDL_GLContext context = SDL_GL_CreateContext(globject::_displayWindow);
     glClearColor( 0.0f, 0.0f, 1.0f, 0.0f );
     glEnable( GL_DEPTH_TEST );
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	SDL_GL_SwapWindow(globject::_displayWindow);
 
-	/* load Models */
+	/* load shaders */
+	globject::load_shaders();
 
+	/* load Models */
     globject n("models/cube.obj", WALL);
 	globject::_object[n._ID] = n;
+
+	/* Load Uniform Variable */
+
+		glProgramUniformMatrix4fv(_progid, 
+		glGetUniformLocation(_progid, "P"),
+		1, GL_FALSE, (GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, 1)._matrix));
+		globject::_modelMatID = glGetUniformLocation(_progid, "M");
+		globject::_viewMatID =glGetUniformLocation(_progid, "V");
 }
 
 void		globject::render(GLuint ID, int status, Matrix model)
@@ -124,12 +141,15 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader)
     glAttachShader(progid, vshaderid);
     glAttachShader(progid, fshaderid);
     glLinkProgram(progid);
+	globject::_progid = progid;
 	return (progid);
 }
 
 void		globject::load_shaders()
 {
-	glUseProgram(loadshaders("shaders/frag.shader", "shaders/vertex.shader"));
+	char a[] = "shaders/frag.shader";
+	char b[]  = "shaders/vertex.shader";
+	glUseProgram(loadshaders(a, b));
 }
 
 void		globject::fill_vao(void)
