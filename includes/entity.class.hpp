@@ -15,7 +15,7 @@ public:
     int		speed;
     float	zoom_m;
 
-	Entity( int type, int id, int x, int y, int status );
+	Entity( int type, int id, float x, float y, int status );
 	Entity( Entity const & src );
 	Entity & operator=( Entity const & rhs );
 	virtual ~Entity( void );
