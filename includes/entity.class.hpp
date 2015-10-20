@@ -20,6 +20,8 @@ public:
 	Entity & operator=( Entity const & rhs );
 	virtual ~Entity( void );
 	Entity( void );
+	void	move( int dir );
+	bool	check_move( float x, float y);
 };
 
 #endif
