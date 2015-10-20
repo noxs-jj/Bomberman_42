@@ -18,7 +18,14 @@
 # include <list>
 # include <stdexcept>
 # include <time.h>
+
+# ifdef linux
+#	include <GL/gl3.h>
+# endif
+# ifdef __APPLE__
 # include <OpenGL/gl3.h>
+# endif
+
 
 #include <SDL.h>
 
