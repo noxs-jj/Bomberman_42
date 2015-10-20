@@ -13,19 +13,27 @@ public :
 
 	void parse(std::string path, int Neg);
 
-	GLfloat _vertex[1000];
-	GLfloat _text[1000];
-	GLfloat _finalVertex[1000];
-	GLfloat _finalText[1000];
-	GLuint  _textSize;
-	GLuint  _vertexSize;
-	GLuint  _finalVertexSize;
-	GLuint  _finalTextSize;
+	GLfloat			_vertex[1000];
+	GLfloat			_text[1000];
+	GLfloat			_finalVertex[1000];
+	GLfloat			_finalText[1000];
+	GLuint			_textSize;
+	GLuint			_vertexSize;
+	GLuint			_finalVertexSize;
+	GLuint			_finalTextSize;
+	GLuint			_textNum;
+	GLuint			_textID[1000];
+	GLuint			_textIDSize;
+	std::string		_texture[1000];
+
 private :
 
-	void add_indice(std::string str, float neg);
-	void add_vertex(std::string str);
-	void add_text(std::string str);
+	int		foundText;
+	int		foundTexture(std::string str);
+	void	add_texture(std::string str);
+	void	add_indice(std::string str, float neg);
+	void	add_vertex(std::string str);
+	void	add_text(std::string str);
 };
 
 #endif

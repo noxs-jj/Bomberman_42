@@ -16,24 +16,28 @@ int main( int ac, char **av ) {
 		return (EXIT_FAILURE);
 	}
 
-/*
+
 	globject::init();
 	Entity map[20][20];
 	std::list<Player*> lol;
 	int e;
 	static float time = 0;
+	for (int i = 0; i < globject::_object[WALL].parser._finalTextSize; i++)
+	{
+		std::cout << globject::_object[WALL].parser._finalText[i] << std::endl;
+	}
 	while (1)
 	{
-		std::cout << (1 / (clock() - time)) * CLOCKS_PER_SEC << std::endl;
+//		std::cout << (1 / (clock() - time)) * CLOCKS_PER_SEC << std::endl;
 		time = clock();
 		SDL_PumpEvents();
 		const Uint8 *state = SDL_GetKeyboardState(NULL);
 		if (state[SDL_SCANCODE_RETURN]) {
-			//exit(0);
+			exit(0);
 			globject::resize(1000, 1000);
 		}
 		globject::render_all(map, lol);
 	}
-    Test graphique...*/ 
+    //Test graphique...
 	return (EXIT_SUCCESS);
 }

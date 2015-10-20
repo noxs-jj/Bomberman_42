@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/19 18:48:59 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/20 12:13:25 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -44,6 +44,44 @@ globject::~globject(void)
 
 }
 
+void globject::load_bmp()
+{
+    unsigned char   header[54];
+    unsigned int    size[3];
+    unsigned char   *data;
+    GLuint          textid;
+    int             a;
+	int				fd;
+	std::string		name;
+	std::string		path;
+
+	for (int i = 0; i < parser._textNum; i++)
+	{
+		name = "texture";
+		path ="textures/";
+		path += parser._texture[i];
+		if ((fd = open(path.c_str(), O_RDONLY)) < 0 ||
+			strcmp(strchr(parser._texture[i].c_str(), '.'), ".bmp"))
+			exit(0);
+		read(fd, header, 54);
+		size[0] = *(int*)&(header[0x22]);
+		size[1] = *(int*)&(header[0x12]);
+		size[2] = *(int*)&(header[0x16]);
+
+		
+		data = new unsigned char [sizeof(unsigned char) * size[0]];
+		read(fd, data, size[0]);
+		glGenTextures(1, &(_textID[i]));
+		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+			size[1], size[2], 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		name += std::to_string(i);
+		_textLoc[i] = glGetUniformLocation(globject::_progid, name.c_str());
+	}
+}
+
 void globject::resize(int x, int y)
 {
 	SDL_SetWindowSize(globject::_displayWindow, x, y);
@@ -59,7 +97,7 @@ void		globject::init(void)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	globject::_displayWindow = SDL_CreateWindow("Bomberman", SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
+		SDL_WINDOWPOS_CENTERED, 900, 800, SDL_WINDOW_OPENGL);
 
 	/* Init OpenGL */
 
@@ -73,8 +111,10 @@ void		globject::init(void)
 	globject::load_shaders();
 
 	/* load Models */
+
 	globject n("models/cube.obj", WALL);
 	globject::_object[n._ID] = n;
+	globject::_object[n._ID].load_bmp();
 
 	/* Load Uniform Variable */
 
@@ -87,6 +127,14 @@ void		globject::init(void)
 
 void		globject::render(int status)
 {
+	for (int i = 0; i < _textNumber; i++)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, _textID[0]);
+	}
+	for (int i = 0; i < _textNumber; i++)
+		glUniform1i(_textLoc[i], i);
+
 	glBindVertexArray(_vaoID);
 	glDrawArrays(GL_TRIANGLES, 0, parser._finalVertexSize / 3);
 }
@@ -221,11 +269,12 @@ void		globject::fill_vao(void)
 {
 	GLuint vertexBufferID;
 	GLuint textBufferID;
+	GLuint textureBufferID;
 
 	glGenVertexArrays(1, &(_vaoID));
 	glGenBuffers(1, &(vertexBufferID));
 	glGenBuffers(1, &(textBufferID));
-
+	glGenBuffers(1, &(textureBufferID));
 	glBindVertexArray(_vaoID);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
@@ -234,8 +283,13 @@ void		globject::fill_vao(void)
 	glEnableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, textBufferID);
-	glBufferData(GL_ARRAY_BUFFER, parser._finalTextSize, parser._finalText, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, parser._finalTextSize * sizeof(GLfloat), parser._finalText, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(1);
+
+    glBindBuffer(GL_ARRAY_BUFFER, textureBufferID);
+    glBufferData(GL_ARRAY_BUFFER, parser._textIDSize / 2 * sizeof(GLuint), parser._textID, GL_DYNAMIC_DRAW);
+    glVertexAttribPointer(2, 1, GL_UNSIGNED_INT, GL_FALSE, 0, (void*)0);
+    glEnableVertexAttribArray(2);
 }
 
