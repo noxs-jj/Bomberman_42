@@ -6,4 +6,5 @@ Enemy::Enemy( int id, float x, float y, int status ) : Entity( ENEMY, id, x, y, 
 	this->frame = 0;
 	this->speed = 1;
 	this->dir = DIR_BOTTOM;
+	this->blast_radius = 1;
 }

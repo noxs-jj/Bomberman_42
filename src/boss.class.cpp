@@ -7,5 +7,6 @@ Boss::Boss( float x, float y, int status, int name ) : Entity( BOSS, 0, x, y, st
 	this->speed = 1;
 	this->dir = DIR_BOTTOM;
 	this->name = name;
+	this->blast_radius = 2;
 	this->zoom_m = 2;
 }

@@ -46,6 +46,12 @@ std::string		ft42::logTime( std::string const & sentence ) {
 	return (this->result);
 }
 
+bool		ft42::check_coord_exist( int x, int y ) {
+	if (x >= 0 && x < MAP_X_SIZE && y >= 0 && y < MAP_Y_SIZE)
+		return true;
+	return false;
+}
+
 std::ofstream &	ft42::getLogFD( void ) { return ( ft42::lodFD ); }
 
 ft42::ft42() : zoom(1) {}

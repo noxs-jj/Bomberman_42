@@ -13,6 +13,7 @@ public:
     int 	status;
     int		frame;
     int		speed;
+    int		blast_radius;
     float	zoom_m;
 
 	Entity( int type, int id, float x, float y, int status );
@@ -21,7 +22,8 @@ public:
 	virtual ~Entity( void );
 	Entity( void );
 	void	move( int dir );
-	bool	check_move( float x, float y);
+	int		check_move( float x, float y );
+	void	die( void );
 };
 
 #endif

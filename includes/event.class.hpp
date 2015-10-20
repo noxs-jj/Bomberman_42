@@ -32,6 +32,7 @@ public:
 	Player *	create_player(int id, int status, float x, float y);
 	Enemy *		create_enemy(int id, int status, float x, float y);
 	Boss *		create_boss(int status, float x, float y, int name);
+	Entity *	create_empty(int x, int y);
 
 
 	void	init( int ac, char **av );

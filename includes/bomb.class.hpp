@@ -10,6 +10,8 @@ public:
 	Bomb( Bomb const & src );
 	Bomb & operator=( Bomb const & rhs );
 	virtual ~Bomb( void );
+	void	detonate( void );
+	void	blast_case(int x, int y);
 
 private:
 	Bomb( void );

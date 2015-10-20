@@ -115,8 +115,6 @@ void	Event::lauchGame( void ) {
 	}
 }
 
-
-
 Wall *	Event::create_wall(int status, float x, float y) {
 	Wall * wall = new Wall(x, y, status);
 	if (wall == NULL) {
@@ -177,6 +175,16 @@ Boss *	Event::create_boss(int status, float x, float y, int name) {
 	return boss;
 }
 
+Entity * Event::create_empty(int x, int y) {
+	Entity * ent = new Entity(EMPTY, 0, (float)x, (float)y, NO_STATUS);
+	if (ent == NULL) {
+		this->w_error("create_empty:: enemy Malloc error");
+		throw std::exception();
+	}
+
+	return boss;
+}
+
 void	Event::fill_border_map(void) {
 	int 	y = 0,
 			x = 0;
@@ -204,7 +212,7 @@ void	Event::fill_border_map(void) {
 				}
 			}
 			else
-				this->map[y][x] = new Entity(EMPTY, 0, (float)x, (float)y, 0);
+				this->map[y][x] = create_empty((int)x, (int)y);
 			x++;
 		}
 		y++;

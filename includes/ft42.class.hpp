@@ -66,6 +66,7 @@ enum STATUS {
 
 	WALL_INDESTRUCTIBLE,
 	WALL_HP_1,		// va tombe prochaine explosion
+	WALL_HP_2,
 	WALL_HP_3,
 	WALL_HP_4,		// solide
 
@@ -97,6 +98,7 @@ public:
 	void					w_full( std::string const newEntry );
 	void					w_error( std::string const newEntry );
 	std::string				logTime( std::string const & sentence );
+	bool					check_coord_exist( int x, int y );
 
 	std::ofstream &			getLogFD( void );
 
