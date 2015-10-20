@@ -43,4 +43,6 @@ public:
 	void	print_map( void ); // DEBUGG
 };
 
+extern Event	*main_event;
+
 #endif
