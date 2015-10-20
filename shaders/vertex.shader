@@ -8,14 +8,15 @@ uniform mat4 M;
 uniform mat4 V;
 uniform mat4 P;
 
-out vec2 uv;
-out float text;
+out vec2		uv;
+flat out float		text;
 
 void main(void)
 {
 
 	uv = in_uv;
 	text = in_text;
+	//text = 1;
     gl_Position = vec4(in_Position.x, in_Position.y, in_Position.z, 1.0);
     gl_Position *= M;
     gl_Position *= V;

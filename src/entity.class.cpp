@@ -12,11 +12,13 @@ Entity::Entity( int type, int id, float x, float y, int status ) : type(type), i
 															pos_y(y), status(status), zoom_m(1) {}
 
 bool	Entity::check_move( float x, float y) {
+/*
 	if (main_event->map[(int)y][(int)x]->type == WALL
 		|| (main_event->map[(int)y][(int)x]->type == BOMB
 			&& !(this->pos_y == y && this->pos_x == x)))
 		return false;
 	return true;
+*/
 }
 
 void	Entity::move( int dir ) {

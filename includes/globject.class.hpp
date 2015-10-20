@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/20 10:59:07 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/20 13:41:39 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -38,7 +38,7 @@ class globject {
 		void			render (int status);
 		static void		render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*> players);
 		static void		resize(int x, int y);
-		GLuint						_textID[100];
+		GLuint						_textID[1000];
 		GLuint						_textLoc[100];
 		GLuint						_textNumber;
 		GLuint						_vaoID;

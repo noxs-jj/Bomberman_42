@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/20 12:13:25 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/20 17:39:00 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -29,9 +29,11 @@ globject::globject(std::string path, GLuint ID) : _ID(ID)
 {
 	int neg;
 
-	neg = (ID == WALL);
+	neg = (ID == WALL || ID == 30 || ID == 31);
 	parser.parse(path, neg);
 	fill_vao();
+	_textNumber = parser._textNum;
+	load_bmp();
 }
 
 globject::globject(std::list<std::string> paths, GLuint ID) : _ID (ID)
@@ -55,11 +57,13 @@ void globject::load_bmp()
 	std::string		name;
 	std::string		path;
 
+	std::cout << parser._textNum << std::endl;
 	for (int i = 0; i < parser._textNum; i++)
 	{
 		name = "texture";
 		path ="textures/";
 		path += parser._texture[i];
+		std::cout << path << std::endl;
 		if ((fd = open(path.c_str(), O_RDONLY)) < 0 ||
 			strcmp(strchr(parser._texture[i].c_str(), '.'), ".bmp"))
 			exit(0);
@@ -75,8 +79,8 @@ void globject::load_bmp()
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
 			size[1], size[2], 0, GL_BGR, GL_UNSIGNED_BYTE, data);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		name += std::to_string(i);
 		_textLoc[i] = glGetUniformLocation(globject::_progid, name.c_str());
 	}
@@ -97,12 +101,12 @@ void		globject::init(void)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	globject::_displayWindow = SDL_CreateWindow("Bomberman", SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, 900, 800, SDL_WINDOW_OPENGL);
+		SDL_WINDOWPOS_CENTERED, 1200, 1200, SDL_WINDOW_OPENGL);
 
 	/* Init OpenGL */
 
 	SDL_GLContext context = SDL_GL_CreateContext(globject::_displayWindow);
-    glClearColor( 0.0f, 0.0f, 1.0f, 0.0f );
+    glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
     glEnable( GL_DEPTH_TEST );
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	SDL_GL_SwapWindow(globject::_displayWindow);
@@ -114,8 +118,12 @@ void		globject::init(void)
 
 	globject n("models/cube.obj", WALL);
 	globject::_object[n._ID] = n;
-	globject::_object[n._ID].load_bmp();
+    n = globject("models/cube_floor.obj", 30);
+	globject::_object[n._ID] = n;
+    n = globject("models/rock.obj", 31);
+	globject::_object[n._ID] = n;
 
+	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
 	glProgramUniformMatrix4fv(_progid, 
@@ -129,8 +137,8 @@ void		globject::render(int status)
 {
 	for (int i = 0; i < _textNumber; i++)
 	{
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, _textID[0]);
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, _textID[i]);
 	}
 	for (int i = 0; i < _textNumber; i++)
 		glUniform1i(_textLoc[i], i);
@@ -147,53 +155,83 @@ void		globject::render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*
     t_point     viewPos;
     t_point     viewDir;
     Matrix      view;
+
 	static		float time = 0;
 	static float o = 0;
 	if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 		return ;
 
-	o += 0.1;
-	viewDir.x = 0.7;
+	viewDir.x = 1.1;
 	viewDir.y = 1.57;
 	viewDir.z = 0;
 	viewPos.x = 0;
 	viewPos.y = 0;
-	viewPos.z = -27;
+	viewPos.z = -47;
 
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
 	time = clock();
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	modelPos.z = 0;
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
-	for (int i = 0; i < MAP_Y_SIZE; i++)
+
+/*
+	for (int y = 0; y < 30; y++)
 	{
-		for (int j = 0; j < MAP_X_SIZE; j++)
-		{
-			modelDir.x = 1;
-			modelDir.z = 0;
-			modelDir.y = 0;
-			modelPos.x = (i - MAP_Y_SIZE / 2);
-			modelPos.z = (j - MAP_X_SIZE / 2);
-			modelPos.y = -1;
-			Model = Matrix::model_matrix(modelPos, modelDir, 1);
-			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-			globject::_object[WALL].render(0);
+			for (int i = -y - MAP_Y_SIZE / 2; i < y + MAP_Y_SIZE / 2; i++)
+			{
+				for (int j = -y - MAP_X_SIZE / 2; j < y + MAP_X_SIZE /2; j ++)
+				{
+					if (!(i == -y - MAP_Y_SIZE / 2 || i ==y + MAP_Y_SIZE / 2 - 1) &&
+						!(j == -y - MAP_X_SIZE / 2 || j ==y + MAP_X_SIZE / 2 - 1))
+						continue ;
+					modelDir.x = 1;
+					modelDir.z = 0;
+					modelDir.y = 0;
+					modelPos.x = i;
+					modelPos.z = j;
+					modelPos.y = -y - 6;
+					Model = Matrix::model_matrix(modelPos, modelDir, 1);
+					glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
+					if (!(i % 4) || !(j % 4))
+					globject::_object[31].render(0);
+					else
+						globject::_object[30].render(0);
+			}
 		}
 	}
-
-	for (int i = 0; i < MAP_Y_SIZE; i++)
+*/ // Create a mountain... Optional.
+	for (int y = 0; y < 5; y++)
 	{
-		for (int j = 0; j < MAP_X_SIZE; j++)
+	for (int i = -MAP_Y_SIZE / 2; i < MAP_Y_SIZE / 2; i++)
+	{
+			for (int j = -MAP_X_SIZE / 2; j < MAP_X_SIZE / 2; j++)
+			{
+				modelDir.x = 1;
+				modelDir.z = 0;
+				modelDir.y = 0;
+				modelPos.x = i;
+				modelPos.z = j;
+				modelPos.y = -1 - y;
+				Model = Matrix::model_matrix(modelPos, modelDir, 1);
+				glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
+				globject::_object[30].render(0);
+			}
+		}
+		}
+	for (int i = -MAP_Y_SIZE / 2; i < MAP_Y_SIZE / 2; i++)
+	{
+		for (int j = -MAP_X_SIZE / 2; j <MAP_X_SIZE / 2; j++)
 		{
 			modelDir.x = 1;
 			modelDir.z = 0;
 			modelDir.y = 0;
 			modelPos.y = 0;
-			modelPos.x = (i - MAP_Y_SIZE / 2);
-			modelPos.z = (j - MAP_X_SIZE / 2);
+			modelPos.x = i;
+			modelPos.z = j;
 			Model = Matrix::model_matrix(modelPos, modelDir, 1);
 			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-			globject::_object[WALL].render(0);
+			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2].id == WALL)
+				globject::_object[WALL].render(0);
 		}
 	}
 	SDL_GL_SwapWindow(globject::_displayWindow);
@@ -288,8 +326,8 @@ void		globject::fill_vao(void)
 	glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ARRAY_BUFFER, textureBufferID);
-    glBufferData(GL_ARRAY_BUFFER, parser._textIDSize / 2 * sizeof(GLuint), parser._textID, GL_DYNAMIC_DRAW);
-    glVertexAttribPointer(2, 1, GL_UNSIGNED_INT, GL_FALSE, 0, (void*)0);
+    glBufferData(GL_ARRAY_BUFFER, parser._textIDSize * sizeof(GLfloat), parser._textID, GL_DYNAMIC_DRAW);
+    glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 0, (void*)0);
     glEnableVertexAttribArray(2);
 }
 

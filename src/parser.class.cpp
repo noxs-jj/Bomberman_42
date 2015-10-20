@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/20 10:38:37 by rcargou          ###   ########.fr       //
+/*   Updated: 2015/10/20 16:09:21 by rcargou          ###   ########.fr       */
 //                                                                            //
 // ************************************************************************** //
 
@@ -19,7 +19,7 @@ parser::parser(void)
 
 parser::parser(std::string path)
 {
-	parse(path, 0);
+//	parse(path, 0);
 }
 
 parser::~parser()
@@ -63,12 +63,28 @@ void parser::parse(std::string path, int neg)
 	}
 }
 
-int parser::foundTexture(std::string str)
+int strcmp(char *a, char *b)
 {
+	for (int i = 0; b[i]; i++)
+		if (a[i] != b[i])
+		return (-1);
+	return (0);
+}
+
+int parser::foundTexture(std::string s)
+{
+	std::string str;
+	int e;
+	str = s;
+	for (e = 0; str[e] && str[e] != ' '; e++)
+		;
+	str[e] = 0;
 	for (int i = 0; i < _textNum; i++)
 	{
-		if (str == _texture[i])
+		if (!strcmp(str.c_str(), _texture[i].c_str()))
 			return (i);
+		else
+			std::cout << str << "" << _texture[i] << "e" << std::endl;
 	}
 	return (-1);
 }
@@ -90,7 +106,6 @@ void parser::add_texture(std::string str)
 	}
 	else 
 		foundText = foundTexture(str);
-
 }
 
 void parser::add_vertex(std::string str)
@@ -181,7 +196,11 @@ void parser::add_indice(std::string str, float neg)
 		_finalText[_finalTextSize] = _text[2 * text[e] + 1];
 		_finalTextSize++;
 	}
-	_textID[_textIDSize] = foundText;;
+	_textID[_textIDSize] = foundText;
 	_textIDSize++;
+    _textID[_textIDSize] = foundText;
+    _textIDSize++;
+    _textID[_textIDSize] = foundText;
+    _textIDSize++;
 }
 

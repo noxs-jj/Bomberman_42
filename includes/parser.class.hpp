@@ -22,7 +22,7 @@ public :
 	GLuint			_finalVertexSize;
 	GLuint			_finalTextSize;
 	GLuint			_textNum;
-	GLuint			_textID[1000];
+	GLfloat			_textID[1000];
 	GLuint			_textIDSize;
 	std::string		_texture[1000];
 
