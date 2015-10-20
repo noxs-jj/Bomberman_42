@@ -22,7 +22,8 @@ public:
 	virtual ~Entity( void );
 	Entity( void );
 	void	move( int dir );
-	bool	check_move( float x, float y);
+	int		check_move( float x, float y );
+	void	die( void );
 };
 
 #endif
