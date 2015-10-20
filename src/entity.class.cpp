@@ -9,7 +9,8 @@ Entity::Entity(void)
 Entity::~Entity( void ) {}
 
 Entity::Entity( int type, int id, float x, float y, int status ) : type(type), id(id), pos_x(x),
-															pos_y(y), status(status), zoom_m(1) {}
+															pos_y(y), status(status),
+															blast_radius(1), zoom_m(1) {}
 
 bool	Entity::check_move( float x, float y) {
 	if (main_event->map[(int)y][(int)x]->type == WALL

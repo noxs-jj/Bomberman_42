@@ -13,6 +13,7 @@ public:
     int 	status;
     int		frame;
     int		speed;
+    int		blast_radius;
     float	zoom_m;
 
 	Entity( int type, int id, float x, float y, int status );
