@@ -182,7 +182,7 @@ Entity * Event::create_empty(int x, int y) {
 		throw std::exception();
 	}
 
-	return boss;
+	return ent;
 }
 
 void	Event::fill_border_map(void) {
