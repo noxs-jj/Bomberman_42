@@ -1,0 +1,7 @@
+RENDER
+
+- demander gestion des touches qui, ou, comment l'integrer ?
+- Zoom: define, key ?
+- ou integrer le menu ?
+- dimensions des models lie taille fenetre:: define ou variable taille fenetre ?
+- 
