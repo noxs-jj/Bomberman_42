@@ -2,7 +2,16 @@
 # define ENTITY_CLASS_HPP
 
 # include <ft42.class.hpp>
+# include <event.class.hpp>
+// # include <wall.class.hpp>
 
+class Wall;
+class Bomb;
+class Fire;
+class Player;
+class Enemy;
+class Boss;
+class Event;
 class Entity : public ft42 {
 public:
 	int		type;

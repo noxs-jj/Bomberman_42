@@ -2,7 +2,10 @@
 # define WALL_CLASS_HPP
 
 # include <entity.class.hpp>
+// #include <event.class.hpp>
 
+class Entity;
+// class Event;
 class Wall : public Entity {
 public:
 	Wall( float x, float y, int status );

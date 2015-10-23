@@ -1,4 +1,10 @@
 #include <event.class.hpp>
+#include <wall.class.hpp>
+#include <bomb.class.hpp>
+#include <fire.class.hpp>
+#include <player.class.hpp>
+#include <enemy.class.hpp>
+#include <boss.class.hpp>
 
 Event::Event( void ) : run(true) {
 	this->map = NULL;

@@ -3,6 +3,7 @@
 
 # include <entity.class.hpp>
 
+class entity;
 class Bomb : public Entity {
 public:
 	

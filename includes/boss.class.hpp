@@ -2,6 +2,7 @@
 # define BOSS_CLASS_HPP
 
 # include <entity.class.hpp>
+class Entity;
 
 class Boss : public Entity {
 public:

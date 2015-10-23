@@ -3,6 +3,7 @@
 
 # include <entity.class.hpp>
 
+class Entity;
 class Fire : public Entity {
 public:
 	

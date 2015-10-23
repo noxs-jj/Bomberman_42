@@ -3,6 +3,7 @@
 
 # include <entity.class.hpp>
 
+class Entity;
 class Player : public Entity {
 public:
 	Player( int id, float x, float y, int status );

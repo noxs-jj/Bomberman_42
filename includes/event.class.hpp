@@ -3,13 +3,20 @@
 
 # include <ft42.class.hpp>
 # include <entity.class.hpp>
-# include <bomb.class.hpp>
-# include <player.class.hpp>
-# include <enemy.class.hpp>
-# include <wall.class.hpp>
-# include <fire.class.hpp>
-# include <boss.class.hpp>
+// # include <bomb.class.hpp>
+// # include <player.class.hpp>
+// # include <enemy.class.hpp>
+// # include <wall.class.hpp>
+// # include <fire.class.hpp>
+// # include <boss.class.hpp>
 
+class Entity;
+class Wall;
+class Bomb;
+class Fire;
+class Player;
+class Enemy;
+class Boss;
 
 class Event : public ft42 {
 public:
