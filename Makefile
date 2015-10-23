@@ -44,10 +44,10 @@ HEAD = 			includes/ft42.class.hpp \
 				includes/bomb.class.hpp \
 				includes/player.class.hpp \
 				includes/enemy.class.hpp \
-				includes/boss.class.hpp
-				# includes/globject.class.hpp \
-				# includes/Matrix.hpp \
-				# includes/parser.class.hpp
+				includes/boss.class.hpp \
+				includes/globject.class.hpp \
+				includes/Matrix.hpp \
+				includes/parser.class.hpp
 
 SRC = 			src/ft42.class.cpp \
 				src/entity.class.cpp \
@@ -58,10 +58,10 @@ SRC = 			src/ft42.class.cpp \
 				src/fire.class.cpp \
 				src/player.class.cpp \
 				src/enemy.class.cpp \
-				src/boss.class.cpp
-				# src/globject.class.cpp \
-				# src/Matrix.cpp \
-				# src/parser.class.cpp
+				src/boss.class.cpp \
+				src/globject.class.cpp \
+				src/Matrix.cpp \
+				src/parser.class.cpp
 
 OBJ = 			$(SRC:.cpp=.cpp.o)
 
