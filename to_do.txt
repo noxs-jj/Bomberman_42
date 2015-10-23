@@ -4,4 +4,11 @@ RENDER
 - Zoom: define, key ?
 - ou integrer le menu ?
 - dimensions des models lie taille fenetre:: define ou variable taille fenetre ?
-- 
+- player, boss volant (evite de faire des animation de marche course)
+
+
+
+Menu 2D:
+- render  3D dans une image + menu 2d dans une autre image translucide = futionne les deux
+- pour afficher le menu en 3d: faire un menu 3d qui fait semblant d'etre 2d
+- bloque video max resolution 1920x1080 + 1600x1080
