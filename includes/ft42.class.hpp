@@ -20,15 +20,13 @@
 # include <time.h>
 
 # ifdef linux
-#	include <GL/gl3.h>
+#		include <GL/gl3.h>
 # endif
 # ifdef __APPLE__
-# include <OpenGL/gl3.h>
+# 	include <OpenGL/gl3.h>
 # endif
 
-
-#include <SDL.h>
-
+# include <SDL.h>
 
 # define LOG_PATH	"log/debugg.log"
 
@@ -36,14 +34,16 @@
 # define MAP_Y_SIZE 20
 # define MAP_X_SIZE 20
 
-typedef struct	s_point
-{
+typedef struct	s_point {
 	float x;
 	float y;
 	float z;
 }				t_point;
 
-enum TYPE {
+enum STATUS {
+	////
+	//// TYPE
+	////
 	WALL = 0,
 	BOMB,
 	FIRE,
@@ -51,10 +51,19 @@ enum TYPE {
 	BOSS,
 	ENEMY,
 	BONUS,
-	EMPTY
-};
+	EMPTY,
 
-enum STATUS {
+	////
+	//// BOSS NAME
+	////
+	BOSS_A,
+	BOSS_B,
+	BOSS_C,
+
+	////
+	//// STATUS
+	////
+	NO_STATUS,	// NULL, NOTHING TO DO
 
 	FIRE_1,			// avant Disparition
 	FIRE_2, 		// Grosse flamme
@@ -70,20 +79,11 @@ enum STATUS {
 	WALL_HP_3,
 	WALL_HP_4,		// solide
 
-	NO_STATUS,
-
 	DIR_UP,
 	DIR_BOTTOM,
 	DIR_LEFT,
 	DIR_RIGHT
 };
-
-enum NAME {
-	BOSS_A,
-	BOSS_B,
-	BOSS_C
-};
-
 
 
 class ft42 {

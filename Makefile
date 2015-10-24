@@ -25,7 +25,7 @@ endif
 
 CXX = 			g++
 
-NAME =			binaire
+NAME =			bomberman
 
 CFLAGS =		-std=gnu++11
 

@@ -1,5 +1,12 @@
 log/*.log
 bomberman
-*.o
 *~
+~*
+.DS_Store
+src/.DS_Store
+includes/.DS_Store
+models/.DS_Store
+shaders/.DS_Store
 src/*.o
+src/.DS_Store
+#*
