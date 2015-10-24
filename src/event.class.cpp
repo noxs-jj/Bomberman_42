@@ -105,7 +105,7 @@ void	Event::init( int ac, char **av ) {
 	this->parse_command(ac, av);
 	fill_border_map();
 	gen_level(1, 0);
-	// print_map(); // DEBUGG
+	main_event->print_map(); // DEBUGG
 }
 
 void	Event::exit_free( void ) {	// free here

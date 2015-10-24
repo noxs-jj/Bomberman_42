@@ -8,15 +8,11 @@ int main( int ac, char **av ) {
 	(void)(av);
 	(void)(ac);
 	try {
-		
-
-
 		main_event->init(ac, av);
-
 		// event->lauchGame();
 
 
-		delete main_event;
+		// delete main_event;
 	}
 	catch (std::exception & e){
 		return (EXIT_FAILURE);
@@ -46,6 +42,10 @@ int main( int ac, char **av ) {
 	{
 		keyboard();
 		usleep(50000);
+		
+		// main_event->print_map(); // DEBUGG
+		// sleep(1);
+
 //		std::cout << (1 / (clock() - time)) * CLOCKS_PER_SEC << std::endl;
 		time = clock();
 		SDL_PumpEvents();

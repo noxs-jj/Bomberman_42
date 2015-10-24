@@ -5,7 +5,7 @@ RENDER
 - ou integrer le menu ?
 - dimensions des models lie taille fenetre:: define ou variable taille fenetre ?
 - player, boss volant (evite de faire des animation de marche course)
-
+- format de la map est un Entity *** map, pas un Entity map[MAP_Y_SIZE][MAP_X_SIZE]
 
 
 Menu 2D:
