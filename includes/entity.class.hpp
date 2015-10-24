@@ -27,6 +27,7 @@ public:
 	void	move( int dir );
 	int		check_move( float x, float y );
 	void	die( void );
+	void	take_damage( void );
 };
 
 #endif

@@ -50,11 +50,11 @@ bool	Event::check_coord(int mode, float x, float y) {
 	std::list<Entity *>::iterator end = this->char_list.end();
 
 	while (it != end) {
-		if (mode == 0 && (*it)->pos_x == x && (*it)->pos_y == y)
+		if (mode == 0 && (int)(*it)->pos_x == (int)x && (int)(*it)->pos_y == (int)y)
 			return false;
 		else if (mode == 1) {
-			if (x >= (*it)->pos_x - 1 && x <= (*it)->pos_x + 1
-				&& y >= (*it)->pos_y - 1 && y <= (*it)->pos_y + 1)
+			if ((int)x >= (int)(*it)->pos_x - 1 && (int)x <= (int)(*it)->pos_x + 1
+				&& (int)y >= (int)(*it)->pos_y - 1 && (int)y <= (int)(*it)->pos_y + 1)
 				return false;
 		}
 		it++;
