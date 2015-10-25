@@ -19,13 +19,19 @@ Entity::Entity( int type, int id, float x, float y, int status ) : type(type), p
 }
 
 int		Entity::check_move( float x, float y ) {
-	if (main_event->map[(int)y][(int)x]->type == WALL)
+	if (main_event->map[(int)y][(int)x]->type == WALL) {
+		std::cout << "wall !!! " << std::endl;
 		return WALL;
+	}
 	else if (main_event->map[(int)y][(int)x]->type == BOMB
-			&& !(this->pos_y == y && this->pos_x == x))
+			&& !((int)this->pos_y == (int)y && (int)this->pos_x == (int)x)) {
+		std::cout << "bomb !!! " << std::endl;
 		return BOMB;
-	else if (main_event->map[(int)y][(int)x]->type == FIRE)
+	}
+	else if (main_event->map[(int)y][(int)x]->type == FIRE) {
+		std::cout << "fire !!! " << std::endl;
 		return FIRE;
+	}
 	return EMPTY;
 }
 
@@ -43,7 +49,10 @@ void	Entity::move( int dir ) {
 	else if (dir == DIR_RIGHT)
 		x += 0.2f;
 	ret = check_move(x, y);
+	std::cout << "pos real " << this->pos_x << " " << this->pos_y << std::endl;
+	std::cout << "pos real " << x << " " << y << std::endl;
 	if (ret == EMPTY) {
+		this->dir = dir;
 		this->pos_x = x;
 		this->pos_y = y;
 		// change frame here
@@ -65,5 +74,6 @@ void	Entity::die( void ) {
 
 void	Entity::put_bomb(int status, float x, float y, int model) {
 	delete main_event->map[(int)y][(int)x];
+	// main_event->map[(int)y][(int)x] = main_event->create_empty((int)x, (int)y);
 	main_event->map[(int)y][(int)x] = main_event->create_bomb(status, x, y, model);
 }
