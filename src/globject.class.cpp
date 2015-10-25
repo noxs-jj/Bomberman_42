@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 12:49:16 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 13:23:37 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -25,7 +25,7 @@ globject::globject(void)
 
 }
 
-globject::globject(std::string path, GLuint ID) : _ID(ID)
+globject::globject(std::string path, GLuint ID, GLfloat zoom) : _ID(ID), _zoom(zoom)
 {
 	int neg;
 
@@ -34,9 +34,10 @@ globject::globject(std::string path, GLuint ID) : _ID(ID)
 	fill_vao();
 	_textNumber = parser._textNum;
 	load_bmp();
+	globject::_object[ID] = *this;
 }
 
-globject::globject(std::list<std::string> paths, GLuint ID) : _ID (ID)
+globject::globject(std::list<std::string> paths, GLuint ID, GLfloat zoom) : _ID (ID), _zoom(zoom)
 {
 
 }
@@ -85,8 +86,8 @@ void globject::load_bmp()
 		read(fd, data, size[0]);
 		glGenTextures(1, &(_textID[i]));
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
-			size[1], size[2], 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+			size[1], size[2], 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		name += std::to_string(i);
@@ -124,13 +125,16 @@ void		globject::init(void)
 
 	/* load Models */
 
-	globject n("models/cube.obj", WALL_HP_1);
-	globject::_object[n._ID] = n;
-    n = globject("models/cube_floor.obj", FLOOR);
-	globject::_object[n._ID] = n;
-    n = globject("models/rock.obj", WALL_INDESTRUCTIBLE);
-	globject::_object[n._ID] = n;
-
+	globject("models/cube.obj", WALL_HP_1, 1);
+    globject("models/cube_floor.obj", FLOOR, 1);
+	//globject("models/rock.obj", WALL_INDESTRUCTIBLE, 1);
+	globject("models/Bomberman/Bomberman.obj", WALL_INDESTRUCTIBLE, 0.05);
+	globject("models/Bomberman/Bomberman.obj", PLAYER, 1);
+	globject("models/Bomberman/Bomberman.obj", PLAYER1, 1);
+	globject("models/Bomberman/Bomberman.obj", PLAYER2, 1);
+	globject("models/Bomberman/Bomberman.obj", PLAYER3, 1);
+	globject("models/Bomberman/Bomberman.obj", PLAYER4, 1);
+	globject("models/Bomberman/Bomberman.obj", ENEMY, 1);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -190,7 +194,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	modelPos.z = 0;
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
 
-	for (int y = 0; y < 5; y++)
+	for (int y = 0; y < 10; y++)
 	{
 	for (int i = -MAP_Y_SIZE / 2; i < MAP_Y_SIZE / 2; i++)
 	{
@@ -204,10 +208,10 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 				modelPos.y = -1 - y;
 				Model = Matrix::model_matrix(modelPos, modelDir, 1);
 				glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-				globject::_object[30].render(0);
+				globject::_object[FLOOR].render(0);
 			}
 		}
-		}
+	}
 	for (int i = -MAP_Y_SIZE / 2; i < MAP_Y_SIZE / 2; i++)
 	{
 		for (int j = -MAP_X_SIZE / 2; j <MAP_X_SIZE / 2; j++)
@@ -218,15 +222,21 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 			modelPos.y = 0;
 			modelPos.x = i;
 			modelPos.z = j;
-			Model = Matrix::model_matrix(modelPos, modelDir, 0.05);
+			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == -1)
+				continue ;
+			Model = Matrix::model_matrix(modelPos, modelDir,
+				globject::_object[map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model]._zoom);
 			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-			//if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->type == WALL)
-			if (map[i][j]->model != 0)
-			{
-				std::cout << map[i][j]->model << std::endl;
-				globject::_object[map[i][j]->model].render(0);
-			}
+			globject::_object[map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model].render(0);
 		}
+	}
+	std::list<Entity*>::iterator it;
+	std::list<Entity*>::iterator ite;
+	it = players.begin();
+	ite = players.end();
+	while (it != ite)
+	{
+		it++;
 	}
 	SDL_GL_SwapWindow(globject::_displayWindow);
 }

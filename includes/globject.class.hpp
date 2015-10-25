@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 12:34:38 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 13:08:06 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -30,8 +30,8 @@ class globject {
 	public :
 
 		globject(void);
-		globject(std::string path, GLuint ID);
-		globject(std::list<std::string> paths, GLuint ID);
+	globject(std::string path, GLuint ID, float zoom);
+	globject(std::list<std::string> paths, GLuint ID, float zoom);
 		~globject(void);
 
 		static void		init(void);
@@ -47,7 +47,7 @@ class globject {
 		GLuint						_elemBufferID;
 		GLuint						_elemBufferSize;
 		GLuint						_ID;
-		GLfloat						zoom;
+		GLfloat						_zoom;
 		static GLuint				_modelMatID;
 		static GLuint				_viewMatID;
 		static GLuint				_progid;
