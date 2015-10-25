@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-/*   Updated: 2015/10/20 16:09:21 by rcargou          ###   ########.fr       */
+//   Updated: 2015/10/25 15:29:28 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -14,7 +14,19 @@
 
 parser::parser(void)
 {
-
+	_vertex = new GLfloat[500000];
+	_text = new GLfloat[500000];
+	_finalVertex = new GLfloat[500000];
+	_finalText = new GLfloat[500000];
+	_textID = new GLfloat[500000];
+	_texture = new std::string[100];
+    _textSize = 0;
+    _textIDSize = 0;
+    _vertexSize = 0;
+    _finalVertexSize = 0;
+    _finalTextSize = 0;
+    _textNum  = 0;
+    foundText = 0;
 }
 
 parser::parser(std::string path)
@@ -29,6 +41,13 @@ parser::~parser()
 
 void parser::parse(std::string path, int neg)
 {
+	/*
+	_vertex = new GLfloat[100000];
+	_text = new GLfloat[100000];
+	_finalVertex = new GLfloat[100000];
+	_finalText = new GLfloat[100000];
+	_textID = new GLfloat[100000];
+	_texture = new std::string[100];*/
 	_textSize = 0;
 	_textIDSize = 0;
 	_vertexSize = 0;
@@ -92,7 +111,7 @@ void parser::add_texture(std::string str)
 {
 	int i;
 
-	i = 0;
+	i = 1;
 	while (str[i] != ' ')
 		i++;
 	while (str[i] == ' ')
@@ -201,6 +220,6 @@ void parser::add_indice(std::string str, float neg)
     _textID[_textIDSize] = foundText;
     _textIDSize++;
     _textID[_textIDSize] = foundText;
-    _textIDSize++;
+	_textIDSize++;
 }
 

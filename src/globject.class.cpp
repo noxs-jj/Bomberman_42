@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 13:56:23 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 15:49:11 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -19,7 +19,8 @@ SDL_RendererInfo	globject::_displayRendererInfo;
 GLuint				globject::_progid;
 GLuint				globject::_modelMatID;
 GLuint				globject::_viewMatID;
-
+#include <errno.h>
+extern int errno ;
 globject::globject(void)
 {
 
@@ -30,7 +31,6 @@ globject::globject(std::string path, GLuint ID, GLfloat zoom) : _ID(ID), _zoom(z
 	int neg;
 
 	neg = (ID == WALL_HP_1 || ID == FLOOR || ID == WALL_INDESTRUCTIBLE);
-	//neg = 0;
 	parser.parse(path, neg);
 	fill_vao();
 	_textNumber = parser._textNum;
@@ -65,17 +65,11 @@ void globject::load_bmp()
 		name = "texture";
 		path ="textures/";
 		path += parser._texture[i];
-		std::cout << path << std::endl;
-		if ((fd = open(path.c_str(), O_RDONLY)) < 0 ||
-			strcmp(strchr(parser._texture[i].c_str(), '.'), ".bmp"))
+		std::cout << path.c_str() << std::endl;
+		if ((fd = open(path.c_str(), O_RDONLY)) < 0)
 		{
-			if (strcmp(strchr(parser._texture[i].c_str(), '.'), ".bmp"))
-			{
-//				load_png();
-				return ;
-			}
-			else
-				exit(0);
+			std::cout << fd << strerror(errno) << std::endl;
+			exit(0);
 		}
 		read(fd, header, 54);
 		size[0] = *(int*)&(header[0x22]);
@@ -86,7 +80,7 @@ void globject::load_bmp()
 		read(fd, data, size[0]);
 		glGenTextures(1, &(_textID[i]));
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		if (_ID >= PLAYER && _ID <= PLAYER4)
+		if ((_ID >= PLAYER && _ID <= PLAYER4) || (_ID >= ENEMY && _ID <= ENEMY4))
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
 				size[1], size[2], 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
 		else
@@ -123,7 +117,7 @@ void		globject::init(void)
     glEnable( GL_DEPTH_TEST );
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	SDL_GL_SwapWindow(globject::_displayWindow);
-
+	glDisable(GL_BLEND);
 	/* load shaders */
 	globject::load_shaders();
 
@@ -133,11 +127,11 @@ void		globject::init(void)
     globject("models/cube_floor.obj", FLOOR, 1);
 	globject("models/rock.obj", WALL_INDESTRUCTIBLE, 1);
 	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.05);
-	globject("models/Bomberman/Bomberman.obj", PLAYER1, 0.05);
-	globject("models/Bomberman/Bomberman.obj", PLAYER2, 0.05);
-	globject("models/Bomberman/Bomberman.obj", PLAYER3, 0.05);
-	globject("models/Bomberman/Bomberman.obj", PLAYER4, 0.05);
-	globject("models/Bomberman/Bomberman.obj", ENEMY1, 0.05);
+	globject("models/Bomberman/Bomberman1.obj", PLAYER1, 0.05);
+	globject("models/Bomberman/Bomberman2.obj", PLAYER2, 0.05);
+	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.05);
+	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.05);
+	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.5);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -186,7 +180,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 
 	o += 0.01;
 	viewDir.x = 1.1 - 1;
-	viewDir.y = 1.57;
+	viewDir.y = 1.57 + o;
 	viewDir.z = 0;
 	viewPos.x = 0;
 	viewPos.y = 0;
@@ -245,7 +239,6 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 		modelPos.y = 0;
 		modelPos.x = (*it)->pos_y - 10;
 		modelPos.z = ((*it)->pos_x - 10);
-		std::cout << (*it)->pos_x << " " << (*it)->pos_y << std::endl;
 		Model = Matrix::model_matrix(modelPos, modelDir,
 					globject::_object[(*it)->model]._zoom);
 		glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
