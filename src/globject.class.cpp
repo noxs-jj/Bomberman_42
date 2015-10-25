@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 15:49:11 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 15:57:37 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -131,7 +131,7 @@ void		globject::init(void)
 	globject("models/Bomberman/Bomberman2.obj", PLAYER2, 0.05);
 	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.05);
 	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.05);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.5);
+	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -179,8 +179,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 		return ;
 
 	o += 0.01;
-	viewDir.x = 1.1 - 1;
-	viewDir.y = 1.57 + o;
+	viewDir.x = 1.1;
+	viewDir.y = 1.57;
 	viewDir.z = 0;
 	viewPos.x = 0;
 	viewPos.y = 0;
