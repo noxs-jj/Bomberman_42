@@ -41,6 +41,9 @@ public:
 	Boss *		create_boss(int status, float x, float y, int name, int model);
 	Entity *	create_empty(int x, int y);
 
+	void		player_move(int id, int dir);
+	void		player_bomb(int id);
+
 
 	void	init( int ac, char **av );
 	void	exit_free( void );
