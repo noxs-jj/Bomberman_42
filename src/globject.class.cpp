@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 17:51:52 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 18:04:23 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -247,6 +247,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 			modelPos.y = 0;
 			modelPos.x = i;
 			modelPos.z = j;
+			modelPos.x = map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->pos_y - 10;
+			modelPos.z = map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->pos_x - 10;
 			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == -1)
 				continue ;
 			Model = Matrix::model_matrix(modelPos, modelDir,
