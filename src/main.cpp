@@ -69,9 +69,9 @@ void  				keyboard( void ) {
 				case SDLK_ESCAPE:	_exit(0); break;
 				// case SDLK_ESCAPE:	this->addKey(ECHAP); break;
 				// case SDLK_q:		this->addKey(ECHAP); break;
-				case SDLK_DOWN:		main_event->player_move(PLAYER1, DIR_BOTTOM); break;
+				case SDLK_DOWN:		main_event->player_move(PLAYER1, DIR_UP); break;
 				// case SDLK_s:		this->addKey(DOWN); break;
-				case SDLK_UP:		main_event->player_move(PLAYER1, DIR_UP); break;
+				case SDLK_UP:		main_event->player_move(PLAYER1, DIR_BOTTOM); break;
 				// case SDLK_w:		this->addKey(UP); break;
 				case SDLK_RIGHT:	main_event->player_move(PLAYER1, DIR_RIGHT); break;
 				// case SDLK_d:		this->addKey(RIGHT); break;

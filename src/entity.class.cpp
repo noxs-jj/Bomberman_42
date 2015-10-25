@@ -35,13 +35,13 @@ void	Entity::move( int dir ) {
 	int		ret = EMPTY;
 
 	if (dir == DIR_UP)
-		y += -0.1f;
+		y += -0.2f;
 	else if (dir == DIR_BOTTOM)
-		y += 0.1f;
+		y += 0.2f;
 	else if (dir == DIR_LEFT)
-		x += -0.1f;
+		x += -0.2f;
 	else if (dir == DIR_RIGHT)
-		x += 0.1f;
+		x += 0.2f;
 	ret = check_move(x, y);
 	if (ret == EMPTY) {
 		this->pos_x = x;
