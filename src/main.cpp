@@ -7,6 +7,9 @@ Event *		main_event = new Event();
 int main( int ac, char **av ) {
 	(void)(av);
 	(void)(ac);
+
+	SoundRender sr;
+
 	try {
 		main_event->init(ac, av);
 		// event->lauchGame();
@@ -41,8 +44,9 @@ int main( int ac, char **av ) {
 	while (1)
 	{
 		keyboard();
+
 		usleep(500);
-		
+
 		// main_event->print_map(); // DEBUGG
 		// sleep(1);
 
