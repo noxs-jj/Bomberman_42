@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 13:47:29 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 13:48:24 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -184,7 +184,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 		return ;
 
 	o += 0.01;
-	viewDir.x = 1.1 - 1;
+	viewDir.x = 1.1;
 	viewDir.y = 1.57;
 	viewDir.z = 0;
 	viewPos.x = 0;
