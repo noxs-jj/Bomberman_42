@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 18:04:23 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 18:09:05 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -267,7 +267,6 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 		modelDir.z = 0;
 		modelDir.y = 0;
 		modelDir = set_dir((*it)->dir);
-		std::cout << (*it)->dir << std::endl;
 		modelPos.y = 0;
 		modelPos.x = ((*it)->pos_y - 10);
 		modelPos.z = (((*it)->pos_x - 10));
