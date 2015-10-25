@@ -73,8 +73,7 @@ void	Entity::die( void ) {
 }
 
 void	Entity::put_bomb(int status, float x, float y, int model) {
-	std::cout << " bomb in " << (int)x + 0.5f << " " << (int)y + 0.5f << std::endl;
 	delete main_event->map[(int)y][(int)x];
 	// main_event->map[(int)y][(int)x] = main_event->create_empty((int)x, (int)y);
-	main_event->map[(int)y][(int)x] = main_event->create_bomb(status, (int)x + 0.5f, (int)y + 0.5f, model);
+	main_event->map[(int)y][(int)x] = main_event->create_bomb(status, x, y, model);
 }
