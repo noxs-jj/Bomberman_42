@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 13:23:37 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 13:47:29 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -81,13 +81,16 @@ void globject::load_bmp()
 		size[1] = *(int*)&(header[0x12]);
 		size[2] = *(int*)&(header[0x16]);
 
-		
 		data = new unsigned char [sizeof(unsigned char) * size[0]];
 		read(fd, data, size[0]);
 		glGenTextures(1, &(_textID[i]));
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-			size[1], size[2], 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		if (_ID >= PLAYER && _ID <= PLAYER4)
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+				size[1], size[2], 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		else
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+						size[1], size[2], 0, GL_BGR, GL_UNSIGNED_BYTE, data);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		name += std::to_string(i);
@@ -127,14 +130,13 @@ void		globject::init(void)
 
 	globject("models/cube.obj", WALL_HP_1, 1);
     globject("models/cube_floor.obj", FLOOR, 1);
-	//globject("models/rock.obj", WALL_INDESTRUCTIBLE, 1);
-	globject("models/Bomberman/Bomberman.obj", WALL_INDESTRUCTIBLE, 0.05);
-	globject("models/Bomberman/Bomberman.obj", PLAYER, 1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER1, 1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER2, 1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER3, 1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER4, 1);
-	globject("models/Bomberman/Bomberman.obj", ENEMY, 1);
+	globject("models/rock.obj", WALL_INDESTRUCTIBLE, 1);
+	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.1);
+	globject("models/Bomberman/Bomberman.obj", PLAYER1, 0.1);
+	globject("models/Bomberman/Bomberman.obj", PLAYER2, 0.1);
+	globject("models/Bomberman/Bomberman.obj", PLAYER3, 0.1);
+	globject("models/Bomberman/Bomberman.obj", PLAYER4, 0.1);
+	globject("models/Bomberman/Bomberman.obj", ENEMY1, 0.1);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -181,8 +183,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 		return ;
 
-	o += 0.005;
-	viewDir.x = 1.1;
+	o += 0.01;
+	viewDir.x = 1.1 - 1;
 	viewDir.y = 1.57;
 	viewDir.z = 0;
 	viewPos.x = 0;
@@ -236,6 +238,17 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	ite = players.end();
 	while (it != ite)
 	{
+		modelDir.x = 0;
+		modelDir.z = 1;
+		modelDir.y = 0;
+		modelPos.y = 0;
+		modelPos.x = (*it)->pos_y - 10;
+		modelPos.z = ((*it)->pos_x - 10);
+		std::cout << (*it)->pos_x << " " << (*it)->pos_y << std::endl;
+		Model = Matrix::model_matrix(modelPos, modelDir,
+					globject::_object[(*it)->model]._zoom);
+		glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
+		globject::_object[(*it)->model].render(0);
 		it++;
 	}
 	SDL_GL_SwapWindow(globject::_displayWindow);
