@@ -41,7 +41,7 @@ int main( int ac, char **av ) {
 	while (1)
 	{
 		keyboard();
-		usleep(50000);
+//		usleep(50000);
 		
 		// main_event->print_map(); // DEBUGG
 		// sleep(1);

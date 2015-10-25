@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 12:01:39 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 12:36:14 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -29,7 +29,7 @@ globject::globject(std::string path, GLuint ID) : _ID(ID)
 {
 	int neg;
 
-	neg = (ID == WALL || ID == 30 || ID == 31);
+	neg = (ID == WALL_HP_1 || ID == FLOOR || || ID == WALL_INDESTRUCTIBLE);
 	parser.parse(path, neg);
 	fill_vao();
 	_textNumber = parser._textNum;
@@ -44,31 +44,6 @@ globject::globject(std::list<std::string> paths, GLuint ID) : _ID (ID)
 globject::~globject(void)
 {
 
-}
-
-void globject::load_png()
-{
-	SDL_Surface		*surface;
-	std::string		name;
-	std::string		path;
-
-    for (int i = 0; i < parser._textNum; i++)
-    {
-		name = "texture";
-		path = "textures/";
-		path += parser._texture[i];
-		if (strcmp(strchr(parser._texture[i].c_str(), '.'), ".bmp") ||
-			(surface = SDL_LoadBMP(path.c_str())))
-			exit(0);
-		glGenTextures(1, &(_textID[i]));
-		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
-					size[1], size[2], 0, GL_BGR, GL_UNSIGNED_BYTE, data);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		name += std::to_string(i);
-		_textLoc[i] = glGetUniformLocation(globject::_progid, name.c_str());
-	}
 }
 
 void globject::load_bmp()
@@ -91,7 +66,15 @@ void globject::load_bmp()
 		std::cout << path << std::endl;
 		if ((fd = open(path.c_str(), O_RDONLY)) < 0 ||
 			strcmp(strchr(parser._texture[i].c_str(), '.'), ".bmp"))
-			exit(0);
+		{
+			if (strcmp(strchr(parser._texture[i].c_str(), '.'), ".bmp"))
+			{
+//				load_png();
+				return ;
+			}
+			else
+				exit(0);
+		}
 		read(fd, header, 54);
 		size[0] = *(int*)&(header[0x22]);
 		size[1] = *(int*)&(header[0x12]);
@@ -141,9 +124,9 @@ void		globject::init(void)
 
 	/* load Models */
 
-	globject n("models/cube.obj", WALL);
+	globject n("models/cube.obj", WALL_HP_1);
 	globject::_object[n._ID] = n;
-    n = globject("models/cube_floor.obj", 30);
+    n = globject("models/cube_floor.obj", FLOOR);
 	globject::_object[n._ID] = n;
     n = globject("models/rock.obj", WALL_INDESTRUCTIBLE);
 	globject::_object[n._ID] = n;
@@ -179,7 +162,7 @@ void		globject::update_key()
 	SDL_PollEvent(&event);
 }
 
-void		globject::render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*> players)
+void		globject::render_all(Entity ***map, std::list<Player*> players)
 {
 	t_point		modelPos;
 	t_point		modelDir;
@@ -190,16 +173,17 @@ void		globject::render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*
 
 	static		float time = 0;
 	static float o = 0;
+
 	if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 		return ;
 
+	o += 0.005;
 	viewDir.x = 1.1;
 	viewDir.y = 1.57;
 	viewDir.z = 0;
 	viewPos.x = 0;
 	viewPos.y = 0;
-	viewPos.z = -47;
-
+	viewPos.z = -27;
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
 	time = clock();
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
@@ -234,11 +218,11 @@ void		globject::render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*
 			modelPos.y = 0;
 			modelPos.x = i;
 			modelPos.z = j;
-			Model = Matrix::model_matrix(modelPos, modelDir, 1);
+			Model = Matrix::model_matrix(modelPos, modelDir, 0.05);
 			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2].type == WALL)
+			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->type == WALL)
 				globject::_object[WALL].render(0);
-		}
+			}
 	}
 	SDL_GL_SwapWindow(globject::_displayWindow);
 }

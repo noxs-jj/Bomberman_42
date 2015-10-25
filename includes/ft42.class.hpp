@@ -76,6 +76,8 @@ enum STATUS {
 	WALL_HP_2,
 	WALL_HP_3,
 	WALL_HP_4,
+
+	FLOOR,
 	//
 	/// Direction
 	//

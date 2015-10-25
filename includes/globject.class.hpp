@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 10:17:30 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 12:34:38 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -36,7 +36,7 @@ class globject {
 
 		static void		init(void);
 		void			render (int status);
-		static void		render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*> players);
+		static void		render_all(Entity ***map, std::list<Player*> players);
 		static void		resize(int x, int y);
 		GLuint						_textID[1000];
 		GLuint						_textLoc[100];
@@ -47,6 +47,7 @@ class globject {
 		GLuint						_elemBufferID;
 		GLuint						_elemBufferSize;
 		GLuint						_ID;
+		GLfloat						zoom;
 		static GLuint				_modelMatID;
 		static GLuint				_viewMatID;
 		static GLuint				_progid;
@@ -54,7 +55,6 @@ class globject {
 		static SDL_Renderer			*_displayRenderer;
 		static SDL_RendererInfo		_displayRendererInfo;
 		static						globject _object[100];
-		static	char				tab[120];
 		parser						parser;
 	
 	private :
@@ -63,6 +63,7 @@ class globject {
 		static void load_shaders();
 		static void update_key();
 		void		load_bmp();
+		void		load_png();
 		void		fill_vao(void);
 
 };

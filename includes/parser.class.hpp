@@ -13,18 +13,18 @@ public :
 
 	void parse(std::string path, int Neg);
 
-	GLfloat			_vertex[1000];
-	GLfloat			_text[1000];
-	GLfloat			_finalVertex[1000];
-	GLfloat			_finalText[1000];
+	GLfloat			_vertex[10000];
+	GLfloat			_text[10000];
+	GLfloat			_finalVertex[10000];
+	GLfloat			_finalText[10000];
 	GLuint			_textSize;
 	GLuint			_vertexSize;
 	GLuint			_finalVertexSize;
 	GLuint			_finalTextSize;
 	GLuint			_textNum;
-	GLfloat			_textID[1000];
+	GLfloat			_textID[10000];
 	GLuint			_textIDSize;
-	std::string		_texture[1000];
+	std::string		_texture[10000];
 
 private :
 
