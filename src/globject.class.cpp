@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 13:48:24 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 13:53:26 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -131,12 +131,12 @@ void		globject::init(void)
 	globject("models/cube.obj", WALL_HP_1, 1);
     globject("models/cube_floor.obj", FLOOR, 1);
 	globject("models/rock.obj", WALL_INDESTRUCTIBLE, 1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER1, 0.1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER2, 0.1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER3, 0.1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER4, 0.1);
-	globject("models/Bomberman/Bomberman.obj", ENEMY1, 0.1);
+	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.05);
+	globject("models/Bomberman/Bomberman.obj", PLAYER1, 0.05);
+	globject("models/Bomberman/Bomberman.obj", PLAYER2, 0.05);
+	globject("models/Bomberman/Bomberman.obj", PLAYER3, 0.05);
+	globject("models/Bomberman/Bomberman.obj", PLAYER4, 0.05);
+	globject("models/Bomberman/Bomberman.obj", ENEMY1, 0.05);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -184,7 +184,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 		return ;
 
 	o += 0.01;
-	viewDir.x = 1.1;
+	viewDir.x = 1.1 - 1;
 	viewDir.y = 1.57;
 	viewDir.z = 0;
 	viewPos.x = 0;

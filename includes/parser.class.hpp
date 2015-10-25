@@ -24,7 +24,7 @@ public :
 	GLuint			_textNum;
 	GLfloat			_textID[10000];
 	GLuint			_textIDSize;
-	std::string		_texture[10000];
+	std::string		_texture[100];
 
 private :
 
