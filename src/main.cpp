@@ -48,7 +48,7 @@ int main( int ac, char **av ) {
 
 //		std::cout << (1 / (clock() - time)) * CLOCKS_PER_SEC << std::endl;
 		time = clock();
-		SDL_PumpEvents();
+		//SDL_PumpEvents();
 		const Uint8 *state = SDL_GetKeyboardState(NULL);
 		if (state[SDL_SCANCODE_RETURN]) {
 //			exit(0);

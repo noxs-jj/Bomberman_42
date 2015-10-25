@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/19 17:02:30 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 16:53:46 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -38,7 +38,7 @@ public :
 	Matrix operator*(Matrix & src);
 	Matrix operator=(Matrix src);
 
-	float *_matrix;
+	float _matrix[16];
 };
 
 std::ostream & operator<<(std::ostream  & o, Matrix & src);

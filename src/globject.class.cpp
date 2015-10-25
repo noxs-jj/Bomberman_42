@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 15:57:37 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 16:59:43 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -19,8 +19,7 @@ SDL_RendererInfo	globject::_displayRendererInfo;
 GLuint				globject::_progid;
 GLuint				globject::_modelMatID;
 GLuint				globject::_viewMatID;
-#include <errno.h>
-extern int errno ;
+
 globject::globject(void)
 {
 
@@ -68,7 +67,6 @@ void globject::load_bmp()
 		std::cout << path.c_str() << std::endl;
 		if ((fd = open(path.c_str(), O_RDONLY)) < 0)
 		{
-			std::cout << fd << strerror(errno) << std::endl;
 			exit(0);
 		}
 		read(fd, header, 54);
@@ -118,6 +116,7 @@ void		globject::init(void)
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	SDL_GL_SwapWindow(globject::_displayWindow);
 	glDisable(GL_BLEND);
+
 	/* load shaders */
 	globject::load_shaders();
 
@@ -168,19 +167,18 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	t_point		modelPos;
 	t_point		modelDir;
 	Matrix		Model;
-    t_point     viewPos;
-    t_point     viewDir;
-    Matrix      view;
+	t_point		viewPos;
+	t_point		viewDir;
+	Matrix		view;
 
 	static		float time = 0;
 	static float o = 0;
 
 	if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 		return ;
-
 	o += 0.01;
 	viewDir.x = 1.1;
-	viewDir.y = 1.57;
+	viewDir.y = -1.57;
 	viewDir.z = 0;
 	viewPos.x = 0;
 	viewPos.y = 0;
@@ -209,9 +207,9 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 			}
 		}
 	}
-	for (int i = -MAP_Y_SIZE / 2; i < MAP_Y_SIZE / 2; i++)
+	for (int i = -MAP_Y_SIZE / 2; i <  MAP_Y_SIZE / 2; i++)
 	{
-		for (int j = -MAP_X_SIZE / 2; j <MAP_X_SIZE / 2; j++)
+		for (int j = -MAP_X_SIZE / 2; j < MAP_X_SIZE / 2; j++)
 		{
 			modelDir.x = 1;
 			modelDir.z = 0;
@@ -230,6 +228,9 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	std::list<Entity*>::iterator it;
 	std::list<Entity*>::iterator ite;
 	it = players.begin();
+	std::cout << "posX: " << (*it)->pos_x << " PosY: " << (*it)->pos_y << " "<<
+		map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type << " " <<
+			map[(int)(*it)->pos_y][(int)(*it)->pos_x]->model << std::endl;
 	ite = players.end();
 	while (it != ite)
 	{

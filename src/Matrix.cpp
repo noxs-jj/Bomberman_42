@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 12:19:38 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 17:00:57 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -69,11 +69,11 @@ Matrix Matrix::operator*(Matrix & b)
 
 	float *dst;
 	float *s;
-	float *t;
+	float t[16];
 
 	dst = _matrix;
 	s = b._matrix;
-	t = new float [16];
+	//t = new float [16];
 
 	t[0] = dst[0] * s[0] + dst[4] * s[1] + dst[8] * s[2] + dst[12] * s[3];
 	t[1] = dst[1] * s[0] + dst[5] * s[1] + dst[9] * s[2] + dst[13] * s[3];
@@ -120,7 +120,7 @@ Matrix Matrix::projection_matrix(float fov, float near, float far, float aspect)
 	float   y_scale;
 	float   frustrum;
 	Matrix	n;
-	float *m;
+	float	*m;
 
 	m = n._matrix;
 	y_scale = (float)((1.0f / tan((fov / 2.0f) / 57.295)) * aspect);
@@ -157,7 +157,9 @@ Matrix Matrix::model_matrix(t_point pos, t_point dir, float zoom)
 
 void Matrix::identity_matrix(void)
 {
-	_matrix = new float[16];
+	//_matrix = new float[16];
+	if (_matrix == NULL)
+		throw std::exception();
 	_matrix[0] = 1;
 	_matrix[1] = 0;
 	_matrix[2] = 0;
