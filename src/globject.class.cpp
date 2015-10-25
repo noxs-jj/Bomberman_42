@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 12:36:14 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 12:49:16 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -220,9 +220,13 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 			modelPos.z = j;
 			Model = Matrix::model_matrix(modelPos, modelDir, 0.05);
 			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->type == WALL)
-				globject::_object[WALL].render(0);
+			//if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->type == WALL)
+			if (map[i][j]->model != 0)
+			{
+				std::cout << map[i][j]->model << std::endl;
+				globject::_object[map[i][j]->model].render(0);
 			}
+		}
 	}
 	SDL_GL_SwapWindow(globject::_displayWindow);
 }
