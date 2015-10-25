@@ -41,13 +41,13 @@ void	Entity::move( int dir ) {
 	int		ret = EMPTY;
 
 	if (dir == DIR_UP)
-		y += -0.2f;
+		y += -0.002f;
 	else if (dir == DIR_BOTTOM)
-		y += 0.2f;
+		y += 0.002f;
 	else if (dir == DIR_LEFT)
-		x += -0.2f;
+		x += -0.002f;
 	else if (dir == DIR_RIGHT)
-		x += 0.2f;
+		x += 0.002f;
 	ret = check_move(x, y);
 	std::cout << "pos real " << this->pos_x << " " << this->pos_y << std::endl;
 	std::cout << "pos real " << x << " " << y << std::endl;

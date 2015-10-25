@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 18:09:05 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 18:24:41 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -113,7 +113,7 @@ void		globject::init(void)
 
 	SDL_GLContext context = SDL_GL_CreateContext(globject::_displayWindow);
     glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
-    glEnable( GL_DEPTH_TEST );
+    glEnable(GL_DEPTH_TEST);
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	SDL_GL_SwapWindow(globject::_displayWindow);
 	glDisable(GL_BLEND);

@@ -40,6 +40,13 @@ typedef struct	s_point {
 	float z;
 }				t_point;
 
+typedef struct  s_key {
+	int key_right;
+	int key_left;
+	int key_up;
+	int key_down;
+}	t_key;
+
 enum STATUS {
 	////
 	//// TYPE
