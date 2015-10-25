@@ -26,9 +26,9 @@ int main( int ac, char **av ) {
 	{
 		for (int j = 0; j < 20; j++)
 		{
-			map[i][j].id = WALL;
+			map[i][j].type = WALL;
 			if (!(rand() % 2))
-				map[i][j].id = 10;
+				map[i][j].type = 10;
 		}
 	}
 	std::list<Player*> lol;
@@ -51,8 +51,8 @@ int main( int ac, char **av ) {
 		SDL_PumpEvents();
 		const Uint8 *state = SDL_GetKeyboardState(NULL);
 		if (state[SDL_SCANCODE_RETURN]) {
-			exit(0);
-			globject::resize(1000, 1000);
+//			exit(0);
+			globject::resize(1300, 800);
 		}
 		globject::render_all(map, lol);
 	}

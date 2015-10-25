@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/20 17:39:00 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 12:01:39 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -44,6 +44,31 @@ globject::globject(std::list<std::string> paths, GLuint ID) : _ID (ID)
 globject::~globject(void)
 {
 
+}
+
+void globject::load_png()
+{
+	SDL_Surface		*surface;
+	std::string		name;
+	std::string		path;
+
+    for (int i = 0; i < parser._textNum; i++)
+    {
+		name = "texture";
+		path = "textures/";
+		path += parser._texture[i];
+		if (strcmp(strchr(parser._texture[i].c_str(), '.'), ".bmp") ||
+			(surface = SDL_LoadBMP(path.c_str())))
+			exit(0);
+		glGenTextures(1, &(_textID[i]));
+		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+					size[1], size[2], 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		name += std::to_string(i);
+		_textLoc[i] = glGetUniformLocation(globject::_progid, name.c_str());
+	}
 }
 
 void globject::load_bmp()
@@ -120,7 +145,7 @@ void		globject::init(void)
 	globject::_object[n._ID] = n;
     n = globject("models/cube_floor.obj", 30);
 	globject::_object[n._ID] = n;
-    n = globject("models/rock.obj", 31);
+    n = globject("models/rock.obj", WALL_INDESTRUCTIBLE);
 	globject::_object[n._ID] = n;
 
 	//std::cout << "teoswag"  << std::endl;
@@ -145,6 +170,13 @@ void		globject::render(int status)
 
 	glBindVertexArray(_vaoID);
 	glDrawArrays(GL_TRIANGLES, 0, parser._finalVertexSize / 3);
+}
+
+void		globject::update_key()
+{
+	SDL_Event event;
+
+	SDL_PollEvent(&event);
 }
 
 void		globject::render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*> players)
@@ -174,32 +206,6 @@ void		globject::render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*
 	modelPos.z = 0;
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
 
-/*
-	for (int y = 0; y < 30; y++)
-	{
-			for (int i = -y - MAP_Y_SIZE / 2; i < y + MAP_Y_SIZE / 2; i++)
-			{
-				for (int j = -y - MAP_X_SIZE / 2; j < y + MAP_X_SIZE /2; j ++)
-				{
-					if (!(i == -y - MAP_Y_SIZE / 2 || i ==y + MAP_Y_SIZE / 2 - 1) &&
-						!(j == -y - MAP_X_SIZE / 2 || j ==y + MAP_X_SIZE / 2 - 1))
-						continue ;
-					modelDir.x = 1;
-					modelDir.z = 0;
-					modelDir.y = 0;
-					modelPos.x = i;
-					modelPos.z = j;
-					modelPos.y = -y - 6;
-					Model = Matrix::model_matrix(modelPos, modelDir, 1);
-					glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-					if (!(i % 4) || !(j % 4))
-					globject::_object[31].render(0);
-					else
-						globject::_object[30].render(0);
-			}
-		}
-	}
-*/ // Create a mountain... Optional.
 	for (int y = 0; y < 5; y++)
 	{
 	for (int i = -MAP_Y_SIZE / 2; i < MAP_Y_SIZE / 2; i++)
@@ -230,7 +236,7 @@ void		globject::render_all(Entity map[MAP_Y_SIZE][MAP_X_SIZE], std::list<Player*
 			modelPos.z = j;
 			Model = Matrix::model_matrix(modelPos, modelDir, 1);
 			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2].id == WALL)
+			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2].type == WALL)
 				globject::_object[WALL].render(0);
 		}
 	}

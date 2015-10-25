@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/20 13:41:39 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 10:17:30 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -54,12 +54,14 @@ class globject {
 		static SDL_Renderer			*_displayRenderer;
 		static SDL_RendererInfo		_displayRendererInfo;
 		static						globject _object[100];
+		static	char				tab[120];
 		parser						parser;
 	
 	private :
 		static char *filetobuff(char *path);
 		static GLuint loadshaders(char *a, char *b);
 		static void load_shaders();
+		static void update_key();
 		void		load_bmp();
 		void		fill_vao(void);
 

@@ -63,26 +63,27 @@ enum STATUS {
 	////
 	//// STATUS
 	////
-	NO_STATUS,	// NULL, NOTHING TO DO
 
+	NO_STATUS,
 	FIRE_1,			// avant Disparition
 	FIRE_2, 		// Grosse flamme
 
 	BOMB_SEC_0, 	// Bombe disparition
 	BOMB_SEC_1,		// Avant Explosion
-	BOMB_SEC_2,
-	BOMB_SEC_3,		// Premiere pose
 
 	WALL_INDESTRUCTIBLE,
 	WALL_HP_1,		// va tombe prochaine explosion
 	WALL_HP_2,
 	WALL_HP_3,
-	WALL_HP_4,		// solide
-
+	WALL_HP_4,
+	//
+	/// Direction
+	//
 	DIR_UP,
 	DIR_BOTTOM,
 	DIR_LEFT,
-	DIR_RIGHT
+	DIR_RIGHT,
+	MAX_ENUM
 };
 
 

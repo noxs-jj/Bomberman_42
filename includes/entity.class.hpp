@@ -10,6 +10,7 @@ class Entity : public ft42 {
 public:
 	int		type;
 	int		id;
+	int		model;
     float	pos_x;
     float	pos_y;  
     int 	dir;
