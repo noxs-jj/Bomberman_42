@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 16:59:43 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 17:11:28 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -30,6 +30,7 @@ globject::globject(std::string path, GLuint ID, GLfloat zoom) : _ID(ID), _zoom(z
 	int neg;
 
 	neg = (ID == WALL_HP_1 || ID == FLOOR || ID == WALL_INDESTRUCTIBLE);
+	neg = 0;
 	parser.parse(path, neg);
 	fill_vao();
 	_textNumber = parser._textNum;
@@ -201,7 +202,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 				modelPos.x = i;
 				modelPos.z = j;
 				modelPos.y = -1 - y;
-				Model = Matrix::model_matrix(modelPos, modelDir, 1);
+				Model = Matrix::model_matrix(modelPos, modelDir, globject::_object[FLOOR]._zoom);
 				glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
 				globject::_object[FLOOR].render(0);
 			}
@@ -238,8 +239,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 		modelDir.z = 1;
 		modelDir.y = 0;
 		modelPos.y = 0;
-		modelPos.x = (*it)->pos_y - 10;
-		modelPos.z = ((*it)->pos_x - 10);
+		modelPos.x = ((*it)->pos_y - 10);
+		modelPos.z = (((*it)->pos_x - 10));
 		Model = Matrix::model_matrix(modelPos, modelDir,
 					globject::_object[(*it)->model]._zoom);
 		glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
