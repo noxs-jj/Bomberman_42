@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 17:15:03 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 17:30:51 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -79,7 +79,7 @@ void globject::load_bmp()
 		read(fd, data, size[0]);
 		glGenTextures(1, &(_textID[i]));
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		if ((_ID >= PLAYER && _ID <= PLAYER4) || (_ID >= ENEMY && _ID <= ENEMY4))
+		if ((_ID >= PLAYER && _ID <= PLAYER4) || (_ID >= ENEMY && _ID <= ENEMY4) || _ID == BOMB)
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
 				size[1], size[2], 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
 		else
@@ -126,12 +126,13 @@ void		globject::init(void)
 	globject("models/cube.obj", WALL_HP_1, 1);
     globject("models/cube_floor.obj", FLOOR, 1);
 	globject("models/rock.obj", WALL_INDESTRUCTIBLE, 1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.05);
-	globject("models/Bomberman/Bomberman1.obj", PLAYER1, 0.05);
-	globject("models/Bomberman/Bomberman2.obj", PLAYER2, 0.05);
-	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.05);
-	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.05);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
+	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.03);
+	globject("models/Bomberman/Bomberman1.obj", PLAYER1, 0.03);
+	globject("models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
+	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
+	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
+	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.2);
+	globject("models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
