@@ -22,5 +22,6 @@
 # include <globject.class.hpp>
 # include <event.class.hpp>
 # include <parser.class.hpp>
+# include <soundrender.class.hpp>
 
 #endif
