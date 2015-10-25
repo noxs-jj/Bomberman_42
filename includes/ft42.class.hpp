@@ -76,8 +76,11 @@ enum STATUS {
 	FIRE_1,			// avant Disparition
 	FIRE_2, 		// Grosse flamme
 
+	// Uniquement pour le moteur de jeu
 	BOMB_SEC_0, 	// Bombe disparition
 	BOMB_SEC_1,		// Avant Explosion
+	BOMB_SEC_2,		// Avant Explosion
+	BOMB_SEC_3,		// Avant Explosion
 
 	WALL_INDESTRUCTIBLE,
 	WALL_HP_1,		// va tombe prochaine explosion

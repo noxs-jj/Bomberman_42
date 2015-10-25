@@ -41,7 +41,7 @@ int main( int ac, char **av ) {
 	while (1)
 	{
 		keyboard();
-		usleep(500);
+		usleep(50000);
 		
 		// main_event->print_map(); // DEBUGG
 		// sleep(1);
@@ -69,15 +69,15 @@ void  				keyboard( void ) {
 				case SDLK_ESCAPE:	_exit(0); break;
 				// case SDLK_ESCAPE:	this->addKey(ECHAP); break;
 				// case SDLK_q:		this->addKey(ECHAP); break;
-				// case SDLK_DOWN:		this->addKey(DOWN); break;
+				case SDLK_DOWN:		main_event->player_move(PLAYER1, DIR_BOTTOM); break;
 				// case SDLK_s:		this->addKey(DOWN); break;
-				// case SDLK_UP:		this->addKey(UP); break;
+				case SDLK_UP:		main_event->player_move(PLAYER1, DIR_UP); break;
 				// case SDLK_w:		this->addKey(UP); break;
-				// case SDLK_RIGHT:	this->addKey(RIGHT); break;
+				case SDLK_RIGHT:	main_event->player_move(PLAYER1, DIR_RIGHT); break;
 				// case SDLK_d:		this->addKey(RIGHT); break;
-				// case SDLK_LEFT:		this->addKey(LEFT); break;
+				case SDLK_LEFT:		main_event->player_move(PLAYER1, DIR_LEFT); break;
 				// case SDLK_a:		this->addKey(LEFT); break;
-				// case SDLK_SPACE:	this->addKey(SPACE); break;
+				case SDLK_SPACE:	main_event->player_bomb(PLAYER1); break;
 				// case SDLK_p:		this->addKey(SPACE); break;
 				// case SDLK_1:		this->addKey(ONE); break;
 				// case SDLK_2:		this->addKey(TWO); break;

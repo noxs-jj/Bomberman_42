@@ -192,6 +192,68 @@ Entity * Event::create_empty(int x, int y) {
 	return ent;
 }
 
+void	Event::player_move(int id, int dir) {
+std::list<Entity *>::iterator it = this->char_list.begin();
+	std::list<Entity *>::iterator end = this->char_list.end();
+
+	while (it != end) {
+		if ((*it)->type == PLAYER && (*it)->model == PLAYER1) {
+			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
+				(*it)->move(dir);
+			}
+		}
+		if ((*it)->type == PLAYER && (*it)->model == PLAYER2) {
+			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
+				(*it)->move(dir);
+			}
+		}
+		if ((*it)->type == PLAYER && (*it)->model == PLAYER3) {
+			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
+				(*it)->move(dir);
+			}
+		}
+		if ((*it)->type == PLAYER && (*it)->model == PLAYER4) {
+			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
+				(*it)->move(dir);
+			}
+		}
+		it++;
+	}
+}
+
+void	Event::player_bomb(int id) {
+	std::list<Entity *>::iterator it = this->char_list.begin();
+	std::list<Entity *>::iterator end = this->char_list.end();
+
+	while (it != end) {
+		if ((*it)->type == PLAYER && (*it)->model == PLAYER1) {
+			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
+				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB);
+				return ;
+			}
+		}
+		if ((*it)->type == PLAYER && (*it)->model == PLAYER2) {
+			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
+				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB);
+				return ;
+			}
+		}
+		if ((*it)->type == PLAYER && (*it)->model == PLAYER3) {
+			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
+				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB);
+				return ;
+			}
+		}
+		if ((*it)->type == PLAYER && (*it)->model == PLAYER4) {
+			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
+				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB);
+				return ;
+			}
+		}
+		it++;
+	}
+}
+
 void	Event::fill_border_map(void) {
 	int 	y = 0,
 			x = 0;
