@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 16:59:43 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 18:09:05 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -30,6 +30,7 @@ globject::globject(std::string path, GLuint ID, GLfloat zoom) : _ID(ID), _zoom(z
 	int neg;
 
 	neg = (ID == WALL_HP_1 || ID == FLOOR || ID == WALL_INDESTRUCTIBLE);
+	neg = 0;
 	parser.parse(path, neg);
 	fill_vao();
 	_textNumber = parser._textNum;
@@ -78,7 +79,7 @@ void globject::load_bmp()
 		read(fd, data, size[0]);
 		glGenTextures(1, &(_textID[i]));
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		if ((_ID >= PLAYER && _ID <= PLAYER4) || (_ID >= ENEMY && _ID <= ENEMY4))
+		if ((_ID >= PLAYER && _ID <= PLAYER4) || (_ID >= ENEMY && _ID <= ENEMY4) || _ID == BOMB)
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
 				size[1], size[2], 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
 		else
@@ -125,12 +126,13 @@ void		globject::init(void)
 	globject("models/cube.obj", WALL_HP_1, 1);
     globject("models/cube_floor.obj", FLOOR, 1);
 	globject("models/rock.obj", WALL_INDESTRUCTIBLE, 1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.05);
-	globject("models/Bomberman/Bomberman1.obj", PLAYER1, 0.05);
-	globject("models/Bomberman/Bomberman2.obj", PLAYER2, 0.05);
-	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.05);
-	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.05);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
+	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.03);
+	globject("models/Bomberman/Bomberman1.obj", PLAYER1, 0.03);
+	globject("models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
+	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
+	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
+	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.2);
+	globject("models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -139,6 +141,34 @@ void		globject::init(void)
 			1, GL_FALSE, (GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, 1)._matrix));
 	globject::_viewMatID = glGetUniformLocation(_progid, "V");
 	globject::_modelMatID = glGetUniformLocation(_progid, "M");
+}
+
+t_point		set_dir(int d)
+{
+	t_point dir;
+
+	dir.y = 0;
+	if (d == DIR_UP)
+	{
+		dir.x = 0;
+		dir.z = 1;
+	}
+	if (d == DIR_BOTTOM)
+	{
+		dir.x = 0;
+		dir.z = -1;
+	}
+	if (d == DIR_LEFT)
+	{
+		dir.x = -1;
+		dir.z = 0;
+	}
+	if (d == DIR_RIGHT)
+	{
+		dir.x = 1;
+		dir.z = 0;
+	}
+	return (dir);
 }
 
 void		globject::render(int status)
@@ -172,13 +202,13 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	Matrix		view;
 
 	static		float time = 0;
-	static float o = 0;
+	static float  o = 0;
 
 	if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 		return ;
 	o += 0.01;
 	viewDir.x = 1.1;
-	viewDir.y = -1.57;
+	viewDir.y = 1.57;
 	viewDir.z = 0;
 	viewPos.x = 0;
 	viewPos.y = 0;
@@ -201,7 +231,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 				modelPos.x = i;
 				modelPos.z = j;
 				modelPos.y = -1 - y;
-				Model = Matrix::model_matrix(modelPos, modelDir, 1);
+				Model = Matrix::model_matrix(modelPos, modelDir, globject::_object[FLOOR]._zoom);
 				glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
 				globject::_object[FLOOR].render(0);
 			}
@@ -217,6 +247,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 			modelPos.y = 0;
 			modelPos.x = i;
 			modelPos.z = j;
+			modelPos.x = map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->pos_y - 10;
+			modelPos.z = map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->pos_x - 10;
 			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == -1)
 				continue ;
 			Model = Matrix::model_matrix(modelPos, modelDir,
@@ -228,18 +260,16 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	std::list<Entity*>::iterator it;
 	std::list<Entity*>::iterator ite;
 	it = players.begin();
-	std::cout << "posX: " << (*it)->pos_x << " PosY: " << (*it)->pos_y << " "<<
-		map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type << " " <<
-			map[(int)(*it)->pos_y][(int)(*it)->pos_x]->model << std::endl;
 	ite = players.end();
 	while (it != ite)
 	{
-		modelDir.x = 0;
-		modelDir.z = 1;
+		modelDir.x = -1;
+		modelDir.z = 0;
 		modelDir.y = 0;
+		modelDir = set_dir((*it)->dir);
 		modelPos.y = 0;
-		modelPos.x = (*it)->pos_y - 10;
-		modelPos.z = ((*it)->pos_x - 10);
+		modelPos.x = ((*it)->pos_y - 10);
+		modelPos.z = (((*it)->pos_x - 10));
 		Model = Matrix::model_matrix(modelPos, modelDir,
 					globject::_object[(*it)->model]._zoom);
 		glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
