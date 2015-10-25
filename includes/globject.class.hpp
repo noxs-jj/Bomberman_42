@@ -36,7 +36,7 @@ class globject {
 
 		static void		init(void);
 		void			render (int status);
-		static void		render_all(Entity ***map, std::list<Player*> players);
+		static void		render_all(Entity ***map, std::list<Entity*> players);
 		static void		resize(int x, int y);
 		GLuint						_textID[1000];
 		GLuint						_textLoc[100];

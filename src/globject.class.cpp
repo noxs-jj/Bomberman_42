@@ -29,7 +29,7 @@ globject::globject(std::string path, GLuint ID) : _ID(ID)
 {
 	int neg;
 
-	neg = (ID == WALL_HP_1 || ID == FLOOR || || ID == WALL_INDESTRUCTIBLE);
+	neg = (ID == WALL_HP_1 || ID == FLOOR || ID == WALL_INDESTRUCTIBLE);
 	parser.parse(path, neg);
 	fill_vao();
 	_textNumber = parser._textNum;
@@ -162,7 +162,7 @@ void		globject::update_key()
 	SDL_PollEvent(&event);
 }
 
-void		globject::render_all(Entity ***map, std::list<Player*> players)
+void		globject::render_all(Entity ***map, std::list<Entity*> players)
 {
 	t_point		modelPos;
 	t_point		modelDir;

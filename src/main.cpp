@@ -20,18 +20,18 @@ int main( int ac, char **av ) {
 
 	srand(clock());
 	globject::init();
-	Entity map[20][20];
+	// Entity map[20][20];
 
-	for (int i = 0; i < 20; i++)
-	{
-		for (int j = 0; j < 20; j++)
-		{
-			map[i][j].type = WALL;
-			if (!(rand() % 2))
-				map[i][j].type = 10;
-		}
-	}
-	std::list<Player*> lol;
+	// for (int i = 0; i < 20; i++)
+	// {
+	// 	for (int j = 0; j < 20; j++)
+	// 	{
+	// 		map[i][j].type = WALL;
+	// 		if (!(rand() % 2))
+	// 			map[i][j].type = 10;
+	// 	}
+	// }
+	// std::list<Player*> lol;
 	int e;
 	static float time = 0;
 	for (int i = 0; i < 30; i++)
@@ -54,7 +54,7 @@ int main( int ac, char **av ) {
 //			exit(0);
 			globject::resize(1300, 800);
 		}
-		globject::render_all(map, lol);
+		globject::render_all(main_event->map, main_event->char_list);
 	}
     //Test graphique...
 	return (EXIT_SUCCESS);
