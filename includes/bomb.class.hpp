@@ -7,7 +7,7 @@ class entity;
 class Bomb : public Entity {
 public:
 	
-	Bomb( float x, float y, int status );
+	Bomb( float x, float y, int status, int model );
 	Bomb( Bomb const & src );
 	Bomb & operator=( Bomb const & rhs );
 	virtual ~Bomb( void );

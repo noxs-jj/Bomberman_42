@@ -9,7 +9,7 @@ public:
 
 	int name;
 
-	Boss( float x, float y, int status, int name );
+	Boss( float x, float y, int status, int name, int model );
 	Boss( Boss const & src );
 	Boss & operator=( Boss const & rhs );
 	virtual ~Boss( void );

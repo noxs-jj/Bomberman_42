@@ -8,7 +8,7 @@ class Entity;
 // class Event;
 class Wall : public Entity {
 public:
-	Wall( float x, float y, int status );
+	Wall( float x, float y, int status, int model );
 	Wall( Wall const & src );
 	Wall & operator=( Wall const & rhs );
 	virtual ~Wall( void );

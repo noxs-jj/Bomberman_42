@@ -33,12 +33,12 @@ public:
 	void		gen_level(int level, int boss);
 	bool		check_coord(int mode, float x, float y);
 	void		gen_obstacle(int difficulty);
-	Wall *		create_wall(int status, float x, float y);
-	Bomb *		create_bomb(int status, float x, float y);
-	Fire *		create_fire(int status, float x, float y);
-	Player *	create_player(int id, int status, float x, float y);
-	Enemy *		create_enemy(int id, int status, float x, float y);
-	Boss *		create_boss(int status, float x, float y, int name);
+	Wall *		create_wall(int status, float x, float y, int model);
+	Bomb *		create_bomb(int status, float x, float y, int model);
+	Fire *		create_fire(int status, float x, float y, int model);
+	Player *	create_player(int id, int status, float x, float y, int model);
+	Enemy *		create_enemy(int id, int status, float x, float y, int model);
+	Boss *		create_boss(int status, float x, float y, int name, int model);
 	Entity *	create_empty(int x, int y);
 
 

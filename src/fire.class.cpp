@@ -2,7 +2,8 @@
 
 Fire::~Fire( void ) {}
 
-Fire::Fire( float x, float y, int status ) : Entity( FIRE, 0, x, y, status ) {
+Fire::Fire( float x, float y, int status, int model ) : Entity( FIRE, 0, x, y, status ) {
+	this->model = model;
 	std::list<Entity *>::iterator it = main_event->char_list.begin();
 	std::list<Entity *>::iterator end = main_event->char_list.end();
 
