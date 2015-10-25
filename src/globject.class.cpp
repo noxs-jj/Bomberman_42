@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 17:30:51 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/25 17:51:52 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -143,6 +143,34 @@ void		globject::init(void)
 	globject::_modelMatID = glGetUniformLocation(_progid, "M");
 }
 
+t_point		set_dir(int d)
+{
+	t_point dir;
+
+	dir.y = 0;
+	if (d == DIR_UP)
+	{
+		dir.x = 0;
+		dir.z = 1;
+	}
+	if (d == DIR_BOTTOM)
+	{
+		dir.x = 0;
+		dir.z = -1;
+	}
+	if (d == DIR_LEFT)
+	{
+		dir.x = -1;
+		dir.z = 0;
+	}
+	if (d == DIR_RIGHT)
+	{
+		dir.x = 1;
+		dir.z = 0;
+	}
+	return (dir);
+}
+
 void		globject::render(int status)
 {
 	for (int i = 0; i < _textNumber; i++)
@@ -174,7 +202,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	Matrix		view;
 
 	static		float time = 0;
-	static float o = 0;
+	static float  o = 0;
 
 	if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 		return ;
@@ -230,15 +258,14 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	std::list<Entity*>::iterator it;
 	std::list<Entity*>::iterator ite;
 	it = players.begin();
-	std::cout << "posX: " << (*it)->pos_x << " PosY: " << (*it)->pos_y << " "<<
-		map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type << " " <<
-			map[(int)(*it)->pos_y][(int)(*it)->pos_x]->model << std::endl;
 	ite = players.end();
 	while (it != ite)
 	{
-		modelDir.x = 0;
-		modelDir.z = 1;
+		modelDir.x = -1;
+		modelDir.z = 0;
 		modelDir.y = 0;
+		modelDir = set_dir((*it)->dir);
+		std::cout << (*it)->dir << std::endl;
 		modelPos.y = 0;
 		modelPos.x = ((*it)->pos_y - 10);
 		modelPos.z = (((*it)->pos_x - 10));
