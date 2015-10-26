@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 18:34:55 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 18:57:16 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -214,12 +214,15 @@ void globject::skybox(t_point viewDir)
     Matrix      Model;
     t_point     viewPos;
     Matrix      view;
+	static float degueu = 0;
+	degueu += 0.001;
 
 	viewPos.x = 0;
 	viewPos.y = 0;
 	viewPos.z = 0;
 	//viewDir.x += 1.5;
-	viewDir.y += 2;
+	viewDir.y += 2 + degueu;
+	viewDir.x = 1;
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
 	//glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
     modelPos.z = 0;

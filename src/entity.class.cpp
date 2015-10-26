@@ -77,7 +77,9 @@ void	Entity::take_damage( void ) {
 void	Entity::die( void ) {
 	std::cout << "Someone died" << std::endl;
 	if (this->type == PLAYER)
+	{
 		globject::spin(this->pos_x, this->pos_y);
+	}
 }
 
 void	Entity::put_bomb(int status, float x, float y, int model, int blast) {
