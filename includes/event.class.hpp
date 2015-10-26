@@ -43,6 +43,7 @@ public:
 
 	void		player_move(int id, int dir);
 	void		player_bomb(int id);
+	void		dec_timer( void );
 
 
 	void	init( int ac, char **av );

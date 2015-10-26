@@ -5,9 +5,11 @@ Bomb::~Bomb( void ) {}
 
 Bomb::Bomb( float x, float y, int status, int model ) : Entity( BOMB, 0, x, y, status ) {
 	this->model = model;
+	this->timer = 180;
 }
 
-void	Bomb::blast_case(int x, int y) {
+void	Bomb::blast_case(int y, int x) {
+	std::cout << "blast_case " << x << " " << y << std::endl;
 	if (main_event->map[y][x]->type == WALL) {
 		if (main_event->map[y][x]->status == WALL_HP_4)
 			main_event->map[y][x]->status = WALL_HP_3;
@@ -32,7 +34,7 @@ void	Bomb::blast_case(int x, int y) {
 
 void	Bomb::detonate( void ) {
 	int i = 1;
-
+	std::cout << "bomb explode in " << (int)this->pos_x << " " << (int)this->pos_y << std::endl;
 	delete main_event->map[(int)this->pos_y][(int)this->pos_x];
 	main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_fire(FIRE_2, this->pos_x, this->pos_y, FIRE_2);
 
@@ -51,4 +53,14 @@ void	Bomb::detonate( void ) {
 
 		i++;
 	}
+}
+
+void	Bomb::bomb_timer( void ) {
+	if (this->timer - 1 > 0) {
+		if (this->timer % 9 == 0)
+			this->frame++;
+		this->timer--;
+	}
+	else
+		detonate();
 }
