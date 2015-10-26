@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 12:35:39 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 13:52:20 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -138,6 +138,7 @@ void		globject::init(void)
 	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS, 1); //test
 	globject("models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
 	globject("models/icosphere.obj", MAX_ENUM, 1);
+	globject("models/FireBurst/FireBurst2.obj", FIRE_2, 0.3);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -189,7 +190,7 @@ void		globject::render(int status)
 		glUniform1i(_textLoc[i], i);
 
 	glBindVertexArray(_vaoID);
-	glDrawArrays(GL_TRIANGLES, 0, parser._finalVertexSize);
+	glDrawArrays(GL_TRIANGLES, 0, parser._finalVertexSize / 3);
 }
 
 void		globject::update_key()
@@ -253,7 +254,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	//if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 	//return ;
 	o += 0.3;
-	prog += 0.3;
+	prog += 0.03;
 	if (o >= 4)
 		o = 0;
 	view = Matrix::view_matrix(viewPos, viewDir, 1);

@@ -1,0 +1,24 @@
+#Produced by Art of Illusion 2.8.1, Sat Apr 23 22:01:35 CDT 2011
+newmtl innderExplosion
+Kd 0.0975 0.0897 0
+Ks 0 0 0
+Ka 0.37 0.22 0
+illum 1
+newmtl InnerBurst
+Kd 1 1 1
+map_Kd FireBurst25.jpg
+Ks 1 1 1
+map_Ks FireBurst26.jpg
+Ka 1 1 1
+map_Ka FireBurst27.jpg
+illum 2
+Ns 129
+newmtl FireBurst
+Kd 1 1 1
+map_Kd FireBurst21.jpg
+Ks 1 1 1
+map_Ks FireBurst23.jpg
+Ka 1 1 1
+map_Ka FireBurst24.jpg
+illum 2
+Ns 129
