@@ -15,7 +15,7 @@ public:
     float	pos_y;  
     int 	dir;
     int 	status;
-    int		frame;
+    float	frame;
     int		speed;
     int		blast_radius;
     float	zoom_m;

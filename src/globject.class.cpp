@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 09:52:16 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 12:08:37 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -135,7 +135,9 @@ void		globject::init(void)
 	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
 	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
 	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.2);
+	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS, 1); //test
 	globject("models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
+	globject("models/icosphere.obj", MAX_ENUM, 1);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -187,7 +189,7 @@ void		globject::render(int status)
 		glUniform1i(_textLoc[i], i);
 
 	glBindVertexArray(_vaoID);
-	glDrawArrays(GL_TRIANGLES, 0, parser._finalVertexSize / 3);
+	glDrawArrays(GL_TRIANGLES, 0, parser._finalVertexSize);
 }
 
 void		globject::update_key()
@@ -206,6 +208,35 @@ GLfloat globject::get_leg_pos(int model)
 	return (-100);
 }
 
+void globject::skybox(t_point viewDir)
+{
+    t_point     modelPos;
+    t_point     modelDir;
+    Matrix      Model;
+    t_point     viewPos;
+    Matrix      view;
+
+	viewPos.x = 0;
+	viewPos.y = 0;
+	viewPos.z = 0;
+	viewDir.x += 1.5;
+	viewDir.y += 2;
+	view = Matrix::view_matrix(viewPos, viewDir, 1);
+	//glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
+    modelPos.z = 0;
+	modelPos.y = 0;
+	modelPos.x = 0;
+    glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
+	glUniform1f(globject::_keyFrameID, 0);
+    modelDir.x = 1;
+    modelDir.z = 0;
+    modelDir.y = 0;
+
+    Model = Matrix::model_matrix(modelPos, modelDir, 100);
+    glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
+	globject::_object[MAX_ENUM].render(0);
+}
+
 void		globject::render_all(Entity ***map, std::list<Entity*> players)
 {
 	t_point		modelPos;
@@ -217,30 +248,42 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 
 	static		float time = 0;
 	static float  o = 0;
+	static float prog = 0;
 
-	if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
-		return ;
+	//if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
+	//return ;
 	o += 0.3;
+	prog += 0.3;
 	if (o >= 4)
 		o = 0;
-	viewDir.x = 1.1;
-	viewDir.y = 1.57;
-	viewDir.z = 0;
-	viewPos.x = 0;
-	viewPos.y = 0;
-	viewPos.z = -27;
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
 	time = clock();
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	modelPos.z = 0;
-	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
 	glUniform1f(globject::_keyFrameID, 0);
-	for (int y = 0; y < 10; y++)
+	modelDir.x = 1;
+	modelDir.z = 0;
+	modelDir.y = 0;
+
+    viewDir.x = 1.1;
+	viewDir.y = 1.57;
+    viewDir.z = 0;
+	skybox(viewDir);
+
+    viewPos.x = 0;
+    viewPos.y = 0;
+    viewPos.z = -28;
+	view = Matrix::view_matrix(viewPos, viewDir, 1);
+	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
+	for (int y = 0; y < 1; y++)
 	{
 	for (int i = -MAP_Y_SIZE / 2; i < MAP_Y_SIZE / 2; i++)
 	{
 			for (int j = -MAP_X_SIZE / 2; j < MAP_X_SIZE / 2; j++)
 			{
+				if (!(j == -MAP_X_SIZE / 2 || j == MAP_X_SIZE / 2 - 1)
+					&& !(i == -MAP_Y_SIZE / 2 || i == MAP_Y_SIZE / 2 - 1) && !(y == 0))
+				continue ;
 				modelDir.x = 1;
 				modelDir.z = 0;
 				modelDir.y = 0;
@@ -253,6 +296,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 			}
 		}
 	}
+
 	for (int i = -MAP_Y_SIZE / 2; i <  MAP_Y_SIZE / 2; i++)
 	{
 		for (int j = -MAP_X_SIZE / 2; j < MAP_X_SIZE / 2; j++)
@@ -273,6 +317,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 			globject::_object[map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model].render(0);
 		}
 	}
+
 	std::list<Entity*>::iterator it;
 	std::list<Entity*>::iterator ite;
 	it = players.begin();
@@ -289,7 +334,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 		Model = Matrix::model_matrix(modelPos, modelDir,
 					globject::_object[(*it)->model]._zoom);
 		glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-		glUniform1f(globject::_keyFrameID, o);
+		glUniform1f(globject::_keyFrameID, (*it)->frame);
 		glUniform1f(globject::_legPos, get_leg_pos((*it)->model));
 		globject::_object[(*it)->model].render(0);
 		it++;

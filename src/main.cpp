@@ -43,19 +43,19 @@ int main( int ac, char **av ) {
 	}
 	while (1)
 	{
+		if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
+			continue ;
 		keyboard();
 
-		usleep(500);
+		//usleep(300);
 
 		// main_event->print_map(); // DEBUGG
 		// sleep(1);
 
-//		std::cout << (1 / (clock() - time)) * CLOCKS_PER_SEC << std::endl;
+		std::cout << (1 / (clock() - time)) * CLOCKS_PER_SEC << std::endl;
 		time = clock();
-		//SDL_PumpEvents();
-		const Uint8 *state = SDL_GetKeyboardState(NULL);
+			const Uint8 *state = SDL_GetKeyboardState(NULL);
 		if (state[SDL_SCANCODE_RETURN]) {
-//			exit(0);
 			globject::resize(1300, 800);
 		}
 		globject::render_all(main_event->map, main_event->char_list);

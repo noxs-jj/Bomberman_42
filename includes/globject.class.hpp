@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 09:47:17 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 11:02:49 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -64,6 +64,7 @@ class globject {
 		static char *filetobuff(char *path);
 		static GLuint loadshaders(char *a, char *b);
 		static void load_shaders();
+		static void skybox(t_point e);
 		static void update_key();
 		void		load_bmp();
 		void		load_png();

@@ -36,30 +36,35 @@ int		Entity::check_move( float x, float y ) {
 }
 
 void	Entity::move( int dir ) {
-	float	x = this->pos_x;
-	float	y = this->pos_y;
+	float	x = 0;//this->pos_x;
+	float	y = 0;//this->pos_y;
 	int		ret = EMPTY;
 
+	frame += 0.3;
 	if (dir == DIR_UP)
-		y += -0.002f;
+		y += -0.08f;
 	else if (dir == DIR_BOTTOM)
-		y += 0.002f;
+		y += 0.08f;
 	else if (dir == DIR_LEFT)
-		x += -0.002f;
+		x += -0.08f;
 	else if (dir == DIR_RIGHT)
-		x += 0.002f;
-	ret = check_move(x, y);
+		x += 0.08f;
+	else
+		frame = 0;
+	ret = check_move(x * 3 + this->pos_x, y + this->pos_y);
 	std::cout << "pos real " << this->pos_x << " " << this->pos_y << std::endl;
 	std::cout << "pos real " << x << " " << y << std::endl;
 	if (ret == EMPTY) {
 		this->dir = dir;
-		this->pos_x = x;
-		this->pos_y = y;
+		this->pos_x = x + this->pos_x;
+		this->pos_y = y + this->pos_y;
 		// change frame here
 	}
 	else if (ret == FIRE) {
 		take_damage();
 	}
+	if (frame >= 4)
+		frame = 0;
 }
 
 void	Entity::take_damage( void ) {
@@ -75,5 +80,5 @@ void	Entity::die( void ) {
 void	Entity::put_bomb(int status, float x, float y, int model) {
 	delete main_event->map[(int)y][(int)x];
 	// main_event->map[(int)y][(int)x] = main_event->create_empty((int)x, (int)y);
-	main_event->map[(int)y][(int)x] = main_event->create_bomb(status, x, y, model);
+	main_event->map[(int)y][(int)x] = main_event->create_bomb(status, (int)x + 0.5, (int)y + 0.5, model);
 }
