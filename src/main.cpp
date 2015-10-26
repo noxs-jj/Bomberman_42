@@ -56,7 +56,7 @@ int main( int ac, char **av ) {
 		time = clock();
 			const Uint8 *state = SDL_GetKeyboardState(NULL);
 		if (state[SDL_SCANCODE_RETURN]) {
-			globject::resize(1300, 800);
+			globject::resize(1300, 1300);
 		}
 		globject::render_all(main_event->map, main_event->char_list);
 	}

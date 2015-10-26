@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 12:08:37 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 12:35:39 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -60,7 +60,7 @@ void globject::load_bmp()
 	int				fd;
 	std::string		name;
 	std::string		path;
-
+	
 	std::cout << parser._textNum << std::endl;
 	for (int i = 0; i < parser._textNum; i++)
 	{
