@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 15:31:58 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 15:41:02 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -282,10 +282,12 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
     viewPos.z = -28;
 	if (doIspin)
 	{
-		viewDir.y += prog;
+		if (prog < 20)
+			;//viewDir.y += prog;
 		viewPos.z += prog - spinz;
 		viewPos.x -= spinx;
-		if (prog < 28)
+		viewPos.y = 0;
+		if (prog < 25)
 			prog+= 0.12;
 	}
 	skybox(viewDir);
@@ -385,8 +387,8 @@ char        *globject::filetobuff(char *path)
 void		globject::spin(float x, float y)
 {
 	doIspin = 1;
-	spinx = x;
-	spinz = y;
+	spinx = x - 10;
+	spinz = y - 10;
 }
 
 GLuint      globject::loadshaders(char *fragshader, char *vertexshader)
