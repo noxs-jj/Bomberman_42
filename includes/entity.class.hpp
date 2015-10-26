@@ -29,7 +29,7 @@ public:
 	int		check_move( float x, float y );
 	void	die( void );
 	void	take_damage( void );
-	void	put_bomb(int status, float x, float y, int model);
+	void	put_bomb(int status, float x, float y, int model, int blast);
 
 private:
 	static int		autoincrement;

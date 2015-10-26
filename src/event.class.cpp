@@ -31,6 +31,7 @@ void	Event::parse_command(int ac, char **av) {
 }
 
 void	Event::gen_obstacle(int difficulty) {
+	std::cout << difficulty << std::endl;
 	int block = ((MAP_X_SIZE - 2) * (MAP_Y_SIZE - 2));
 	int tmpx = 0, tmpy = 0;
 
@@ -39,7 +40,7 @@ void	Event::gen_obstacle(int difficulty) {
 		tmpy = 2 + (rand() % (MAP_Y_SIZE - 4));
 		if (check_coord(1, (float)tmpx, (float)tmpy) == true) {
 			delete this->map[tmpy][tmpx];
-			this->map[tmpy][tmpx] = create_wall(WALL_HP_1 + difficulty, (float)tmpx, (float)tmpy, WALL_HP_1);
+			this->map[tmpy][tmpx] = create_wall(WALL_HP_1 + difficulty, (float)tmpx, (float)tmpy, WALL_HP_1 + difficulty);
 		}
 		block--;
 	}
@@ -73,7 +74,7 @@ void	Event::gen_level(int level, int boss) {
 	// delete this->map[p_y][p_x];
 
 	int i = 0;
-	while (i != level % 3) {
+	while (i < (level % 3) + boss) {
 		tmpx = 2 + (rand() % (MAP_X_SIZE - 4));
 		tmpy = 2 + (rand() % (MAP_Y_SIZE - 4));
 		if (check_coord(0, (float)tmpx, (float)tmpy) == true) {
@@ -84,7 +85,7 @@ void	Event::gen_level(int level, int boss) {
 			i++;
 		}
 	}
-	gen_obstacle((level % 3));
+	gen_obstacle((level / 3));
 }
 
 void	Event::print_map( void ) {
@@ -220,29 +221,45 @@ void	Event::player_bomb(int id) {
 	while (it != end) {
 		if ((*it)->type == PLAYER && (*it)->model == PLAYER1) {
 			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
-				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB);
+				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius);
 				return ;
 			}
 		}
 		if ((*it)->type == PLAYER && (*it)->model == PLAYER2) {
 			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
-				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB);
+				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius);
 				return ;
 			}
 		}
 		if ((*it)->type == PLAYER && (*it)->model == PLAYER3) {
 			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
-				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB);
+				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius);
 				return ;
 			}
 		}
 		if ((*it)->type == PLAYER && (*it)->model == PLAYER4) {
 			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
-				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB);
+				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius);
 				return ;
 			}
 		}
 		it++;
+	}
+}
+
+void	Event::dec_timer( void ) {
+	int x, y = 0;
+
+	while (y < MAP_Y_SIZE) {
+		x = 0;
+		while (x < MAP_X_SIZE) {
+			if (this->map[y][x]->type == BOMB)
+				static_cast<Bomb*>(main_event->map[y][x])->bomb_timer();
+			if (this->map[y][x]->type == FIRE)
+				static_cast<Fire*>(main_event->map[y][x])->fire_timer();
+			x++;
+		}
+		y++;
 	}
 }
 
