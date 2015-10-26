@@ -30,7 +30,7 @@ void	Event::parse_command(int ac, char **av) {
 	}
 }
 
-void	Event::gen_obstacle(int difficulty) {
+void	Event::gen_obstacle(int difficulty) { // add WALL_INDESTRUCTIBLE
 	std::cout << difficulty << std::endl;
 	int block = ((MAP_X_SIZE - 2) * (MAP_Y_SIZE - 2));
 	int tmpx = 0, tmpy = 0;

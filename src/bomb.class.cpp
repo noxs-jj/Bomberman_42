@@ -19,7 +19,8 @@ void	Bomb::blast_case(int y, int x) {
 			main_event->map[y][x]->status = WALL_HP_1;
 		else if (main_event->map[y][x]->status == WALL_HP_1) {
 			delete main_event->map[y][x];
-			main_event->map[y][x] = main_event->create_empty(x, y);
+			// main_event->map[y][x] = main_event->create_empty(x, y);
+			main_event->map[y][x] = main_event->create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
 		}
 	}
 	else if (main_event->map[y][x]->type == BOMB)
