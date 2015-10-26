@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 13:52:20 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 14:39:26 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -138,7 +138,7 @@ void		globject::init(void)
 	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS, 1); //test
 	globject("models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
 	globject("models/icosphere.obj", MAX_ENUM, 1);
-	globject("models/FireBurst/FireBurst2.obj", FIRE_2, 0.3);
+	globject("models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
