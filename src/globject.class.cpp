@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 15:41:02 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 16:40:32 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -251,14 +251,15 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	t_point		viewDir;
 	Matrix		view;
 	float		zoomMul;
+	float		zoom;
 	static size_t	a = 0;
 	static float	time = 0;
 	static float	o = 0;
-	static float	prog = 0;
-
+	static float	prog = 0.01;
+	zoom = 1;
 	//if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 	//return ;
-	o += 0.3;
+	o += 0.03;
 	zoomMul = 1;
 	a++;
 	a = a % 10;
@@ -282,16 +283,16 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
     viewPos.z = -28;
 	if (doIspin)
 	{
-		if (prog < 20)
-			;//viewDir.y += prog;
-		viewPos.z += prog - spinz;
+		viewDir.x = 1.57;
+		viewDir.y += prog;
 		viewPos.x -= spinx;
-		viewPos.y = 0;
+		viewPos.y -= spinz;
+		viewPos.z += prog;
 		if (prog < 25)
-			prog+= 0.12;
+			prog+= 0.36;
 	}
 	skybox(viewDir);
-	view = Matrix::view_matrix(viewPos, viewDir, 1);
+	view = Matrix::view_matrix(viewPos, viewDir, zoom);
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
 	for (int y = 0; y < 1; y++)
 	{
