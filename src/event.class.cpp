@@ -30,7 +30,7 @@ void	Event::parse_command(int ac, char **av) {
 	}
 }
 
-void	Event::gen_obstacle(int difficulty) { // add WALL_INDESTRUCTIBLE
+void	Event::gen_obstacle(int difficulty) {
 	std::cout << difficulty << std::endl;
 	int block = ((MAP_X_SIZE - 2) * (MAP_Y_SIZE - 2));
 	int tmpx = 0, tmpy = 0;
@@ -43,7 +43,7 @@ void	Event::gen_obstacle(int difficulty) { // add WALL_INDESTRUCTIBLE
 			if (rand() % 20 <= 2)
 				this->map[tmpy][tmpx] = create_wall(WALL_INDESTRUCTIBLE, (float)tmpx, (float)tmpy, WALL_INDESTRUCTIBLE);
 			else
-				this->map[tmpy][tmpx] = create_wall(WALL_HP_1 + difficulty, (float)tmpx, (float)tmpy, WALL_HP_1 + difficulty);
+				this->map[tmpy][tmpx] = create_wall(WALL_HP_1 + difficulty, (float)tmpx, (float)tmpy, WALL_HP_1);
 		}
 		block--;
 	}
@@ -108,7 +108,7 @@ void	Event::print_map( void ) {
 void	Event::init( int ac, char **av ) {
 	this->parse_command(ac, av);
 	fill_border_map();
-	gen_level(1, 0);
+	gen_level(3, 1);
 	main_event->print_map(); // DEBUGG
 }
 
