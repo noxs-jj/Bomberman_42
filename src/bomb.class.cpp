@@ -49,7 +49,7 @@ void	Bomb::blast_case(int y, int x) {
 }
 
 void	Bomb::detonate( void ) {
-	int i = 1;
+	int i = 0;
 	std::cout << "bomb explode in " << (int)this->pos_x << " " << (int)this->pos_y << std::endl;
 	delete main_event->map[(int)this->pos_y][(int)this->pos_x];
 	main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);

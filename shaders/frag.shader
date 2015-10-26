@@ -16,6 +16,7 @@ void wich_one()
 {
 	vec2 t = uv;
 
+	t.y = 1.0f - uv.y;
 	float toxt = text;
 	if (toxt == 0)
 		FragColor = (vec4(texture(texture0, t).r, texture(texture0, t).g, texture(texture0, t).b,

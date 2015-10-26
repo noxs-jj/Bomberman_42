@@ -6,12 +6,13 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 16:40:32 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 18:27:48 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 #include <globject.class.hpp>
 #include <Bomb.class.hpp>
+#include <Fire.class.hpp>
 
 globject			globject::_object[100];
 SDL_Window			*globject::_displayWindow;
@@ -54,43 +55,34 @@ globject::~globject(void)
 
 }
 
+
 void globject::load_bmp()
 {
     unsigned char   header[54];
-    unsigned int    size[3];
-    unsigned char   *data;
     GLuint          textid;
     int             a;
-	int				fd;
-	std::string		name;
-	std::string		path;
-	
+    int             fd;
+	std::string     name;
+	std::string     path;
 	std::cout << parser._textNum << std::endl;
-	for (int i = 0; i < parser._textNum; i++)
-	{
-		name = "texture";
-		path ="textures/";
-		path += parser._texture[i];
+    for (int i = 0; i < parser._textNum; i++)
+    {
+        name = "texture";
+        path ="textures/";
+        path += parser._texture[i];
 		std::cout << path.c_str() << std::endl;
-		if ((fd = open(path.c_str(), O_RDONLY)) < 0)
-		{
-			exit(0);
-		}
-		read(fd, header, 54);
-		size[0] = *(int*)&(header[0x22]);
-		size[1] = *(int*)&(header[0x12]);
-		size[2] = *(int*)&(header[0x16]);
-
-		data = new unsigned char [sizeof(unsigned char) * size[0]];
-		read(fd, data, size[0]);
+        SDL_Surface *imp = IMG_Load(path.c_str());
+		if (imp == NULL)
+			return ;
 		glGenTextures(1, &(_textID[i]));
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		if (((_ID >= PLAYER && _ID <= PLAYER4) || (_ID >= ENEMY && _ID <= ENEMY4) || _ID == BOMB) || _ID == BOSS_A)
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-				size[1], size[2], 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		if ((_ID >= BOSS_A && _ID <= BOSS_C) || (_ID >= PLAYER && _ID <= PLAYER4)
+			|| _ID == BOMB || (_ID >= ENEMY && _ID <= ENEMY4))
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+				imp->w, imp->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
 		else
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
-						size[1], size[2], 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+				imp->w, imp->h, 0, GL_BGR, GL_UNSIGNED_BYTE, imp->pixels);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		name += std::to_string(i);
@@ -131,6 +123,8 @@ void		globject::init(void)
 	/* load Models */
 
 	globject("models/cube.obj", WALL_HP_1, 1);
+	globject("models/cube1.obj", WALL_HP_2, 1);
+	globject("models/cube2.obj", WALL_HP_3, 1);
     globject("models/cube_floor.obj", FLOOR, 1);
 	globject("models/rock.obj", WALL_INDESTRUCTIBLE, 1);
 	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.03);
@@ -259,12 +253,10 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	zoom = 1;
 	//if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 	//return ;
-	o += 0.03;
+	o += 0.003;
 	zoomMul = 1;
 	a++;
 	a = a % 10;
-	if (o >= 4)
-		o = 0;
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
 	time = clock();
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
@@ -331,10 +323,21 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 			modelPos.z = map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->pos_x - 10;
 			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == -1)
 				continue ;
+			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model >= WALL_HP_1 &&
+				map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model <= WALL_HP_4)
+				map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model =
+				map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->status;
 			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == BOMB)
 				if (!(a % (1 + (dynamic_cast<Bomb*>(map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2])->timer) / 2)))
+				{
 					zoomMul *= 1 + 3.0f / (static_cast<float>
 					((dynamic_cast<Bomb*>(map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2])->timer)));
+				}
+            if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == FIRE_2)
+			{
+				zoomMul *= 1.0f - (1.0f / (static_cast<float>
+									 ((dynamic_cast<Fire*>(map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2])->timer))));
+			}
 			Model = Matrix::model_matrix(modelPos, modelDir,
 				globject::_object[map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model]._zoom * zoomMul);
 			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);

@@ -19,6 +19,7 @@
 # include <stdexcept>
 # include <time.h>
 
+
 # ifdef linux
 #		include <GL/gl3.h>
 # endif
@@ -27,6 +28,7 @@
 # endif
 
 # include <SDL.h>
+# include <SDL_image.h>
 
 # define LOG_PATH	"log/debugg.log"
 

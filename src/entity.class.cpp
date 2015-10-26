@@ -53,8 +53,8 @@ void	Entity::move( int dir ) {
 	else
 		frame = 0;
 	ret = check_move(x * 3 + this->pos_x, y + this->pos_y);
-	std::cout << "pos real " << this->pos_x << " " << this->pos_y << std::endl;
-	std::cout << "pos real " << x << " " << y << std::endl;
+//	std::cout << "pos real " << this->pos_x << " " << this->pos_y << std::endl;
+	//std::cout << "pos real " << x << " " << y << std::endl;
 	if (ret == EMPTY) {
 		this->dir = dir;
 		this->pos_x = x + this->pos_x;

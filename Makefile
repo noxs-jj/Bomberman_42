@@ -6,7 +6,7 @@
 #    By: vinz <vinz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/20 17:10:26 by vinz             ###   ########.fr        #
+#    Updated: 2015/10/26 16:50:10 by rcargou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ INCLUDE =		-I includes/ -I rc_lib/rc_math/
 
 SDL_INCLUDE =	`sdl2-config --cflags`
 
-SDL_LIB =		`sdl2-config --libs`
+SDL_LIB =		`sdl2-config --libs` -lSDL2_image
 
 HEAD = 			includes/ft42.class.hpp \
 				includes/entity.class.hpp \

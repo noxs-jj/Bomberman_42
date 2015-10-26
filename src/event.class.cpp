@@ -30,8 +30,19 @@ void	Event::parse_command(int ac, char **av) {
 	}
 }
 
+int rand_range(int min, int max)
+{
+	float tmp;
+
+	tmp = rand();
+	tmp /= RAND_MAX;
+	tmp *= max;
+	return (tmp + min);
+}
+
 void	Event::gen_obstacle(int difficulty) {
 	std::cout << difficulty << std::endl;
+	difficulty++;
 	int block = ((MAP_X_SIZE - 2) * (MAP_Y_SIZE - 2));
 	int tmpx = 0, tmpy = 0;
 
@@ -43,7 +54,7 @@ void	Event::gen_obstacle(int difficulty) {
 			if (rand() % 20 <= 2)
 				this->map[tmpy][tmpx] = create_wall(WALL_INDESTRUCTIBLE, (float)tmpx, (float)tmpy, WALL_INDESTRUCTIBLE);
 			else
-				this->map[tmpy][tmpx] = create_wall(WALL_HP_1 + difficulty, (float)tmpx, (float)tmpy, WALL_HP_1);
+				this->map[tmpy][tmpx] = create_wall(rand_range(WALL_HP_1, 1 + difficulty), (float)tmpx, (float)tmpy, WALL_HP_1);
 		}
 		block--;
 	}
