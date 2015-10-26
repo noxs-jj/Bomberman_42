@@ -53,7 +53,7 @@ int main( int ac, char **av ) {
 		// main_event->print_map(); // DEBUGG
 		// sleep(1);
 		static int test = 1;
-		if (test)
+		if (test && 0)
 		globject::spin(3, 3);
 		test = 0;
 		std::cout << (1 / (clock() - time)) * CLOCKS_PER_SEC << std::endl;

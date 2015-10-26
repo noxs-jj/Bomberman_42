@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 15:27:44 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 15:31:58 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -85,7 +85,7 @@ void globject::load_bmp()
 		read(fd, data, size[0]);
 		glGenTextures(1, &(_textID[i]));
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		if (((_ID >= PLAYER && _ID <= PLAYER4) || (_ID >= ENEMY && _ID <= ENEMY4) || _ID == BOMB))
+		if (((_ID >= PLAYER && _ID <= PLAYER4) || (_ID >= ENEMY && _ID <= ENEMY4) || _ID == BOMB) || _ID == BOSS_A)
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
 				size[1], size[2], 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
 		else
