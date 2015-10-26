@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 15:29:28 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 08:31:22 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -173,41 +173,41 @@ void parser::add_indice(std::string str, float neg)
 	int text[3];
 	int vertex[3];
 
-	i = 2;
+	i = 1;
 	while (str[i] == ' ')
 		i++;
-	vertex[0] = std::atoi(str.c_str() + i) - 1;
+	vertex[0] = std::atof(str.c_str() + i) - 1;
 	while (str[i] != '/')
 		i++;
 	i++;
-	text[0] = std::atoi(str.c_str() + i) - 1;
+	text[0] = std::atof(str.c_str() + i) - 1;
 
 	while (str[i] != ' ')
 		i++;
 	while(str[i] == ' ')
 		i++;
-	vertex[1] = std::atoi(str.c_str() + i) - 1;
+	vertex[1] = std::atof(str.c_str() + i) - 1;
 	while(str[i] != '/')
 		i++;
 	i++;
-	text[1] = std::atoi(str.c_str() + i) - 1;
+	text[1] = std::atof(str.c_str() + i) - 1;
 
 	while (str[i] != ' ')
 		i++;
 	while(str[i] == ' ')
 		i++;
-	vertex[2] = std::atoi(str.c_str() + i) - 1;
+	vertex[2] = std::atof(str.c_str() + i) - 1;
 	while(str[i] != '/')
 		i++;
 	i++;
-	text[2] = std::atoi(str.c_str() + i) - 1;
+	text[2] = std::atof(str.c_str() + i) - 1;
 	for (int e = 0; e < 3; e++)
 	{
-		_finalVertex[_finalVertexSize] = _vertex[3 * vertex[e]] - 0.5 * neg;
+		_finalVertex[_finalVertexSize] = _vertex[3 * vertex[e]];
         _finalVertexSize++;
-        _finalVertex[_finalVertexSize] = _vertex[3 * vertex[e] + 1] - 0.5 * neg;
+        _finalVertex[_finalVertexSize] = _vertex[3 * vertex[e] + 1];
         _finalVertexSize++;
-        _finalVertex[_finalVertexSize] = _vertex[3 * vertex[e] + 2] - 0.5 * neg;
+        _finalVertex[_finalVertexSize] = _vertex[3 * vertex[e] + 2];
         _finalVertexSize++;
 
 		_finalText[_finalTextSize] = _text[2 * text[e]];

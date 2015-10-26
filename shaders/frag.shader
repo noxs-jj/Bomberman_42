@@ -15,9 +15,11 @@ out vec4 FragColor;
 void wich_one()
 {
 	vec2 t = uv;
+
 	float toxt = text;
 	if (toxt == 0)
-		FragColor = (vec4(texture(texture0, t).r, texture(texture0, t).g, texture(texture0, t).b, 1));
+		FragColor = (vec4(texture(texture0, t).r, texture(texture0, t).g, texture(texture0, t).b,
+			1));
 	else if (toxt == 1)
 		FragColor = (vec4(texture(texture1, t).r, texture(texture1, t).g, texture(texture1, t).b, 1));
 	else if (toxt == 2)

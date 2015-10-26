@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 13:08:06 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 09:47:17 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -51,6 +51,8 @@ class globject {
 		static GLuint				_modelMatID;
 		static GLuint				_viewMatID;
 		static GLuint				_progid;
+		static GLuint				_keyFrameID;
+		static GLuint				_legPos;
 		static SDL_Window			*_displayWindow;
 		static SDL_Renderer			*_displayRenderer;
 		static SDL_RendererInfo		_displayRendererInfo;
@@ -58,6 +60,7 @@ class globject {
 		parser						parser;
 	
 	private :
+		static GLfloat get_leg_pos(int model);
 		static char *filetobuff(char *path);
 		static GLuint loadshaders(char *a, char *b);
 		static void load_shaders();

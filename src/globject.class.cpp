@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/25 18:24:41 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 09:52:16 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -19,6 +19,8 @@ SDL_RendererInfo	globject::_displayRendererInfo;
 GLuint				globject::_progid;
 GLuint				globject::_modelMatID;
 GLuint				globject::_viewMatID;
+GLuint				globject::_keyFrameID;
+GLuint				globject::_legPos;
 
 globject::globject(void)
 {
@@ -79,7 +81,7 @@ void globject::load_bmp()
 		read(fd, data, size[0]);
 		glGenTextures(1, &(_textID[i]));
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		if ((_ID >= PLAYER && _ID <= PLAYER4) || (_ID >= ENEMY && _ID <= ENEMY4) || _ID == BOMB)
+		if (((_ID >= PLAYER && _ID <= PLAYER4) || (_ID >= ENEMY && _ID <= ENEMY4) || _ID == BOMB))
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
 				size[1], size[2], 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
 		else
@@ -95,6 +97,7 @@ void globject::load_bmp()
 void globject::resize(int x, int y)
 {
 	SDL_SetWindowSize(globject::_displayWindow, x, y);
+	glViewport(0, 0, x, y);
 }
 
 void		globject::init(void)
@@ -127,7 +130,7 @@ void		globject::init(void)
     globject("models/cube_floor.obj", FLOOR, 1);
 	globject("models/rock.obj", WALL_INDESTRUCTIBLE, 1);
 	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.03);
-	globject("models/Bomberman/Bomberman1.obj", PLAYER1, 0.03);
+	globject("models/Bomberman/Bomberman.obj", PLAYER1, 0.03);
 	globject("models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
 	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
 	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
@@ -141,6 +144,8 @@ void		globject::init(void)
 			1, GL_FALSE, (GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, 1)._matrix));
 	globject::_viewMatID = glGetUniformLocation(_progid, "V");
 	globject::_modelMatID = glGetUniformLocation(_progid, "M");
+	globject::_keyFrameID = glGetUniformLocation(_progid, "keyframe");
+	globject::_legPos = glGetUniformLocation(_progid, "leg_pos");
 }
 
 t_point		set_dir(int d)
@@ -192,6 +197,15 @@ void		globject::update_key()
 	SDL_PollEvent(&event);
 }
 
+GLfloat globject::get_leg_pos(int model)
+{
+	if (model >= PLAYER && model <= PLAYER4)
+		return (10);
+	if (model == ENEMY1)
+		return (1);
+	return (-100);
+}
+
 void		globject::render_all(Entity ***map, std::list<Entity*> players)
 {
 	t_point		modelPos;
@@ -206,7 +220,9 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 
 	if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 		return ;
-	o += 0.01;
+	o += 0.3;
+	if (o >= 4)
+		o = 0;
 	viewDir.x = 1.1;
 	viewDir.y = 1.57;
 	viewDir.z = 0;
@@ -218,7 +234,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	modelPos.z = 0;
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
-
+	glUniform1f(globject::_keyFrameID, 0);
 	for (int y = 0; y < 10; y++)
 	{
 	for (int i = -MAP_Y_SIZE / 2; i < MAP_Y_SIZE / 2; i++)
@@ -273,6 +289,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 		Model = Matrix::model_matrix(modelPos, modelDir,
 					globject::_object[(*it)->model]._zoom);
 		glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
+		glUniform1f(globject::_keyFrameID, o);
+		glUniform1f(globject::_legPos, get_leg_pos((*it)->model));
 		globject::_object[(*it)->model].render(0);
 		it++;
 	}
@@ -363,12 +381,12 @@ void		globject::fill_vao(void)
 	glEnableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, textBufferID);
-	glBufferData(GL_ARRAY_BUFFER, parser._finalTextSize * sizeof(GLfloat), parser._finalText, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, parser._finalTextSize * sizeof(GLfloat), parser._finalText, GL_STATIC_DRAW);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ARRAY_BUFFER, textureBufferID);
-    glBufferData(GL_ARRAY_BUFFER, parser._textIDSize * sizeof(GLfloat), parser._textID, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, parser._textIDSize * sizeof(GLfloat), parser._textID, GL_STATIC_DRAW);
     glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 0, (void*)0);
     glEnableVertexAttribArray(2);
 }
