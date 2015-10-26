@@ -6,11 +6,12 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 14:39:26 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 15:27:44 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 #include <globject.class.hpp>
+#include <Bomb.class.hpp>
 
 globject			globject::_object[100];
 SDL_Window			*globject::_displayWindow;
@@ -21,6 +22,9 @@ GLuint				globject::_modelMatID;
 GLuint				globject::_viewMatID;
 GLuint				globject::_keyFrameID;
 GLuint				globject::_legPos;
+GLfloat				globject::spinx;
+GLfloat				globject::spinz;
+int					globject::doIspin;
 
 globject::globject(void)
 {
@@ -135,7 +139,7 @@ void		globject::init(void)
 	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
 	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
 	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.2);
-	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS, 1); //test
+	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
 	globject("models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
 	globject("models/icosphere.obj", MAX_ENUM, 1);
 	globject("models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
@@ -220,7 +224,7 @@ void globject::skybox(t_point viewDir)
 	viewPos.x = 0;
 	viewPos.y = 0;
 	viewPos.z = 0;
-	viewDir.x += 1.5;
+	//viewDir.x += 1.5;
 	viewDir.y += 2;
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
 	//glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
@@ -233,7 +237,7 @@ void globject::skybox(t_point viewDir)
     modelDir.z = 0;
     modelDir.y = 0;
 
-    Model = Matrix::model_matrix(modelPos, modelDir, 100);
+    Model = Matrix::model_matrix(modelPos, modelDir, 50);
     glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
 	globject::_object[MAX_ENUM].render(0);
 }
@@ -246,15 +250,18 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	t_point		viewPos;
 	t_point		viewDir;
 	Matrix		view;
-
-	static		float time = 0;
-	static float  o = 0;
-	static float prog = 0;
+	float		zoomMul;
+	static size_t	a = 0;
+	static float	time = 0;
+	static float	o = 0;
+	static float	prog = 0;
 
 	//if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 	//return ;
 	o += 0.3;
-	prog += 0.03;
+	zoomMul = 1;
+	a++;
+	a = a % 10;
 	if (o >= 4)
 		o = 0;
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
@@ -269,11 +276,19 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
     viewDir.x = 1.1;
 	viewDir.y = 1.57;
     viewDir.z = 0;
-	skybox(viewDir);
 
     viewPos.x = 0;
     viewPos.y = 0;
     viewPos.z = -28;
+	if (doIspin)
+	{
+		viewDir.y += prog;
+		viewPos.z += prog - spinz;
+		viewPos.x -= spinx;
+		if (prog < 28)
+			prog+= 0.12;
+	}
+	skybox(viewDir);
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
 	for (int y = 0; y < 1; y++)
@@ -302,6 +317,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	{
 		for (int j = -MAP_X_SIZE / 2; j < MAP_X_SIZE / 2; j++)
 		{
+			zoomMul = 1;
 			modelDir.x = 1;
 			modelDir.z = 0;
 			modelDir.y = 0;
@@ -312,8 +328,12 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 			modelPos.z = map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->pos_x - 10;
 			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == -1)
 				continue ;
+			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == BOMB)
+				if (!(a % (1 + (dynamic_cast<Bomb*>(map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2])->timer) / 2)))
+					zoomMul *= 1 + 3.0f / (static_cast<float>
+					((dynamic_cast<Bomb*>(map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2])->timer)));
 			Model = Matrix::model_matrix(modelPos, modelDir,
-				globject::_object[map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model]._zoom);
+				globject::_object[map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model]._zoom * zoomMul);
 			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
 			globject::_object[map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model].render(0);
 		}
@@ -360,6 +380,13 @@ char        *globject::filetobuff(char *path)
     read(fd, n, len);
     n[len] = 0;
     return (n);
+}
+
+void		globject::spin(float x, float y)
+{
+	doIspin = 1;
+	spinx = x;
+	spinz = y;
 }
 
 GLuint      globject::loadshaders(char *fragshader, char *vertexshader)

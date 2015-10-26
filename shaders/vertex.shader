@@ -40,16 +40,16 @@ void handle_anim()
 		return ;
 	if (in_Position.y < leg_pos)
 	{
-	if (keyframe > 1)
-	   rot = 1 - (keyframe - 1);
-	if (keyframe > 3)
-	   rot = (keyframe - 4);
-	anim_pos.y -= leg_pos;
-	if (in_Position.x > 0)
-	   anim_pos *= rotationMatrix(right, -rot);
-	else
-		anim_pos *= rotationMatrix(right, rot);
-	anim_pos.y += leg_pos;
+		if (keyframe > 1)
+			rot = 1 - (keyframe - 1);
+		if (keyframe > 3)
+			rot = (keyframe - 4);
+		anim_pos.y -= leg_pos;
+		if (in_Position.x > 0)
+			anim_pos *= rotationMatrix(right, -rot);
+		else
+			anim_pos *= rotationMatrix(right, rot);
+		anim_pos.y += leg_pos;
 	}
 }
 

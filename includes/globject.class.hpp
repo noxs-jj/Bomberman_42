@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 11:02:49 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/26 15:16:38 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -30,14 +30,15 @@ class globject {
 	public :
 
 		globject(void);
-	globject(std::string path, GLuint ID, float zoom);
-	globject(std::list<std::string> paths, GLuint ID, float zoom);
+		globject(std::string path, GLuint ID, float zoom);
+		globject(std::list<std::string> paths, GLuint ID, float zoom);
 		~globject(void);
 
 		static void		init(void);
 		void			render (int status);
 		static void		render_all(Entity ***map, std::list<Entity*> players);
 		static void		resize(int x, int y);
+		static void		spin(float x, float y);
 		GLuint						_textID[1000];
 		GLuint						_textLoc[100];
 		GLuint						_textNumber;
@@ -48,6 +49,9 @@ class globject {
 		GLuint						_elemBufferSize;
 		GLuint						_ID;
 		GLfloat						_zoom;
+		static GLfloat				spinx;
+		static GLfloat				spinz;
+		static int					doIspin;
 		static GLuint				_modelMatID;
 		static GLuint				_viewMatID;
 		static GLuint				_progid;
