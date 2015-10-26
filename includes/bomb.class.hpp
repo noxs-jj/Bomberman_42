@@ -15,7 +15,7 @@ public:
 	void	detonate( void );
 	void	blast_case(int y, int x);
 	void	bomb_timer( void );
-
+	void	damage_entity(int x, int y );
 private:
 	Bomb( void );
 };
