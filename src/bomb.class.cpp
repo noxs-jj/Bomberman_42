@@ -26,7 +26,7 @@ void	Bomb::blast_case(int y, int x) {
 		static_cast<Bomb*>(main_event->map[y][x])->detonate();
 	else if (main_event->map[y][x]->type == EMPTY) {
 		delete main_event->map[y][x];
-		main_event->map[y][x] = main_event->create_fire(FIRE_2, (float)x, (float)y, FIRE_2);
+		main_event->map[y][x] = main_event->create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
 	}
 	else if (main_event->map[y][x]->type == FIRE)
 		main_event->map[y][x]->status = FIRE_2;
@@ -36,7 +36,8 @@ void	Bomb::detonate( void ) {
 	int i = 1;
 	std::cout << "bomb explode in " << (int)this->pos_x << " " << (int)this->pos_y << std::endl;
 	delete main_event->map[(int)this->pos_y][(int)this->pos_x];
-	main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_fire(FIRE_2, this->pos_x, this->pos_y, FIRE_2);
+	main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
+	// main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_fire(FIRE_2, (int)this->pos_x - 0.5, (int)this->pos_y - 0.5, FIRE_2);
 
 	while (i <= this->blast_radius) {
 		if (check_coord_exist((int)(this->pos_y - i), (int)(this->pos_x)) == true)
