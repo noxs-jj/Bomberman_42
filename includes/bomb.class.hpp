@@ -13,7 +13,7 @@ public:
 	Bomb & operator=( Bomb const & rhs );
 	virtual ~Bomb( void );
 	void	detonate( void );
-	void	blast_case(int y, int x);
+	int		blast_case(int y, int x);
 	void	bomb_timer( void );
 	void	damage_entity(int x, int y );
 private:

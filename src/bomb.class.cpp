@@ -20,7 +20,7 @@ void	Bomb::damage_entity(int x, int y ) {
 	}
 }
 
-void	Bomb::blast_case(int y, int x) {
+int		Bomb::blast_case(int y, int x) {
 	if (main_event->map[y][x]->type == WALL) {
 		if (main_event->map[y][x]->status == WALL_HP_4)
 			main_event->map[y][x]->status = WALL_HP_3;
@@ -41,31 +41,36 @@ void	Bomb::blast_case(int y, int x) {
 		delete main_event->map[y][x];
 		main_event->map[y][x] = main_event->create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
 		damage_entity(x, y);
+		return (0);
 	}
-	else if (main_event->map[y][x]->type == FIRE)
+	else if (main_event->map[y][x]->type == FIRE) {
 		main_event->map[y][x]->status = FIRE_2;
 		damage_entity(x, y);
+		return (0);
+	}
+	return (1);
 }
 
 void	Bomb::detonate( void ) {
 	int i = 0;
+	int dir[4] = {0};
 	delete main_event->map[(int)this->pos_y][(int)this->pos_x];
 	main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
 	damage_entity((int)this->pos_x ,(int)this->pos_y);
 	// main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_fire(FIRE_2, (int)this->pos_x - 0.5, (int)this->pos_y - 0.5, FIRE_2);
 
 	while (i <= this->blast_radius) {
-		if (check_coord_exist((int)(this->pos_y - i), (int)(this->pos_x)) == true)
-			blast_case((int)(this->pos_y - i), (int)this->pos_x);
+		if (dir[0] == 0 && check_coord_exist((int)(this->pos_y - i), (int)(this->pos_x)) == true)
+			dir[0] = blast_case((int)(this->pos_y - i), (int)this->pos_x);
 
-		if (check_coord_exist((int)(this->pos_y + i), (int)(this->pos_x)) == true)
-			blast_case((int)(this->pos_y + i), (int)this->pos_x);
+		if (dir[1] == 0 && check_coord_exist((int)(this->pos_y + i), (int)(this->pos_x)) == true)
+			dir[1] = blast_case((int)(this->pos_y + i), (int)this->pos_x);
 
-		if (check_coord_exist((int)(this->pos_x - i), (int)(this->pos_y)) == true)
-			blast_case((int)this->pos_y, (int)(this->pos_x - i));
+		if (dir[2] == 0 && check_coord_exist((int)(this->pos_x - i), (int)(this->pos_y)) == true)
+			dir[2] = blast_case((int)this->pos_y, (int)(this->pos_x - i));
 
-		if (check_coord_exist((int)(this->pos_x + i), (int)(this->pos_y)) == true)
-			blast_case((int)this->pos_y, (int)(this->pos_x + i));
+		if (dir[3] == 0 && check_coord_exist((int)(this->pos_x + i), (int)(this->pos_y)) == true)
+			dir[3] = blast_case((int)this->pos_y, (int)(this->pos_x + i));
 
 		i++;
 	}
