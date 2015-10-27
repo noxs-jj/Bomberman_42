@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 16:27:06 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/27 13:58:15 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -31,7 +31,6 @@ class globject {
 
 		globject(void);
 		globject(std::string path, GLuint ID, float zoom);
-		globject(std::list<std::string> paths, GLuint ID, float zoom);
 		~globject(void);
 
 		static void		init(void);

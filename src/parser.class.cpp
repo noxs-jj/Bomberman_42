@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 08:31:22 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/27 14:01:27 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -31,7 +31,7 @@ parser::parser(void)
 
 parser::parser(std::string path)
 {
-//	parse(path, 0);
+	parse(path, 0);
 }
 
 parser::~parser()
@@ -98,7 +98,7 @@ int parser::foundTexture(std::string s)
 	for (e = 0; str[e] && str[e] != ' '; e++)
 		;
 	str[e] = 0;
-	for (int i = 0; i < _textNum; i++)
+	for (size_t i = 0; i < _textNum; i++)
 	{
 		if (!strcmp(str.c_str(), _texture[i].c_str()))
 			return (i);
@@ -173,6 +173,7 @@ void parser::add_indice(std::string str, float neg)
 	int text[3];
 	int vertex[3];
 
+	neg = neg * 42;
 	i = 1;
 	while (str[i] == ' ')
 		i++;

@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-/*   Updated: 2015/10/27 12:46:09 by nmohamed         ###   ########.fr       */
+//   Updated: 2015/10/27 13:59:30 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -45,11 +45,6 @@ globject::globject(std::string path, GLuint ID, GLfloat zoom) : _ID(ID), _zoom(z
 	globject::_object[ID] = *this;
 }
 
-globject::globject(std::list<std::string> paths, GLuint ID, GLfloat zoom) : _ID (ID), _zoom(zoom)
-{
-
-}
-
 globject::~globject(void)
 {
 
@@ -58,14 +53,10 @@ globject::~globject(void)
 
 void globject::load_bmp()
 {
-    unsigned char   header[54];
-    GLuint          textid;
-    int             a;
-    int             fd;
 	std::string     name;
 	std::string     path;
 	std::cout << parser._textNum << std::endl;
-    for (int i = 0; i < parser._textNum; i++)
+    for (size_t i = 0; i < parser._textNum; i++)
     {
         name = "texture";
         path ="textures/";
@@ -110,7 +101,7 @@ void		globject::init(void)
 
 	/* Init OpenGL */
 
-	SDL_GLContext context = SDL_GL_CreateContext(globject::_displayWindow);
+	SDL_GL_CreateContext(globject::_displayWindow);
     glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
     glEnable(GL_DEPTH_TEST);
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
@@ -179,12 +170,13 @@ t_point		set_dir(int d)
 
 void		globject::render(int status)
 {
-	for (int i = 0; i < _textNumber; i++)
+	status = status * 42;
+	for (size_t i = 0; i < _textNumber; i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, _textID[i]);
 	}
-	for (int i = 0; i < _textNumber; i++)
+	for (size_t i = 0; i < _textNumber; i++)
 		glUniform1i(_textLoc[i], i);
 
 	glBindVertexArray(_vaoID);
