@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+         #
+#    By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/27 13:31:58 by jmoiroux         ###   ########.fr        #
+#    Updated: 2015/10/27 20:17:20 by nmohamed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 PLATFORM := $(shell uname)
 
-#Mac --	brew install sdl2
+#Mac --	brew install sdl2 sdl2_image sdl2_mixer
 ifeq "$(PLATFORM)" "Darwin"
 	GLUT = -framework Appkit -framework OpenGL
 	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
@@ -47,7 +47,8 @@ HEAD = 			includes/ft42.class.hpp \
 				includes/boss.class.hpp \
 				includes/globject.class.hpp \
 				includes/Matrix.hpp \
-				includes/parser.class.hpp
+				includes/parser.class.hpp \
+				includes/soundrender.class.hpp
 
 SRC = 			src/ft42.class.cpp \
 				src/entity.class.cpp \
@@ -66,7 +67,6 @@ SRC = 			src/ft42.class.cpp \
 OBJ = 			$(SRC:.cpp=.cpp.o)
 
 %.cpp.o: %.cpp $(HEAD)
-	clear
 	@$(CXX) $(CFLAGS)  $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
@@ -83,8 +83,10 @@ fclean: clean
 
 re: fclean all
 
+soundtest: all
+	$(CXX) src/soundrender.class.cpp $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) `sdl2-config --libs` `sdl2-config --cflags` -lSDL2_mixer "tests/soundrender.test.cpp"
+
 sdltest:
-	clear
 	$(CXX) $(CFLAGS) -stdlib=libc++ -o testsdl2 test/test_sdl2.cpp \
 	-framework opengl `sdl2-config --libs` `sdl2-config --cflags`
 

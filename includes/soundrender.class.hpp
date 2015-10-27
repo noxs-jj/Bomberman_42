@@ -1,5 +1,6 @@
 #include <string>
 #include <ft42.class.hpp>
+#include <SDL_mixer.h>
 
 class SoundRender {
 
@@ -13,10 +14,10 @@ class SoundRender {
         // add a sound to sound list
         // play it with 'playSound(soundName);'
         // returns 'false' if something goes wrong
-        void addSound(std::string soundName, std::string fileName);
+        void loadSound(std::string soundName, std::string fileName);
 
         // play the sound 'soundName'
-        // which you added via 'addSound(soundName, fileName);'
+        // which you added via 'loadSound(soundName, fileName);'
         // returns 'false' if it does not exist
         bool playSound(std::string soundName);
 
