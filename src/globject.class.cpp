@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 13:59:30 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/27 14:42:04 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -123,7 +123,7 @@ void		globject::init(void)
 	globject("models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
 	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
 	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.2);
+	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
 	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
 	globject("models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
 	globject("models/icosphere.obj", MAX_ENUM, 1);
@@ -166,6 +166,11 @@ t_point		set_dir(int d)
 		dir.z = 0;
 	}
 	return (dir);
+}
+
+void		globject::display_menu(SDL_Surface *menu)
+{
+	menu = menu + 1;
 }
 
 void		globject::render(int status)
@@ -276,7 +281,9 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 		viewPos.y -= spinz;
 		viewPos.z += prog;
 		if (prog < 25)
+		{
 			prog+= 0.36;
+		}
 	}
 	skybox(viewDir);
 	view = Matrix::view_matrix(viewPos, viewDir, zoom);

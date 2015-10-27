@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 13:58:15 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/27 14:41:23 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -63,15 +63,16 @@ class globject {
 		parser						parser;
 	
 	private :
-		static GLfloat get_leg_pos(int model);
-		static char *filetobuff(char *path);
-		static GLuint loadshaders(char *a, char *b);
-		static void load_shaders();
-		static void skybox(t_point e);
-		static void update_key();
-		void		load_bmp();
-		void		load_png();
-		void		fill_vao(void);
+		static void			display_menu(SDL_Surface *menu);
+		static GLfloat		get_leg_pos(int model);
+		static char			*filetobuff(char *path);
+		static GLuint		loadshaders(char *a, char *b);
+		static void			load_shaders();
+		static void			skybox(t_point e);
+		static void			update_key();
+		void				load_bmp();
+		void				load_png();
+		void				fill_vao(void);
 
 };
 

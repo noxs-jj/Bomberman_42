@@ -42,7 +42,6 @@ int rand_range(int min, int max)
 
 void	Event::gen_obstacle(int difficulty) {
 	std::cout << difficulty << std::endl;
-	difficulty++;
 	int block = ((MAP_X_SIZE - 2) * (MAP_Y_SIZE - 2));
 	int tmpx = 0, tmpy = 0;
 
@@ -119,7 +118,7 @@ void	Event::print_map( void ) {
 void	Event::init( int ac, char **av ) {
 	this->parse_command(ac, av);
 	fill_border_map();
-	gen_level(3, 1);
+	gen_level(6, 1);
 	main_event->print_map(); // DEBUGG
 }
 
