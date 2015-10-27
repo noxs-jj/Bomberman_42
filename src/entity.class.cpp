@@ -20,19 +20,13 @@ Entity::Entity( int type, float x, float y, int status ) : type(type), pos_x(x),
 }
 
 int		Entity::check_move( float x, float y ) {
-	if (main_event->map[(int)y][(int)x]->type == WALL) {
-		std::cout << "wall !!! " << std::endl;
+	if (main_event->map[(int)y][(int)x]->type == WALL)
 		return WALL;
-	}
 	else if (main_event->map[(int)y][(int)x]->type == BOMB
-			&& !((int)this->pos_y == (int)y && (int)this->pos_x == (int)x)) {
-		std::cout << "bomb !!! " << std::endl;
+			&& !((int)this->pos_y == (int)y && (int)this->pos_x == (int)x))
 		return BOMB;
-	}
-	else if (main_event->map[(int)y][(int)x]->type == FIRE) {
-		std::cout << "fire !!! " << std::endl;
+	else if (main_event->map[(int)y][(int)x]->type == FIRE)
 		return FIRE;
-	}
 	return EMPTY;
 }
 

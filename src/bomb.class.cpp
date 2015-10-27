@@ -21,7 +21,6 @@ void	Bomb::damage_entity(int x, int y ) {
 }
 
 void	Bomb::blast_case(int y, int x) {
-	std::cout << "blast_case " << x << " " << y << std::endl;
 	if (main_event->map[y][x]->type == WALL) {
 		if (main_event->map[y][x]->status == WALL_HP_4)
 			main_event->map[y][x]->status = WALL_HP_3;
@@ -50,7 +49,6 @@ void	Bomb::blast_case(int y, int x) {
 
 void	Bomb::detonate( void ) {
 	int i = 0;
-	std::cout << "bomb explode in " << (int)this->pos_x << " " << (int)this->pos_y << std::endl;
 	delete main_event->map[(int)this->pos_y][(int)this->pos_x];
 	main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
 	damage_entity((int)this->pos_x ,(int)this->pos_y);
