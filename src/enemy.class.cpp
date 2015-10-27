@@ -2,7 +2,7 @@
 
 Enemy::~Enemy( void ) {}
 
-Enemy::Enemy( float x, float y, int status, int model ) : Entity( ENEMY, id, x, y, status ) {
+Enemy::Enemy( float x, float y, int status, int model ) : Entity( ENEMY, x, y, status ) {
 	this->frame = 0;
 	this->speed = 1;
 	this->dir = DIR_BOTTOM;

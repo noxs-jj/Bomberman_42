@@ -3,7 +3,7 @@
 
 Bomb::~Bomb( void ) {}
 
-Bomb::Bomb( float x, float y, int status, int model ) : Entity( BOMB, 0, x, y, status ) {
+Bomb::Bomb( float x, float y, int status, int model ) : Entity( BOMB, x, y, status ) {
 	this->model = model;
 	this->timer = 180;
 }

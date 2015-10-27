@@ -67,7 +67,7 @@ int main( int ac, char **av ) {
 void keyboard(void)
 {
 	SDL_Event           event;
-	static t_key		key = {0};
+	static t_key		key = {0, 0, 0, 0};
 
 	while (SDL_PollEvent(&event)) {
         if (event.type == SDL_KEYDOWN) {

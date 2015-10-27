@@ -2,7 +2,7 @@
 
 Fire::~Fire( void ) {}
 
-Fire::Fire( float x, float y, int status, int model ) : Entity( FIRE, 0, x, y, status ) {
+Fire::Fire( float x, float y, int status, int model ) : Entity( FIRE, x, y, status ) {
 	this->model = model;
 	this->timer = 40;
 }
