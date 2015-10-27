@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:41:23 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/27 18:45:40 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -35,9 +35,10 @@ class globject {
 
 		static void		init(void);
 		void			render (int status);
-		static void		render_all(Entity ***map, std::list<Entity*> players);
+		static void		render_all(Entity ***map, std::list<Entity*> players, SDL_Surface *menu);
 		static void		resize(int x, int y);
 		static void		spin(float x, float y);
+		static void		reinit_level(int env);
 		GLuint						_textID[1000];
 		GLuint						_textLoc[100];
 		GLuint						_textNumber;
@@ -48,6 +49,7 @@ class globject {
 		GLuint						_elemBufferSize;
 		GLuint						_ID;
 		GLfloat						_zoom;
+		static int					space;
 		static GLfloat				spinx;
 		static GLfloat				spinz;
 		static int					doIspin;

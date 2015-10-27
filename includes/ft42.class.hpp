@@ -97,6 +97,8 @@ enum STATUS {
 	WALL_HP_4,
 
 	FLOOR,
+	MENU,
+
 	//
 	/// Direction
 	//

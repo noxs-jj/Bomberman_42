@@ -6,7 +6,7 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:42:04 by rcargou          ###   ########.fr       //
+//   Updated: 2015/10/27 19:17:49 by rcargou          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -26,6 +26,7 @@ GLuint				globject::_legPos;
 GLfloat				globject::spinx;
 GLfloat				globject::spinz;
 int					globject::doIspin;
+int					globject::space = 1;
 
 globject::globject(void)
 {
@@ -50,6 +51,11 @@ globject::~globject(void)
 
 }
 
+void globject::reinit_level(int env)
+{
+	env = env - 1;
+	doIspin = 0;
+}
 
 void globject::load_bmp()
 {
@@ -60,7 +66,9 @@ void globject::load_bmp()
     {
         name = "texture";
         path ="textures/";
-        path += parser._texture[i];
+		if (globject::space)
+			path = "spacestextures/";
+		path += parser._texture[i];
 		std::cout << path.c_str() << std::endl;
         SDL_Surface *imp = IMG_Load(path.c_str());
 		if (imp == NULL)
@@ -68,7 +76,7 @@ void globject::load_bmp()
 		glGenTextures(1, &(_textID[i]));
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
 		if ((_ID >= BOSS_A && _ID <= BOSS_C) || (_ID >= PLAYER && _ID <= PLAYER4)
-			|| _ID == BOMB || (_ID >= ENEMY && _ID <= ENEMY4))
+			|| _ID == BOMB || (_ID >= ENEMY && _ID <= ENEMY4) || _ID == MENU || (globject::space && _ID == MAX_ENUM))
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
 				imp->w, imp->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
 		else
@@ -106,8 +114,8 @@ void		globject::init(void)
     glEnable(GL_DEPTH_TEST);
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	SDL_GL_SwapWindow(globject::_displayWindow);
-	glDisable(GL_BLEND);
-
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	/* load shaders */
 	globject::load_shaders();
 
@@ -124,10 +132,16 @@ void		globject::init(void)
 	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
 	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
 	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
+	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
+	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
+	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY4, 0.3);
 	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
+	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS_B, 1);
+	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS_C, 1);
 	globject("models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
 	globject("models/icosphere.obj", MAX_ENUM, 1);
 	globject("models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
+	globject("models/menu.obj", MENU, 1);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -168,9 +182,32 @@ t_point		set_dir(int d)
 	return (dir);
 }
 
-void		globject::display_menu(SDL_Surface *menu)
+void		globject::display_menu(SDL_Surface *imp)
 {
-	menu = menu + 1;
+	GLuint _textID;
+	GLuint loc;
+	Matrix a;
+
+	if (!imp)
+		return ;
+	glGenTextures(1, &_textID);
+	globject::_object[MENU]._textNumber = 1;
+	glBindTexture(GL_TEXTURE_2D, _textID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+			imp->w, imp->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	loc = glGetUniformLocation(globject::_progid, "texture0");
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, _textID);
+	glUniform1i(loc, 0);
+	a.scale_matrix(1);
+    glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, a._matrix);
+	a.scale_matrix(1 / 1);
+	a.trans_matrix(0, 0, -1.75);
+    glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, a._matrix);
+	glBindVertexArray(globject::_object[MENU]._vaoID);
+	glDrawArrays(GL_TRIANGLES, 0, globject::_object[MENU].parser._finalVertexSize / 3);
 }
 
 void		globject::render(int status)
@@ -212,14 +249,16 @@ void globject::skybox(t_point viewDir)
     t_point     viewPos;
     Matrix      view;
 	static float degueu = 0;
-	degueu += 0.001;
 
+	degueu += 0.004;
+	if (!space)
+		degueu -= 0.003;
 	viewPos.x = 0;
 	viewPos.y = 0;
 	viewPos.z = 0;
 	//viewDir.x += 1.5;
 	viewDir.y += 2 + degueu;
-	viewDir.x = 1;
+	viewDir.x = 1 + degueu;
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
 	//glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
     modelPos.z = 0;
@@ -236,7 +275,7 @@ void globject::skybox(t_point viewDir)
 	globject::_object[MAX_ENUM].render(0);
 }
 
-void		globject::render_all(Entity ***map, std::list<Entity*> players)
+void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surface *menu)
 {
 	t_point		modelPos;
 	t_point		modelDir;
@@ -266,10 +305,21 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 	modelDir.z = 0;
 	modelDir.y = 0;
 
+	//test
+    //display_menu(NULL);
+    //SDL_GL_SwapWindow(globject::_displayWindow);
+	//return ;
+	//test
     viewDir.x = 1.1;
 	viewDir.y = 1.57;
     viewDir.z = 0;
-
+	skybox(viewDir);
+	if (space)
+	{
+		viewDir.x += cos(30 * o) / 30;
+		viewDir.y +=  sin(30 * o) / 30;
+		viewDir.z = 0;
+	}
     viewPos.x = 0;
     viewPos.y = 0;
     viewPos.z = -28;
@@ -285,7 +335,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 			prog+= 0.36;
 		}
 	}
-	skybox(viewDir);
+	else
+		prog = 0;
 	view = Matrix::view_matrix(viewPos, viewDir, zoom);
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
 	for (int y = 0; y < 1; y++)
@@ -368,6 +419,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players)
 		globject::_object[(*it)->model].render(0);
 		it++;
 	}
+	display_menu(menu);
 	SDL_GL_SwapWindow(globject::_displayWindow);
 }
 
