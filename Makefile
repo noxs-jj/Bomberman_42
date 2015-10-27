@@ -6,7 +6,7 @@
 #    By: vinz <vinz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/26 16:50:10 by rcargou          ###   ########.fr        #
+#    Updated: 2015/10/27 12:54:36 by nmohamed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ CFLAGS =		-std=gnu++11
 
 INCLUDE =		-I includes/ -I rc_lib/rc_math/
 
-SDL_INCLUDE =	`sdl2-config --cflags`
+SDL_INCLUDE =	`sdl2-config --cflags` -I $HOME/.brew/include/SDL
 
 SDL_LIB =		`sdl2-config --libs` -lSDL2_image
 

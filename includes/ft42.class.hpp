@@ -25,10 +25,9 @@
 # endif
 # ifdef __APPLE__
 # 	include <OpenGL/gl3.h>
+#   include <SDL.h>
+#   include <SDL_image.h>
 # endif
-
-# include <SDL.h>
-# include <SDL_image.h>
 
 # define LOG_PATH	"log/debugg.log"
 

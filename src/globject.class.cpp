@@ -6,13 +6,13 @@
 //   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/26 18:57:16 by rcargou          ###   ########.fr       //
+/*   Updated: 2015/10/27 12:46:09 by nmohamed         ###   ########.fr       */
 //                                                                            //
 // ************************************************************************** //
 
 #include <globject.class.hpp>
-#include <Bomb.class.hpp>
-#include <Fire.class.hpp>
+#include <bomb.class.hpp>
+#include <fire.class.hpp>
 
 globject			globject::_object[100];
 SDL_Window			*globject::_displayWindow;
