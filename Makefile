@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vinz <vinz@student.42.fr>                  +#+  +:+       +#+         #
+#    By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/27 12:54:36 by nmohamed         ###   ########.fr        #
+#    Updated: 2015/10/27 13:31:58 by jmoiroux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ CXX = 			g++
 
 NAME =			bomberman
 
-CFLAGS =		-std=gnu++11
+CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror
 
 INCLUDE =		-I includes/ -I rc_lib/rc_math/
 

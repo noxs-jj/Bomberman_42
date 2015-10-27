@@ -13,7 +13,7 @@ Entity::Entity(void)
 
 Entity::~Entity( void ) {}
 
-Entity::Entity( int type, int id, float x, float y, int status ) : type(type), pos_x(x),
+Entity::Entity( int type, float x, float y, int status ) : type(type), pos_x(x),
 															pos_y(y), status(status), zoom_m(1) {
 	Entity::autoincrement++;
 	this->id = Entity::autoincrement;

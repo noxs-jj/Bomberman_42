@@ -6,7 +6,7 @@
 class Entity;
 class Player : public Entity {
 public:
-	Player( int id, float x, float y, int status, int model );
+	Player( float x, float y, int status, int model );
 	Player( Player const & src );
 	Player & operator=( Player const & rhs );
 	virtual ~Player( void );

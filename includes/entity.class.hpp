@@ -12,7 +12,7 @@ public:
 	int		id;
 	int		model;
     float	pos_x;
-    float	pos_y;  
+    float	pos_y;
     int 	dir;
     int 	status;
     float	frame;
@@ -20,7 +20,7 @@ public:
     int		blast_radius;
     float	zoom_m;
 
-	Entity( int type, int id, float x, float y, int status );
+	Entity( int type, float x, float y, int status );
 	Entity( Entity const & src );
 	Entity & operator=( Entity const & rhs );
 	virtual ~Entity( void );

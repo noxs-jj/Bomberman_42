@@ -6,8 +6,8 @@
 class Entity;
 class Enemy : public Entity {
 public:
-	
-	Enemy( int id, float x, float y, int status, int model );
+
+	Enemy( float x, float y, int status, int model );
 	Enemy( Enemy const & src );
 	Enemy & operator=( Enemy const & rhs );
 	virtual ~Enemy( void );

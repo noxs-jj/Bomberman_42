@@ -84,7 +84,7 @@ void	Event::gen_level(int level, int boss) {
 	int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
 	int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
 
-	this->char_list.push_back(create_player(0, 0, (float)p_x, (float)p_y, PLAYER1)); // change model
+	this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1)); // change model
 	// delete this->map[p_y][p_x];
 
 	int i = 0;
@@ -95,7 +95,7 @@ void	Event::gen_level(int level, int boss) {
 			if (boss == 1)
 				this->char_list.push_back(create_boss(0, (float)tmpx, (float)tmpy, BOSS_A, BOSS_A)); // change model
 			else
-				this->char_list.push_back(create_enemy(i, 0, (float)tmpx, (float)tmpy, ENEMY1)); // change model
+				this->char_list.push_back(create_enemy(0, (float)tmpx, (float)tmpy, ENEMY1)); // change model
 			i++;
 		}
 	}
@@ -166,8 +166,8 @@ Fire *	Event::create_fire(int status, float x, float y, int model) {
 	return fire;
 }
 
-Player *	Event::create_player(int id, int status, float x, float y, int model) {
-	Player * player = new Player(id, x, y, status, model);
+Player *	Event::create_player(int status, float x, float y, int model) {
+	Player * player = new Player(x, y, status, model);
 	if (player == NULL) {
 		this->w_error("create_player:: player Malloc error");
 		throw std::exception();
@@ -176,8 +176,8 @@ Player *	Event::create_player(int id, int status, float x, float y, int model) {
 	return player;
 }
 
-Enemy *	Event::create_enemy(int id, int status, float x, float y, int model) {
-	Enemy * enemy = new Enemy(id, x, y, status, model);
+Enemy *	Event::create_enemy(int status, float x, float y, int model) {
+	Enemy * enemy = new Enemy(x, y, status, model);
 	if (enemy == NULL) {
 		this->w_error("create_enemy:: enemy Malloc error");
 		throw std::exception();
@@ -197,7 +197,7 @@ Boss *	Event::create_boss(int status, float x, float y, int name, int model) {
 }
 
 Entity * Event::create_empty(int x, int y) {
-	Entity * ent = new Entity(EMPTY, 0, (float)x, (float)y, NO_STATUS);
+	Entity * ent = new Entity(EMPTY, (float)x, (float)y, NO_STATUS);
 	ent->model = -1;
 	if (ent == NULL) {
 		this->w_error("create_empty:: enemy Malloc error");
@@ -210,6 +210,7 @@ Entity * Event::create_empty(int x, int y) {
 void	Event::player_move(int id, int dir) {
 	std::list<Entity *>::iterator it = this->char_list.begin();
 	std::list<Entity *>::iterator end = this->char_list.end();
+	(void)id;
 
 	while (it != end) {
 		if ((*it)->type == PLAYER && (*it)->model == PLAYER1) {
@@ -231,6 +232,7 @@ void	Event::player_move(int id, int dir) {
 void	Event::player_bomb(int id) {
 	std::list<Entity *>::iterator it = this->char_list.begin();
 	std::list<Entity *>::iterator end = this->char_list.end();
+	(void)id;
 
 	while (it != end) {
 		if ((*it)->type == PLAYER && (*it)->model == PLAYER1) {

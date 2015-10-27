@@ -36,8 +36,8 @@ public:
 	Wall *		create_wall(int status, float x, float y, int model);
 	Bomb *		create_bomb(int status, float x, float y, int model);
 	Fire *		create_fire(int status, float x, float y, int model);
-	Player *	create_player(int id, int status, float x, float y, int model);
-	Enemy *		create_enemy(int id, int status, float x, float y, int model);
+	Player *	create_player(int status, float x, float y, int model);
+	Enemy *		create_enemy(int status, float x, float y, int model);
 	Boss *		create_boss(int status, float x, float y, int name, int model);
 	Entity *	create_empty(int x, int y);
 

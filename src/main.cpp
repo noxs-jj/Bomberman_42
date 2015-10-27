@@ -35,7 +35,6 @@ int main( int ac, char **av ) {
 	// 	}
 	// }
 	// std::list<Player*> lol;
-	int e;
 	static float time = 0;
 	for (int i = 0; i < 30; i++)
 	{
@@ -52,7 +51,7 @@ int main( int ac, char **av ) {
 
 		// main_event->print_map(); // DEBUGG
 		// sleep(1);
-	
+
 		//	std::cout << (1 / (clock() - time)) * CLOCKS_PER_SEC << std::endl;
 		time = clock();
 			const Uint8 *state = SDL_GetKeyboardState(NULL);
