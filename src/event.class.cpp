@@ -5,9 +5,11 @@
 #include <player.class.hpp>
 #include <enemy.class.hpp>
 #include <boss.class.hpp>
+#include <soundrender.class.hpp>
 
 Event::Event( void ) : run(true) {
 	this->map = NULL;
+	this->load_sounds();
 	srand(time(NULL));
 }
 
@@ -18,7 +20,9 @@ Event & Event::operator=( Event const & rhs ) {
 	return (*this);
 }
 
-Event::~Event( void ) {}
+Event::~Event( void ) {
+	delete this->soundrender;
+}
 
 void	Event::parse_command(int ac, char **av) {
 	int i = 0;
@@ -309,5 +313,24 @@ void	Event::fill_border_map(void) {
 			x++;
 		}
 		y++;
+	}
+}
+
+void	Event::load_sounds(void) {
+	if (this->soundrender != NULL) {
+		this->soundrender = new SoundRender::SoundRender();
+		this->soundrender->loadSound("blast", "sound/blast.wav");
+		std::cout << "sounds loaded" << std::endl;
+	} else {
+		std::cout << "soundrender == NULL" << std::endl;
+	}
+}
+
+void    Event::play_sound(std::string soundName) {
+	if (this->soundrender != NULL) {
+		this->soundrender->playSound(soundName);
+		std::cout << "sound " << soundName << " played" << std::endl;
+	} else {
+		std::cout << "soundrender == NULL" << std::endl;
 	}
 }

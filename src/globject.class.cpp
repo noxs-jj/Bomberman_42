@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//                                                                            //
-//                                                        :::      ::::::::   //
-//   globject.class.cpp                                 :+:      :+:    :+:   //
-//                                                    +:+ +:+         +:+     //
-//   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
-//                                                +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 19:17:49 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   globject.class.cpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
+/*   Updated: 2015/10/28 17:28:52 by nmohamed         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <globject.class.hpp>
 #include <bomb.class.hpp>
@@ -100,7 +100,7 @@ void		globject::init(void)
 
 	/* Init SDL */
 
-	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -145,7 +145,7 @@ void		globject::init(void)
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
-	glProgramUniformMatrix4fv(_progid, 
+	glProgramUniformMatrix4fv(_progid,
 		glGetUniformLocation(_progid, "P"),
 			1, GL_FALSE, (GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, 1)._matrix));
 	globject::_viewMatID = glGetUniformLocation(_progid, "V");
@@ -523,4 +523,3 @@ void		globject::fill_vao(void)
     glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 0, (void*)0);
     glEnableVertexAttribArray(2);
 }
-

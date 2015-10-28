@@ -6,7 +6,7 @@
 #    By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/28 16:51:49 by nmohamed         ###   ########.fr        #
+#    Updated: 2015/10/28 17:25:30 by nmohamed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ INCLUDE =		-I includes/ -I rc_lib/rc_math/
 
 SDL_INCLUDE =	`sdl2-config --cflags` -I $HOME/.brew/include/SDL
 
-SDL_LIB =		`sdl2-config --libs` -lSDL2_image
+SDL_LIB =		`sdl2-config --libs` -lSDL2_image -lSDL2_mixer
 
 HEAD = 			includes/ft42.class.hpp \
 				includes/entity.class.hpp \
@@ -62,7 +62,8 @@ SRC = 			src/ft42.class.cpp \
 				src/boss.class.cpp \
 				src/globject.class.cpp \
 				src/Matrix.cpp \
-				src/parser.class.cpp
+				src/parser.class.cpp \
+				src/soundrender.class.cpp
 
 OBJ = 			$(SRC:.cpp=.cpp.o)
 
