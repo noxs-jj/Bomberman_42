@@ -1,18 +1,18 @@
-// ************************************************************************** //
-//                                                                            //
-//                                                        :::      ::::::::   //
-//   parser.class.cpp                                   :+:      :+:    :+:   //
-//                                                    +:+ +:+         +:+     //
-//   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
-//                                                +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:01:27 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.class.cpp                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
+/*   Updated: 2015/10/28 20:10:01 by noxsnono         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 # include <parser.class.hpp>
 
-parser::parser(void)
+Parser::Parser(void)
 {
 	_vertex = new GLfloat[500000];
 	_text = new GLfloat[500000];
@@ -29,17 +29,17 @@ parser::parser(void)
     foundText = 0;
 }
 
-parser::parser(std::string path)
+Parser::Parser(std::string path)
 {
 	parse(path, 0);
 }
 
-parser::~parser()
+Parser::~Parser()
 {
 
 }
 
-void parser::parse(std::string path, int neg)
+void Parser::parse(std::string path, int neg)
 {
 	/*
 	_vertex = new GLfloat[100000];
@@ -90,7 +90,7 @@ int strcmp(char *a, char *b)
 	return (0);
 }
 
-int parser::foundTexture(std::string s)
+int Parser::foundTexture(std::string s)
 {
 	std::string str;
 	int e;
@@ -107,7 +107,7 @@ int parser::foundTexture(std::string s)
 	}
 	return (-1);
 }
-void parser::add_texture(std::string str)
+void Parser::add_texture(std::string str)
 {
 	int i;
 
@@ -123,11 +123,11 @@ void parser::add_texture(std::string str)
 		_textNum++;
 		foundText = _textNum - 1;
 	}
-	else 
+	else
 		foundText = foundTexture(str);
 }
 
-void parser::add_vertex(std::string str)
+void Parser::add_vertex(std::string str)
 {
 	int i;
 
@@ -150,7 +150,7 @@ void parser::add_vertex(std::string str)
 	_vertexSize++;
 }
 
-void parser::add_text(std::string str)
+void Parser::add_text(std::string str)
 {
 	int i;
 
@@ -167,7 +167,7 @@ void parser::add_text(std::string str)
 	_textSize++;
 }
 
-void parser::add_indice(std::string str, float neg)
+void Parser::add_indice(std::string str, float neg)
 {
 	int i;
 	int text[3];
@@ -223,4 +223,3 @@ void parser::add_indice(std::string str, float neg)
     _textID[_textIDSize] = foundText;
 	_textIDSize++;
 }
-

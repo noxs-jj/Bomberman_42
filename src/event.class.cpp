@@ -318,7 +318,7 @@ void	Event::fill_border_map(void) {
 
 void	Event::load_sounds(void) {
 	if (this->soundrender != NULL) {
-		this->soundrender = new SoundRender::SoundRender();
+		this->soundrender = new SoundRender();
 		this->soundrender->loadSound("blast", "sound/blast.wav");
 		std::cout << "sounds loaded" << std::endl;
 	} else {

@@ -21,7 +21,14 @@
 
 
 # ifdef linux
-#		include <GL/gl3.h>
+#   include <GL/glew.h>
+#   include <GL/glut.h>
+#   include <GL/gl.h>
+#   include <GL/glu.h>
+#   include <GL/glext.h>
+#   include <SDL2/SDL.h>
+#		include <SDL2/SDL_image.h>
+#		include <SDL2/SDL_mixer.h>
 # endif
 # ifdef __APPLE__
 # 	include <OpenGL/gl3.h>

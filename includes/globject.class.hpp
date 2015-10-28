@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//                                                                            //
-//                                                        :::      ::::::::   //
-//   globject.class.hpp                                 :+:      :+:    :+:   //
-//                                                    +:+ +:+         +:+     //
-//   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
-//                                                +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 18:45:40 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   globject.class.hpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
+/*   Updated: 2015/10/28 19:50:51 by noxsnono         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef GLOBJECT_CLASS_HPP
 # define GLOBJECT_CLASS_HPP
@@ -62,8 +62,8 @@ class globject {
 		static SDL_Renderer			*_displayRenderer;
 		static SDL_RendererInfo		_displayRendererInfo;
 		static						globject _object[100];
-		parser						parser;
-	
+		Parser						parser;
+
 	private :
 		static void			display_menu(SDL_Surface *menu);
 		static GLfloat		get_leg_pos(int model);

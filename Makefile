@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+         #
+#    By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/28 17:25:30 by nmohamed         ###   ########.fr        #
+#    Updated: 2015/10/28 20:31:13 by noxsnono         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,14 @@ ifeq "$(PLATFORM)" "Darwin"
 	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
 endif
 #Linux -- apt-get install libsdl2-dev libsdl2-gfx-dev freeglut3 freeglut3-dev
+# libsdl2-image-dev libsdl2-mixer-dev glee-dev libgles2-mesa-dev
+# freeglut3 freeglut3-dev libglew-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx
 ifeq "$(PLATFORM)" "Linux"
-	GLUT = -lGL -lGLU -lglut
+	GLUT = -lGL -lGLU -lglut -lGLEW -lm
 	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
 endif
 
-CXX = 			g++
+CXX = 			clang++
 
 NAME =			bomberman
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   globject.class.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/10/28 17:28:52 by nmohamed         ###   ########.fr       */
+/*   Updated: 2015/10/28 20:30:08 by noxsnono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -459,7 +459,7 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader)
     vshaderid = glCreateShader(GL_VERTEX_SHADER);
     fshaderid = glCreateShader(GL_FRAGMENT_SHADER);
     buff = filetobuff(vertexshader);
-    glShaderSource(vshaderid, 1, (const char *const *)(&buff), NULL);
+    // glShaderSource(vshaderid, 1, (const char *const *)(&buff), NULL);
     glCompileShader(vshaderid);
 
 
@@ -473,7 +473,7 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader)
 	std::cout << FragmentShaderErrorMessage << std::endl;
 
 	buff = filetobuff(fragshader);
-	glShaderSource(fshaderid, 1, (const char *const *)(&buff), NULL);
+	// glShaderSource(fshaderid, 1, (const char *const *)(&buff), NULL);
 	glCompileShader(fshaderid);
 
 	glGetShaderiv(fshaderid, GL_COMPILE_STATUS, &Result);
