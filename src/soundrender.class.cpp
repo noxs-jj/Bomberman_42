@@ -1,18 +1,14 @@
 #include "soundrender.class.hpp"
 
 SoundRender::SoundRender() {
-    // load support for the OGG sample/music format
-    int flags = MIX_INIT_OGG;
-    // init
-    int initted = Mix_Init(flags);
-
-    // test init success
-    if ((initted & flags) != flags) {
-        // error
-        printf("Mix_Init: Failed to init required ogg and mod support!\n");
-        printf("Mix_Init: %s\n", Mix_GetError());
+    // open 44.1KHz, signed 16bit, system byte order,
+    // stereo audio, using 1024 byte chunks
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+        std::printf("SoundRender::SoundRender(): %s\n", Mix_GetError());
         return ;
     }
+    // allocate 16 mixing channels
+    Mix_AllocateChannels(mMaxAllocatedChannels);
 }
 
 SoundRender::SoundRender(SoundRender const & rhs) {
@@ -27,5 +23,35 @@ SoundRender & SoundRender::operator=(SoundRender const & rhs) {
 }
 
 SoundRender::~SoundRender() {
+    for (auto & kv : mChunks) {
+        // kv.first --> key (std::string)
+        // kv.second --> value (Mix_Chunk*)
+        Mix_FreeChunk(kv.second);
+    }
+    while (Mix_Init(0)) {
+        Mix_Quit();
+    }
+    Mix_CloseAudio();
+}
 
+
+bool SoundRender::loadSound(std::string soundName, std::string fileName) {
+    (void)soundName;
+    (void)fileName;
+    Mix_Chunk *chunk = Mix_LoadWAV(fileName.c_str());
+    if (chunk == NULL) {
+        printf("SoundRender::loadSound: %s\n", Mix_GetError());
+        return false;
+    }
+    mChunks[soundName] = chunk;
+    return true;
+}
+
+void SoundRender::playSound(std::string soundName) {
+    (void)soundName;
+    if (Mix_PlayChannel(-1, mChunks[soundName], 0) == -1) {
+        printf("SoundRender::playSound: %s\n",Mix_GetError());
+        // may be critical error, or maybe just no channels were free.
+        // you could allocated another channel in that case...
+    }
 }
