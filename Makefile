@@ -6,7 +6,7 @@
 #    By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/28 20:31:13 by noxsnono         ###   ########.fr        #
+#    Updated: 2015/10/29 17:37:51 by noxsnono         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ CXX = 			clang++
 NAME =			bomberman
 
 CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror
+# CFLAGS =		-std=gnu++11
 
 INCLUDE =		-I includes/ -I rc_lib/rc_math/
 

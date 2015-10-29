@@ -6,7 +6,7 @@
 /*   By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/10/28 20:30:08 by noxsnono         ###   ########.fr       */
+/*   Updated: 2015/10/29 18:15:17 by noxsnono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,9 @@ void		globject::init(void)
 {
 
 	/* Init SDL */
-
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	std::cout << "deb -999" << std::endl;
+
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -108,18 +109,24 @@ void		globject::init(void)
 		SDL_WINDOWPOS_CENTERED, 1200, 1200, SDL_WINDOW_OPENGL);
 
 	/* Init OpenGL */
+	std::cout << "deb -997" << std::endl;
 
 	SDL_GL_CreateContext(globject::_displayWindow);
+	std::cout << "deb -996" << std::endl;
     glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
     glEnable(GL_DEPTH_TEST);
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	SDL_GL_SwapWindow(globject::_displayWindow);
 	glEnable(GL_BLEND);
+	std::cout << "deb -995" << std::endl;
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	/* load shaders */
+	std::cout << "deb -994" << std::endl;
 	globject::load_shaders();
+	std::cout << "deb -998" << std::endl;
 
 	/* load Models */
+	std::cout << "yhnm 2" << std::endl;
 
 	globject("models/cube.obj", WALL_HP_1, 1);
 	globject("models/cube1.obj", WALL_HP_2, 1);
@@ -141,6 +148,7 @@ void		globject::init(void)
 	globject("models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
 	globject("models/icosphere.obj", MAX_ENUM, 1);
 	globject("models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
+	std::cout << "yhnm 1" << std::endl;
 	globject("models/menu.obj", MENU, 1);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
@@ -286,7 +294,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	float		zoomMul;
 	float		zoom;
 	static size_t	a = 0;
-	static float	time = 0;
+	// static float	time = 0;
 	static float	o = 0;
 	static float	prog = 0.01;
 	zoom = 1;
@@ -297,7 +305,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	a++;
 	a = a % 10;
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
-	time = clock();
+	// time = clock();
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	modelPos.z = 0;
 	glUniform1f(globject::_keyFrameID, 0);
@@ -456,12 +464,20 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader)
     GLuint      progid;
     char        *buff;
 
+
+    if(glewInit() != GLEW_OK)
+			std::cerr << "glew failed" << std::endl;
+		std::cout << "fgh 0" << std::endl;
     vshaderid = glCreateShader(GL_VERTEX_SHADER);
+		std::cout << "fgh 3" << std::endl;
     fshaderid = glCreateShader(GL_FRAGMENT_SHADER);
+		std::cout << "fgh 2" << std::endl;
     buff = filetobuff(vertexshader);
-    // glShaderSource(vshaderid, 1, (const char *const *)(&buff), NULL);
+		// glShaderSource(vshaderid, 1, (const char *const *)(&buff), NULL);
+    glShaderSource(vshaderid, 1, (const char **)(&buff), NULL);
     glCompileShader(vshaderid);
 
+		std::cout << "fgh 1" << std::endl;
 
 	int Result;
 	int InfoLogLength;
@@ -474,6 +490,7 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader)
 
 	buff = filetobuff(fragshader);
 	// glShaderSource(fshaderid, 1, (const char *const *)(&buff), NULL);
+	glShaderSource(fshaderid, 1, (const char **)(&buff), NULL);
 	glCompileShader(fshaderid);
 
 	glGetShaderiv(fshaderid, GL_COMPILE_STATUS, &Result);
@@ -486,14 +503,19 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader)
 	glAttachShader(progid, fshaderid);
 	glLinkProgram(progid);
 	globject::_progid = progid;
+	std::cout << "yhnm 0" << std::endl;
 	return (progid);
 }
 
 void		globject::load_shaders()
 {
+	std::cout << "try 0" << std::endl;
 	char a[] = "shaders/frag.shader";
+	std::cout << "try 1" << std::endl;
 	char b[]  = "shaders/vertex.shader";
+	std::cout << "try 2" << std::endl;
 	glUseProgram(loadshaders(a, b));
+	std::cout << "try 3" << std::endl;
 }
 
 void		globject::fill_vao(void)

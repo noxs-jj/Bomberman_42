@@ -10,19 +10,25 @@ int main( int ac, char **av ) {
 
 	//SoundRender sr;
 
-	try {
-		main_event->init(ac, av);
+	// try {
+		// main_event->init(ac, av);
 		// event->lauchGame();
 
 
 		// delete main_event;
-	}
-	catch (std::exception & e){
-		return (EXIT_FAILURE);
-	}
+	// }
+	// catch (std::exception & e){
+	// 	return (EXIT_FAILURE);
+	// }
+	main_event->init(ac, av);
+	std::cout << "deb -9999" << std::endl;
 
 	srand(clock());
-	globject::init();
+	std::cout << "deb -9998" << std::endl;
+	globject * render = new globject();
+	std::cout << "deb -9997" << std::endl;
+	render->init();
+	std::cout << "deb -9996" << std::endl;
 	// Entity map[20][20];
 
 	// for (int i = 0; i < 20; i++)
@@ -38,14 +44,17 @@ int main( int ac, char **av ) {
 	static float time = 0;
 	for (int i = 0; i < 30; i++)
 	{
-		std::cout << globject::_object[WALL].parser._textID[i] << std::endl;
+		std::cout << render->_object[WALL].parser._textID[i] << std::endl;
 	}
+	std::cout << "deb 0" << std::endl;
 	while (1)
 	{
 		if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 			continue ;
 		keyboard();
 		main_event->dec_timer();
+		std::cout << "deb 1" << std::endl;
+
 
 		//usleep(300);
 
@@ -54,13 +63,16 @@ int main( int ac, char **av ) {
 
 		//	std::cout << (1 / (clock() - time)) * CLOCKS_PER_SEC << std::endl;
 		time = clock();
+		std::cout << "deb 2" << std::endl;
+
 			const Uint8 *state = SDL_GetKeyboardState(NULL);
 		if (state[SDL_SCANCODE_RETURN]) {
-			globject::resize(1300, 1300);
+			render->resize(1300, 1300);
 		}
-		globject::render_all(main_event->map, main_event->char_list, NULL);
+		render->render_all(main_event->map, main_event->char_list, NULL);
 	}
     //Test graphique...
+		delete render;
 	return (EXIT_SUCCESS);
 }
 

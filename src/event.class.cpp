@@ -117,13 +117,19 @@ void	Event::print_map( void ) {
 		std::cout << std::endl;
 		y++;
 	}
+	std::cout << "deb 3.end" << std::endl;
 }
 
 void	Event::init( int ac, char **av ) {
 	this->parse_command(ac, av);
+	std::cout << "deb 3.1" << std::endl;
+
 	fill_border_map();
+	std::cout << "deb 3.2" << std::endl;
 	gen_level(6, 1);
+	std::cout << "deb 3.3" << std::endl;
 	main_event->print_map(); // DEBUGG
+	std::cout << "deb 3.4" << std::endl;
 }
 
 void	Event::exit_free( void ) {	// free here
