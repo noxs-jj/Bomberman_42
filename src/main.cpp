@@ -58,8 +58,8 @@ int main( int ac, char **av ) {
 			if (state[SDL_SCANCODE_RETURN]) {
 				globject::resize(1300, 1300);
 			}
-			globject::render_all(main_event->map, main_event->char_list, menu->current);
-			// globject::render_all(main_event->map, main_event->char_list, NULL);
+			// globject::render_all(main_event->map, main_event->char_list, menu->current);
+			globject::render_all(main_event->map, main_event->char_list, NULL);
 			// globject::render_all(NULL, NULL, menu->current);
 		}
 

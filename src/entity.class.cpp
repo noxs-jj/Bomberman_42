@@ -74,6 +74,16 @@ void	Entity::die( void ) {
 	{
 		globject::spin(this->pos_x, this->pos_y);
 	}
+	else {
+		std::list<Entity *>::iterator it = main_event->char_list.begin();
+		std::list<Entity *>::iterator end = main_event->char_list.end();
+
+		while (it != end) {
+			if (this->id == (*it)->id)
+				main_event->char_list.erase(it); // delete this ?
+			it++;
+		}
+	}
 }
 
 void	Entity::put_bomb(int status, float x, float y, int model, int blast) {
