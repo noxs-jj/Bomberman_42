@@ -7,7 +7,7 @@
 #include <boss.class.hpp>
 #include <soundrender.class.hpp>
 
-Event::Event( void ) : run(true), coop(false) {
+Event::Event( void ) : run(true), coop(false), multi(2) {
 	this->map = NULL;
 	this->load_sounds();
 	srand(time(NULL));
@@ -117,6 +117,20 @@ void	Event::gen_level_campaign(int level, int boss, bool coop) {
 	gen_obstacle((level / 3));
 }
 
+void	Event::gen_level_multi(int level, int coop) {
+	int i = 0;
+
+	while (i < coop) {
+		int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
+		int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+		if (check_coord(0, (float)p_x, (float)p_y) == true) {
+			this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1 + i)); // change model
+			i++;
+		}
+	}
+	gen_obstacle((level / 3));
+}
+
 void	Event::print_map( void ) {
 	int y = 0, x;
 	std::cout << "print_map" << std::endl;
@@ -134,7 +148,11 @@ void	Event::print_map( void ) {
 void	Event::init( int ac, char **av ) {
 	this->parse_command(ac, av);
 	fill_border_map();
-	gen_level_campaign(6, 1, this->coop);
+	if (this->multi != 0)
+		gen_level_multi(6, this->multi);
+	else
+		gen_level_campaign(6, 1, this->coop);
+
 	main_event->print_map(); // DEBUGG
 }
 
