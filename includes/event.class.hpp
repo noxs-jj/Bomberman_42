@@ -21,9 +21,10 @@ class SoundRender;
 
 class Event : public ft42 {
 public:
-	bool					run;
-	Entity ***				map;
+	bool									run;
+	Entity ***						map;
 	std::list<Entity *>		char_list;
+	bool									coop;
 
 	Event( void );
 	Event( Event const & src );
@@ -31,7 +32,7 @@ public:
 	virtual ~Event( void );
 
 	void		fill_border_map(void);
-	void		gen_level(int level, int boss);
+	void		gen_level_campaign(int level, int boss, bool coop);
 	bool		check_coord(int mode, float x, float y);
 	void		gen_obstacle(int difficulty);
 	Wall *		create_wall(int status, float x, float y, int model);

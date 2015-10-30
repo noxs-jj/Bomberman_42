@@ -7,7 +7,7 @@
 #include <boss.class.hpp>
 #include <soundrender.class.hpp>
 
-Event::Event( void ) : run(true) {
+Event::Event( void ) : run(true), coop(false) {
 	this->map = NULL;
 	this->load_sounds();
 	srand(time(NULL));
@@ -82,12 +82,24 @@ bool	Event::check_coord(int mode, float x, float y) {
 	return true;
 }
 
-void	Event::gen_level(int level, int boss) {
+void	Event::gen_level_campaign(int level, int boss, bool coop) {
 	int tmpx = 0, tmpy = 0;
 	int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
 	int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
 
 	this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1)); // change model
+	std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
+	if (coop == true) {
+		p_x = 2 + (rand() % (MAP_X_SIZE - 4));
+		p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+		while (check_coord(0, (float)p_x, (float)p_y) != true) {
+			p_x = 2 + (rand() % (MAP_X_SIZE - 4));
+			p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+			}
+			this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1)); // change model
+			std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
+	}
+
 	// delete this->map[p_y][p_x];
 
 	int i = 0;
@@ -122,8 +134,9 @@ void	Event::print_map( void ) {
 void	Event::init( int ac, char **av ) {
 	this->parse_command(ac, av);
 	fill_border_map();
-	gen_level(6, 1);
+	gen_level_campaign(6, 1, this->coop);
 	main_event->print_map(); // DEBUGG
+	this->play_sound("startup");
 }
 
 void	Event::exit_free( void ) {	// free here
@@ -319,7 +332,13 @@ void	Event::fill_border_map(void) {
 void	Event::load_sounds(void) {
 	this->soundrender = new SoundRender();
 	if (this->soundrender != NULL) {
-		if (!this->soundrender->loadSound("blast", "sound/blast.wav")) {
+		if (!(
+					 this->soundrender->loadSound("blast", "sound/blast.wav")
+				&& this->soundrender->loadSound("startup", "sound/ps1.wav")
+				&& this->soundrender->loadSound("pause", "sound/pause.wav")
+				&& this->soundrender->loadSound("conclusion", "sound/HANABI_2B.wav")
+				&& this->soundrender->loadSound("lay_bomb", "sound/BOM_SET.wav")
+			)) {
 			std::cout << "loadsound error" << std::endl;
 		}
 		std::cout << "sounds loaded" << std::endl;
