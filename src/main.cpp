@@ -77,22 +77,24 @@ int main( int ac, char **av ) {
 void keyboard(void) {
 	SDL_Event           event;
 	static t_key		key = {0, 0, 0, 0};
+	static t_key		key2 = {0, 0, 0, 0}; // key for p2
+	// static t_key		key3 = {0, 0, 0, 0};
+	// static t_key		key4 = {0, 0, 0, 0};
 
 	while (SDL_PollEvent(&event)) {
         if (event.type == SDL_KEYDOWN) {
             switch((event).key.keysym.sym) {
 			case SDLK_ESCAPE:   _exit(0); break;
-                // case SDLK_ESCAPE:    this->addKey(ECHAP); break;
-                // case SDLK_q:     this->addKey(ECHAP); break;
 			case SDLK_DOWN:     key.key_up = 1; break;
-                // case SDLK_s:     this->addKey(DOWN); break;
 			case SDLK_UP:       key.key_down = 1; break;
-                // case SDLK_w:     this->addKey(UP); break;
 			case SDLK_RIGHT:    key.key_right = 1; break;
-                // case SDLK_d:     this->addKey(RIGHT); break;
 			case SDLK_LEFT:     key.key_left = 1; break;
-			    // case SDLK_a:     this->addKey(LEFT); break;
-			case SDLK_SPACE:    main_event->player_bomb(PLAYER1); break;
+			case SDLK_KP_0:    main_event->player_bomb(PLAYER1); break;
+			case SDLK_s:     key2.key_up = 1; break;
+			case SDLK_w:       key2.key_down = 1; break;
+			case SDLK_d:    key2.key_right = 1; break;
+			case SDLK_a:     key2.key_left = 1; break;
+			case SDLK_SPACE:    main_event->player_bomb(PLAYER2); break;
                 // case SDLK_p:     this->addKey(SPACE); break;
                 // case SDLK_1:     this->addKey(ONE); break;
                 // case SDLK_2:     this->addKey(TWO); break;
@@ -106,25 +108,34 @@ void keyboard(void) {
                 // case SDLK_ESCAPE:    this->addKey(ECHAP); break;
                 // case SDLK_q:     this->addKey(ECHAP); break;
             case SDLK_DOWN:     key.key_up = 0; break;
-                // case SDLK_s:     this->addKey(DOWN); break;
             case SDLK_UP:       key.key_down = 0; break;
-                // case SDLK_w:     this->addKey(UP); break;
             case SDLK_RIGHT:    key.key_right = 0; break;
-                // case SDLK_d:     this->addKey(RIGHT); break;
             case SDLK_LEFT:     key.key_left = 0; break;
-                // case SDLK_a:     this->addKey(LEFT); break;
+						case SDLK_s:     key2.key_up = 0; break;
+            case SDLK_w:       key2.key_down = 0; break;
+            case SDLK_d:    key2.key_right = 0; break;
+            case SDLK_a:     key2.key_left = 0; break;
             default: break;
             }
         }
     }
 	if (key.key_right)
 		main_event->player_move(PLAYER1, DIR_RIGHT);
-    if (key.key_left)
+  if (key.key_left)
 		main_event->player_move(PLAYER1, DIR_LEFT);
-    if (key.key_up)
+  if (key.key_up)
 		main_event->player_move(PLAYER1, DIR_UP);
-    if (key.key_down)
+  if (key.key_down)
 		main_event->player_move(PLAYER1, DIR_BOTTOM);
+
+	if (key2.key_right)
+		main_event->player_move(PLAYER2, DIR_RIGHT);
+	if (key2.key_left)
+		main_event->player_move(PLAYER2, DIR_LEFT);
+	if (key2.key_up)
+		main_event->player_move(PLAYER2, DIR_UP);
+	if (key2.key_down)
+		main_event->player_move(PLAYER2, DIR_BOTTOM);
 }
 /*
 void  				keyboard( void ) {

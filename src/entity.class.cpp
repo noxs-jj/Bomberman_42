@@ -68,9 +68,24 @@ void	Entity::take_damage( void ) {
 	die();
 }
 
+int		Entity::count_entity(int type) {
+	std::list<Entity *>::iterator it = main_event->char_list.begin();
+	std::list<Entity *>::iterator end = main_event->char_list.end();
+
+	int i = 0;
+	while (it != end) {
+		if ((*it)->type == type)
+			i++;
+		it++;
+	}
+	return i;
+}
+
 void	Entity::die( void ) {
-	std::cout << "Someone died" << std::endl;
-	if (this->type == PLAYER)
+	std::cout << "Someone died " << std::endl;
+	std::cout << "count_entity" << count_entity(PLAYER) << std::endl;
+
+	if (this->type == PLAYER && count_entity(PLAYER) == 1)
 	{
 		globject::spin(this->pos_x, this->pos_y);
 	}

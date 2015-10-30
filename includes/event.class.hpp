@@ -25,6 +25,7 @@ public:
 	Entity ***						map;
 	std::list<Entity *>		char_list;
 	bool									coop;
+	int										multi;
 
 	Event( void );
 	Event( Event const & src );
@@ -33,6 +34,7 @@ public:
 
 	void		fill_border_map(void);
 	void		gen_level_campaign(int level, int boss, bool coop);
+	void		gen_level_multi(int level, int coop);
 	bool		check_coord(int mode, float x, float y);
 	void		gen_obstacle(int difficulty);
 	Wall *		create_wall(int status, float x, float y, int model);
