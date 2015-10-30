@@ -74,6 +74,7 @@ void	Bomb::detonate( void ) {
 
 		i++;
 	}
+	main_event->play_sound("blast");
 }
 
 void	Bomb::bomb_timer( void ) {
