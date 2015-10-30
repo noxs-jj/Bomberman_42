@@ -25,7 +25,7 @@ public:
   void            multi_4players();
   void            exit_game();
   void            exit_confirm();
-  void            intro_start();
+  void            intro_start() ;
 
 private:
   Menu( void );

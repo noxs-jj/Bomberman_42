@@ -24,8 +24,13 @@ public:
 	bool									run;
 	Entity ***						map;
 	std::list<Entity *>		char_list;
-	bool									coop;
-	int										multi;
+	bool									coop; // false si campaign
+	int										multi; // 0 == non activer, 2 player, 3, 4, 5
+	bool									new_game; // false == continue (load fichier sauvegarde)
+	int 									config[4]; // config[1](3)  == (joueur 2, config 3)
+	bool									general_sound; // activer son general du jeux
+	bool									music; // activer musique de fond
+
 
 	Event( void );
 	Event( Event const & src );

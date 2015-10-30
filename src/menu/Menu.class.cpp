@@ -1,5 +1,6 @@
 #include <Menu.class.hpp>
 
+
 void  Menu::campain_new_game() {}
 
 void  Menu::campain_coop() {}
@@ -24,14 +25,13 @@ void  Menu::exit_confirm() {}
 
 void Menu::intro_start() {
   this->current = NULL;
-  this->current = SDL_LoadBMP("src/menu/assets/42test.bmp");
-  std::cerr << "img 0" << std::endl;
+  this->current = SDL_LoadBMP("src/menu/assets/intro_start.bmp");
+  // this->current = IMG_LoadPNG_RW("src/menu/assets/intro_start.bmp");
   if (NULL == this->current) {
-    std::cerr << "img 1" << std::endl;
-    this->w_full("Menu::intro_start load image error");
+
+    std::cerr << "Menu::intro_start load image error " << SDL_GetError() << std::endl;
     throw std::exception();
   }
-  std::cerr << "img 2" << std::endl;
 }
 
 
