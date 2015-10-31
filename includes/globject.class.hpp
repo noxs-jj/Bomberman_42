@@ -6,7 +6,7 @@
 /*   By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/10/28 19:50:51 by noxsnono         ###   ########.fr       */
+/*   Updated: 2015/10/31 17:00:27 by noxsnono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,13 @@ class globject {
 		static SDL_Renderer			*_displayRenderer;
 		static SDL_RendererInfo		_displayRendererInfo;
 		static						globject _object[100];
+
 		Parser						parser;
 
-	private :
+		// Jean-Jacques modification pour affichage mise en public pour acces
 		static void			display_menu(SDL_Surface *menu);
+
+	private :
 		static GLfloat		get_leg_pos(int model);
 		static char			*filetobuff(char *path);
 		static GLuint		loadshaders(char *a, char *b);

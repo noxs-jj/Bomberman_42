@@ -3,6 +3,7 @@
 int main(int argc, char const *argv[]) {
 	(void)argc;
 	(void)argv;
+	std::cout << "start" << std::endl;
 
 	// start SDL with audio support
 	if (SDL_Init(SDL_INIT_AUDIO) == -1) {
@@ -12,14 +13,41 @@ int main(int argc, char const *argv[]) {
 
 	SoundRender* sr = new SoundRender();
 
+	// load sounds
 	sr->loadSound("blast", "sound/blast.wav");
-	sr->playSound("blast");
-	sr->playSound("blast");
-	sr->playSound("blast");
+	sr->loadSound("startup", "sound/ps1.wav");
+	sr->loadMusic("music", "sound/bgm.wav");
 
-	std::cout << "start" << std::endl;
+	// play sound
+	sr->playSound("startup");
+	sleep(2);
+	sr->playSound("blast");
+	sleep(2);
+	std::cout << "Playing 17 sounds" << std::endl;
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sr->playSound("blast");
+	sleep(6);
+	sr->playSound("blast");
+	sr->playSound("blast");
 	sleep(3);
-
+	std::cout << "Playing music" << std::endl;
+	sr->playMusic("music");
+	sleep(6);
 
 	delete sr;
 	std::cout << "end" << std::endl;

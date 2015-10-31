@@ -30,7 +30,7 @@ public:
 	void	die( void );
 	void	take_damage( void );
 	void	put_bomb(int status, float x, float y, int model, int blast);
-
+	int		count_entity(int type);
 private:
 	static int		autoincrement;
 };

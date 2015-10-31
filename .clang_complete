@@ -1,0 +1,7 @@
+-std=gnu++11
+-Wall
+-Wextra
+-Werror
+-Iincludes/
+-Irc_lib/rc_math/
+-I/Volumes/Data/nfs/zfs-student-4/users/2013/nmohamed/.brew/include/SDL2

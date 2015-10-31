@@ -29,11 +29,13 @@
 #   include <SDL2/SDL.h>
 #		include <SDL2/SDL_image.h>
 #		include <SDL2/SDL_mixer.h>
+#		include <SDL2/SDL_ttf.h>
 # endif
 # ifdef __APPLE__
 # 	include <OpenGL/gl3.h>
 #   include <SDL.h>
 #   include <SDL_image.h>
+#   include <SDL_ttf.h>
 # endif
 
 # define LOG_PATH	"log/debugg.log"

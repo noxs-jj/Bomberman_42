@@ -20,10 +20,14 @@ class SoundRender {
         // play the sound 'soundName'
         // which you added via 'loadSound(soundName, fileName);'
         // returns 'false' if it does not exist
-        void playSound(std::string soundName);
+        bool playSound(std::string soundName) const;
+
+        bool loadMusic(std::string musicName, std::string fileName);
+        bool playMusic(std::string musicName) const;
 
     private:
-        
+
         int const                         mMaxAllocatedChannels = 16;
         std::map<std::string, Mix_Chunk*> mChunks;
+        std::map<std::string, Mix_Music*> mMusics;
 };

@@ -11,22 +11,32 @@ SoundRender::SoundRender() {
     Mix_AllocateChannels(mMaxAllocatedChannels);
 }
 
-SoundRender::SoundRender(SoundRender const & rhs) {
+SoundRender::SoundRender(SoundRender const & rhs)
+    : mChunks(rhs.mChunks)
+    , mMusics(rhs.mMusics) {
     (void)rhs;
 }
 
 SoundRender & SoundRender::operator=(SoundRender const & rhs) {
     if (this != &rhs) {
-        (void)rhs;
+        mChunks = rhs.mChunks;
+        mMusics = rhs.mMusics;
     }
     return (*this);
 }
 
 SoundRender::~SoundRender() {
+    // free sounds
     for (auto & kv : mChunks) {
         // kv.first --> key (std::string)
         // kv.second --> value (Mix_Chunk*)
         Mix_FreeChunk(kv.second);
+        kv.second = NULL;
+    }
+    // free music
+    for (auto & kv : mMusics) {
+        Mix_FreeMusic(kv.second);
+        kv.second = NULL;
     }
     while (Mix_Init(0)) {
         Mix_Quit();
@@ -47,11 +57,36 @@ bool SoundRender::loadSound(std::string soundName, std::string fileName) {
     return true;
 }
 
-void SoundRender::playSound(std::string soundName) {
+bool SoundRender::playSound(std::string soundName) const {
     (void)soundName;
-    if (Mix_PlayChannel(-1, mChunks[soundName], 0) == -1) {
+    if (Mix_PlayChannel(-1, mChunks.at(soundName), 0) == -1) {
         printf("SoundRender::playSound: %s\n",Mix_GetError());
         // may be critical error, or maybe just no channels were free.
         // you could allocated another channel in that case...
+        return false;
     }
+    return true;
+}
+
+bool SoundRender::loadMusic(std::string musicName, std::string fileName) {
+    // load the WAV file "fileName" to play as music
+    Mix_Music * music;
+    music = Mix_LoadMUS(fileName.c_str());
+    if (!music) {
+        std::printf("Mix_LoadMUS(\"%s\"): %s\n", fileName.c_str(), Mix_GetError());
+        // this might be a critical error...
+        return false;
+    }
+    mMusics[musicName] = music;
+    return true;
+}
+
+bool SoundRender::playMusic(std::string musicName) const {
+    // play music forever
+    if (Mix_PlayMusic(mMusics.at(musicName), -1) == -1) {
+        std::printf("Mix_PlayMusic: %s\n", Mix_GetError());
+        // well, there's no music, but most games don't break without music...
+        return false;
+    }
+    return true;
 }

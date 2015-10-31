@@ -6,13 +6,13 @@
 #    By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/29 17:37:51 by noxsnono         ###   ########.fr        #
+#    Updated: 2015/10/31 16:59:32 by noxsnono         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 PLATFORM := $(shell uname)
 
-#Mac --	brew install sdl2 sdl2_image sdl2_mixer
+#Mac --	brew install sdl2 sdl2_image sdl2_mixer sdl2_ttf
 ifeq "$(PLATFORM)" "Darwin"
 	GLUT = -framework Appkit -framework OpenGL
 	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
@@ -36,37 +36,39 @@ INCLUDE =		-I includes/ -I rc_lib/rc_math/
 
 SDL_INCLUDE =	`sdl2-config --cflags` -I $HOME/.brew/include/SDL
 
-SDL_LIB =		`sdl2-config --libs` -lSDL2_image -lSDL2_mixer
+SDL_LIB =		`sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 HEAD = 			includes/ft42.class.hpp \
-				includes/entity.class.hpp \
-				includes/event.class.hpp \
-	 			includes/main.hpp \
-				includes/wall.class.hpp \
-				includes/fire.class.hpp \
-				includes/bomb.class.hpp \
-				includes/player.class.hpp \
-				includes/enemy.class.hpp \
-				includes/boss.class.hpp \
-				includes/globject.class.hpp \
-				includes/Matrix.hpp \
-				includes/parser.class.hpp \
-				includes/soundrender.class.hpp
+						includes/entity.class.hpp \
+						includes/event.class.hpp \
+	 					includes/main.hpp \
+						includes/wall.class.hpp \
+						includes/fire.class.hpp \
+						includes/bomb.class.hpp \
+						includes/player.class.hpp \
+						includes/enemy.class.hpp \
+						includes/boss.class.hpp \
+						includes/globject.class.hpp \
+						includes/Matrix.hpp \
+						includes/parser.class.hpp \
+						includes/soundrender.class.hpp \
+						includes/Menu.class.hpp
 
 SRC = 			src/ft42.class.cpp \
-				src/entity.class.cpp \
-				src/event.class.cpp \
-				src/main.cpp \
-				src/wall.class.cpp \
-				src/bomb.class.cpp \
-				src/fire.class.cpp \
-				src/player.class.cpp \
-				src/enemy.class.cpp \
-				src/boss.class.cpp \
-				src/globject.class.cpp \
-				src/Matrix.cpp \
-				src/parser.class.cpp \
-				src/soundrender.class.cpp
+						src/entity.class.cpp \
+						src/event.class.cpp \
+						src/main.cpp \
+						src/wall.class.cpp \
+						src/bomb.class.cpp \
+						src/fire.class.cpp \
+						src/player.class.cpp \
+						src/enemy.class.cpp \
+						src/boss.class.cpp \
+						src/globject.class.cpp \
+						src/Matrix.cpp \
+						src/parser.class.cpp \
+						src/soundrender.class.cpp \
+						src/menu/Menu.class.cpp
 
 OBJ = 			$(SRC:.cpp=.cpp.o)
 

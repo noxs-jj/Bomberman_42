@@ -7,9 +7,8 @@
 #include <boss.class.hpp>
 #include <soundrender.class.hpp>
 
-Event::Event( void ) : run(true) {
+Event::Event( void ) : run(true), coop(false), multi(2) {
 	this->map = NULL;
-	this->load_sounds();
 	srand(time(NULL));
 }
 
@@ -82,12 +81,24 @@ bool	Event::check_coord(int mode, float x, float y) {
 	return true;
 }
 
-void	Event::gen_level(int level, int boss) {
+void	Event::gen_level_campaign(int level, int boss, bool coop) {
 	int tmpx = 0, tmpy = 0;
 	int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
 	int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
 
 	this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1)); // change model
+	std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
+	if (coop == true) {
+		p_x = 2 + (rand() % (MAP_X_SIZE - 4));
+		p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+		while (check_coord(0, (float)p_x, (float)p_y) != true) {
+			p_x = 2 + (rand() % (MAP_X_SIZE - 4));
+			p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+			}
+			this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER2)); // change model
+			std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
+	}
+
 	// delete this->map[p_y][p_x];
 
 	int i = 0;
@@ -99,6 +110,20 @@ void	Event::gen_level(int level, int boss) {
 				this->char_list.push_back(create_boss(0, (float)tmpx, (float)tmpy, BOSS_A, BOSS_A)); // change model
 			else
 				this->char_list.push_back(create_enemy(0, (float)tmpx, (float)tmpy, ENEMY1)); // change model
+			i++;
+		}
+	}
+	gen_obstacle((level / 3));
+}
+
+void	Event::gen_level_multi(int level, int coop) {
+	int i = 0;
+
+	while (i < coop) {
+		int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
+		int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+		if (check_coord(0, (float)p_x, (float)p_y) == true) {
+			this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1 + i)); // change model
 			i++;
 		}
 	}
@@ -125,11 +150,15 @@ void	Event::init( int ac, char **av ) {
 	std::cout << "deb 3.1" << std::endl;
 
 	fill_border_map();
-	std::cout << "deb 3.2" << std::endl;
-	gen_level(6, 1);
-	std::cout << "deb 3.3" << std::endl;
+
+	if (this->multi != 0)
+		gen_level_multi(6, this->multi);
+	else
+		gen_level_campaign(6, 1, this->coop);
+
 	main_event->print_map(); // DEBUGG
-	std::cout << "deb 3.4" << std::endl;
+	this->load_sounds();
+	this->soundrender->playSound("startup");
 }
 
 void	Event::exit_free( void ) {	// free here
@@ -216,53 +245,23 @@ Entity * Event::create_empty(int x, int y) {
 	return ent;
 }
 
-void	Event::player_move(int id, int dir) {
+void	Event::player_move(int model, int dir) {
 	std::list<Entity *>::iterator it = this->char_list.begin();
 	std::list<Entity *>::iterator end = this->char_list.end();
-	(void)id;
 
 	while (it != end) {
-		if ((*it)->type == PLAYER && (*it)->model == PLAYER1) {
+		if ((*it)->model == model)
 			(*it)->move(dir);
-		}
-		else if ((*it)->type == PLAYER && (*it)->model == PLAYER2) {
-			(*it)->move(dir);
-		}
-		else if ((*it)->type == PLAYER && (*it)->model == PLAYER3) {
-			(*it)->move(dir);
-		}
-		else if ((*it)->type == PLAYER && (*it)->model == PLAYER4) {
-			(*it)->move(dir);
-		}
 		it++;
 	}
 }
 
-void	Event::player_bomb(int id) {
+void	Event::player_bomb(int model) {
 	std::list<Entity *>::iterator it = this->char_list.begin();
 	std::list<Entity *>::iterator end = this->char_list.end();
-	(void)id;
 
 	while (it != end) {
-		if ((*it)->type == PLAYER && (*it)->model == PLAYER1) {
-			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
-				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius);
-				return ;
-			}
-		}
-		if ((*it)->type == PLAYER && (*it)->model == PLAYER2) {
-			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
-				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius);
-				return ;
-			}
-		}
-		if ((*it)->type == PLAYER && (*it)->model == PLAYER3) {
-			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
-				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius);
-				return ;
-			}
-		}
-		if ((*it)->type == PLAYER && (*it)->model == PLAYER4) {
+		if ((*it)->model == model) {
 			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
 				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius);
 				return ;
@@ -323,19 +322,21 @@ void	Event::fill_border_map(void) {
 }
 
 void	Event::load_sounds(void) {
+	this->soundrender = new SoundRender();
 	if (this->soundrender != NULL) {
-		this->soundrender = new SoundRender();
-		this->soundrender->loadSound("blast", "sound/blast.wav");
+		if (!(
+				   this->soundrender->loadSound("blast", "sound/blast.wav")
+				&& this->soundrender->loadSound("startup", "sound/ps1.wav")
+				&& this->soundrender->loadSound("die", "sound/Megaman dies.wav")
+				&& this->soundrender->loadSound("ready", "sound/Ready megaman.wav")
+				&& this->soundrender->loadSound("menu2", "sound/Mega menu 2.wav")
+				&& this->soundrender->loadSound("menu1", "sound/Mega menu 1.wav")
+				// music
+				&& this->soundrender->loadMusic("music", "sound/bgm.wav")
+			)) {
+			std::cout << "loadsound error" << std::endl;
+		}
 		std::cout << "sounds loaded" << std::endl;
-	} else {
-		std::cout << "soundrender == NULL" << std::endl;
-	}
-}
-
-void    Event::play_sound(std::string soundName) {
-	if (this->soundrender != NULL) {
-		this->soundrender->playSound(soundName);
-		std::cout << "sound " << soundName << " played" << std::endl;
 	} else {
 		std::cout << "soundrender == NULL" << std::endl;
 	}
