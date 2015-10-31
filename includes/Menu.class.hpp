@@ -10,8 +10,48 @@ public:
 
   Event *         event;
   SDL_Surface *   current;
+  SDL_Surface *   ecran_menu;
   bool            introstart;
   TTF_Font *      SansPosterBold;
+
+  SDL_Color       white;
+  SDL_Color       blue;
+  SDL_Color       red;
+  SDL_Rect        position;
+
+  SDL_Surface *   str_return;
+  SDL_Surface *   str_return_selected;
+  SDL_Surface *   str_campaign;
+  SDL_Surface *   str_campaign_selected;
+  SDL_Surface *   str_campaign_new;
+  SDL_Surface *   str_campaign_new_selected;
+  SDL_Surface *   str_campaign_coop;
+  SDL_Surface *   str_campaign_coop_selected;
+  SDL_Surface *   str_campaign_continue;
+  SDL_Surface *   str_campaign_continue_selected;
+  SDL_Surface *   str_arena;
+  SDL_Surface *   str_arena_selected;
+  SDL_Surface *   str_multiplayer;
+  SDL_Surface *   str_multiplayer_selected;
+  SDL_Surface *   str_2players;
+  SDL_Surface *   str_2players_selected;
+  SDL_Surface *   str_3players;
+  SDL_Surface *   str_3players_selected;
+  SDL_Surface *   str_4players;
+  SDL_Surface *   str_4players_selected;
+  SDL_Surface *   str_5players;
+  SDL_Surface *   str_5players_selected;
+  SDL_Surface *   str_exit;
+  SDL_Surface *   str_exit_selected;
+  SDL_Surface *   str_exit_confirm;
+  SDL_Surface *   str_exit_yes;
+  SDL_Surface *   str_exit_yes_selected;
+  SDL_Surface *   str_exit_no;
+  SDL_Surface *   str_exit_no_selected;
+
+
+
+
 
   Menu(Event * event);
   virtual ~Menu();
