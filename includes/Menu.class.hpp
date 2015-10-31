@@ -13,10 +13,20 @@ enum MENU_SELECTED {
   MENU_CAMPAIGN_CONTINUE,
   MENU_CAMPAIGN_COOP,
   MENU_CAMPAIGN_RETURN,
+  MENU_ARENA_2P,
+  MENU_ARENA_3P,
+  MENU_ARENA_4P,
+  MENU_ARENA_RETURN,
+  MENU_MULTI_2P,
+  MENU_MULTI_3P,
+  MENU_MULTI_4P,
+  MENU_MULTI_RETURN,
   MENU_CONFIG_NAME,
   MENU_CONFIG_NAMEA,
   MENU_CONFIG_NAMEB,
-  MENU_CONFIG_RETURN
+  MENU_CONFIG_RETURN,
+  MENU_EXIT_CONFIRM,
+  MENU_EXIT_RETURN
 };
 
 enum MENU_SELECTED_PRINCIPAL {
@@ -24,7 +34,8 @@ enum MENU_SELECTED_PRINCIPAL {
   CAMPAIGN,
   ARENA,
   MULTIPLAYER,
-  CONFIG
+  CONFIG,
+  EXIT
 };
 class Event;
 
@@ -71,10 +82,7 @@ public:
   SDL_Surface *   str_exit;
   SDL_Surface *   str_exit_selected;
   SDL_Surface *   str_exit_confirm;
-  SDL_Surface *   str_exit_yes;
-  SDL_Surface *   str_exit_yes_selected;
-  SDL_Surface *   str_exit_no;
-  SDL_Surface *   str_exit_no_selected;
+  SDL_Surface *   str_exit_confirm_selected;
 
 
 
@@ -85,9 +93,8 @@ public:
 
   void            campaign();
   void            config();
-  void            multi_2players();
-  void            multi_3players();
-  void            multi_4players();
+  void            arena();
+  void            multiplayer();
   void            exit_game();
   void            exit_confirm();
   void            intro_start() ;

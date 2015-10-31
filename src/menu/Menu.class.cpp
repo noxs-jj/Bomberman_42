@@ -9,13 +9,19 @@ void  Menu::campaign() {
   print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_CAMPAIGN_RETURN);
 }
 
+void  Menu::arena() {
+  print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_ARENA_2P);
+  print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_ARENA_3P);
+  print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_ARENA_4P);
+  print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_ARENA_RETURN);
+}
 
-
-void  Menu::multi_2players() {}
-
-void  Menu::multi_3players() {}
-
-void  Menu::multi_4players() {}
+void  Menu::multiplayer() {
+  print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_MULTI_2P);
+  print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_MULTI_3P);
+  print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_MULTI_4P);
+  print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_MULTI_RETURN);
+}
 
 void  Menu::config() {
   print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 400, MENU_CONFIG_NAME);
@@ -24,9 +30,10 @@ void  Menu::config() {
   print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_CONFIG_RETURN);
 }
 
-void  Menu::exit_game() {}
-
-void  Menu::exit_confirm() {}
+void  Menu::exit_game() {
+  print_surface(this->str_exit_confirm, this->str_exit_confirm_selected, 400, 400, MENU_EXIT_CONFIRM);
+  print_surface(this->str_return, this->str_return_selected, 400, 500, MENU_EXIT_RETURN);
+}
 
 void  Menu::print_surface(SDL_Surface * str, SDL_Surface * str_select, int x, int y, int type) {
   this->position.x = x;
@@ -79,11 +86,8 @@ void Menu::init() {
   this->str_config_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Config <<", this->white);
   this->str_exit = TTF_RenderText_Blended(this->SansPosterBold, "Exit Game", this->white);
   this->str_exit_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Exit Game <<", this->white);
-  this->str_exit_confirm = TTF_RenderText_Blended(this->SansPosterBold, "Confirm exit game ?", this->white);
-  this->str_exit_yes = TTF_RenderText_Blended(this->SansPosterBold, "Yes", this->white);
-  this->str_exit_yes_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Yes <<", this->white);
-  this->str_exit_no = TTF_RenderText_Blended(this->SansPosterBold, "No", this->white);
-  this->str_exit_no_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> No <<", this->white);
+  this->str_exit_confirm = TTF_RenderText_Blended(this->SansPosterBold, "Confirm exit game", this->white);
+  this->str_exit_confirm_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Confirm exit game <<", this->white);
   this->str_return = TTF_RenderText_Blended(this->SansPosterBold, "Return", this->white);
   this->str_return_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Return <<", this->white);
 
@@ -123,7 +127,10 @@ void  Menu::menu_selection() {
   switch(this->menu_selected) {
     case BIG_MENU: this->big_menu(); break;
     case CAMPAIGN: this->campaign(); break;
+    case ARENA: this->arena(); break;
+    case MULTIPLAYER: this->multiplayer(); break;
     case CONFIG: this->config(); break;
+    case EXIT: this->exit_game(); break;
   }
 
   globject::display_menu(this->ecran_menu);
@@ -165,6 +172,27 @@ void  Menu::move_menu_ver(int dir) {
     else
      this->detail_menu_selected += dir;
   }
+
+  else if (this->menu_selected == ARENA) {
+    if (dir == -1 && this->detail_menu_selected == MENU_ARENA_2P) {
+      this->detail_menu_selected = MENU_ARENA_RETURN;
+    }
+    else if (dir == 1 && this->detail_menu_selected == MENU_ARENA_RETURN) {
+      this->detail_menu_selected = MENU_ARENA_2P;
+    }
+    else
+     this->detail_menu_selected += dir;
+  }
+  else if (this->menu_selected == MULTIPLAYER) {
+    if (dir == -1 && this->detail_menu_selected == MENU_MULTI_2P) {
+      this->detail_menu_selected = MENU_MULTI_RETURN;
+    }
+    else if (dir == 1 && this->detail_menu_selected == MENU_MULTI_RETURN) {
+      this->detail_menu_selected = MENU_MULTI_2P;
+    }
+    else
+     this->detail_menu_selected += dir;
+  }
   else if (this->menu_selected == CONFIG) {
     if (dir == -1 && this->detail_menu_selected == MENU_CONFIG_NAME) {
       this->detail_menu_selected = MENU_CONFIG_RETURN;
@@ -174,6 +202,14 @@ void  Menu::move_menu_ver(int dir) {
     }
     else
      this->detail_menu_selected += dir;
+  }
+  else if (this->menu_selected == EXIT) {
+    if (this->detail_menu_selected == MENU_EXIT_CONFIRM) {
+      this->detail_menu_selected = MENU_EXIT_RETURN;
+    }
+    else if (this->detail_menu_selected == MENU_EXIT_RETURN) {
+      this->detail_menu_selected = MENU_EXIT_CONFIRM;
+    }
   }
 }
 
@@ -186,12 +222,28 @@ void  Menu::change_menu() {
     this->detail_menu_selected = MENU_CONFIG_NAME;
     this->menu_selected = CONFIG;
   }
-  else if (this->detail_menu_selected == MENU_CAMPAIGN_RETURN || this->detail_menu_selected == MENU_CONFIG_RETURN) {
+  else if (this->detail_menu_selected == MENU_MULTIPLAYER) {
+    this->detail_menu_selected = MENU_MULTI_2P;
+    this->menu_selected = MULTIPLAYER;
+  }
+  else if (this->detail_menu_selected == MENU_ARENA) {
+    this->detail_menu_selected = MENU_ARENA_2P;
+    this->menu_selected = ARENA;
+  }
+  else if (this->detail_menu_selected == MENU_CAMPAIGN_RETURN
+    || this->detail_menu_selected == MENU_CONFIG_RETURN
+    || this->detail_menu_selected == MENU_EXIT_RETURN
+    || this->detail_menu_selected == MENU_ARENA_RETURN
+    || this->detail_menu_selected == MENU_MULTI_RETURN) {
     this->detail_menu_selected = MENU_CAMPAIGN;
     this->menu_selected = BIG_MENU;
   }
-
-
+  else if (this->detail_menu_selected == MENU_EXIT) {
+    this->detail_menu_selected = MENU_EXIT_CONFIRM;
+    this->menu_selected = EXIT;
+  }
+  else if (this->detail_menu_selected ==MENU_EXIT_CONFIRM)
+    _exit(0);
 }
 
 void  Menu::menu_keyboard(void) {
