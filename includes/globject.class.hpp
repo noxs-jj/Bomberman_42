@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//                                                                            //
-//                                                        :::      ::::::::   //
-//   globject.class.hpp                                 :+:      :+:    :+:   //
-//                                                    +:+ +:+         +:+     //
-//   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
-//                                                +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 18:45:40 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   globject.class.hpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
+/*   Updated: 2015/10/31 12:42:07 by jmoiroux         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef GLOBJECT_CLASS_HPP
 # define GLOBJECT_CLASS_HPP
@@ -63,9 +63,11 @@ class globject {
 		static SDL_RendererInfo		_displayRendererInfo;
 		static						globject _object[100];
 		parser						parser;
-	
-	private :
+
+		// Jean-Jacques modification pour affichage mise en public pour acces
 		static void			display_menu(SDL_Surface *menu);
+
+	private :
 		static GLfloat		get_leg_pos(int model);
 		static char			*filetobuff(char *path);
 		static GLuint		loadshaders(char *a, char *b);

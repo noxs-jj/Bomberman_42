@@ -10,6 +10,8 @@ public:
 
   Event *         event;
   SDL_Surface *   current;
+  bool            introstart;
+  TTF_Font *      SansPosterBold;
 
   Menu(Event * event);
   virtual ~Menu();
@@ -26,6 +28,10 @@ public:
   void            exit_game();
   void            exit_confirm();
   void            intro_start() ;
+  void            main_loop();
+  void            menu_keyboard();
+  void            big_menu();
+  void            init();
 
 private:
   Menu( void );

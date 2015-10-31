@@ -15,62 +15,58 @@ int main( int ac, char **av ) {
 		}
 		Menu * menu = new Menu(main_event);
 		if (menu == NULL) {
-			main_event->w_full("Event Global allocation error");
+			main_event->w_full("Menu allocation error");
 			throw std::exception();
 		}
+		if (TTF_Init() != 0){
+			main_event->w_full("TTF_init initialization error ");
+			throw std::exception();
+		}
+		atexit(TTF_Quit);
 		srand(clock());
 		globject::init();
+		main_event->mode_menu = true;
+		menu->init();
+		menu->introstart = false;
+		static float time = 0;
 		main_event->init(ac, av);
 
-		menu->intro_start();
 
-		// Entity map[20][20];
-
-		// for (int i = 0; i < 20; i++)
-		// {
-		// 	for (int j = 0; j < 20; j++)
-		// 	{
-		// 		map[i][j].type = WALL;
-		// 		if (!(rand() % 2))
-		// 			map[i][j].type = 10;
-		// 	}
-		// }
-		// std::list<Player*> lol;
-		static float time = 0;
 		for (int i = 0; i < 30; i++) {
 			std::cout << globject::_object[WALL].parser._textID[i] << std::endl;
 		}
+
 		while (1) {
 			if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 				continue ;
 			keyboard();
-
 			main_event->dec_timer();
-
-			// usleep(5000);
-
-			// main_event->print_map(); // DEBUGG
-			// sleep(1);
-
-			//	std::cout << (1 / (clock() - time)) * CLOCKS_PER_SEC << std::endl;
 			time = clock();
 				const Uint8 *state = SDL_GetKeyboardState(NULL);
 			if (state[SDL_SCANCODE_RETURN]) {
 				globject::resize(1300, 1300);
 			}
-			globject::render_all(main_event->map, main_event->char_list, menu->current);
-			// globject::render_all(main_event->map, main_event->char_list, NULL);
-			// globject::render_all(NULL, NULL, menu->current);
+
+
+			if (false == main_event->mode_menu)
+				globject::render_all(main_event->map, main_event->char_list, NULL);
+			else
+				menu->main_loop();
+			std::cerr << "qpwoei" << std::endl;
+
 		}
 
-		// event->lauchGame();
-		// delete main_event;
+
+
+
+
+		delete main_event;
 	}
 	catch (std::exception & e){
 		std::cerr << "EXIT_FAILURE" << std::endl;
 		return (EXIT_FAILURE);
 	}
-    //Test graphique...
+  std::cout << "EXIT_SUCCESS" << std::endl;
 	return (EXIT_SUCCESS);
 }
 
@@ -89,24 +85,24 @@ void keyboard(void) {
 			case SDLK_UP:       key.key_down = 1; break;
 			case SDLK_RIGHT:    key.key_right = 1; break;
 			case SDLK_LEFT:     key.key_left = 1; break;
-			case SDLK_KP_0:    main_event->player_bomb(PLAYER1); break;
-			case SDLK_s:     key2.key_up = 1; break;
-			case SDLK_w:       key2.key_down = 1; break;
-			case SDLK_d:    key2.key_right = 1; break;
-			case SDLK_a:     key2.key_left = 1; break;
+			case SDLK_KP_0:    	main_event->player_bomb(PLAYER1); break;
+			case SDLK_s:     		key2.key_up = 1; break;
+			case SDLK_w:       	key2.key_down = 1; break;
+			case SDLK_d:    		key2.key_right = 1; break;
+			case SDLK_a:     		key2.key_left = 1; break;
 			case SDLK_SPACE:    main_event->player_bomb(PLAYER2); break;
-                // case SDLK_p:     this->addKey(SPACE); break;
-                // case SDLK_1:     this->addKey(ONE); break;
-                // case SDLK_2:     this->addKey(TWO); break;
-                // case SDLK_3:     this->addKey(THREE); break;
-			// case SDLK_SPACE:  main_event->play_sound("blast"); break;
+
+			case SDLK_p:        if (true == main_event->mode_menu)
+														main_event->mode_menu = false;
+													else
+														main_event->mode_menu = true;
+													break;
+
 			default: break;
 			}
 		}
         if (event.type == SDL_KEYUP) {
             switch((event).key.keysym.sym) {
-                // case SDLK_ESCAPE:    this->addKey(ECHAP); break;
-                // case SDLK_q:     this->addKey(ECHAP); break;
             case SDLK_DOWN:     key.key_up = 0; break;
             case SDLK_UP:       key.key_down = 0; break;
             case SDLK_RIGHT:    key.key_right = 0; break;
@@ -137,32 +133,3 @@ void keyboard(void) {
 	if (key2.key_down)
 		main_event->player_move(PLAYER2, DIR_BOTTOM);
 }
-/*
-void  				keyboard( void ) {
-	SDL_Event 			event;
-
-	while (SDL_PollEvent(&event)) {
-		if (event.type == SDL_KEYDOWN) {
-			switch((event).key.keysym.sym) {
-				case SDLK_ESCAPE:	_exit(0); break;
-				// case SDLK_ESCAPE:	this->addKey(ECHAP); break;
-				// case SDLK_q:		this->addKey(ECHAP); break;
-				case SDLK_DOWN:		main_event->player_move(PLAYER1, DIR_UP); break;
-				// case SDLK_s:		this->addKey(DOWN); break;
-				case SDLK_UP:		main_event->player_move(PLAYER1, DIR_BOTTOM); break;
-				// case SDLK_w:		this->addKey(UP); break;
-				case SDLK_RIGHT:	main_event->player_move(PLAYER1, DIR_RIGHT); break;
-				// case SDLK_d:		this->addKey(RIGHT); break;
-				case SDLK_LEFT:		main_event->player_move(PLAYER1, DIR_LEFT); break;
-				// case SDLK_a:		this->addKey(LEFT); break;
-				case SDLK_SPACE:	main_event->player_bomb(PLAYER1); break;
-				// case SDLK_p:		this->addKey(SPACE); break;
-				// case SDLK_1:		this->addKey(ONE); break;
-				// case SDLK_2:		this->addKey(TWO); break;
-				// case SDLK_3:		this->addKey(THREE); break;
-				default: break;
-			}
-		}
-	}
-}
-*/

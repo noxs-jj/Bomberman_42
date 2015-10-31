@@ -27,6 +27,7 @@
 # 	include <OpenGL/gl3.h>
 #   include <SDL.h>
 #   include <SDL_image.h>
+#   include <SDL_ttf.h>
 # endif
 
 # define LOG_PATH	"log/debugg.log"

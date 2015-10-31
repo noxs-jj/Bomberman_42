@@ -6,13 +6,13 @@
 #    By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/30 12:24:13 by jmoiroux         ###   ########.fr        #
+#    Updated: 2015/10/31 13:46:29 by jmoiroux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 PLATFORM := $(shell uname)
 
-#Mac --	brew install sdl2 sdl2_image sdl2_mixer
+#Mac --	brew install sdl2 sdl2_image sdl2_mixer sdl2_ttf
 ifeq "$(PLATFORM)" "Darwin"
 	GLUT = -framework Appkit -framework OpenGL
 	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
@@ -33,7 +33,7 @@ INCLUDE =		-I includes/ -I rc_lib/rc_math/
 
 SDL_INCLUDE =	`sdl2-config --cflags` -I $HOME/.brew/include/SDL
 
-SDL_LIB =		`sdl2-config --libs` -lSDL2_image -lSDL2_mixer
+SDL_LIB =		`sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 HEAD = 			includes/ft42.class.hpp \
 						includes/entity.class.hpp \
