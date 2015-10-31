@@ -84,6 +84,7 @@ int		Entity::count_entity(int type) {
 void	Entity::die( void ) {
 	std::cout << "Someone died " << std::endl;
 	std::cout << "count_entity" << count_entity(PLAYER) << std::endl;
+	main_event->soundrender->playSound("die");
 
 	if (this->type == PLAYER && count_entity(PLAYER) == 1)
 	{
