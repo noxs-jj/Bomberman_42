@@ -143,25 +143,37 @@ void  Menu::main_loop() {
   std::cout << "deb 1" << std::endl;
 
 }
-// 6 - 9
+
 void  Menu::move_menu_ver(int dir) {
   if (this->menu_selected == BIG_MENU) {
-    if (dir == DIR_UP)
-    this->detail_menu_selected = (MENU_EXIT + 1 + this->detail_menu_selected - 1) % (MENU_EXIT + 1);
-  else
-    this->detail_menu_selected = MENU_CAMPAIGN + (this->detail_menu_selected + 1) % (MENU_EXIT + 1);
+    if (dir == -1 && this->detail_menu_selected == MENU_CAMPAIGN) {
+      this->detail_menu_selected = MENU_EXIT;
+    }
+    else if (dir == 1 && this->detail_menu_selected == MENU_EXIT) {
+      this->detail_menu_selected = MENU_CAMPAIGN;
+    }
+    else
+     this->detail_menu_selected += dir;
   }
   else if (this->menu_selected == CAMPAIGN) {
-    if (dir == DIR_UP)
-    this->detail_menu_selected = (MENU_CAMPAIGN_RETURN + 1 + this->detail_menu_selected - 1) % (MENU_CAMPAIGN_RETURN + 1);
-  else
-    this->detail_menu_selected = (this->detail_menu_selected + 1) % (MENU_CAMPAIGN_RETURN + 1);
+    if (dir == -1 && this->detail_menu_selected == MENU_CAMPAIGN_NEW) {
+      this->detail_menu_selected = MENU_CAMPAIGN_RETURN;
+    }
+    else if (dir == 1 && this->detail_menu_selected == MENU_CAMPAIGN_RETURN) {
+      this->detail_menu_selected = MENU_CAMPAIGN_NEW;
+    }
+    else
+     this->detail_menu_selected += dir;
   }
   else if (this->menu_selected == CONFIG) {
-    if (dir == DIR_UP)
-    this->detail_menu_selected = (MENU_CONFIG_RETURN + 1 + this->detail_menu_selected - 1) % (MENU_CONFIG_RETURN + 1);
-  else
-    this->detail_menu_selected = MENU_CONFIG_NAME + (this->detail_menu_selected + 1) % (MENU_CONFIG_RETURN + 1);
+    if (dir == -1 && this->detail_menu_selected == MENU_CONFIG_NAME) {
+      this->detail_menu_selected = MENU_CONFIG_RETURN;
+    }
+    else if (dir == 1 && this->detail_menu_selected == MENU_CONFIG_RETURN) {
+      this->detail_menu_selected = MENU_CONFIG_NAME;
+    }
+    else
+     this->detail_menu_selected += dir;
   }
 }
 
@@ -195,8 +207,8 @@ void  Menu::menu_keyboard(void) {
       main_event->mode_menu = false;
     }
     break;
-    case SDLK_DOWN:     move_menu_ver(DIR_BOTTOM); break;
-    case SDLK_UP:       move_menu_ver(DIR_UP); break;
+    case SDLK_DOWN:     move_menu_ver(1); break;
+    case SDLK_UP:       move_menu_ver(-1); break;
     case SDLK_RIGHT:    std::cout << "hey" << std::endl; break;
     case SDLK_LEFT:     std::cout << "hey" << std::endl; break;
     case SDLK_RETURN:   change_menu(); break;
