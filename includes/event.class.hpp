@@ -50,8 +50,10 @@ public:
 	Enemy *		create_enemy(int status, float x, float y, int model);
 	Boss *		create_boss(int status, float x, float y, int name, int model);
 	Entity *	create_empty(int x, int y);
-	void        load_sounds(void);
-	void        play_sound(std::string soundName);
+
+	// soundrender
+	SoundRender *	soundrender = NULL;
+	void        load_sounds(void); //loads all sounds
 
 	void		player_move(int id, int dir);
 	void		player_bomb(int id);
@@ -65,9 +67,6 @@ public:
 	void	parse_command(int ac, char **av);
 
 	void	print_map( void ); // DEBUGG
-
-private:
-	SoundRender *	soundrender = NULL;
 };
 
 extern Event	*main_event;

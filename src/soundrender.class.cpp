@@ -73,7 +73,7 @@ bool SoundRender::loadMusic(std::string musicName, std::string fileName) {
     Mix_Music * music;
     music = Mix_LoadMUS(fileName.c_str());
     if (!music) {
-        std::printf("Mix_LoadMUS(\"music.mp3\"): %s\n", Mix_GetError());
+        std::printf("Mix_LoadMUS(\"%s\"): %s\n", fileName.c_str(), Mix_GetError());
         // this might be a critical error...
         return false;
     }

@@ -9,7 +9,6 @@
 
 Event::Event( void ) : run(true), coop(false), multi(2) {
 	this->map = NULL;
-	this->load_sounds();
 	srand(time(NULL));
 }
 
@@ -154,7 +153,8 @@ void	Event::init( int ac, char **av ) {
 		gen_level_campaign(6, 1, this->coop);
 
 	main_event->print_map(); // DEBUGG
-	this->play_sound("startup");
+	this->load_sounds();
+	this->soundrender->playSound("startup");
 }
 
 void	Event::exit_free( void ) {	// free here
@@ -321,24 +321,16 @@ void	Event::load_sounds(void) {
 	this->soundrender = new SoundRender();
 	if (this->soundrender != NULL) {
 		if (!(
-					 this->soundrender->loadSound("blast", "sound/blast.wav")
+				this->soundrender->loadSound("blast", "sound/blast.wav")
 				&& this->soundrender->loadSound("startup", "sound/ps1.wav")
-				&& this->soundrender->loadSound("pause", "sound/pause.wav")
-				&& this->soundrender->loadSound("conclusion", "sound/HANABI_2B.wav")
-				&& this->soundrender->loadSound("lay_bomb", "sound/BOM_SET.wav")
+				// && this->soundrender->loadSound("pause", "sound/pause.wav")
+				// && this->soundrender->loadSound("conclusion", "sound/HANABI_2B.wav")
+				// && this->soundrender->loadSound("lay_bomb", "sound/BOM_SET.wav")
+				&& this->soundrender->loadMusic("music", "sound/bgm.wav")
 			)) {
 			std::cout << "loadsound error" << std::endl;
 		}
 		std::cout << "sounds loaded" << std::endl;
-	} else {
-		std::cout << "soundrender == NULL" << std::endl;
-	}
-}
-
-void    Event::play_sound(std::string soundName) {
-	if (this->soundrender != NULL) {
-		this->soundrender->playSound(soundName);
-		std::cout << "sound " << soundName << " played" << std::endl;
 	} else {
 		std::cout << "soundrender == NULL" << std::endl;
 	}

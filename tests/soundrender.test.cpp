@@ -16,7 +16,6 @@ int main(int argc, char const *argv[]) {
 	// load sounds
 	sr->loadSound("blast", "sound/blast.wav");
 	sr->loadSound("startup", "sound/ps1.wav");
-	sr->loadSound("startup", "sound/bgm.wav");
 	sr->loadMusic("music", "sound/bgm.wav");
 
 	// play sound

@@ -36,6 +36,9 @@ int main( int ac, char **av ) {
 			std::cout << globject::_object[WALL].parser._textID[i] << std::endl;
 		}
 
+		// music
+		main_event->soundrender->playMusic("music");
+
 		while (1) {
 			if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 				continue ;

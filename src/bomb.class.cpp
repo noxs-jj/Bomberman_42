@@ -1,5 +1,6 @@
 #include <bomb.class.hpp>
 #include <fire.class.hpp>
+#include <soundrender.class.hpp>
 
 Bomb::~Bomb( void ) {}
 
@@ -74,7 +75,7 @@ void	Bomb::detonate( void ) {
 
 		i++;
 	}
-	main_event->play_sound("blast");
+	main_event->soundrender->playSound("blast");
 }
 
 void	Bomb::bomb_timer( void ) {
