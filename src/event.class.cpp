@@ -321,11 +321,13 @@ void	Event::load_sounds(void) {
 	this->soundrender = new SoundRender();
 	if (this->soundrender != NULL) {
 		if (!(
-				this->soundrender->loadSound("blast", "sound/blast.wav")
+				   this->soundrender->loadSound("blast", "sound/blast.wav")
 				&& this->soundrender->loadSound("startup", "sound/ps1.wav")
-				// && this->soundrender->loadSound("pause", "sound/pause.wav")
-				// && this->soundrender->loadSound("conclusion", "sound/HANABI_2B.wav")
-				// && this->soundrender->loadSound("lay_bomb", "sound/BOM_SET.wav")
+				&& this->soundrender->loadSound("die", "sound/Megaman dies.wav")
+				&& this->soundrender->loadSound("ready", "sound/Ready megaman.wav")
+				&& this->soundrender->loadSound("menu2", "sound/Mega menu 2.wav")
+				&& this->soundrender->loadSound("menu1", "sound/Mega menu 1.wav")
+				// music
 				&& this->soundrender->loadMusic("music", "sound/bgm.wav")
 			)) {
 			std::cout << "loadsound error" << std::endl;
