@@ -59,6 +59,12 @@ void Menu::init() {
   this->white = {255, 255, 255, 1};
   this->blue = {0, 0, 255, 1};
   this->red = {255, 0, 0, 1};
+  SDL_JoystickEventState(SDL_ENABLE);
+  this->manette1 = SDL_GameControllerOpen(0);
+  if (this->manette1 < NULL) {
+    std::cerr << "Could not open gamecontroller " << SDL_GetError() << std::endl;
+    throw std::exception();
+  }
 
   this->menu_selected = BIG_MENU;
   this->detail_menu_selected = MENU_CAMPAIGN;
@@ -247,45 +253,55 @@ void  Menu::change_menu() {
 }
 
 void  Menu::menu_keyboard(void) {
- SDL_Event           event;
+  SDL_Event           event;
+  // SDL_Joystick *     pJoy = NULL;
+  SDL_JoystickEventState(SDL_ENABLE);
 
- while (SDL_PollEvent(&event)) {
-  if (event.type == SDL_KEYDOWN) {
-    switch((event).key.keysym.sym) {
-     case SDLK_ESCAPE:     _exit(0); break;
 
-     case SDLK_SPACE:     if (false == this->introstart) {
-      this->introstart = true;
-      main_event->mode_menu = false;
-    }
-    break;
-    case SDLK_DOWN:     move_menu_ver(1); break;
-    case SDLK_UP:       move_menu_ver(-1); break;
-    case SDLK_RIGHT:    std::cout << "hey" << std::endl; break;
-    case SDLK_LEFT:     std::cout << "hey" << std::endl; break;
-    case SDLK_RETURN:   change_menu(); break;
+  int i = 0;
 
-          			// case SDLK_DOWN:     key.key_up = 1; break;
-          			// case SDLK_UP:       key.key_down = 1; break;
-          			// case SDLK_RIGHT:    key.key_right = 1; break;
-          			// case SDLK_LEFT:     key.key_left = 1; break;
-          			// case SDLK_KP_0:    	main_event->player_bomb(PLAYER1); break;
-          			// case SDLK_s:     		key2.key_up = 1; break;
-          			// case SDLK_w:       	key2.key_down = 1; break;
-          			// case SDLK_d:    		key2.key_right = 1; break;
-          			// case SDLK_a:     		key2.key_left = 1; break;
-          			// case SDLK_SPACE:    main_event->player_bomb(PLAYER2); break;
+  while (SDL_PollEvent(&event)) {
+    if (event.type == SDL_KEYDOWN) {
+      std::cout << "(event).key.keysym.sym " << (event).key.keysym.sym << std::endl;
+      switch((event).key.keysym.sym) {
+        case SDLK_ESCAPE:     _exit(0); break;
 
-    case SDLK_p:        if (true == main_event->mode_menu)
-    main_event->mode_menu = false;
-    else
-      main_event->mode_menu = true;
-    break;
-
-    default: break;
-    			  }
+        case SDLK_SPACE:     if (false == this->introstart) {
+          this->introstart = true;
+          main_event->mode_menu = false;
         }
-    }
+        break;
+        case SDLK_DOWN:     move_menu_ver(1); break;
+        case SDLK_UP:       move_menu_ver(-1); break;
+        case SDLK_RIGHT:    std::cout << "hey" << std::endl; break;
+        case SDLK_LEFT:     std::cout << "hey" << std::endl; break;
+        case SDLK_RETURN:   change_menu(); break;
+
+
+        case SDLK_p:        if (true == main_event->mode_menu)
+        main_event->mode_menu = false;
+        else
+        main_event->mode_menu = true;
+        break;
+
+        case SDLK_c:        std::cout << "SDL_NumJoysticks(void) " << SDL_NumJoysticks() << std::endl;
+        while ( i < SDL_NumJoysticks() ){
+          printf("    %s\n", SDL_GameControllerNameForIndex(i) );
+          i++;
+        }
+        break;
+
+        default: break;
+      }
+  }
+  else if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERBUTTONUP) {
+    fprintf(stdout, "Appui bouton joystick :\n");
+                            fprintf(stdout, "\tjoystick : %d\n",event.jbutton.which);
+                            fprintf(stdout, "\tbutton : %d\n",event.jbutton.button);
+                            fprintf(stdout, "\tétat : %d\n",event.jbutton.state);
+                            break;
+  }
+  }
 }
 
 Menu::Menu(Event * event) : event(event), current(NULL) {}

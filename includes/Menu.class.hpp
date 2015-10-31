@@ -47,6 +47,7 @@ public:
   SDL_Surface *   ecran_menu;
   bool            introstart;
   TTF_Font *      SansPosterBold;
+  SDL_GameController * manette1;
 
   SDL_Color       white;
   SDL_Color       blue;
