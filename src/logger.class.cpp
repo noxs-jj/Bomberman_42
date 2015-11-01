@@ -6,7 +6,7 @@
 /*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/01 15:55:13 by nmohamed          #+#    #+#             */
-/*   Updated: 2015/11/01 16:53:45 by nmohamed         ###   ########.fr       */
+/*   Updated: 2015/11/01 17:02:18 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void Logger::trace(const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 	m_mutex->lock();
-	log("trace", fmt, args);
+	log("[trace]", fmt, args);
 	m_outputFileStream << std::endl;
 	m_mutex->unlock();
 }
