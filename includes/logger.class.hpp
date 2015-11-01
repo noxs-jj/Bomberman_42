@@ -6,12 +6,13 @@
 /*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/01 15:55:04 by nmohamed          #+#    #+#             */
-/*   Updated: 2015/11/01 15:56:29 by nmohamed         ###   ########.fr       */
+/*   Updated: 2015/11/01 16:36:30 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* *************************************** */
 /* Easy logging class for the average noob */
+/*        somewhat log4j compatible        */
 /* *************************************** */
 
 #ifndef LOGGER_CLASS_HPP
@@ -33,9 +34,17 @@ class Logger {
 		Logger & operator=(Logger const & rhs);
 		~Logger();
 
-		void log(const char *fmt, ...);
+		void fatal(const char *fmt, ...);
+		void error(const char *fmt, ...);
+		void warning(const char *fmt, ...);
+		void info(const char *fmt, ...);
+		void debug(const char *fmt, ...);
+		void trace(const char *fmt, ...);
 
 	private:
+
+		void log(std::string prefix, const char *fmt, va_list args);
+
 		static std::string _getTimestamp();
 
 		std::string const m_fileName;

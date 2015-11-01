@@ -6,7 +6,7 @@
 /*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/01 15:55:13 by nmohamed          #+#    #+#             */
-/*   Updated: 2015/11/01 15:55:14 by nmohamed         ###   ########.fr       */
+/*   Updated: 2015/11/01 16:53:45 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,74 @@ Logger & Logger::operator=(Logger const & rhs) {
 }
 
 Logger::~Logger() {
-	;
+	m_outputFileStream << "\033[00m" << std::endl;
 }
 
-void Logger::log(const char *fmt, ...) {
-	va_list args;
-	va_start(args, fmt);
+void Logger::log(std::string prefix, const char *fmt, va_list args) {
 	char *str;
 	vasprintf(&str, fmt, args);
-
-	m_mutex->lock();
-	m_outputFileStream << "[ LOG ] [" << _getTimestamp() << "] " << str << std::endl;
-	m_mutex->unlock();
+	m_outputFileStream << prefix << "\t-- " << _getTimestamp() << "\t-- " << str;
 	free(str);
+}
+
+void Logger::fatal(const char *fmt, ...) {
+	va_list args;
+	va_start(args, fmt);
+	m_mutex->lock();
+	log("\033[41;01m" "[fatal]", fmt, args);
+	m_outputFileStream << "\033[00m" << std::endl;
+	m_mutex->unlock();
+}
+
+void Logger::error(const char *fmt, ...) {
+	va_list args;
+	va_start(args, fmt);
+	m_mutex->lock();
+	log("\033[31;01m" "[error]", fmt, args);
+	m_outputFileStream << "\033[00m" << std::endl;
+	m_mutex->unlock();
+}
+
+void Logger::warning(const char *fmt, ...) {
+	va_list args;
+	va_start(args, fmt);
+	m_mutex->lock();
+	log("\033[43;01m" "[warn]", fmt, args);
+	m_outputFileStream << "\033[00m" << std::endl;
+	m_mutex->unlock();
+}
+
+void Logger::info(const char *fmt, ...) {
+	va_list args;
+	va_start(args, fmt);
+	m_mutex->lock();
+	log("\033[34;01m" "[info]", fmt, args);
+	m_outputFileStream << "\033[00m" << std::endl;
+	m_mutex->unlock();
+}
+
+void Logger::debug(const char *fmt, ...) {
+	va_list args;
+	va_start(args, fmt);
+	m_mutex->lock();
+	log("\033[37;01m" "[debug]", fmt, args);
+	m_outputFileStream << "\033[00m" << std::endl;
+	m_mutex->unlock();
+}
+
+void Logger::trace(const char *fmt, ...) {
+	va_list args;
+	va_start(args, fmt);
+	m_mutex->lock();
+	log("trace", fmt, args);
+	m_outputFileStream << std::endl;
+	m_mutex->unlock();
 }
 
 std::string Logger::_getTimestamp() {
 	std::stringstream ss;
 	timespec ts;
 	clock_gettime(0, &ts);
-	ss << ' ' << ts.tv_sec << "." << std::setfill(' ') << std::setw(10) << std::left << ts.tv_nsec;
+	ss << ts.tv_sec << "." << ts.tv_nsec;
 	return ss.str();
 }
