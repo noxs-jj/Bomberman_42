@@ -10,3 +10,7 @@ shaders/.DS_Store
 src/*.o
 src/.DS_Store
 #*
+**/*.swo
+**/*.swp
+**/.DS_Store
+**/*.o

@@ -6,7 +6,7 @@
 /*   By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/10/29 18:15:17 by noxsnono         ###   ########.fr       */
+/*   Updated: 2015/10/31 23:03:30 by noxsnono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void		globject::init(void)
 	std::cout << "deb -999" << std::endl;
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	globject::_displayWindow = SDL_CreateWindow("Bomberman", SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED, 1200, 1200, SDL_WINDOW_OPENGL);
@@ -111,7 +111,18 @@ void		globject::init(void)
 	/* Init OpenGL */
 	std::cout << "deb -997" << std::endl;
 
-	SDL_GL_CreateContext(globject::_displayWindow);
+	SDL_GLContext glcontext = SDL_GL_CreateContext(globject::_displayWindow);
+	if(NULL == glcontext) {
+		std::cerr << "SDL_GLContext failed " <<  SDL_GetError() << std::endl;
+		_exit(0);
+	}
+
+	GLenum err = glewInit();
+	if(err != GLEW_OK) {
+		std::cerr << "glew failed" << glewGetErrorString(err) << std::endl;
+		_exit(0);
+	}
+
 	std::cout << "deb -996" << std::endl;
     glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
     glEnable(GL_DEPTH_TEST);
@@ -464,9 +475,13 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader)
     GLuint      progid;
     char        *buff;
 
+		// GLenum err = glewInit();
+    // if(err != GLEW_OK) {
+		// 	std::cerr << "glew failed" << std::endl;
+		// 	std::cerr << glewGetErrorString(err) << std::endl;
+		// 	_exit(0);
+		// }
 
-    if(glewInit() != GLEW_OK)
-			std::cerr << "glew failed" << std::endl;
 		std::cout << "fgh 0" << std::endl;
     vshaderid = glCreateShader(GL_VERTEX_SHADER);
 		std::cout << "fgh 3" << std::endl;
