@@ -151,15 +151,14 @@ void	Event::init( int ac, char **av ) {
 	else
 		gen_level_campaign(6, 1, this->coop);
 
-	main_event->print_map(); // DEBUGG
+	// main_event->print_map(); // DEBUGG
 	this->load_sounds();
 	this->soundrender->playSound("startup");
 }
 
 void	Event::exit_free( void ) {	// free here
 
-	this->w_log("Event::exit_free ==> End of free gomoku");
-
+	this->w_log("Event::exit_free ==> End of free Bomberman");
 }
 
 void	Event::lauchGame( void ) {
@@ -172,7 +171,7 @@ void	Event::lauchGame( void ) {
 Wall *	Event::create_wall(int status, float x, float y, int model) {
 	Wall * wall = new Wall(x, y, status, model);
 	if (wall == NULL) {
-		this->w_error("create_wall:: wall Malloc error");
+		this->w_full("create_wall:: wall Malloc error");
 		throw std::exception();
 	}
 
@@ -182,7 +181,7 @@ Wall *	Event::create_wall(int status, float x, float y, int model) {
 Bomb *	Event::create_bomb(int status, float x, float y, int model) {
 	Bomb * bomb = new Bomb(x, y, status, model);
 	if (bomb == NULL) {
-		this->w_error("create_bomb:: bomb Malloc error");
+		this->w_full("create_bomb:: bomb Malloc error");
 		throw std::exception();
 	}
 

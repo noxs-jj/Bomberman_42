@@ -228,10 +228,13 @@ void  Menu::move_menu_ver(int dir) {
 }
 
 void  Menu::change_menu() {
-  if (this->detail_menu_selected == MENU_CAMPAIGN) {
+  if ( false == main_event->game_playing && CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_NEW == this->detail_menu_selected )
+    Gamelauncher::campaign_new();
+  else if (this->detail_menu_selected == MENU_CAMPAIGN) {
     this->detail_menu_selected = MENU_CAMPAIGN_NEW;
     this->menu_selected = CAMPAIGN;
   }
+
 
   else if (this->detail_menu_selected == MENU_CONFIG) {
     this->detail_menu_selected = MENU_CONFIG_NAME;
@@ -249,11 +252,11 @@ void  Menu::change_menu() {
     this->menu_selected = MULTIPLAYER;
   }
 
-  else if ( false == main_event->game_playing && this->detail_menu_selected == MENU_ARENA && this->detail_menu_selected == MENU_ARENA_4P )
+  else if ( false == main_event->game_playing && this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_4P )
     Gamelauncher::run_arena_4();
-  else if ( false == main_event->game_playing && this->detail_menu_selected == MENU_ARENA && this->detail_menu_selected == MENU_ARENA_3P )
+  else if ( false == main_event->game_playing && this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_3P )
     Gamelauncher::run_arena_3();
-  else if ( false == main_event->game_playing && this->detail_menu_selected == MENU_ARENA && this->detail_menu_selected == MENU_ARENA_2P )
+  else if ( false == main_event->game_playing && this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_2P )
     Gamelauncher::run_arena_2();
   else if (this->detail_menu_selected == MENU_ARENA) {
     this->detail_menu_selected = MENU_ARENA_2P;
@@ -280,9 +283,6 @@ void  Menu::change_menu() {
 
 void  Menu::menu_keyboard(void) {
   SDL_Event           event;
-  SDL_JoystickEventState(SDL_ENABLE);
-
-
   int i = 0;
 
   while (SDL_PollEvent(&event)) {

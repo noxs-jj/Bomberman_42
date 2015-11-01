@@ -6,7 +6,7 @@
 #    By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/11/01 17:28:35 by jmoiroux         ###   ########.fr        #
+#    Updated: 2015/11/01 17:55:00 by jmoiroux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,11 @@ ifeq "$(PLATFORM)" "Linux"
 	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
 endif
 
-CXX = 			g++
+CXX = 			clang++
 
 NAME =			bomberman
 
-CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror
+CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror -pedantic
 
 INCLUDE =		-I includes/ -I rc_lib/rc_math/
 

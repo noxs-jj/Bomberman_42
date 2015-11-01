@@ -34,7 +34,6 @@ int main( int ac, char **av ) {
 
 
 
-
 		// music
 		main_event->soundrender->playMusic("music");
 

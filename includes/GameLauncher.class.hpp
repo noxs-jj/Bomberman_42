@@ -8,6 +8,8 @@ public:
   Gamelauncher();
   virtual ~Gamelauncher();
 
+  static void  campaign_new();
+
   static void  run_multi_2();
   static void  run_multi_3();
   static void  run_multi_4();
