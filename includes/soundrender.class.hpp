@@ -1,5 +1,6 @@
 #include <string>
 #include <ft42.class.hpp>
+#include <SDL.h>
 #include <SDL_mixer.h>
 #include <map>
 

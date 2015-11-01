@@ -2,6 +2,8 @@
 -Wall
 -Wextra
 -Werror
--Iincludes/
--Irc_lib/rc_math/
+-Iincludes
+-Irc_lib/rc_math
+-I/usr/include/SDL2
+-I/usr/include
 -I/Volumes/Data/nfs/zfs-student-4/users/2013/nmohamed/.brew/include/SDL2
