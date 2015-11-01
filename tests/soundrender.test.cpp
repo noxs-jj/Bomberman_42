@@ -1,4 +1,5 @@
 #include "soundrender.class.hpp"
+#include <thread>
 
 int main(int argc, char const *argv[]) {
 	(void)argc;
@@ -46,9 +47,12 @@ int main(int argc, char const *argv[]) {
 	sr->playSound("blast");
 	sleep(3);
 	std::cout << "Playing music" << std::endl;
-	sr->playMusic("music");
-	sleep(6);
+	std::thread t([sr](){
+		sr->playMusic("music");
+		sleep(6);
+	});
 
+	t.join();
 	delete sr;
 	std::cout << "end" << std::endl;
 	return 0;

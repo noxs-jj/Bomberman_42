@@ -6,7 +6,7 @@
 #    By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/31 15:55:32 by nmohamed         ###   ########.fr        #
+#    Updated: 2015/11/01 14:39:03 by nmohamed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,8 +86,11 @@ fclean: clean
 
 re: fclean all
 
-soundtest: all
-	$(CXX) src/soundrender.class.cpp $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) `sdl2-config --libs` `sdl2-config --cflags` -lSDL2_mixer "tests/soundrender.test.cpp"
+soundtest:
+	$(CXX) src/soundrender.class.cpp $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) `sdl2-config --libs` `sdl2-config --cflags` -lSDL2_mixer "tests/soundrender.test.cpp" -lpthread
+
+loggertest:
+	$(CXX) src/logger.class.cpp $(CFLAGS) $(INCLUDE) $(CFLAGS) "tests/logger.test.cpp" -lpthread
 
 sdltest:
 	$(CXX) $(CFLAGS) -stdlib=libc++ -o testsdl2 test/test_sdl2.cpp \
