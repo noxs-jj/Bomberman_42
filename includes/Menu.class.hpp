@@ -9,6 +9,7 @@ enum MENU_SELECTED {
   MENU_MULTIPLAYER,
   MENU_CONFIG,
   MENU_EXIT,
+  RESUME_GAME,
   MENU_CAMPAIGN_NEW,
   MENU_CAMPAIGN_CONTINUE,
   MENU_CAMPAIGN_COOP,
@@ -27,6 +28,7 @@ enum MENU_SELECTED {
   MENU_CONFIG_RETURN,
   MENU_EXIT_CONFIRM,
   MENU_EXIT_RETURN
+
 };
 
 enum MENU_SELECTED_PRINCIPAL {
@@ -46,6 +48,7 @@ public:
   SDL_Surface *   current;
   SDL_Surface *   ecran_menu;
   bool            introstart;
+  bool            launch_action;
   TTF_Font *      SansPosterBold;
   SDL_GameController * manette1;
 
@@ -58,6 +61,8 @@ public:
   int             detail_menu_selected;
   SDL_Surface *   str_return;
   SDL_Surface *   str_return_selected;
+  SDL_Surface *   str_resume_game;
+  SDL_Surface *   str_resume_game_selected;
   SDL_Surface *   str_campaign;
   SDL_Surface *   str_campaign_selected;
   SDL_Surface *   str_campaign_new;

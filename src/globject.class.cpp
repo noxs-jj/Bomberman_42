@@ -6,7 +6,7 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/10/31 18:42:21 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2015/11/01 14:51:18 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,12 @@ void		globject::init(void)
 
 	/* Init OpenGL */
 
-	SDL_GL_CreateContext(globject::_displayWindow);
+	SDL_GLContext glcontext = SDL_GL_CreateContext(globject::_displayWindow);
+	if(NULL == glcontext) {
+		std::cerr << "SDL_GLContext failed " <<  SDL_GetError() << std::endl;
+		_exit(0);
+	}
+
     glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
     glEnable(GL_DEPTH_TEST);
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);

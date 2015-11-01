@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+         #
+#    By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/31 15:55:32 by nmohamed         ###   ########.fr        #
+#    Updated: 2015/11/01 16:56:26 by jmoiroux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ HEAD = 			includes/ft42.class.hpp \
 						includes/Matrix.hpp \
 						includes/parser.class.hpp \
 						includes/soundrender.class.hpp \
-						includes/Menu.class.hpp
+						includes/Menu.class.hpp \
+						includes/GameLauncher.class.hpp
 
 SRC = 			src/ft42.class.cpp \
 						src/entity.class.cpp \
@@ -65,7 +66,8 @@ SRC = 			src/ft42.class.cpp \
 						src/Matrix.cpp \
 						src/parser.class.cpp \
 						src/soundrender.class.cpp \
-						src/menu/Menu.class.cpp
+						src/menu/Menu.class.cpp \
+						src/GameLauncher.class.cpp
 
 OBJ = 			$(SRC:.cpp=.cpp.o)
 
@@ -73,7 +75,7 @@ OBJ = 			$(SRC:.cpp=.cpp.o)
 	@$(CXX) $(CFLAGS)  $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
-	@echo "./gomoku -iathink -log -depth=[1-10]"
+	@echo "./bomberman"
 
 $(NAME): $(OBJ)
 	$(COMMAND)

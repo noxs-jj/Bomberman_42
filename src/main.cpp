@@ -22,23 +22,26 @@ int main( int ac, char **av ) {
 			main_event->w_full("TTF_init initialization error ");
 			throw std::exception();
 		}
+		ft42::logg = true; // ceci active les debugg ecran et fichier
 		atexit(TTF_Quit);
 		srand(clock());
 		globject::init();
 		main_event->mode_menu = true;
 		menu->init();
 		menu->introstart = false;
-		static float time = 0;
+		main_event->w_log("Event Init");
 		main_event->init(ac, av);
 
 
-		for (int i = 0; i < 30; i++) {
-			std::cout << globject::_object[WALL].parser._textID[i] << std::endl;
-		}
+
 
 		// music
 		main_event->soundrender->playMusic("music");
 
+		// for (int i = 0; i < 30; i++) {
+		// 	std::cout << globject::_object[WALL].parser._textID[i] << std::endl;
+		// }
+		static float time = 0;
 		while (1) {
 			if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 				continue ;
@@ -49,20 +52,16 @@ int main( int ac, char **av ) {
 			if (state[SDL_SCANCODE_RETURN]) {
 				globject::resize(1300, 1300);
 			}
-
-
 			if (false == main_event->mode_menu)
 				globject::render_all(main_event->map, main_event->char_list, NULL);
 			else
 				menu->main_loop();
-			std::cerr << "qpwoei" << std::endl;
-
 		}
 
 
 
 
-
+		main_event->w_log("Delete Main Event then EXIT");
 		delete main_event;
 	}
 	catch (std::exception & e){
