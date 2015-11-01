@@ -1,0 +1,7 @@
+- multi joueurs
+- mode arene
+- mode coop
+- plus de 3 levels (9 levels)
+- un boss affiche
+- map genere aleatoirement
+- packs de testure de l'espace SKYBOX

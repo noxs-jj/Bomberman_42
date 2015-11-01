@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   globject.class.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2015/10/31 23:03:30 by noxsnono         ###   ########.fr       */
+=======
+/*   Updated: 2015/10/31 21:55:54 by jmoiroux         ###   ########.fr       */
+>>>>>>> 796febdd94056a7129ce7283c36c8e7d30fde618
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +103,11 @@ void		globject::init(void)
 {
 
 	/* Init SDL */
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-	std::cout << "deb -999" << std::endl;
+
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER) < 0) {
+		std::cerr << "globject::init SDL_Init() error = " << SDL_GetError() << std::endl;
+		throw std::exception();
+	}
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
