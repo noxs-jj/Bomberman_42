@@ -6,7 +6,7 @@
 /*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/01 15:55:13 by nmohamed          #+#    #+#             */
-/*   Updated: 2015/11/01 17:02:18 by nmohamed         ###   ########.fr       */
+/*   Updated: 2015/11/02 13:12:02 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,17 @@ void Logger::trace(const char *fmt, ...) {
 std::string Logger::_getTimestamp() {
 	std::stringstream ss;
 	timespec ts;
+	#ifdef LINUX
 	clock_gettime(0, &ts);
+	#else
+	clock_serv_t cclock;
+	mach_timespec_t mts;
+	host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+	clock_get_time(cclock, &mts);
+	mach_port_deallocate(mach_task_self(), cclock);
+	ts.tv_sec = mts.tv_sec;
+	ts.tv_nsec = mts.tv_nsec;
+	#endif
 	ss << ts.tv_sec << "." << ts.tv_nsec;
 	return ss.str();
 }

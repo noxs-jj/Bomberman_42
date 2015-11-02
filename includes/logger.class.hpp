@@ -6,7 +6,7 @@
 /*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/01 15:55:04 by nmohamed          #+#    #+#             */
-/*   Updated: 2015/11/01 16:36:30 by nmohamed         ###   ########.fr       */
+/*   Updated: 2015/11/02 13:11:07 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@
 # include <sstream>
 # include <iomanip>
 # include <mutex>
+
+# include <time.h>
+# include <sys/time.h>
+
+# ifdef __MACH__
+#  include <mach/clock.h>
+#  include <mach/mach.h>
+# endif
 
 class Logger {
 	public:
