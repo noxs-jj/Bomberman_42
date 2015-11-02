@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+         #
+#    By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/11/01 17:55:00 by jmoiroux         ###   ########.fr        #
+#    Updated: 2015/11/02 13:15:52 by nmohamed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,3 +99,4 @@ sdltest:
 	-framework opengl `sdl2-config --libs` `sdl2-config --cflags`
 
 .PHONY: all clean fclean re
+.SILENT: $(CXX) $(NAME) $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(SDL_LIB) $(HEAD) $(SRC) $(OBJ) %.cpp.o all $(NAME) clean fclean re soundtest loggertest sdltest
