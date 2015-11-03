@@ -292,10 +292,10 @@ void  Menu::menu_keyboard(void) {
         case SDLK_ESCAPE:     _exit(0); break;
 
         case SDLK_SPACE:    if (false == this->introstart) {
-                                this->introstart = true;
-                                main_event->mode_menu = true;
-                            }
-                            break;
+          this->introstart = true;
+          main_event->mode_menu = true;
+        }
+        break;
 
         case SDLK_DOWN:     move_menu_ver(1); break;
         case SDLK_UP:       move_menu_ver(-1); break;
@@ -305,28 +305,46 @@ void  Menu::menu_keyboard(void) {
 
 
         case SDLK_p:        if (true == main_event->mode_menu)
-                              main_event->mode_menu = false;
-                            else
-                              main_event->mode_menu = true;
-                            break;
+        main_event->mode_menu = false;
+        else
+        main_event->mode_menu = true;
+        break;
 
         case SDLK_c:        std::cout << "SDL_NumJoysticks(void) " << SDL_NumJoysticks() << std::endl;
-                            while ( i < SDL_NumJoysticks() ){
-                              printf("    %s\n", SDL_GameControllerNameForIndex(i) );
-                              i++;
-                            }
-                            break;
+        while ( i < SDL_NumJoysticks() ){
+          printf("    %s\n", SDL_GameControllerNameForIndex(i) );
+          i++;
+        }
+        break;
 
         default: break;
       }
-  }
-  else if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERBUTTONUP) {
-    fprintf(stdout, "Appui bouton joystick :\n");
-    fprintf(stdout, "\tjoystick : %d\n",event.jbutton.which);
-    fprintf(stdout, "\tbutton : %d\n",event.jbutton.button);
-    fprintf(stdout, "\tétat : %d\n",event.jbutton.state);
-    break;
-  }
+    }
+    else if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+      fprintf(stdout, "Appui bouton joystick :\n");
+      fprintf(stdout, "\tjoystick : %d\n",event.jbutton.which);
+      fprintf(stdout, "\tbutton : %d\n",event.jbutton.button);
+      fprintf(stdout, "\tétat : %d\n",event.jbutton.state);
+      switch (event.cbutton.button) {
+        case SDL_CONTROLLER_BUTTON_A             : change_menu(); break;
+        case SDL_CONTROLLER_BUTTON_B             : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_X             : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_Y             : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_BACK          : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_GUIDE         : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_START         : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_LEFTSTICK     : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_RIGHTSTICK    : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_LEFTSHOULDER  : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_DPAD_UP       : move_menu_ver(-1); break;
+        case SDL_CONTROLLER_BUTTON_DPAD_DOWN     : move_menu_ver(1); break;
+        case SDL_CONTROLLER_BUTTON_DPAD_LEFT     : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_DPAD_RIGHT    : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_MAX           : (void)0; break;
+        default: break;
+      }
+    }
   }
 }
 

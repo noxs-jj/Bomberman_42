@@ -115,6 +115,48 @@ void keyboard(void) {
             default: break;
             }
         }
+		else if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+		  switch (event.cbutton.button) {
+			case SDL_CONTROLLER_BUTTON_A             : main_event->player_bomb(PLAYER2); break;
+			case SDL_CONTROLLER_BUTTON_B             : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_X             : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_Y             : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_BACK          : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_GUIDE         : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_START         : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_LEFTSTICK     : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_RIGHTSTICK    : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_LEFTSHOULDER  : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_DPAD_UP       : key2.key_down = true; break;
+			case SDL_CONTROLLER_BUTTON_DPAD_DOWN     : key2.key_up = true; break;
+			case SDL_CONTROLLER_BUTTON_DPAD_LEFT     : key2.key_left = true; break;
+			case SDL_CONTROLLER_BUTTON_DPAD_RIGHT    : key2.key_right = true; break;
+			case SDL_CONTROLLER_BUTTON_MAX           : (void)0; break;
+			default: break;
+		  }
+		}
+		else if (event.type == SDL_CONTROLLERBUTTONUP) {
+		  switch (event.cbutton.button) {
+			case SDL_CONTROLLER_BUTTON_A             : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_B             : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_X             : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_Y             : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_BACK          : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_GUIDE         : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_START         : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_LEFTSTICK     : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_RIGHTSTICK    : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_LEFTSHOULDER  : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER : (void)0; break;
+			case SDL_CONTROLLER_BUTTON_DPAD_UP       : key2.key_down = false; break;
+			case SDL_CONTROLLER_BUTTON_DPAD_DOWN     : key2.key_up = false; break;
+			case SDL_CONTROLLER_BUTTON_DPAD_LEFT     : key2.key_left = false; break;
+			case SDL_CONTROLLER_BUTTON_DPAD_RIGHT    : key2.key_right = false; break;
+			case SDL_CONTROLLER_BUTTON_MAX           : (void)0; break;
+			default: break;
+		  }
+		}
     }
 	if (key.key_right)
 		main_event->player_move(PLAYER1, DIR_RIGHT);
@@ -133,4 +175,7 @@ void keyboard(void) {
 		main_event->player_move(PLAYER2, DIR_UP);
 	if (key2.key_down)
 		main_event->player_move(PLAYER2, DIR_BOTTOM);
+
+
+
 }
