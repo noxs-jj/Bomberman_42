@@ -3,14 +3,15 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 #include <map>
+#include <stdexcept>
 
-class SoundRender {
+class SoundRender : ft42 {
 
     public:
 
         SoundRender();
-        SoundRender(SoundRender const & rhs);
-        SoundRender & operator=(SoundRender const & rhs);
+        SoundRender(SoundRender const & rhs) = default;
+        SoundRender & operator=(SoundRender const & rhs) = default;
         ~SoundRender();
 
         // add a sound to sound list
