@@ -20,9 +20,13 @@ int main(int argc, char const *argv[]) {
 		sr->loadSound("blast", "sound/blast.wav");
 		sr->loadSound("startup", "sound/ps1.wav");
 		sr->loadMusic("music", "sound/bgm.wav");
+		std::cout << "next step SHOULD FAIL" << std::endl;
 		sr->loadMusic("music", "sosad0");
+		std::cout << "next step SHOULD FAIL" << std::endl;
 		sr->loadMusic("musicasdsad", "sosad1");
+		std::cout << "next step SHOULD FAIL" << std::endl;
 		sr->loadSound("zxc", "sosad2");
+		std::cout << "next step SHOULD FAIL" << std::endl;
 		sr->loadSound("zxc", "sosad3");
 
 		// play sound
@@ -31,6 +35,7 @@ int main(int argc, char const *argv[]) {
 		sr->playSound("blast");
 		sleep(2);
 		std::cout << "Playing 17 sounds" << std::endl;
+		std::cout << "Some sounds SHOULD FAIL because of too few channels" << std::endl;
 		sr->playSound("blast");
 		sr->playSound("blast");
 		sr->playSound("blast");
@@ -53,6 +58,7 @@ int main(int argc, char const *argv[]) {
 		sr->playSound("blast");
 		sleep(3);
 		std::cout << "Playing music" << std::endl;
+		std::cout << "Testing thread safety" << std::endl;
 		std::thread t([&sr](){
 			sr->playMusic("music");
 			sleep(6);
