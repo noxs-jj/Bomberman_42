@@ -2,6 +2,7 @@
 #include <globject.class.hpp>
 #include <event.class.hpp>
 #include <GameLauncher.class.hpp>
+#include <soundrender.class.hpp>
 
 void  Menu::campaign() {
   print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 400, MENU_CAMPAIGN_NEW);
@@ -158,6 +159,7 @@ void  Menu::main_loop() {
 }
 
 void  Menu::move_menu_ver(int dir) {
+  main_event->soundrender->playSound("menu1");
   if (this->menu_selected == BIG_MENU) {
     if (dir == -1 && this->detail_menu_selected == MENU_CAMPAIGN) {
       this->detail_menu_selected = MENU_EXIT;
@@ -228,6 +230,7 @@ void  Menu::move_menu_ver(int dir) {
 }
 
 void  Menu::change_menu() {
+  main_event->soundrender->playSound("menu2");
   if ( false == main_event->game_playing && CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_NEW == this->detail_menu_selected )
     Gamelauncher::campaign_new();
   else if (this->detail_menu_selected == MENU_CAMPAIGN) {

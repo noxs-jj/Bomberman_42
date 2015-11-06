@@ -8,7 +8,7 @@ void			ft42::w_full( std::string const newEntry ) {
 	if (true == ft42::logg) {
 		std::cout << newEntry << std::endl;
 		ft42::lodFD << ft42::logTime( newEntry ) << std::endl;
-	}	
+	}
 }
 
 void			ft42::w_error( std::string const newEntry ) {
