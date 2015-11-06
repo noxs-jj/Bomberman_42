@@ -4,7 +4,7 @@
 # include <ft42.class.hpp>
 
 enum MENU_SELECTED {
-  RESUME_GAME = 0
+  RESUME_GAME = 0,
   MENU_CAMPAIGN,
   MENU_ARENA,
   MENU_MULTIPLAYER,

@@ -6,7 +6,7 @@
 #    By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/11/06 14:31:00 by nmohamed         ###   ########.fr        #
+#    Updated: 2015/11/06 14:35:50 by nmohamed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror -pedantic
 
 INCLUDE =		-I includes/ -I rc_lib/rc_math/
 
-SDL_INCLUDE =	`sdl2-config --cflags` -I $HOME/.brew/include/SDL
+SDL_INCLUDE =	`sdl2-config --cflags` -I $(HOME)/.brew/include/SDL
 
 SDL_LIB =		`sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
