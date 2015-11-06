@@ -86,9 +86,23 @@ void	Entity::die( void ) {
 	std::cout << "count_entity" << count_entity(PLAYER) << std::endl;
 	main_event->soundrender->playSound("die");
 
-	if (this->type == PLAYER && count_entity(PLAYER) == 1)
-	{
+	if (this->type == PLAYER && main_event->multi > 0 && count_entity(PLAYER) == 2) {
+		std::list<Entity *>::iterator it = main_event->char_list.begin();
+		std::list<Entity *>::iterator end = main_event->char_list.end();
+
+		while (it != end) {
+			if (this->id == (*it)->id)
+				main_event->char_list.erase(it); // delete this ?
+			else if ((*it)->type == PLAYER)
+				main_event->draw_winner = (*it)->model - PLAYER;
+			it++;
+		}
+		main_event->mode_menu = true; // desactive menu render
+	}
+	else if (this->type == PLAYER && count_entity(PLAYER) == 1) {
 		globject::spin(this->pos_x, this->pos_y);
+		main_event->mode_menu = false; // desactive menu render
+		main_event->draw_winner = this->model - PLAYER;
 	}
 	else {
 		std::list<Entity *>::iterator it = main_event->char_list.begin();

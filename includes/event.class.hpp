@@ -33,6 +33,7 @@ public:
 	bool									music; // activer musique de fond
 	bool									mode_menu; // si en menu ou pas
 	bool            			game_playing; // si une game en cours
+	int										draw_winner;
 
 
 	Event( void );

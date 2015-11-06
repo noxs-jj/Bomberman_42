@@ -324,6 +324,8 @@ void	Event::load_sounds(void) {
 				&& this->soundrender->loadSound("ready", "sound/Ready megaman.wav")
 				&& this->soundrender->loadSound("menu2", "sound/Mega menu 2.wav")
 				&& this->soundrender->loadSound("menu1", "sound/Mega menu 1.wav")
+				&& this->soundrender->loadSound("victory", "sound/victory.wav")
+				&& this->soundrender->loadSound("finish", "sound/finish.wav")
 				// music
 				&& this->soundrender->loadMusic("music", "sound/bgm.wav")
 			)) {

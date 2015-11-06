@@ -82,22 +82,29 @@ void keyboard(void) {
 	static t_key		key = {0, 0, 0, 0};
 	static t_key		key2 = {0, 0, 0, 0}; // key for p2
 	static t_key		key3 = {0, 0, 0, 0};
-	// static t_key		key4 = {0, 0, 0, 0};
+	static t_key		key4 = {0, 0, 0, 0};
 
 	while (SDL_PollEvent(&event)) {
         if (event.type == SDL_KEYDOWN) {
             switch((event).key.keysym.sym) {
 			case SDLK_ESCAPE:   _exit(0); break;
-			case SDLK_DOWN:     key.key_up = 1; break;
-			case SDLK_UP:       key.key_down = 1; break;
-			case SDLK_RIGHT:    key.key_right = 1; break;
-			case SDLK_LEFT:     key.key_left = 1; break;
+			case SDLK_KP_5:     key.key_up = 1; break;
+			case SDLK_KP_8:       key.key_down = 1; break;
+			case SDLK_KP_6:    key.key_right = 1; break;
+			case SDLK_KP_4:     key.key_left = 1; break;
 			case SDLK_KP_0:    	main_event->player_bomb(main_event->config[0]); break;
+
 			case SDLK_s:     		key2.key_up = 1; break;
 			case SDLK_w:       	key2.key_down = 1; break;
 			case SDLK_d:    		key2.key_right = 1; break;
 			case SDLK_a:     		key2.key_left = 1; break;
 			case SDLK_SPACE:    main_event->player_bomb(main_event->config[1]); break;
+
+			case SDLK_k:     		key4.key_up = 1; break;
+			case SDLK_i:       	key4.key_down = 1; break;
+			case SDLK_l:    		key4.key_right = 1; break;
+			case SDLK_j:     		key4.key_left = 1; break;
+			case SDLK_n:    main_event->player_bomb(main_event->config[3]); break;
 
 			case SDLK_p:        if (true == main_event->mode_menu)
 														main_event->mode_menu = false;
@@ -110,14 +117,21 @@ void keyboard(void) {
 		}
         if (event.type == SDL_KEYUP) {
             switch((event).key.keysym.sym) {
-            case SDLK_DOWN:     key.key_up = 0; break;
-            case SDLK_UP:       key.key_down = 0; break;
-            case SDLK_RIGHT:    key.key_right = 0; break;
-            case SDLK_LEFT:     key.key_left = 0; break;
-						case SDLK_s:     key2.key_up = 0; break;
-            case SDLK_w:       key2.key_down = 0; break;
-            case SDLK_d:    key2.key_right = 0; break;
-            case SDLK_a:     key2.key_left = 0; break;
+			case SDLK_KP_5:     key.key_up = 0; break;
+			case SDLK_KP_8:       key.key_down = 0; break;
+			case SDLK_KP_6:    key.key_right = 0; break;
+			case SDLK_KP_4:     key.key_left = 0; break;
+
+			case SDLK_s:     		key2.key_up = 0; break;
+			case SDLK_w:       	key2.key_down = 0; break;
+			case SDLK_d:    		key2.key_right = 0; break;
+			case SDLK_a:     		key2.key_left = 0; break;
+
+			case SDLK_k:     		key4.key_up = 0; break;
+			case SDLK_i:       	key4.key_down = 0; break;
+			case SDLK_l:    		key4.key_right = 0; break;
+			case SDLK_j:     		key4.key_left = 0; break;
+
             default: break;
             }
         }
@@ -191,5 +205,14 @@ void keyboard(void) {
 		main_event->player_move(main_event->config[2], DIR_UP);
 	if (key3.key_down)
 		main_event->player_move(main_event->config[2], DIR_BOTTOM);
+
+	if (key4.key_right)
+		main_event->player_move(main_event->config[3], DIR_RIGHT);
+	if (key4.key_left)
+		main_event->player_move(main_event->config[3], DIR_LEFT);
+	if (key4.key_up)
+		main_event->player_move(main_event->config[3], DIR_UP);
+	if (key4.key_down)
+		main_event->player_move(main_event->config[3], DIR_BOTTOM);
 
 }

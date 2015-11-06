@@ -57,7 +57,7 @@ void  Menu::big_menu() {
 }
 
 void Menu::init() {
-  this->SansPosterBold = TTF_OpenFont("src/menu/fonts/SansPosterBold.ttf", 24);
+  this->SansPosterBold = TTF_OpenFont("src/menu/fonts/GoldenAge.ttf", 64);
   this->white = {255, 255, 255, 1};
   this->blue = {0, 0, 255, 1};
   this->red = {255, 0, 0, 1};
