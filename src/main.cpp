@@ -29,7 +29,13 @@ int main( int ac, char **av ) {
 		main_event->mode_menu = true;
 		menu->init();
 		menu->introstart = false;
-		main_event->w_log("Event Init");
+		main_event->w_log("Event Init ----sdgzdsgdgf");
+		// main_event->print_map(); // DEBUGG
+		main_event->load_sounds();
+		main_event->soundrender->playSound("startup");
+
+		menu->main_loop();
+
 		main_event->init(ac, av);
 
 

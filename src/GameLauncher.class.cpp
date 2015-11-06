@@ -4,7 +4,7 @@
 void  Gamelauncher::campaign_new() {
   main_event->w_log("MENU_CAMPAIGN_NEW + LAUNCH ");
   main_event->coop = 0;
-  main_event->multi = 0; // 2 players in game
+  main_event->multi = 0;
   main_event->arena = 0;
   main_event->config[0] = 0x0; // player 1 get config number x
   main_event->mode_menu = false; // desactive menu render
@@ -25,7 +25,7 @@ void  Gamelauncher::run_multi_2() {
 void  Gamelauncher::run_multi_3() {
   main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_3P + LAUNCH ");
   main_event->coop = 0;
-  main_event->multi = 4; // 3 players in game
+  main_event->multi = 3; // 3 players in game
   main_event->arena = 0;
   main_event->config[0] = 0x0; // player 1 get config number x
   main_event->config[1] = 0x0; // player 2 get config number x
