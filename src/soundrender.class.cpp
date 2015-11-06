@@ -1,36 +1,30 @@
 #include "soundrender.class.hpp"
 
 SoundRender::SoundRender() {
-	w_full("soundrender -> constructing");
+	if (!init()) {
+        return ;
+    };
+}
+
+SoundRender::~SoundRender() {
+    deinit();
+}
+
+bool SoundRender::init() {
+    w_full("soundrender -> constructing");
     // open 44.1KHz, signed 16bit, system byte order,
     // stereo audio, using 1024 byte chunks
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
 		w_error(Mix_GetError());
-        return ;
+        return false;
     }
     // allocate 16 mixing channels
 	w_full("soundrender -> allocating channels");
     Mix_AllocateChannels(mMaxAllocatedChannels);
+    return true;
 }
-/*
-SoundRender::SoundRender(SoundRender const & rhs)
-    : mChunks(rhs.mChunks)
-    , mMusics(rhs.mMusics) {
-	w_full("soundrender -> allocating channels");
-    (void)rhs;
-}
-*/
-/*
-SoundRender & SoundRender::operator=(SoundRender const & rhs) {
-    w_full("copying soundrender");
-    if (this != &rhs) {
-        mChunks = rhs.mChunks;
-        mMusics = rhs.mMusics;
-    }
-    return (*this);
-}
-*/
-SoundRender::~SoundRender() {
+
+bool SoundRender::deinit() {
     w_full("destructing soundrender");
     // free sounds
     for (auto & kv : mChunks) {
@@ -51,8 +45,8 @@ SoundRender::~SoundRender() {
     }
     w_full("soundrender -> close audio");
     Mix_CloseAudio();
+    return true;
 }
-
 
 bool SoundRender::loadSound(std::string soundName, std::string fileName) {
     w_full("loading sound -> " + soundName + " at " + fileName);

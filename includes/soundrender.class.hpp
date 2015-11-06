@@ -14,6 +14,9 @@ class SoundRender : ft42 {
         SoundRender & operator=(SoundRender const & rhs) = default;
         ~SoundRender();
 
+		bool init();
+		bool deinit();
+
         // add a sound to sound list
         // play it with 'playSound(soundName);'
         // returns 'false' if something goes wrong
