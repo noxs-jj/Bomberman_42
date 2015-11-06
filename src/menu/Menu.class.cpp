@@ -161,13 +161,19 @@ void  Menu::main_loop() {
 void  Menu::move_menu_ver(int dir) {
   main_event->soundrender->playSound("menu1");
   if (this->menu_selected == BIG_MENU) {
-    if (dir == -1 && main_event->game_playing == true && this->detail_menu_selected == RESUME_GAME) {
+    if (dir == -1 && main_event->game_playing == true && this->detail_menu_selected == MENU_CAMPAIGN) {
+      this->detail_menu_selected = RESUME_GAME;
+    }
+    else if (dir == -1 && main_event->game_playing == false && this->detail_menu_selected == MENU_CAMPAIGN) {
       this->detail_menu_selected = MENU_EXIT;
     }
-    else if (dir == 1 && main_event->game_playing == false && this->detail_menu_selected == MENU_CAMPAIGN) {
+    else if (dir == -1 && this->detail_menu_selected == RESUME_GAME) {
       this->detail_menu_selected = MENU_EXIT;
     }
-    else if (dir == 1 && this->detail_menu_selected == MENU_EXIT) {
+    else if (dir == 1 && main_event->game_playing == true && this->detail_menu_selected == MENU_EXIT) {
+      this->detail_menu_selected = RESUME_GAME;
+    }
+    else if (dir == 1 && main_event->game_playing == false && this->detail_menu_selected == MENU_EXIT) {
       this->detail_menu_selected = MENU_CAMPAIGN;
     }
     else
