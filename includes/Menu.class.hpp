@@ -45,18 +45,19 @@ class Event;
 class Menu : public ft42 {
 public:
 
-  Event *         event;
-  SDL_Surface *   current;
-  SDL_Surface *   ecran_menu;
-  bool            introstart;
-  bool            launch_action;
-  TTF_Font *      SansPosterBold;
-  SDL_GameController * manette1;
+  Event *               event;
+  SDL_Surface *         current;
+  SDL_Surface *         ecran_menu;
+  bool                  introstart;
+  bool                  launch_action;
 
-  SDL_Color       white;
-  SDL_Color       blue;
-  SDL_Color       red;
-  SDL_Rect        position;
+  TTF_Font *            SansPosterBold;
+  SDL_GameController *  manette1;
+
+  SDL_Color             white;
+  SDL_Color             blue;
+  SDL_Color             red;
+  SDL_Rect              position;
 
   int             menu_selected;
   int             detail_menu_selected;
@@ -90,8 +91,7 @@ public:
   SDL_Surface *   str_exit_selected;
   SDL_Surface *   str_exit_confirm;
   SDL_Surface *   str_exit_confirm_selected;
-
-
+  SDL_Surface **  winner;
 
 
 
@@ -113,6 +113,7 @@ public:
   void            move_menu_ver(int dir);
   void            menu_selection();
   void            change_menu();
+  void            winner_multi();
 
 private:
   Menu( void );

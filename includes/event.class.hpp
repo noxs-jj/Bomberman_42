@@ -3,12 +3,6 @@
 
 # include <ft42.class.hpp>
 # include <entity.class.hpp>
-// # include <bomb.class.hpp>
-// # include <player.class.hpp>
-// # include <enemy.class.hpp>
-// # include <wall.class.hpp>
-// # include <fire.class.hpp>
-// # include <boss.class.hpp>
 
 class Entity;
 class Wall;
@@ -18,6 +12,7 @@ class Player;
 class Enemy;
 class Boss;
 class SoundRender;
+class Menu;
 
 class Event : public ft42 {
 public:
@@ -34,18 +29,19 @@ public:
 	bool									mode_menu; // si en menu ou pas
 	bool            			game_playing; // si une game en cours
 	int										draw_winner;
-
+	SoundRender *					soundrender = NULL;
+	Menu *								menu = NULL;
 
 	Event( void );
 	Event( Event const & src );
 	Event & operator=( Event const & rhs );
 	virtual ~Event( void );
 
-	void		fill_border_map(void);
-	void		gen_level_campaign(int level, int boss, bool coop);
-	void		gen_level_multi(int level, int coop);
-	bool		check_coord(int mode, float x, float y);
-	void		gen_obstacle(int difficulty);
+	void			fill_border_map(void);
+	void			gen_level_campaign(int level, int boss, bool coop);
+	void			gen_level_multi(int level, int coop);
+	bool			check_coord(int mode, float x, float y);
+	void			gen_obstacle(int difficulty);
 	Wall *		create_wall(int status, float x, float y, int model);
 	Bomb *		create_bomb(int status, float x, float y, int model);
 	Fire *		create_fire(int status, float x, float y, int model);
@@ -54,22 +50,15 @@ public:
 	Boss *		create_boss(int status, float x, float y, int name, int model);
 	Entity *	create_empty(int x, int y);
 
-	// soundrender
-	SoundRender *	soundrender = NULL;
-	void        load_sounds(void); //loads all sounds
-
-	void		player_move(int id, int dir);
-	void		player_bomb(int id);
-	void		dec_timer( void );
-
-
-	void	init( int ac, char **av );
-	void	exit_free( void );
-
-	void	lauchGame( void );
-	void	parse_command(int ac, char **av);
-
-	void	print_map( void ); // DEBUGG
+	void      load_sounds(void); //loads all sounds
+	void			player_move(int id, int dir);
+	void			player_bomb(int id);
+	void			dec_timer( void );
+	void			init( int ac, char **av );
+	void			exit_free( void );
+	void			lauchGame( void );
+	void			parse_command(int ac, char **av);
+	void			print_map( void ); // DEBUGG
 };
 
 extern Event	*main_event;

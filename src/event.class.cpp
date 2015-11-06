@@ -6,6 +6,7 @@
 #include <enemy.class.hpp>
 #include <boss.class.hpp>
 #include <soundrender.class.hpp>
+#include <Menu.class.hpp>
 
 Event::Event( void ) : run(true), coop(false), multi(2) {
 	this->map = NULL;
@@ -156,6 +157,12 @@ void	Event::init( int ac, char **av ) {
 }
 
 void	Event::exit_free( void ) {	// free here
+
+	// FREE menu
+	if (NULL != this->menu)
+		delete this->menu;
+	if (NULL != this->soundrender)
+		delete this->soundrender;
 
 	this->w_log("Event::exit_free ==> End of free Bomberman");
 }
