@@ -146,14 +146,13 @@ void	Event::print_map( void ) {
 void	Event::init( int ac, char **av ) {
 	this->parse_command(ac, av);
 	fill_border_map();
-	if (this->multi != 0)
+	std::cout << "this->multi " << this->multi << std::endl;
+	if (this->multi > 0)
 		gen_level_multi(6, this->multi);
 	else
 		gen_level_campaign(6, 1, this->coop);
 
 	// main_event->print_map(); // DEBUGG
-	this->load_sounds();
-	this->soundrender->playSound("startup");
 }
 
 void	Event::exit_free( void ) {	// free here
