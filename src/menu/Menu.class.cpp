@@ -105,7 +105,7 @@ void Menu::init() {
   this->str_exit_confirm_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Confirm exit game <<", this->red);
   this->str_return = TTF_RenderText_Blended(this->SansPosterBold, "Return", this->white);
   this->str_return_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Return <<", this->red);
-  this->winner = (SDL_Surface **)malloc(sizeof(SDL_Surface *) * 5);
+  this->winner = (SDL_Surface **)std::malloc(sizeof(SDL_Surface *) * 5);
   if (NULL == this->winner) {
     this->w_error("Menu::init winner allocation error");
     throw std::exception();
@@ -248,6 +248,10 @@ void  Menu::change_menu() {
     this->menu_selected = CAMPAIGN;
   }
 
+  else if (main_event->game_playing == true && this->menu_selected == RESUME_GAME) {
+    main_event->game_playing = false;
+    main_event->mode_menu = false;
+  }
 
   else if (this->detail_menu_selected == MENU_CONFIG) {
     this->detail_menu_selected = MENU_CONFIG_NAME;
@@ -303,7 +307,6 @@ void  Menu::menu_keyboard(void) {
       std::cout << "(event).key.keysym.sym " << (event).key.keysym.sym << std::endl;
       switch((event).key.keysym.sym) {
         case SDLK_ESCAPE:   main_event->exit_free();
-                            _exit(0);
                             break;
 
         case SDLK_SPACE:    if (false == this->introstart) {
@@ -323,9 +326,9 @@ void  Menu::menu_keyboard(void) {
                             break;
 
         case SDLK_p:        if (true == main_event->mode_menu)
-                            main_event->mode_menu = false;
+                              main_event->mode_menu = false;
                             else
-                            main_event->mode_menu = true;
+                              main_event->mode_menu = true;
                             break;
 
         case SDLK_c:        std::cout << "SDL_NumJoysticks(void) " << SDL_NumJoysticks() << std::endl;
@@ -406,5 +409,5 @@ Menu::~Menu() {
   SDL_FreeSurface(this->winner[3]);
   SDL_FreeSurface(this->winner[4]);
 
-  free(this->winner);
+  std::free(this->winner);
 }

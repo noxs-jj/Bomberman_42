@@ -21,7 +21,7 @@ Event & Event::operator=( Event const & rhs ) {
 }
 
 Event::~Event( void ) {
-	delete this->soundrender;
+	// delete this->soundrender;
 }
 
 void	Event::parse_command(int ac, char **av) {
@@ -159,12 +159,18 @@ void	Event::init( int ac, char **av ) {
 void	Event::exit_free( void ) {	// free here
 
 	// FREE menu
-	if (NULL != this->menu)
+	if (NULL != this->menu) {
+		this->w_full("Delete menu");
 		delete this->menu;
-	if (NULL != this->soundrender)
+	}
+	if (NULL != this->soundrender) {
+		this->w_full("Delete soundrender");
 		delete this->soundrender;
+	}
 
 	this->w_log("Event::exit_free ==> End of free Bomberman");
+	this->event_running = false;
+	this->mode_menu = false;
 }
 
 void	Event::lauchGame( void ) {

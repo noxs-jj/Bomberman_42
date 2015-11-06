@@ -31,6 +31,7 @@ public:
 	int										draw_winner;
 	SoundRender *					soundrender = NULL;
 	Menu *								menu = NULL;
+	bool									event_running = true;
 
 	Event( void );
 	Event( Event const & src );

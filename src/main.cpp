@@ -23,7 +23,7 @@ int main( int ac, char **av ) {
 			throw std::exception();
 		}
 		ft42::logg = true; // ceci active les debugg ecran et fichier
-		atexit(TTF_Quit);
+		std::atexit(TTF_Quit);
 		srand(clock());
 		globject::init();
 		main_event->mode_menu = true;
@@ -47,7 +47,7 @@ int main( int ac, char **av ) {
 		// 	std::cout << globject::_object[WALL].parser._textID[i] << std::endl;
 		// }
 		static float time = 0;
-		while (1) {
+		while (true == main_event->event_running) {
 			if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 				continue ;
 			keyboard();
@@ -67,7 +67,8 @@ int main( int ac, char **av ) {
 
 
 		main_event->w_log("Delete Main Event then EXIT");
-		delete main_event;
+		if (NULL != main_event)
+			delete main_event;
 	}
 	catch (std::exception & e){
 		std::cerr << "EXIT_FAILURE" << std::endl;
@@ -88,9 +89,8 @@ void keyboard(void) {
         if (event.type == SDL_KEYDOWN) {
             switch((event).key.keysym.sym) {
 							case SDLK_ESCAPE:   main_event->exit_free();
-																	delete main_event;
-																	_exit(0);
 																	break;
+
 							case SDLK_KP_5:     key.key_up = 1; break;
 							case SDLK_KP_8:     key.key_down = 1; break;
 							case SDLK_KP_6:    	key.key_right = 1; break;
