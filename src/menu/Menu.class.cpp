@@ -150,7 +150,7 @@ void  Menu::menu_selection() {
 
   if (main_event->draw_winner != 0) { // Affichage du victorieu
     this->winner_multi();
-    main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
+    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
   }
   else {
     switch(this->menu_selected) {
@@ -240,46 +240,44 @@ void  Menu::move_menu_ver(int dir) {
 }
 
 void  Menu::change_menu() {
+  std::cout << this->menu_selected << " vs " << RESUME_GAME << std::endl;
   main_event->soundrender->playSound("menu2");
-  if ( false == main_event->game_playing && CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_NEW == this->detail_menu_selected )
+  if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_NEW == this->detail_menu_selected )
     Gamelauncher::campaign_new();
+  else if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_COOP == this->detail_menu_selected )
+      Gamelauncher::campaign_new_coop();
   else if (this->detail_menu_selected == MENU_CAMPAIGN) {
     this->detail_menu_selected = MENU_CAMPAIGN_NEW;
     this->menu_selected = CAMPAIGN;
   }
-
-  else if (main_event->game_playing == true && this->menu_selected == RESUME_GAME) {
+  else if (main_event->game_playing == true && this->detail_menu_selected == RESUME_GAME) {
     main_event->game_playing = false;
     main_event->mode_menu = false;
   }
-
   else if (this->detail_menu_selected == MENU_CONFIG) {
     this->detail_menu_selected = MENU_CONFIG_NAME;
     this->menu_selected = CONFIG;
   }
-
-  else if ( false == main_event->game_playing && this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_4P )
+  else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_4P )
     Gamelauncher::run_multi_4(); // Multiplayer 4 Players Launcher game
-  else if ( false == main_event->game_playing && this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_3P )
+  else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_3P )
     Gamelauncher::run_multi_3(); // Multiplayer 3 Players Launcher game
-  else if ( false == main_event->game_playing && this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_2P )
+  else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_2P )
     Gamelauncher::run_multi_2(); // Multiplayer 2 Players Launcher game
   else if (this->detail_menu_selected == MENU_MULTIPLAYER) {
     this->detail_menu_selected = MENU_MULTI_2P;
     this->menu_selected = MULTIPLAYER;
   }
-
-  else if ( false == main_event->game_playing && this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_4P )
+  else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_4P )
     Gamelauncher::run_arena_4();
-  else if ( false == main_event->game_playing && this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_3P )
+  else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_3P )
     Gamelauncher::run_arena_3();
-  else if ( false == main_event->game_playing && this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_2P )
+  else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_2P )
     Gamelauncher::run_arena_2();
   else if (this->detail_menu_selected == MENU_ARENA) {
     this->detail_menu_selected = MENU_ARENA_2P;
     this->menu_selected = ARENA;
   }
-
   else if (this->detail_menu_selected == MENU_CAMPAIGN_RETURN
     || this->detail_menu_selected == MENU_CONFIG_RETURN
     || this->detail_menu_selected == MENU_EXIT_RETURN
@@ -288,12 +286,10 @@ void  Menu::change_menu() {
     this->detail_menu_selected = MENU_CAMPAIGN;
     this->menu_selected = BIG_MENU;
   }
-
   else if (this->detail_menu_selected == MENU_EXIT) {
     this->detail_menu_selected = MENU_EXIT_CONFIRM;
     this->menu_selected = EXIT;
   }
-
   else if (this->detail_menu_selected == MENU_EXIT_CONFIRM)
     main_event->exit_free();
 }

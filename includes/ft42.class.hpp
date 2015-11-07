@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <vector>
 
+# define MAX_LEVEL 9
 
 # ifdef linux
 #		include <GL/gl3.h>

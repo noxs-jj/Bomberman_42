@@ -97,12 +97,15 @@ void	Entity::die( void ) {
 				main_event->draw_winner = (*it)->model - PLAYER;
 			it++;
 		}
+		main_event->game_pause = true;
 		main_event->mode_menu = true; // desactive menu render
 	}
-	else if (this->type == PLAYER && count_entity(PLAYER) == 1) {
+	else if (this->type == PLAYER && count_entity(PLAYER) == 1) { // loose
 		globject::spin(this->pos_x, this->pos_y);
-		main_event->mode_menu = false; // desactive menu render
-		main_event->draw_winner = this->model - PLAYER;
+		main_event->mode_menu = true; // desactive menu render
+		main_event->game_pause = true;
+		globject::reinit_level(0);
+		// insert lose screen here !
 	}
 	else {
 		std::list<Entity *>::iterator it = main_event->char_list.begin();
@@ -114,6 +117,19 @@ void	Entity::die( void ) {
 			it++;
 		}
 	}
+
+	if (main_event->multi == 0 && main_event->arena == 0
+		&& count_entity(ENEMY) == 0 && count_entity(BOSS) == 0) { // campaign win
+			main_event->game_pause = true;
+			if (main_event->actual_level == MAX_LEVEL) {
+				main_event->actual_level = 1;
+				// insert win game screen here !
+			}
+			else {
+				// insert win level screen here !
+				main_event->make_new_game(1);
+			}
+		}
 }
 
 void	Entity::put_bomb(int status, float x, float y, int model, int blast) {
