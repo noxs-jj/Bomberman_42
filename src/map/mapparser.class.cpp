@@ -6,7 +6,7 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/07 13:27:58 by jmoiroux          #+#    #+#             */
-/*   Updated: 2015/11/07 16:54:27 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2015/11/07 16:56:28 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int         Mapparser::valid_map( char const *map_path ) {
   std::string   line;
   int           x = 0,
                 y = 0,
-                i = 0,
                 j = 0;
 
   if( access( map_path, F_OK ) < 0 ) {

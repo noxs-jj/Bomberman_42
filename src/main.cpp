@@ -10,79 +10,79 @@ int main( int ac, char **av ) {
 	ft42::logg = true;
 
 	// TEST mapparser
-	try {
-		std::cout << "ac " << ac << " -- av " << av[1] << std::endl;
-
-		Mapparser::valid_map(av[1]);
-	}
-	catch (std::exception & e){
-		std::cerr << "EXIT_FAILURE " << std::endl;
-		return (EXIT_FAILURE);
-	}
-	// END mapparser
-	//
 	// try {
-	// 	if (main_event == NULL) {
-	// 		std::cerr << "Event Global allocation error" << std::endl;
-	// 		throw std::exception();
-	// 	}
-	// 	main_event->menu = new Menu(main_event);
-	// 	if (main_event->menu == NULL) {
-	// 		main_event->w_full("Menu allocation error");
-	// 		throw std::exception();
-	// 	}
-	// 	if (TTF_Init() != 0){
-	// 		main_event->w_full("TTF_init initialization error ");
-	// 		throw std::exception();
-	// 	}
-	// 	ft42::logg = true; // ceci active les debugg ecran et fichier
-	// 	std::atexit(TTF_Quit);
-	// 	srand(clock());
-	// 	globject::init();
-	// 	main_event->mode_menu = true;
-	// 	main_event->menu->init();
-	// 	main_event->menu->introstart = false;
-	// 	main_event->w_log("Event Init");
-	// 	// main_event->print_map(); // DEBUGG
-	// 	main_event->load_sounds();
-	// 	main_event->soundrender->playSound("startup");
+	// 	std::cout << "ac " << ac << " -- av " << av[1] << std::endl;
 	//
-	// 	main_event->menu->main_loop();
-	//
-	// 	main_event->init(ac, av);
-	//
-	//
-	// 	// music
-	// 	main_event->soundrender->playMusic("music");
-	//
-	// 	// for (int i = 0; i < 30; i++) {
-	// 	// 	std::cout << globject::_object[WALL].parser._textID[i] << std::endl;
-	// 	// }
-	// 	static float time = 0;
-	// 	while (true == main_event->event_running) {
-	// 		if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
-	// 			continue ;
-	// 		keyboard();
-	// 		main_event->dec_timer();
-	// 		time = clock();
-	// 			const Uint8 *state = SDL_GetKeyboardState(NULL);
-	// 		if (state[SDL_SCANCODE_RETURN]) {
-	// 			globject::resize(1300, 1300);
-	// 		}
-	// 		if (false == main_event->mode_menu)
-	// 			globject::render_all(main_event->map, main_event->char_list, NULL);
-	// 		else
-	// 			main_event->menu->main_loop();
-	// 	}
-	//
-	// 	main_event->w_log("Delete Main Event then EXIT");
-	// 	if (NULL != main_event)
-	// 		delete main_event;
+	// 	Mapparser::valid_map(av[1]);
 	// }
 	// catch (std::exception & e){
-	// 	std::cerr << "EXIT_FAILURE " << e.what() << std::endl;
+	// 	std::cerr << "EXIT_FAILURE " << std::endl;
 	// 	return (EXIT_FAILURE);
 	// }
+	// END mapparser
+
+	try {
+		if (main_event == NULL) {
+			std::cerr << "Event Global allocation error" << std::endl;
+			throw std::exception();
+		}
+		main_event->menu = new Menu(main_event);
+		if (main_event->menu == NULL) {
+			main_event->w_full("Menu allocation error");
+			throw std::exception();
+		}
+		if (TTF_Init() != 0){
+			main_event->w_full("TTF_init initialization error ");
+			throw std::exception();
+		}
+		ft42::logg = true; // ceci active les debugg ecran et fichier
+		std::atexit(TTF_Quit);
+		srand(clock());
+		globject::init();
+		main_event->mode_menu = true;
+		main_event->menu->init();
+		main_event->menu->introstart = false;
+		main_event->w_log("Event Init");
+		// main_event->print_map(); // DEBUGG
+		main_event->load_sounds();
+		main_event->soundrender->playSound("startup");
+
+		main_event->menu->main_loop();
+
+		main_event->init(ac, av);
+
+
+		// music
+		main_event->soundrender->playMusic("music");
+
+		// for (int i = 0; i < 30; i++) {
+		// 	std::cout << globject::_object[WALL].parser._textID[i] << std::endl;
+		// }
+		static float time = 0;
+		while (true == main_event->event_running) {
+			if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
+				continue ;
+			keyboard();
+			main_event->dec_timer();
+			time = clock();
+				const Uint8 *state = SDL_GetKeyboardState(NULL);
+			if (state[SDL_SCANCODE_RETURN]) {
+				globject::resize(1300, 1300);
+			}
+			if (false == main_event->mode_menu)
+				globject::render_all(main_event->map, main_event->char_list, NULL);
+			else
+				main_event->menu->main_loop();
+		}
+
+		main_event->w_log("Delete Main Event then EXIT");
+		if (NULL != main_event)
+			delete main_event;
+	}
+	catch (std::exception & e){
+		std::cerr << "EXIT_FAILURE " << e.what() << std::endl;
+		return (EXIT_FAILURE);
+	}
   std::cout << "EXIT_SUCCESS" << std::endl;
 	return (EXIT_SUCCESS);
 }
