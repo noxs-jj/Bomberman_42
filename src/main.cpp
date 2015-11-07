@@ -13,7 +13,10 @@ int main( int ac, char **av ) {
 	// try {
 	// 	std::cout << "ac " << ac << " -- av " << av[1] << std::endl;
 	//
-	// 	Mapparser::valid_map(av[1]);
+	// 	Entity *** new_map = Mapparser::map_from_file(av[1]);
+	//
+	// 	(void)new_map;
+	//
 	// }
 	// catch (std::exception & e){
 	// 	std::cerr << "EXIT_FAILURE " << std::endl;
@@ -35,6 +38,7 @@ int main( int ac, char **av ) {
 			main_event->w_full("TTF_init initialization error ");
 			throw std::exception();
 		}
+
 		ft42::logg = true; // ceci active les debugg ecran et fichier
 		std::atexit(TTF_Quit);
 		srand(clock());
