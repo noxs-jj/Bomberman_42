@@ -367,9 +367,9 @@ void  Menu::menu_keyboard(void) {
                               change_menu();
                             break;
 
-        case SDLK_p:        if (true == main_event->mode_menu)
+        case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
                               main_event->mode_menu = false;
-                            else
+                            else if (main_event->game_playing == true)
                               main_event->mode_menu = true;
                             break;
 

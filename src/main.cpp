@@ -118,9 +118,9 @@ void keyboard(void) {
 							case SDLK_j:     		key4.key_left = 1; break;
 							case SDLK_n:    main_event->player_bomb(main_event->config[3]); break;
 
-							case SDLK_p:        if (true == main_event->mode_menu)
+							case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
 																		main_event->mode_menu = false;
-																	else
+																	else if (main_event->game_playing == true)
 																		main_event->mode_menu = true;
 																	break;
 
