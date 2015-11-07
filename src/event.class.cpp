@@ -75,7 +75,7 @@ void	Event::make_new_game( int new_level ) {
 			gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
 		}
 	}
-		main_event->print_map(); // DEBUGG
+		// main_event->print_map(); // DEBUGG
 }
 
 void	Event::parse_command(int ac, char **av) {

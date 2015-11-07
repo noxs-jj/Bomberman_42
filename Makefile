@@ -6,7 +6,7 @@
 #    By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/11/07 15:47:10 by jmoiroux         ###   ########.fr        #
+#    Updated: 2015/11/07 20:00:00 by jmoiroux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,11 +95,6 @@ soundtest:
 
 loggertest:
 	$(CXX) src/logger.class.cpp $(CFLAGS) $(INCLUDE) $(CFLAGS) "tests/logger.test.cpp" -lpthread
-
-mapparsertest:
-	clear
-	clang++ $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(GLUT) $(SRC) $(HEAD) $(SDL_LIB) \
-	tests/mapparser.text.cpp
 
 sdltest:
 	$(CXX) $(CFLAGS) -stdlib=libc++ -o testsdl2 test/test_sdl2.cpp \
