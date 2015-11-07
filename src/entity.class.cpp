@@ -104,6 +104,7 @@ void	Entity::die( void ) {
 		globject::spin(this->pos_x, this->pos_y);
 		main_event->mode_menu = true; // desactive menu render
 		main_event->game_pause = true;
+		globject::reinit_level(0);
 		// insert lose screen here !
 	}
 	else {

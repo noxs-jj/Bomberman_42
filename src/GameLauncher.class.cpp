@@ -9,6 +9,22 @@ void  Gamelauncher::campaign_new() {
   main_event->arena = 0;
   main_event->config[0] = PLAYER1; // player 1 get config number x
   main_event->mode_menu = false; // desactive menu render
+  std::cout << "HSEHGSHSHSHSH" << std::endl;
+  if (main_event->game_playing == true) {
+    std::cout << "HSEHGSHSHSHSH" << std::endl;
+    main_event->make_new_game(0);
+  }
+  main_event->game_playing = true; // activate active partie
+}
+
+void  Gamelauncher::campaign_new_coop() {
+  main_event->w_log("MENU_CAMPAIGN_NEW_COOP + LAUNCH ");
+  main_event->draw_winner = 0;
+  main_event->coop = 2;
+  main_event->multi = 0;
+  main_event->arena = 0;
+  main_event->config[0] = PLAYER1; // player 1 get config number x
+  main_event->mode_menu = false; // desactive menu render
   if (main_event->game_playing == true)
     main_event->make_new_game(0);
   main_event->game_playing = true; // activate active partie

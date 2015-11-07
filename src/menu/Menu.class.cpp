@@ -244,6 +244,8 @@ void  Menu::change_menu() {
   main_event->soundrender->playSound("menu2");
   if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_NEW == this->detail_menu_selected )
     Gamelauncher::campaign_new();
+  else if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_COOP == this->detail_menu_selected )
+      Gamelauncher::campaign_new_coop();
   else if (this->detail_menu_selected == MENU_CAMPAIGN) {
     this->detail_menu_selected = MENU_CAMPAIGN_NEW;
     this->menu_selected = CAMPAIGN;

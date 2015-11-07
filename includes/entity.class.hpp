@@ -19,6 +19,7 @@ public:
   int		speed;
   int		blast_radius;
   float	zoom_m;
+	static int		autoincrement;
 
 	Entity( int type, float x, float y, int status );
 	Entity( Entity const & src );
@@ -31,8 +32,6 @@ public:
 	void	take_damage( void );
 	void	put_bomb(int status, float x, float y, int model, int blast);
 	int		count_entity(int type);
-private:
-	static int		autoincrement;
 };
 
 #endif

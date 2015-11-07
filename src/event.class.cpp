@@ -46,7 +46,7 @@ void	Event::make_new_game( int new_level ) {
 	if (this->game_playing == true)
 		this->free_game();
 		main_event->game_pause = false;
-		// reset Entity::autoincrement
+		Entity::autoincrement = 0;
 	fill_border_map();
 	this->actual_level += new_level;
 	if (this->multi > 0)
