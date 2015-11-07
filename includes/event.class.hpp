@@ -20,6 +20,7 @@ public:
 	Entity ***						map;
 	std::list<Entity *>		char_list;
 	bool									coop; // false si campaign
+	int 									actual_level;
 	int										multi; // 0 == non activer, 2 player, 3, 4, 5
 	int										arena; // 0 == non activer, 2 player, 3, 4, 5
 	bool									new_game; // false == continue (load fichier sauvegarde)
@@ -28,6 +29,7 @@ public:
 	bool									music; // activer musique de fond
 	bool									mode_menu; // si en menu ou pas
 	bool            			game_playing; // si une game en cours
+	bool									game_pause; // si le jeu est en pause / fini
 	int										draw_winner;
 	SoundRender *					soundrender = NULL;
 	Menu *								menu = NULL;
@@ -60,6 +62,8 @@ public:
 	void			lauchGame( void );
 	void			parse_command(int ac, char **av);
 	void			print_map( void ); // DEBUGG
+	void 			make_new_game( int new_level );
+	void 			free_game( void );
 };
 
 extern Event	*main_event;

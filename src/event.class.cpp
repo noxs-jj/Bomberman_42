@@ -8,8 +8,9 @@
 #include <soundrender.class.hpp>
 #include <Menu.class.hpp>
 
-Event::Event( void ) : run(true), coop(false), multi(2) {
+Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 	this->map = NULL;
+	this->game_pause = false;
 	srand(time(NULL));
 }
 
@@ -22,6 +23,36 @@ Event & Event::operator=( Event const & rhs ) {
 
 Event::~Event( void ) {
 	// delete this->soundrender;
+}
+
+void 	Event::free_game( void ) {
+	int x, y = 0;
+
+	while (y < MAP_Y_SIZE) {
+		x = 0;
+		while (x < MAP_X_SIZE) {
+			delete this->map[y][x];
+			x++;
+		}
+		y++;
+	}
+
+	while (this->char_list.size() > 0) {
+		this->char_list.pop_front();
+	}
+}
+
+void	Event::make_new_game( int new_level ) {
+	if (this->game_playing == true)
+		this->free_game();
+		main_event->game_pause = false;
+		// reset Entity::autoincrement
+	fill_border_map();
+	this->actual_level += new_level;
+	if (this->multi > 0)
+		gen_level_multi(this->actual_level, this->multi);
+	else
+		gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
 }
 
 void	Event::parse_command(int ac, char **av) {
@@ -85,6 +116,7 @@ void	Event::gen_level_campaign(int level, int boss, bool coop) {
 	int tmpx = 0, tmpy = 0;
 	int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
 	int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+	boss = (boss > 0) ? 0 : 1;
 
 	this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1)); // change model
 	std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
@@ -149,15 +181,14 @@ void	Event::init( int ac, char **av ) {
 	fill_border_map();
 	std::cout << "this->multi " << this->multi << std::endl;
 	if (this->multi > 0)
-		gen_level_multi(6, this->multi);
+		gen_level_multi(1, this->multi);
 	else
-		gen_level_campaign(6, 1, this->coop);
+		gen_level_campaign(actual_level, this->actual_level % 3, this->coop);
 
 	// main_event->print_map(); // DEBUGG
 }
 
 void	Event::exit_free( void ) {	// free here
-
 	// FREE menu
 	if (NULL != this->menu) {
 		this->w_full("Delete menu");
@@ -171,6 +202,9 @@ void	Event::exit_free( void ) {	// free here
 	this->w_log("Event::exit_free ==> End of free Bomberman");
 	this->event_running = false;
 	this->mode_menu = false;
+
+	if (this->game_playing == true)
+		this->free_game();
 }
 
 void	Event::lauchGame( void ) {
@@ -252,6 +286,8 @@ Entity * Event::create_empty(int x, int y) {
 }
 
 void	Event::player_move(int model, int dir) {
+	if (this->game_pause == true)
+		return ;
 	std::list<Entity *>::iterator it = this->char_list.begin();
 	std::list<Entity *>::iterator end = this->char_list.end();
 
@@ -263,6 +299,8 @@ void	Event::player_move(int model, int dir) {
 }
 
 void	Event::player_bomb(int model) {
+	if (this->game_pause == true)
+		return ;
 	std::list<Entity *>::iterator it = this->char_list.begin();
 	std::list<Entity *>::iterator end = this->char_list.end();
 

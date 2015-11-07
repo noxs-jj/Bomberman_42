@@ -19,6 +19,7 @@
 # include <stdexcept>
 # include <time.h>
 
+# define MAX_LEVEL 9
 
 # ifdef linux
 #		include <GL/gl3.h>

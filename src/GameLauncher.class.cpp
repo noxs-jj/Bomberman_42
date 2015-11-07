@@ -9,6 +9,8 @@ void  Gamelauncher::campaign_new() {
   main_event->arena = 0;
   main_event->config[0] = PLAYER1; // player 1 get config number x
   main_event->mode_menu = false; // desactive menu render
+  if (main_event->game_playing == true)
+    main_event->make_new_game(0);
   main_event->game_playing = true; // activate active partie
 }
 
@@ -21,6 +23,8 @@ void  Gamelauncher::run_multi_2() {
   main_event->config[0] = PLAYER1; // player 1 get config number x
   main_event->config[1] = PLAYER2; // player 2 get config number x
   main_event->mode_menu = false; // desactive menu render
+  if (main_event->game_playing == true)
+    main_event->make_new_game(0);
   main_event->game_playing = true; // activate active partie
 }
 
@@ -34,6 +38,8 @@ void  Gamelauncher::run_multi_3() {
   main_event->config[1] = PLAYER2; // player 2 get config number x
   main_event->config[2] = PLAYER3; // player 3 get config number x
   main_event->mode_menu = false; // desactive menu render
+  if (main_event->game_playing == true)
+    main_event->make_new_game(0);
   main_event->game_playing = true; // activate active partie
 }
 
@@ -48,6 +54,8 @@ void  Gamelauncher::run_multi_4() {
   main_event->config[2] = PLAYER3; // player 3 get config number x
   main_event->config[3] = PLAYER4; // player 4 get config number x
   main_event->mode_menu = false; // desactive menu render
+  if (main_event->game_playing == true)
+    main_event->make_new_game(0);
   main_event->game_playing = true; // activate active partie
 }
 
@@ -60,6 +68,8 @@ void  Gamelauncher::run_arena_2() {
   main_event->config[0] = PLAYER1; // player 1 get config number x
   main_event->config[1] = PLAYER2; // player 2 get config number x
   main_event->mode_menu = false; // desactive menu render
+  if (main_event->game_playing == true)
+    main_event->make_new_game(0);
   main_event->game_playing = true; // activate active partie
 }
 
@@ -73,6 +83,8 @@ void  Gamelauncher::run_arena_3() {
   main_event->config[1] = PLAYER2; // player 2 get config number x
   main_event->config[2] = PLAYER3; // player 3 get config number x
   main_event->mode_menu = false; // desactive menu render
+  if (main_event->game_playing == true)
+    main_event->make_new_game(0);
   main_event->game_playing = true; // activate active partie
 }
 
@@ -87,6 +99,8 @@ void  Gamelauncher::run_arena_4() {
   main_event->config[2] = PLAYER3; // player 3 get config number x
   main_event->config[3] = PLAYER4; // player 4 get config number x
   main_event->mode_menu = false; // desactive menu render
+  if (main_event->game_playing == true)
+    main_event->make_new_game(0);
   main_event->game_playing = true; // activate active partie
 }
 
