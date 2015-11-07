@@ -18,6 +18,14 @@ void			ft42::w_error( std::string const newEntry ) {
 	}
 }
 
+void 			ft42::w_exception( std::string const newEntry ) {
+	if (true == ft42::logg)
+		this->w_log(newEntry);
+	std::cout << newEntry << std::endl;
+	ft42::lodFD << ft42::logTime( newEntry ) << std::endl;
+	throw std::exception();
+}
+
 void			ft42::w_log( std::string const newEntry ) {
 	if (true == ft42::logg) {
 		if ( ft42::logFileName.empty() && ft42::lodFD.is_open() == 0) {
