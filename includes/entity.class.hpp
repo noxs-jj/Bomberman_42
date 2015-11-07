@@ -11,14 +11,14 @@ public:
 	int		type;
 	int		id;
 	int		model;
-    float	pos_x;
-    float	pos_y;
-    int 	dir;
-    int 	status;
-    float	frame;
-    int		speed;
-    int		blast_radius;
-    float	zoom_m;
+  float	pos_x;
+  float	pos_y;
+  int 	dir;
+  int 	status;
+  float	frame;
+  int		speed;
+  int		blast_radius;
+  float	zoom_m;
 
 	Entity( int type, float x, float y, int status );
 	Entity( Entity const & src );
