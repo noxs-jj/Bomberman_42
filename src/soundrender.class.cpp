@@ -27,17 +27,18 @@ bool SoundRender::init() {
 bool SoundRender::deinit() {
     w_full("destructing soundrender");
     // free sounds
-    for (auto & kv : mChunks) {
-        // kv.first --> key (std::string)
-        // kv.second --> value (Mix_Chunk*)
-        w_full("freeing " + kv.first);
-        Mix_FreeChunk(kv.second);
-        kv.second = NULL;
+    for (auto it = mChunks.begin(); it != mChunks.cend();)
+    {
+        w_full("freeing " + it->first);
+        Mix_FreeChunk(it->second);
+        mChunks.erase(it++);
     }
     // free music
-    for (auto & kv : mMusics) {
-        Mix_FreeMusic(kv.second);
-        kv.second = NULL;
+    for (auto it = mMusics.begin(); it != mMusics.cend();)
+    {
+        w_full("freeing " + it->first);
+        Mix_FreeMusic(it->second);
+        mMusics.erase(it++);
     }
     w_full("soundrender -> deiniting (Mix_Init(0))");
     while (Mix_Init(0)) {
