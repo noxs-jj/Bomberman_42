@@ -6,7 +6,7 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/07 13:27:34 by jmoiroux          #+#    #+#             */
-/*   Updated: 2015/11/07 16:09:55 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2015/11/07 18:05:58 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <ft42.class.hpp>
 
-static std::map<std::string, int> const mapcase = {
+static std::map<std::string, int> const g_mapcase = {
 
   {"   ", EMPTY},
   {"1##", WALL_INDESTRUCTIBLE},
@@ -45,8 +45,9 @@ public:
   void        get_error() const ;
   static int  valid_map( char const *map_path ) ;
 
-  Entity ***  map_from_file( char *map_path );
-  Entity ***  map_alloc();
+  static Entity ***  map_from_file( char *map_path );
+  static Entity ***  map_alloc();
+  static Entity *    get_entity_from_map( std::string & casemap, float x, float y);
 
 };
 
