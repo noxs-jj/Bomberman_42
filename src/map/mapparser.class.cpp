@@ -6,7 +6,7 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/07 13:27:58 by jmoiroux          #+#    #+#             */
-/*   Updated: 2015/11/07 18:08:39 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2015/11/07 18:28:01 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ Entity ***  Mapparser::map_from_file( char *map_path ) {
 
       std::cout << casemap;
       casemap.clear();
-      i += 3;
+      i += 4;
       x++;
 
       if ( i >= (int)line.length() )
@@ -53,6 +53,7 @@ Entity ***  Mapparser::map_from_file( char *map_path ) {
     j++;
   }
 
+  std::cout << "Mapparser::map_from_file LOADED" << std::endl;
   return tmp;
 }
 
@@ -60,7 +61,7 @@ Entity ***  Mapparser::map_from_file( char *map_path ) {
 Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, float y) {
   Entity * tmp = NULL;
 
-  if ( g_mapcase.count(casemap) != 0) {
+  if ( g_mapcase.count(casemap) == 0) {
     main_event->w_full("Map file Case Syntax error/doesn't exist");
     throw std::exception();
   }

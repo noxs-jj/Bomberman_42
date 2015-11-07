@@ -16,6 +16,8 @@ class Menu;
 
 class Event : public ft42 {
 public:
+	int										ac;
+	char **								av;
 	bool									run;
 	Entity ***						map;
 	std::list<Entity *>		char_list;

@@ -51,9 +51,10 @@ int main( int ac, char **av ) {
 		main_event->load_sounds();
 		main_event->soundrender->playSound("startup");
 
-		main_event->menu->main_loop();
+		std::cout << "ac= " << ac << std::endl;
+		main_event->init(ac, av);
 
-		// main_event->init(ac, av);
+		main_event->menu->main_loop();
 
 
 		// music

@@ -7,6 +7,7 @@
 #include <boss.class.hpp>
 #include <soundrender.class.hpp>
 #include <Menu.class.hpp>
+#include <mapparser.class.hpp>
 
 Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 	this->map = NULL;
@@ -54,10 +55,25 @@ void	Event::make_new_game( int new_level ) {
 	fill_border_map();
 	this->actual_level += new_level;
 	std::cout << "new wall level " << this->actual_level << std::endl;
-	if (this->multi > 0)
-		gen_level_multi(this->actual_level, this->multi);
-	else
-		gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
+	if (this->multi > 0) {
+		std::cout << "this->multi > 0" << std::endl;
+		// gen_level_multi(this->actual_level, this->multi);
+		if (this->ac >= 2)
+			this->map = Mapparser::map_from_file(av[1]);
+		else
+			gen_level_multi(this->actual_level, this->multi);
+	}
+	else {
+		std::cout << "this->multi > 0 else " << this->ac << std::endl;
+		// gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
+		if (this->ac >= 2) {
+			std::cout << "this->ac >= 2" << this->ac << std::endl;
+			this->map = Mapparser::map_from_file(av[1]);
+		}
+		else {
+			gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
+		}
+	}
 }
 
 void	Event::parse_command(int ac, char **av) {
@@ -118,6 +134,7 @@ bool	Event::check_coord(int mode, float x, float y) {
 }
 
 void	Event::gen_level_campaign(int level, int boss, bool coop) {
+	std::cout << "gen_level_campaign " << std::endl;
 	int tmpx = 0, tmpy = 0;
 	int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
 	int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
@@ -182,13 +199,8 @@ void	Event::print_map( void ) {
 }
 
 void	Event::init( int ac, char **av ) {
-	this->parse_command(ac, av);
-	fill_border_map();
-	std::cout << "this->multi " << this->multi << std::endl;
-	if (this->multi > 0)
-		gen_level_multi(1, this->multi);
-	else
-		gen_level_campaign(actual_level, this->actual_level % 3, this->coop);
+	this->ac = ac;
+	this->av = av;
 
 	// main_event->print_map(); // DEBUGG
 }
