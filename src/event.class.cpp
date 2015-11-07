@@ -69,11 +69,13 @@ void	Event::make_new_game( int new_level ) {
 		if (this->ac >= 2) {
 			std::cout << "this->ac >= 2" << this->ac << std::endl;
 			this->map = Mapparser::map_from_file(av[1]);
+			// this->map = Mapparser::map_from_file("src/map/test/test1.ntm");
 		}
 		else {
 			gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
 		}
 	}
+		main_event->print_map(); // DEBUGG
 }
 
 void	Event::parse_command(int ac, char **av) {
@@ -196,13 +198,14 @@ void	Event::print_map( void ) {
 		std::cout << std::endl;
 		y++;
 	}
+	std::cout << "print_map END" << std::endl;
 }
 
 void	Event::init( int ac, char **av ) {
 	this->ac = ac;
 	this->av = av;
 
-	// main_event->print_map(); // DEBUGG
+
 }
 
 void	Event::exit_free( void ) {	// free here
