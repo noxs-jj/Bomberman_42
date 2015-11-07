@@ -11,6 +11,10 @@
 Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 	this->map = NULL;
 	this->game_pause = false;
+	this->draw_winner_multi = 0;
+	this->draw_winner_campaign = 0;
+	this->draw_lose_campaign = 0;
+	this->draw_end_campaign = 0;
 	srand(time(NULL));
 }
 
@@ -49,6 +53,7 @@ void	Event::make_new_game( int new_level ) {
 		Entity::autoincrement = 0;
 	fill_border_map();
 	this->actual_level += new_level;
+	std::cout << "new wall level " << this->actual_level << std::endl;
 	if (this->multi > 0)
 		gen_level_multi(this->actual_level, this->multi);
 	else

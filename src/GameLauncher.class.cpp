@@ -3,23 +3,29 @@
 
 void  Gamelauncher::campaign_new() {
   main_event->w_log("MENU_CAMPAIGN_NEW + LAUNCH ");
-  main_event->draw_winner = 0;
+  main_event->draw_winner_multi = 0;
+  main_event->draw_winner_campaign = 0;
+  main_event->draw_lose_campaign = 0;
+  main_event->draw_end_campaign = 0;
+  main_event->actual_level = 1;
   main_event->coop = 0;
   main_event->multi = 0;
   main_event->arena = 0;
   main_event->config[0] = PLAYER1; // player 1 get config number x
   main_event->mode_menu = false; // desactive menu render
-  std::cout << "HSEHGSHSHSHSH" << std::endl;
-  if (main_event->game_playing == true) {
-    std::cout << "HSEHGSHSHSHSH" << std::endl;
-    main_event->make_new_game(0);
-  }
+  // if (main_event->game_playing == true) {
+  main_event->make_new_game(0);
+  // }
   main_event->game_playing = true; // activate active partie
 }
 
 void  Gamelauncher::campaign_new_coop() {
   main_event->w_log("MENU_CAMPAIGN_NEW_COOP + LAUNCH ");
-  main_event->draw_winner = 0;
+  main_event->draw_winner_multi = 0;
+  main_event->draw_winner_campaign = 0;
+  main_event->draw_lose_campaign = 0;
+  main_event->draw_end_campaign = 0;
+  main_event->actual_level = 1;
   main_event->coop = 2;
   main_event->multi = 0;
   main_event->arena = 0;
@@ -32,7 +38,10 @@ void  Gamelauncher::campaign_new_coop() {
 
 void  Gamelauncher::run_multi_2() {
   main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_2P + LAUNCH ");
-  main_event->draw_winner = 0;
+  main_event->draw_winner_multi = 0;
+  main_event->draw_winner_campaign = 0;
+  main_event->draw_lose_campaign = 0;
+  main_event->draw_end_campaign = 0;
   main_event->coop = 0;
   main_event->multi = 2; // 2 players in game
   main_event->arena = 0;
@@ -46,7 +55,10 @@ void  Gamelauncher::run_multi_2() {
 
 void  Gamelauncher::run_multi_3() {
   main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_3P + LAUNCH ");
-  main_event->draw_winner = 0;
+  main_event->draw_winner_multi = 0;
+  main_event->draw_winner_campaign = 0;
+  main_event->draw_lose_campaign = 0;
+  main_event->draw_end_campaign = 0;
   main_event->coop = 0;
   main_event->multi = 3; // 3 players in game
   main_event->arena = 0;
@@ -61,7 +73,10 @@ void  Gamelauncher::run_multi_3() {
 
 void  Gamelauncher::run_multi_4() {
   main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_4P + LAUNCH ");
-  main_event->draw_winner = 0;
+  main_event->draw_winner_multi = 0;
+  main_event->draw_winner_campaign = 0;
+  main_event->draw_lose_campaign = 0;
+  main_event->draw_end_campaign = 0;
   main_event->coop = 0;
   main_event->multi = 4; // 4 players in game
   main_event->arena = 0;
@@ -77,7 +92,10 @@ void  Gamelauncher::run_multi_4() {
 
 void  Gamelauncher::run_arena_2() {
   main_event->w_log("MENU_MULTIPLAYER + MENU_ARENA_2P + LAUNCH ");
-  main_event->draw_winner = 0;
+  main_event->draw_winner_multi = 0;
+  main_event->draw_winner_campaign = 0;
+  main_event->draw_lose_campaign = 0;
+  main_event->draw_end_campaign = 0;
   main_event->coop = 0;
   main_event->multi = 0;
   main_event->arena = 2;  // 2 players in game
@@ -91,7 +109,10 @@ void  Gamelauncher::run_arena_2() {
 
 void  Gamelauncher::run_arena_3() {
   main_event->w_log("MENU_MULTIPLAYER + MENU_ARENA_3P + LAUNCH ");
-  main_event->draw_winner = 0;
+  main_event->draw_winner_multi = 0;
+  main_event->draw_winner_campaign = 0;
+  main_event->draw_lose_campaign = 0;
+  main_event->draw_end_campaign = 0;
   main_event->coop = 0;
   main_event->multi = 0;
   main_event->arena = 3;  // 3 players in game
@@ -106,7 +127,10 @@ void  Gamelauncher::run_arena_3() {
 
 void  Gamelauncher::run_arena_4() {
   main_event->w_log("MENU_MULTIPLAYER + MENU_ARENA_4P + LAUNCH ");
-  main_event->draw_winner = 0;
+  main_event->draw_winner_multi = 0;
+  main_event->draw_winner_campaign = 0;
+  main_event->draw_lose_campaign = 0;
+  main_event->draw_end_campaign = 0;
   main_event->coop = 0;
   main_event->multi = 0;
   main_event->arena = 4;  // 4 players in game
