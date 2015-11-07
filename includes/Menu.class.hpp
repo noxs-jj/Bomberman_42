@@ -91,6 +91,9 @@ public:
   SDL_Surface *   str_exit_selected;
   SDL_Surface *   str_exit_confirm;
   SDL_Surface *   str_exit_confirm_selected;
+  SDL_Surface *   lose_campaign_txt;
+  SDL_Surface *   winner_campaign_txt;
+  SDL_Surface *   winner_game_txt;
   SDL_Surface **  winner;
 
 
@@ -114,6 +117,9 @@ public:
   void            menu_selection();
   void            change_menu();
   void            winner_multi();
+  void            winner_campaign();
+  void            lose_campaign();
+  void            end_campaign();
 
 private:
   Menu( void );

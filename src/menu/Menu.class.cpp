@@ -5,8 +5,23 @@
 #include <soundrender.class.hpp>
 
 void  Menu::winner_multi() {
-  std::cout << "main_event->draw_winner " << main_event->draw_winner << std::endl;
-  print_surface(this->winner[0], this->str_campaign_new_selected, 400, 400, 0);
+  std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
+  print_surface(this->winner[main_event->draw_winner_multi], this->winner[main_event->draw_winner_multi], 400, 400, 0);
+}
+
+void  Menu::winner_campaign() {
+  std::cout << "main_event->winner_campaign " << main_event->draw_winner_campaign << std::endl;
+  print_surface(this->winner_campaign_txt, this->winner_campaign_txt, 400, 400, 0);
+}
+
+void  Menu::lose_campaign() {
+  std::cout << "main_event->lose_campaign " << main_event->draw_lose_campaign << std::endl;
+  print_surface(this->lose_campaign_txt, this->lose_campaign_txt, 400, 400, 0);
+}
+
+void  Menu::end_campaign() {
+  std::cout << "main_event->end_campaign " << main_event->draw_end_campaign << std::endl;
+  print_surface(this->winner_game_txt, this->winner_game_txt, 400, 400, 0);
 }
 
 void  Menu::campaign() {
@@ -105,6 +120,11 @@ void Menu::init() {
   this->str_exit_confirm_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Confirm exit game <<", this->red);
   this->str_return = TTF_RenderText_Blended(this->SansPosterBold, "Return", this->white);
   this->str_return_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Return <<", this->red);
+
+  this->lose_campaign_txt = TTF_RenderText_Blended(this->SansPosterBold, "You Lose !", this->red);
+  this->winner_campaign_txt = TTF_RenderText_Blended(this->SansPosterBold, "You win ! Next level...", this->red);
+  this->winner_game_txt = TTF_RenderText_Blended(this->SansPosterBold, "You win the game !", this->red);
+
   this->winner = (SDL_Surface **)std::malloc(sizeof(SDL_Surface *) * 5);
   if (NULL == this->winner) {
     this->w_error("Menu::init winner allocation error");
@@ -148,8 +168,26 @@ void  Menu::menu_selection() {
   glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
   SDL_FillRect(this->ecran_menu, NULL, SDL_MapRGB(this->ecran_menu->format, 0, 0, 0) );
 
-  if (main_event->draw_winner != 0) { // Affichage du victorieu
+  if (main_event->draw_winner_multi != 0) { // Affichage du victorieu
     this->winner_multi();
+    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
+  }
+  else if (main_event->draw_winner_campaign != 0) { // Affichage du victorieu
+    this->winner_campaign();
+
+    if (main_event->draw_winner_campaign == 1) {
+      main_event->make_new_game(1);
+      main_event->draw_winner_campaign = 2;
+    }
+
+    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
+  }
+  else if (main_event->draw_lose_campaign != 0) { // Affichage du victorieu
+    this->lose_campaign();
+    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
+  }
+  else if (main_event->draw_end_campaign != 0) { // Affichage du victorieu
+    this->end_campaign();
     // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
   }
   else {
@@ -315,8 +353,16 @@ void  Menu::menu_keyboard(void) {
         case SDLK_UP:       move_menu_ver(-1); break;
         case SDLK_RIGHT:    std::cout << "hey" << std::endl; break;
         case SDLK_LEFT:     std::cout << "hey" << std::endl; break;
-        case SDLK_RETURN:   if (main_event->draw_winner != 0)
-                              main_event->draw_winner = false;
+        case SDLK_RETURN:   if (main_event->draw_winner_multi != 0
+                            || main_event->draw_winner_campaign != 0
+                            || main_event->draw_lose_campaign != 0
+                            || main_event->draw_end_campaign != 0) {
+                              main_event->draw_winner_multi = 0;
+                              main_event->draw_winner_campaign = 0;
+                              main_event->draw_lose_campaign = 0;
+                              main_event->draw_end_campaign = 0;
+                              main_event->mode_menu = false;
+                            }
                             else
                               change_menu();
                             break;

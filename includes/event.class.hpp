@@ -30,7 +30,10 @@ public:
 	bool									mode_menu; // si en menu ou pas
 	bool            			game_playing; // si une game en cours
 	bool									game_pause; // si le jeu est en pause / fini
-	int										draw_winner;
+	int										draw_winner_multi;
+	int										draw_winner_campaign;
+	int										draw_lose_campaign;
+	int										draw_end_campaign;
 	SoundRender *					soundrender = NULL;
 	Menu *								menu = NULL;
 	bool									event_running = true;

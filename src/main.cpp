@@ -49,7 +49,7 @@ int main( int ac, char **av ) {
 
 		main_event->menu->main_loop();
 
-		main_event->init(ac, av);
+		// main_event->init(ac, av);
 
 
 		// music
