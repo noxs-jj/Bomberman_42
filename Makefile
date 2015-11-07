@@ -6,7 +6,7 @@
 #    By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/11/07 16:13:17 by nmohamed         ###   ########.fr        #
+#    Updated: 2015/11/07 17:21:35 by nmohamed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ HEAD = 			includes/ft42.class.hpp \
 						includes/parser.class.hpp \
 						includes/soundrender.class.hpp \
 						includes/Menu.class.hpp \
-						includes/GameLauncher.class.hpp
+						includes/GameLauncher.class.hpp \
+						includes/mapparser.class.hpp
 
 SRC = 			src/ft42.class.cpp \
 						src/entity.class.cpp \
@@ -67,7 +68,8 @@ SRC = 			src/ft42.class.cpp \
 						src/parser.class.cpp \
 						src/soundrender.class.cpp \
 						src/menu/Menu.class.cpp \
-						src/GameLauncher.class.cpp
+						src/GameLauncher.class.cpp \
+						src/map/mapparser.class.cpp
 
 OBJ = 			$(SRC:.cpp=.cpp.o)
 
@@ -91,8 +93,13 @@ re: fclean all
 soundtest:
 	$(CXX) src/ft42.class.cpp src/soundrender.class.cpp $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) `sdl2-config --libs` `sdl2-config --cflags` -lSDL2_mixer "tests/soundrender.test.cpp" -lpthread
 
-loggertest: 
+loggertest:
 	$(CXX) src/logger.class.cpp $(CFLAGS) $(INCLUDE) $(CFLAGS) "tests/logger.test.cpp" -lpthread
+
+mapparsertest:
+	clear
+	clang++ $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(GLUT) $(SRC) $(HEAD) $(SDL_LIB) \
+	tests/mapparser.text.cpp
 
 sdltest:
 	$(CXX) $(CFLAGS) -stdlib=libc++ -o testsdl2 test/test_sdl2.cpp \

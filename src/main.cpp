@@ -7,6 +7,19 @@ Event *		main_event = new Event(); // GLOBAL
 int main( int ac, char **av ) {
 	(void)(av);
 	(void)(ac);
+	ft42::logg = true;
+
+	// TEST mapparser
+	// try {
+	// 	std::cout << "ac " << ac << " -- av " << av[1] << std::endl;
+	//
+	// 	Mapparser::valid_map(av[1]);
+	// }
+	// catch (std::exception & e){
+	// 	std::cerr << "EXIT_FAILURE " << std::endl;
+	// 	return (EXIT_FAILURE);
+	// }
+	// END mapparser
 
 	try {
 		if (main_event == NULL) {
@@ -39,7 +52,6 @@ int main( int ac, char **av ) {
 		main_event->init(ac, av);
 
 
-
 		// music
 		main_event->soundrender->playMusic("music");
 
@@ -63,15 +75,12 @@ int main( int ac, char **av ) {
 				main_event->menu->main_loop();
 		}
 
-
-
-
 		main_event->w_log("Delete Main Event then EXIT");
 		if (NULL != main_event)
 			delete main_event;
 	}
 	catch (std::exception & e){
-		std::cerr << "EXIT_FAILURE" << std::endl;
+		std::cerr << "EXIT_FAILURE " << e.what() << std::endl;
 		return (EXIT_FAILURE);
 	}
   std::cout << "EXIT_SUCCESS" << std::endl;
