@@ -395,9 +395,10 @@ void	Event::load_sounds(void) {
 				&& this->soundrender->loadSound("ready", "sound/Ready megaman.wav")
 				&& this->soundrender->loadSound("menu2", "sound/Mega menu 2.wav")
 				&& this->soundrender->loadSound("menu1", "sound/Mega menu 1.wav")
-				&& this->soundrender->loadSound("victory", "sound/victory.wav")
 				&& this->soundrender->loadSound("finish", "sound/finish.wav")
 				// music
+				&& this->soundrender->loadMusic("victory", "sound/victory_finalfantasy.wav")
+				&& this->soundrender->loadMusic("victory_multiplayer", "sound/victory.wav")
 				&& this->soundrender->loadMusic("music", "sound/bgm.wav")
 			)) {
 			std::cout << "loadsound error" << std::endl;
