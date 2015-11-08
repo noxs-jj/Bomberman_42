@@ -1,6 +1,28 @@
 #include <Menu.class.hpp>
 #include <globject.class.hpp>
 #include <event.class.hpp>
+#include <GameLauncher.class.hpp>
+#include <soundrender.class.hpp>
+
+void  Menu::winner_multi() {
+  std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
+  print_surface(this->winner[main_event->draw_winner_multi], this->winner[main_event->draw_winner_multi], 400, 400, 0);
+}
+
+void  Menu::winner_campaign() {
+  std::cout << "main_event->winner_campaign " << main_event->draw_winner_campaign << std::endl;
+  print_surface(this->winner_campaign_txt, this->winner_campaign_txt, 400, 400, 0);
+}
+
+void  Menu::lose_campaign() {
+  std::cout << "main_event->lose_campaign " << main_event->draw_lose_campaign << std::endl;
+  print_surface(this->lose_campaign_txt, this->lose_campaign_txt, 400, 400, 0);
+}
+
+void  Menu::end_campaign() {
+  std::cout << "main_event->end_campaign " << main_event->draw_end_campaign << std::endl;
+  print_surface(this->winner_game_txt, this->winner_game_txt, 400, 400, 0);
+}
 
 void  Menu::campaign() {
   print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 400, MENU_CAMPAIGN_NEW);
@@ -45,6 +67,8 @@ void  Menu::print_surface(SDL_Surface * str, SDL_Surface * str_select, int x, in
 }
 
 void  Menu::big_menu() {
+  if (true == main_event->game_playing) // Si partie en cours
+    print_surface(this->str_resume_game, this->str_resume_game_selected, 400, 300, RESUME_GAME);
   print_surface(this->str_campaign, this->str_campaign_selected, 400, 400, MENU_CAMPAIGN);
   print_surface(this->str_arena, this->str_arena_selected, 400, 500, MENU_ARENA);
   print_surface(this->str_multiplayer, this->str_multiplayer_selected, 400, 600, MENU_MULTIPLAYER);
@@ -52,10 +76,8 @@ void  Menu::big_menu() {
   print_surface(this->str_exit, this->str_exit_selected, 400, 800, MENU_EXIT);
 }
 
-// https://openclassrooms.com/courses/apprenez-a-programmer-en-c/ecrire-du-texte-avec-sdl-ttf
-
 void Menu::init() {
-  this->SansPosterBold = TTF_OpenFont("src/menu/fonts/SansPosterBold.ttf", 24);
+  this->SansPosterBold = TTF_OpenFont("src/menu/fonts/GoldenAge.ttf", 64);
   this->white = {255, 255, 255, 1};
   this->blue = {0, 0, 255, 1};
   this->red = {255, 0, 0, 1};
@@ -68,35 +90,51 @@ void Menu::init() {
 
   this->menu_selected = BIG_MENU;
   this->detail_menu_selected = MENU_CAMPAIGN;
+  this->str_resume_game = TTF_RenderText_Blended(this->SansPosterBold, "Resume Game", this->white);
+  this->str_resume_game_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Resume Game <<", this->red);
   this->str_campaign = TTF_RenderText_Blended(this->SansPosterBold, "Campaign", this->white);
-  this->str_campaign_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Campaign <<", this->white);
+  this->str_campaign_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Campaign <<", this->red);
   this->str_campaign_new = TTF_RenderText_Blended(this->SansPosterBold, "New", this->white);
-  this->str_campaign_new_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> New <<", this->white);
+  this->str_campaign_new_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> New <<", this->red);
   this->str_campaign_coop = TTF_RenderText_Blended(this->SansPosterBold, "Coop", this->white);
-  this->str_campaign_coop_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Coop <<", this->white);
+  this->str_campaign_coop_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Coop <<", this->red);
   this->str_campaign_continue = TTF_RenderText_Blended(this->SansPosterBold, "Continue", this->white);
-  this->str_campaign_continue_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Continue <<", this->white);
+  this->str_campaign_continue_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Continue <<", this->red);
   this->str_arena = TTF_RenderText_Blended(this->SansPosterBold, "Arena", this->white);
-  this->str_arena_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Arena <<", this->white);
+  this->str_arena_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Arena <<", this->red);
   this->str_2players = TTF_RenderText_Blended(this->SansPosterBold, "2 Players", this->white);
-  this->str_2players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 2 Players <<", this->white);
+  this->str_2players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 2 Players <<", this->red);
   this->str_3players = TTF_RenderText_Blended(this->SansPosterBold, "3 Players", this->white);
-  this->str_3players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 3 Players <<", this->white);
+  this->str_3players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 3 Players <<", this->red);
   this->str_4players = TTF_RenderText_Blended(this->SansPosterBold, "4 Players", this->white);
-  this->str_4players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 4 Players <<", this->white);
+  this->str_4players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 4 Players <<", this->red);
   this->str_5players = TTF_RenderText_Blended(this->SansPosterBold, "5 Players", this->white);
-  this->str_5players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 5 Players <<", this->white);
+  this->str_5players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 5 Players <<", this->red);
   this->str_multiplayer = TTF_RenderText_Blended(this->SansPosterBold, "Multi Players", this->white);
-  this->str_multiplayer_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Multi Players <<", this->white);
+  this->str_multiplayer_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Multi Players <<", this->red);
   this->str_config = TTF_RenderText_Blended(this->SansPosterBold, "Config", this->white);
-  this->str_config_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Config <<", this->white);
+  this->str_config_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Config <<", this->red);
   this->str_exit = TTF_RenderText_Blended(this->SansPosterBold, "Exit Game", this->white);
-  this->str_exit_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Exit Game <<", this->white);
+  this->str_exit_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Exit Game <<", this->red);
   this->str_exit_confirm = TTF_RenderText_Blended(this->SansPosterBold, "Confirm exit game", this->white);
-  this->str_exit_confirm_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Confirm exit game <<", this->white);
+  this->str_exit_confirm_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Confirm exit game <<", this->red);
   this->str_return = TTF_RenderText_Blended(this->SansPosterBold, "Return", this->white);
-  this->str_return_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Return <<", this->white);
+  this->str_return_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Return <<", this->red);
 
+  this->lose_campaign_txt = TTF_RenderText_Blended(this->SansPosterBold, "You Lose !", this->red);
+  this->winner_campaign_txt = TTF_RenderText_Blended(this->SansPosterBold, "You win ! Next level...", this->red);
+  this->winner_game_txt = TTF_RenderText_Blended(this->SansPosterBold, "You win the game !", this->red);
+
+  this->winner = (SDL_Surface **)std::malloc(sizeof(SDL_Surface *) * 5);
+  if (NULL == this->winner) {
+    this->w_error("Menu::init winner allocation error");
+    throw std::exception();
+  }
+  this->winner[0] = TTF_RenderText_Blended(this->SansPosterBold, "Player 1 Victory", this->blue);
+  this->winner[1] = TTF_RenderText_Blended(this->SansPosterBold, "Player 2 Victory", this->blue);
+  this->winner[2] = TTF_RenderText_Blended(this->SansPosterBold, "Player 3 Victory", this->blue);
+  this->winner[3] = TTF_RenderText_Blended(this->SansPosterBold, "Player 4 Victory", this->blue);
+  this->winner[4] = TTF_RenderText_Blended(this->SansPosterBold, "Player 5 Victory", this->blue);
 }
 
 void Menu::intro_start() {
@@ -130,13 +168,37 @@ void  Menu::menu_selection() {
   glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
   SDL_FillRect(this->ecran_menu, NULL, SDL_MapRGB(this->ecran_menu->format, 0, 0, 0) );
 
-  switch(this->menu_selected) {
-    case BIG_MENU: this->big_menu(); break;
-    case CAMPAIGN: this->campaign(); break;
-    case ARENA: this->arena(); break;
-    case MULTIPLAYER: this->multiplayer(); break;
-    case CONFIG: this->config(); break;
-    case EXIT: this->exit_game(); break;
+  if (main_event->draw_winner_multi != 0) { // Affichage du victorieu
+    this->winner_multi();
+    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
+  }
+  else if (main_event->draw_winner_campaign != 0) { // Affichage du victorieu
+    this->winner_campaign();
+
+    if (main_event->draw_winner_campaign == 1) {
+      main_event->make_new_game(1);
+      main_event->draw_winner_campaign = 2;
+    }
+
+    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
+  }
+  else if (main_event->draw_lose_campaign != 0) { // Affichage du victorieu
+    this->lose_campaign();
+    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
+  }
+  else if (main_event->draw_end_campaign != 0) { // Affichage du victorieu
+    this->end_campaign();
+    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
+  }
+  else {
+    switch(this->menu_selected) {
+      case BIG_MENU: this->big_menu(); break;
+      case CAMPAIGN: this->campaign(); break;
+      case ARENA: this->arena(); break;
+      case MULTIPLAYER: this->multiplayer(); break;
+      case CONFIG: this->config(); break;
+      case EXIT: this->exit_game(); break;
+    }
   }
 
   globject::display_menu(this->ecran_menu);
@@ -144,94 +206,112 @@ void  Menu::menu_selection() {
 }
 
 void  Menu::main_loop() {
-  std::cout << "deb 0" << std::endl;
   while (true == main_event->mode_menu) {
     if (false == this->introstart)
       this->intro_start();
     else
       this->menu_selection();
     this->menu_keyboard();
-    usleep(5000);
+    usleep(50000);
   }
-  std::cout << "deb 1" << std::endl;
-
 }
 
 void  Menu::move_menu_ver(int dir) {
+  main_event->soundrender->playSound("menu1");
   if (this->menu_selected == BIG_MENU) {
-    if (dir == -1 && this->detail_menu_selected == MENU_CAMPAIGN) {
+    if (dir == -1 && main_event->game_playing == true && this->detail_menu_selected == MENU_CAMPAIGN)
+      this->detail_menu_selected = RESUME_GAME;
+    else if (dir == -1 && main_event->game_playing == false && this->detail_menu_selected == MENU_CAMPAIGN)
       this->detail_menu_selected = MENU_EXIT;
-    }
-    else if (dir == 1 && this->detail_menu_selected == MENU_EXIT) {
+    else if (dir == -1 && this->detail_menu_selected == RESUME_GAME)
+      this->detail_menu_selected = MENU_EXIT;
+    else if (dir == 1 && main_event->game_playing == true && this->detail_menu_selected == MENU_EXIT)
+      this->detail_menu_selected = RESUME_GAME;
+    else if (dir == 1 && main_event->game_playing == false && this->detail_menu_selected == MENU_EXIT)
       this->detail_menu_selected = MENU_CAMPAIGN;
-    }
     else
      this->detail_menu_selected += dir;
   }
+
   else if (this->menu_selected == CAMPAIGN) {
-    if (dir == -1 && this->detail_menu_selected == MENU_CAMPAIGN_NEW) {
+    if (dir == -1 && this->detail_menu_selected == MENU_CAMPAIGN_NEW)
       this->detail_menu_selected = MENU_CAMPAIGN_RETURN;
-    }
-    else if (dir == 1 && this->detail_menu_selected == MENU_CAMPAIGN_RETURN) {
+    else if (dir == 1 && this->detail_menu_selected == MENU_CAMPAIGN_RETURN)
       this->detail_menu_selected = MENU_CAMPAIGN_NEW;
-    }
     else
      this->detail_menu_selected += dir;
   }
 
   else if (this->menu_selected == ARENA) {
-    if (dir == -1 && this->detail_menu_selected == MENU_ARENA_2P) {
+    if (dir == -1 && this->detail_menu_selected == MENU_ARENA_2P)
       this->detail_menu_selected = MENU_ARENA_RETURN;
-    }
-    else if (dir == 1 && this->detail_menu_selected == MENU_ARENA_RETURN) {
+    else if (dir == 1 && this->detail_menu_selected == MENU_ARENA_RETURN)
       this->detail_menu_selected = MENU_ARENA_2P;
-    }
     else
      this->detail_menu_selected += dir;
   }
+
   else if (this->menu_selected == MULTIPLAYER) {
-    if (dir == -1 && this->detail_menu_selected == MENU_MULTI_2P) {
+    if (dir == -1 && this->detail_menu_selected == MENU_MULTI_2P)
       this->detail_menu_selected = MENU_MULTI_RETURN;
-    }
-    else if (dir == 1 && this->detail_menu_selected == MENU_MULTI_RETURN) {
+    else if (dir == 1 && this->detail_menu_selected == MENU_MULTI_RETURN)
       this->detail_menu_selected = MENU_MULTI_2P;
-    }
     else
-     this->detail_menu_selected += dir;
+       this->detail_menu_selected += dir;
   }
+
   else if (this->menu_selected == CONFIG) {
-    if (dir == -1 && this->detail_menu_selected == MENU_CONFIG_NAME) {
+    if (dir == -1 && this->detail_menu_selected == MENU_CONFIG_NAME)
       this->detail_menu_selected = MENU_CONFIG_RETURN;
-    }
-    else if (dir == 1 && this->detail_menu_selected == MENU_CONFIG_RETURN) {
+    else if (dir == 1 && this->detail_menu_selected == MENU_CONFIG_RETURN)
       this->detail_menu_selected = MENU_CONFIG_NAME;
-    }
     else
      this->detail_menu_selected += dir;
   }
+
   else if (this->menu_selected == EXIT) {
-    if (this->detail_menu_selected == MENU_EXIT_CONFIRM) {
+    if (this->detail_menu_selected == MENU_EXIT_CONFIRM)
       this->detail_menu_selected = MENU_EXIT_RETURN;
-    }
-    else if (this->detail_menu_selected == MENU_EXIT_RETURN) {
+    else if (this->detail_menu_selected == MENU_EXIT_RETURN)
       this->detail_menu_selected = MENU_EXIT_CONFIRM;
-    }
   }
 }
 
 void  Menu::change_menu() {
-  if (this->detail_menu_selected == MENU_CAMPAIGN) {
+  std::cout << this->menu_selected << " vs " << RESUME_GAME << std::endl;
+  main_event->soundrender->playSound("menu2");
+  if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_NEW == this->detail_menu_selected )
+    Gamelauncher::campaign_new();
+  else if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_COOP == this->detail_menu_selected )
+      Gamelauncher::campaign_new_coop();
+  else if (this->detail_menu_selected == MENU_CAMPAIGN) {
     this->detail_menu_selected = MENU_CAMPAIGN_NEW;
     this->menu_selected = CAMPAIGN;
+  }
+  else if (main_event->game_playing == true && this->detail_menu_selected == RESUME_GAME) {
+    main_event->game_playing = false;
+    main_event->mode_menu = false;
   }
   else if (this->detail_menu_selected == MENU_CONFIG) {
     this->detail_menu_selected = MENU_CONFIG_NAME;
     this->menu_selected = CONFIG;
   }
+  else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_4P )
+    Gamelauncher::run_multi_4(); // Multiplayer 4 Players Launcher game
+  else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_3P )
+    Gamelauncher::run_multi_3(); // Multiplayer 3 Players Launcher game
+  else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_2P )
+    Gamelauncher::run_multi_2(); // Multiplayer 2 Players Launcher game
   else if (this->detail_menu_selected == MENU_MULTIPLAYER) {
     this->detail_menu_selected = MENU_MULTI_2P;
     this->menu_selected = MULTIPLAYER;
   }
+  else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_4P )
+    Gamelauncher::run_arena_4();
+  else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_3P )
+    Gamelauncher::run_arena_3();
+  else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_2P )
+    Gamelauncher::run_arena_2();
   else if (this->detail_menu_selected == MENU_ARENA) {
     this->detail_menu_selected = MENU_ARENA_2P;
     this->menu_selected = ARENA;
@@ -248,41 +328,50 @@ void  Menu::change_menu() {
     this->detail_menu_selected = MENU_EXIT_CONFIRM;
     this->menu_selected = EXIT;
   }
-  else if (this->detail_menu_selected ==MENU_EXIT_CONFIRM)
-    _exit(0);
+  else if (this->detail_menu_selected == MENU_EXIT_CONFIRM)
+    main_event->exit_free();
 }
 
 void  Menu::menu_keyboard(void) {
   SDL_Event           event;
-  // SDL_Joystick *     pJoy = NULL;
-  SDL_JoystickEventState(SDL_ENABLE);
-
-
   int i = 0;
 
   while (SDL_PollEvent(&event)) {
     if (event.type == SDL_KEYDOWN) {
       std::cout << "(event).key.keysym.sym " << (event).key.keysym.sym << std::endl;
       switch((event).key.keysym.sym) {
-        case SDLK_ESCAPE:     _exit(0); break;
+        case SDLK_ESCAPE:   main_event->exit_free();
+                            break;
 
-        case SDLK_SPACE:     if (false == this->introstart) {
-          this->introstart = true;
-          main_event->mode_menu = false;
-        }
-        break;
+        case SDLK_SPACE:    if (false == this->introstart) {
+                              this->introstart = true;
+                              main_event->mode_menu = true;
+                            }
+                            break;
+
         case SDLK_DOWN:     move_menu_ver(1); break;
         case SDLK_UP:       move_menu_ver(-1); break;
         case SDLK_RIGHT:    std::cout << "hey" << std::endl; break;
         case SDLK_LEFT:     std::cout << "hey" << std::endl; break;
-        case SDLK_RETURN:   change_menu(); break;
+        case SDLK_RETURN:   if (main_event->draw_winner_multi != 0
+                            || main_event->draw_winner_campaign != 0
+                            || main_event->draw_lose_campaign != 0
+                            || main_event->draw_end_campaign != 0) {
+                              main_event->draw_winner_multi = 0;
+                              main_event->draw_winner_campaign = 0;
+                              main_event->draw_lose_campaign = 0;
+                              main_event->draw_end_campaign = 0;
+                              main_event->mode_menu = false;
+                            }
+                            else
+                              change_menu();
+                            break;
 
-
-        case SDLK_p:        if (true == main_event->mode_menu)
-        main_event->mode_menu = false;
-        else
-        main_event->mode_menu = true;
-        break;
+        case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
+                              main_event->mode_menu = false;
+                            else if (main_event->game_playing == true)
+                              main_event->mode_menu = true;
+                            break;
 
         case SDLK_c:        std::cout << "SDL_NumJoysticks(void) " << SDL_NumJoysticks() << std::endl;
         while ( i < SDL_NumJoysticks() ){
@@ -293,17 +382,74 @@ void  Menu::menu_keyboard(void) {
 
         default: break;
       }
-  }
-  else if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERBUTTONUP) {
-    fprintf(stdout, "Appui bouton joystick :\n");
-                            fprintf(stdout, "\tjoystick : %d\n",event.jbutton.which);
-                            fprintf(stdout, "\tbutton : %d\n",event.jbutton.button);
-                            fprintf(stdout, "\tétat : %d\n",event.jbutton.state);
-                            break;
-  }
+    }
+    else if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+      fprintf(stdout, "Appui bouton joystick :\n");
+      fprintf(stdout, "\tjoystick : %d\n",event.jbutton.which);
+      fprintf(stdout, "\tbutton : %d\n",event.jbutton.button);
+      fprintf(stdout, "\tétat : %d\n",event.jbutton.state);
+      switch (event.cbutton.button) {
+        case SDL_CONTROLLER_BUTTON_A             : change_menu(); break;
+        case SDL_CONTROLLER_BUTTON_B             : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_X             : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_Y             : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_BACK          : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_GUIDE         : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_START         : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_LEFTSTICK     : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_RIGHTSTICK    : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_LEFTSHOULDER  : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_DPAD_UP       : move_menu_ver(-1); break;
+        case SDL_CONTROLLER_BUTTON_DPAD_DOWN     : move_menu_ver(1); break;
+        case SDL_CONTROLLER_BUTTON_DPAD_LEFT     : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_DPAD_RIGHT    : (void)0; break;
+        case SDL_CONTROLLER_BUTTON_MAX           : (void)0; break;
+        default: break;
+      }
+    }
   }
 }
 
 Menu::Menu(Event * event) : event(event), current(NULL) {}
 
-Menu::~Menu() {}
+Menu::~Menu() {
+  SDL_FreeSurface(this->str_resume_game);
+  SDL_FreeSurface(this->str_resume_game_selected);
+  SDL_FreeSurface(this->str_campaign);
+  SDL_FreeSurface(this->str_campaign_selected);
+  SDL_FreeSurface(this->str_campaign_new);
+  SDL_FreeSurface(this->str_campaign_new_selected);
+  SDL_FreeSurface(this->str_campaign_coop);
+  SDL_FreeSurface(this->str_campaign_coop_selected);
+  SDL_FreeSurface(this->str_campaign_continue);
+  SDL_FreeSurface(this->str_campaign_continue_selected);
+  SDL_FreeSurface(this->str_arena);
+  SDL_FreeSurface(this->str_arena_selected);
+  SDL_FreeSurface(this->str_2players);
+  SDL_FreeSurface(this->str_2players_selected);
+  SDL_FreeSurface(this->str_3players);
+  SDL_FreeSurface(this->str_3players_selected);
+  SDL_FreeSurface(this->str_4players);
+  SDL_FreeSurface(this->str_4players_selected);
+  SDL_FreeSurface(this->str_5players);
+  SDL_FreeSurface(this->str_5players_selected);
+  SDL_FreeSurface(this->str_multiplayer);
+  SDL_FreeSurface(this->str_multiplayer_selected);
+  SDL_FreeSurface(this->str_config);
+  SDL_FreeSurface(this->str_config_selected);
+  SDL_FreeSurface(this->str_exit);
+  SDL_FreeSurface(this->str_exit_selected);
+  SDL_FreeSurface(this->str_exit_confirm);
+  SDL_FreeSurface(this->str_exit_confirm_selected);
+  SDL_FreeSurface(this->str_return);
+  SDL_FreeSurface(this->str_return_selected);
+
+  SDL_FreeSurface(this->winner[0]);
+  SDL_FreeSurface(this->winner[1]);
+  SDL_FreeSurface(this->winner[2]);
+  SDL_FreeSurface(this->winner[3]);
+  SDL_FreeSurface(this->winner[4]);
+
+  std::free(this->winner);
+}

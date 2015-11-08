@@ -6,7 +6,7 @@
 #    By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/10/31 22:34:10 by noxsnono         ###   ########.fr        #
+#    Updated: 2015/11/08 12:41:37 by noxsnono         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,12 +30,12 @@ CXX = 			clang++
 
 NAME =			bomberman
 
-CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror
-# CFLAGS =		-std=gnu++11
+
+CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror -pedantic
 
 INCLUDE =		-I includes/ -I rc_lib/rc_math/
 
-SDL_INCLUDE =	`sdl2-config --cflags` -I $HOME/.brew/include/SDL
+SDL_INCLUDE =	`sdl2-config --cflags` -I $(HOME)/.brew/include/SDL
 
 SDL_LIB =		`sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
@@ -53,7 +53,9 @@ HEAD = 			includes/ft42.class.hpp \
 						includes/Matrix.hpp \
 						includes/parser.class.hpp \
 						includes/soundrender.class.hpp \
-						includes/Menu.class.hpp
+						includes/Menu.class.hpp \
+						includes/GameLauncher.class.hpp \
+						includes/mapparser.class.hpp
 
 SRC = 			src/ft42.class.cpp \
 						src/entity.class.cpp \
@@ -69,7 +71,9 @@ SRC = 			src/ft42.class.cpp \
 						src/Matrix.cpp \
 						src/parser.class.cpp \
 						src/soundrender.class.cpp \
-						src/menu/Menu.class.cpp
+						src/menu/Menu.class.cpp \
+						src/GameLauncher.class.cpp \
+						src/map/mapparser.class.cpp
 
 OBJ = 			$(SRC:.cpp=.cpp.o)
 
@@ -77,7 +81,7 @@ OBJ = 			$(SRC:.cpp=.cpp.o)
 	@$(CXX) $(CFLAGS)  $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
-	@echo "./gomoku -iathink -log -depth=[1-10]"
+	@echo "./bomberman"
 
 $(NAME): $(OBJ)
 	$(COMMAND)
@@ -90,11 +94,15 @@ fclean: clean
 
 re: fclean all
 
-soundtest: all
-	$(CXX) src/soundrender.class.cpp $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) `sdl2-config --libs` `sdl2-config --cflags` -lSDL2_mixer "tests/soundrender.test.cpp"
+soundtest:
+	$(CXX) src/ft42.class.cpp src/soundrender.class.cpp $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) `sdl2-config --libs` `sdl2-config --cflags` -lSDL2_mixer "tests/soundrender.test.cpp" -lpthread
+
+loggertest:
+	$(CXX) src/logger.class.cpp $(CFLAGS) $(INCLUDE) $(CFLAGS) "tests/logger.test.cpp" -lpthread
 
 sdltest:
 	$(CXX) $(CFLAGS) -stdlib=libc++ -o testsdl2 test/test_sdl2.cpp \
 	-framework opengl `sdl2-config --libs` `sdl2-config --cflags`
 
 .PHONY: all clean fclean re
+.SILENT: $(CXX) $(NAME) $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(SDL_LIB) $(HEAD) $(SRC) $(OBJ) %.cpp.o all $(NAME) clean fclean re soundtest loggertest sdltest

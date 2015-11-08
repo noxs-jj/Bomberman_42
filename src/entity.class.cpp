@@ -86,9 +86,26 @@ void	Entity::die( void ) {
 	std::cout << "count_entity" << count_entity(PLAYER) << std::endl;
 	main_event->soundrender->playSound("die");
 
-	if (this->type == PLAYER && count_entity(PLAYER) == 1)
-	{
+	if (this->type == PLAYER && main_event->multi > 0 && count_entity(PLAYER) == 2) {
+		std::list<Entity *>::iterator it = main_event->char_list.begin();
+		std::list<Entity *>::iterator end = main_event->char_list.end();
+
+		while (it != end) {
+			if (this->id == (*it)->id)
+				main_event->char_list.erase(it); // delete this ?
+			else if ((*it)->type == PLAYER)
+				main_event->draw_winner_multi = (*it)->model - PLAYER;
+			it++;
+		}
+		main_event->game_pause = true;
+		main_event->mode_menu = true; // desactive menu render
+	}
+	else if (this->type == PLAYER && count_entity(PLAYER) == 1) { // loose
 		globject::spin(this->pos_x, this->pos_y);
+		main_event->mode_menu = true; // desactive menu render
+		main_event->game_pause = true;
+		globject::reinit_level(0);
+		main_event->draw_lose_campaign = 1;
 	}
 	else {
 		std::list<Entity *>::iterator it = main_event->char_list.begin();
@@ -100,6 +117,18 @@ void	Entity::die( void ) {
 			it++;
 		}
 	}
+
+	if (main_event->multi == 0 && main_event->arena == 0
+		&& count_entity(ENEMY) == 0 && count_entity(BOSS) == 0) { // campaign win
+			main_event->game_pause = true;
+			main_event->mode_menu = true; // desactive menu render
+			if (main_event->actual_level == MAX_LEVEL) {
+				main_event->actual_level = 1;
+				main_event->draw_end_campaign = 1;
+			}
+			else
+				main_event->draw_winner_campaign = 1;
+		}
 }
 
 void	Entity::put_bomb(int status, float x, float y, int model, int blast) {

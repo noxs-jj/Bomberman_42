@@ -4,11 +4,13 @@
 # include <ft42.class.hpp>
 
 enum MENU_SELECTED {
-  MENU_CAMPAIGN = 0,
+  RESUME_GAME = 0,
+  MENU_CAMPAIGN,
   MENU_ARENA,
   MENU_MULTIPLAYER,
   MENU_CONFIG,
   MENU_EXIT,
+
   MENU_CAMPAIGN_NEW,
   MENU_CAMPAIGN_CONTINUE,
   MENU_CAMPAIGN_COOP,
@@ -27,6 +29,7 @@ enum MENU_SELECTED {
   MENU_CONFIG_RETURN,
   MENU_EXIT_CONFIRM,
   MENU_EXIT_RETURN
+
 };
 
 enum MENU_SELECTED_PRINCIPAL {
@@ -42,22 +45,26 @@ class Event;
 class Menu : public ft42 {
 public:
 
-  Event *         event;
-  SDL_Surface *   current;
-  SDL_Surface *   ecran_menu;
-  bool            introstart;
-  TTF_Font *      SansPosterBold;
-  SDL_GameController * manette1;
+  Event *               event;
+  SDL_Surface *         current;
+  SDL_Surface *         ecran_menu;
+  bool                  introstart;
+  bool                  launch_action;
 
-  SDL_Color       white;
-  SDL_Color       blue;
-  SDL_Color       red;
-  SDL_Rect        position;
+  TTF_Font *            SansPosterBold;
+  SDL_GameController *  manette1;
+
+  SDL_Color             white;
+  SDL_Color             blue;
+  SDL_Color             red;
+  SDL_Rect              position;
 
   int             menu_selected;
   int             detail_menu_selected;
   SDL_Surface *   str_return;
   SDL_Surface *   str_return_selected;
+  SDL_Surface *   str_resume_game;
+  SDL_Surface *   str_resume_game_selected;
   SDL_Surface *   str_campaign;
   SDL_Surface *   str_campaign_selected;
   SDL_Surface *   str_campaign_new;
@@ -84,8 +91,10 @@ public:
   SDL_Surface *   str_exit_selected;
   SDL_Surface *   str_exit_confirm;
   SDL_Surface *   str_exit_confirm_selected;
-
-
+  SDL_Surface *   lose_campaign_txt;
+  SDL_Surface *   winner_campaign_txt;
+  SDL_Surface *   winner_game_txt;
+  SDL_Surface **  winner;
 
 
 
@@ -107,6 +116,10 @@ public:
   void            move_menu_ver(int dir);
   void            menu_selection();
   void            change_menu();
+  void            winner_multi();
+  void            winner_campaign();
+  void            lose_campaign();
+  void            end_campaign();
 
 private:
   Menu( void );

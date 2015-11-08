@@ -6,9 +6,16 @@
 #include <enemy.class.hpp>
 #include <boss.class.hpp>
 #include <soundrender.class.hpp>
+#include <Menu.class.hpp>
+#include <mapparser.class.hpp>
 
-Event::Event( void ) : run(true), coop(false), multi(2) {
+Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 	this->map = NULL;
+	this->game_pause = false;
+	this->draw_winner_multi = 0;
+	this->draw_winner_campaign = 0;
+	this->draw_lose_campaign = 0;
+	this->draw_end_campaign = 0;
 	srand(time(NULL));
 }
 
@@ -20,7 +27,55 @@ Event & Event::operator=( Event const & rhs ) {
 }
 
 Event::~Event( void ) {
-	delete this->soundrender;
+	// delete this->soundrender;
+}
+
+void 	Event::free_game( void ) {
+	int x, y = 0;
+
+	while (y < MAP_Y_SIZE) {
+		x = 0;
+		while (x < MAP_X_SIZE) {
+			delete this->map[y][x];
+			x++;
+		}
+		y++;
+	}
+
+	while (this->char_list.size() > 0) {
+		this->char_list.pop_front();
+	}
+}
+
+void	Event::make_new_game( int new_level ) {
+	if (this->game_playing == true)
+		this->free_game();
+		main_event->game_pause = false;
+		Entity::autoincrement = 0;
+	fill_border_map();
+	this->actual_level += new_level;
+	std::cout << "new wall level " << this->actual_level << std::endl;
+	if (this->multi > 0) {
+		std::cout << "this->multi > 0" << std::endl;
+		// gen_level_multi(this->actual_level, this->multi);
+		if (this->ac >= 2)
+			this->map = Mapparser::map_from_file(av[1]);
+		else
+			gen_level_multi(this->actual_level, this->multi);
+	}
+	else {
+		std::cout << "this->multi > 0 else " << this->ac << std::endl;
+		// gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
+		if (this->ac >= 2) {
+			std::cout << "this->ac >= 2" << this->ac << std::endl;
+			this->map = Mapparser::map_from_file(av[1]);
+			// this->map = Mapparser::map_from_file("src/map/test/test1.ntm");
+		}
+		else {
+			gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
+		}
+	}
+		// main_event->print_map(); // DEBUGG
 }
 
 void	Event::parse_command(int ac, char **av) {
@@ -33,8 +88,7 @@ void	Event::parse_command(int ac, char **av) {
 	}
 }
 
-int rand_range(int min, int max)
-{
+int rand_range(int min, int max) {
 	float tmp;
 
 	tmp = rand();
@@ -82,9 +136,11 @@ bool	Event::check_coord(int mode, float x, float y) {
 }
 
 void	Event::gen_level_campaign(int level, int boss, bool coop) {
+	std::cout << "gen_level_campaign " << std::endl;
 	int tmpx = 0, tmpy = 0;
 	int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
 	int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+	boss = (boss > 0) ? 0 : 1;
 
 	this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1)); // change model
 	std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
@@ -142,29 +198,31 @@ void	Event::print_map( void ) {
 		std::cout << std::endl;
 		y++;
 	}
-	std::cout << "deb 3.end" << std::endl;
+	std::cout << "print_map END" << std::endl;
 }
 
 void	Event::init( int ac, char **av ) {
-	this->parse_command(ac, av);
-	std::cout << "deb 3.1" << std::endl;
-
-	fill_border_map();
-
-	if (this->multi != 0)
-		gen_level_multi(6, this->multi);
-	else
-		gen_level_campaign(6, 1, this->coop);
-
-	main_event->print_map(); // DEBUGG
-	this->load_sounds();
-	this->soundrender->playSound("startup");
+	this->ac = ac;
+	this->av = av;
 }
 
 void	Event::exit_free( void ) {	// free here
+	// FREE menu
+	if (NULL != this->menu) {
+		this->w_full("Delete menu");
+		delete this->menu;
+	}
+	if (NULL != this->soundrender) {
+		this->w_full("Delete soundrender");
+		delete this->soundrender;
+	}
 
-	this->w_log("Event::exit_free ==> End of free gomoku");
+	this->w_log("Event::exit_free ==> End of free Bomberman");
+	this->event_running = false;
+	this->mode_menu = false;
 
+	if (this->game_playing == true)
+		this->free_game();
 }
 
 void	Event::lauchGame( void ) {
@@ -177,7 +235,7 @@ void	Event::lauchGame( void ) {
 Wall *	Event::create_wall(int status, float x, float y, int model) {
 	Wall * wall = new Wall(x, y, status, model);
 	if (wall == NULL) {
-		this->w_error("create_wall:: wall Malloc error");
+		this->w_full("create_wall:: wall Malloc error");
 		throw std::exception();
 	}
 
@@ -187,7 +245,7 @@ Wall *	Event::create_wall(int status, float x, float y, int model) {
 Bomb *	Event::create_bomb(int status, float x, float y, int model) {
 	Bomb * bomb = new Bomb(x, y, status, model);
 	if (bomb == NULL) {
-		this->w_error("create_bomb:: bomb Malloc error");
+		this->w_full("create_bomb:: bomb Malloc error");
 		throw std::exception();
 	}
 
@@ -246,6 +304,8 @@ Entity * Event::create_empty(int x, int y) {
 }
 
 void	Event::player_move(int model, int dir) {
+	if (this->game_pause == true)
+		return ;
 	std::list<Entity *>::iterator it = this->char_list.begin();
 	std::list<Entity *>::iterator end = this->char_list.end();
 
@@ -257,6 +317,8 @@ void	Event::player_move(int model, int dir) {
 }
 
 void	Event::player_bomb(int model) {
+	if (this->game_pause == true)
+		return ;
 	std::list<Entity *>::iterator it = this->char_list.begin();
 	std::list<Entity *>::iterator end = this->char_list.end();
 
@@ -331,7 +393,10 @@ void	Event::load_sounds(void) {
 				&& this->soundrender->loadSound("ready", "sound/Ready megaman.wav")
 				&& this->soundrender->loadSound("menu2", "sound/Mega menu 2.wav")
 				&& this->soundrender->loadSound("menu1", "sound/Mega menu 1.wav")
+				&& this->soundrender->loadSound("finish", "sound/finish.wav")
 				// music
+				&& this->soundrender->loadMusic("victory", "sound/victory_finalfantasy.wav")
+				&& this->soundrender->loadMusic("victory_multiplayer", "sound/victory.wav")
 				&& this->soundrender->loadMusic("music", "sound/bgm.wav")
 			)) {
 			std::cout << "loadsound error" << std::endl;

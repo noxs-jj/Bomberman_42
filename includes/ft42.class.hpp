@@ -1,24 +1,27 @@
 #ifndef FT42_CLASS_HPP
 # define FT42_CLASS_HPP
 
+# include <algorithm>
 # include <cstdlib>
 # include <cstring>
 # include <exception>
 # include <fstream>
 # include <iostream>
 # include <istream>
-# include <sstream>
-# include <string>
-# include <vector>
-# include <regex>
-# include <unistd.h>
-# include <stdlib.h>
-# include <set>
-# include <algorithm>
 # include <list>
+# include <map>
+# include <iostream>
+# include <regex>
+# include <set>
+# include <sstream>
 # include <stdexcept>
+# include <stdlib.h>
+# include <string>
 # include <time.h>
+# include <unistd.h>
+# include <vector>
 
+# define MAX_LEVEL 9
 
 # ifdef linux
 #   include <GL/glew.h>
@@ -126,6 +129,7 @@ public:
 	void					w_log( std::string const newEntry );
 	void					w_full( std::string const newEntry );
 	void					w_error( std::string const newEntry );
+	void 					w_exception( std::string const newEntry );
 	std::string				logTime( std::string const & sentence );
 	bool					check_coord_exist( int x, int y );
 
