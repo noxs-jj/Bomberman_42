@@ -6,7 +6,7 @@
 /*   By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/10/31 17:00:27 by noxsnono         ###   ########.fr       */
+/*   Updated: 2015/11/08 13:12:34 by noxsnono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ class globject {
 		~globject(void);
 
 		static void		init(void);
-		void			render (int status);
+		void					render (int status);
 		static void		render_all(Entity ***map, std::list<Entity*> players, SDL_Surface *menu);
 		static void		resize(int x, int y);
 		static void		spin(float x, float y);
@@ -61,7 +61,7 @@ class globject {
 		static SDL_Window			*_displayWindow;
 		static SDL_Renderer			*_displayRenderer;
 		static SDL_RendererInfo		_displayRendererInfo;
-		static						globject _object[100];
+		static					globject _object[100];
 
 		Parser						parser;
 

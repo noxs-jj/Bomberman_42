@@ -6,7 +6,7 @@
 /*   By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/11/08 12:44:20 by noxsnono         ###   ########.fr       */
+/*   Updated: 2015/11/08 13:18:41 by noxsnono         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void		globject::init(void)
 {
 
 	/* Init SDL */
-
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER) < 0) {
 		std::cerr << "globject::init SDL_Init() error = " << SDL_GetError() << std::endl;
 		throw std::exception();
@@ -141,8 +140,8 @@ void		globject::init(void)
 
 	/* load Models */
 	std::cout << "yhnm 2" << std::endl;
-
 	globject("models/cube.obj", WALL_HP_1, 1);
+	std::cout << "yhnm 2.1" << std::endl;
 	globject("models/cube1.obj", WALL_HP_2, 1);
 	globject("models/cube2.obj", WALL_HP_3, 1);
     globject("models/cube_floor.obj", FLOOR, 1);

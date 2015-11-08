@@ -1,7 +1,6 @@
 #include <main.hpp>
 #include <list>
 #include <Menu.class.hpp>
-#include <SDL2/SDL_ttf.h>
 
 void		keyboard( void ); // A Mettre dans main.hpp
 
@@ -42,10 +41,18 @@ int main( int ac, char **av ) {
 			throw std::exception();
 		}
 
+		// main_event->render = new globject();
+		// if (main_event->render == NULL) {
+		// 	std::cerr << "main_event->render globject allocation error" << std::endl;
+		// 	throw std::exception();
+		// }
+
+
 		ft42::logg = true; // ceci active les debugg ecran et fichier
 		std::atexit(TTF_Quit);
 		srand(clock());
 		globject::init();
+		// main_event->render->init();
 		main_event->mode_menu = true;
 		main_event->menu->init();
 		main_event->menu->introstart = false;
@@ -64,7 +71,7 @@ int main( int ac, char **av ) {
 		main_event->soundrender->playMusic("music");
 
 		// for (int i = 0; i < 30; i++) {
-		// 	std::cout << globject::_object[WALL].parser._textID[i] << std::endl;
+		// 	std::cout << main_event->render->_object[WALL].parser._textID[i] << std::endl;
 		// }
 		static float time = 0;
 		while (true == main_event->event_running) {
@@ -75,10 +82,10 @@ int main( int ac, char **av ) {
 			time = clock();
 				const Uint8 *state = SDL_GetKeyboardState(NULL);
 			if (state[SDL_SCANCODE_RETURN]) {
-				globject::resize(1300, 1300);
+				main_event->render->resize(1300, 1300);
 			}
 			if (false == main_event->mode_menu)
-				globject::render_all(main_event->map, main_event->char_list, NULL);
+				main_event->render->render_all(main_event->map, main_event->char_list, NULL);
 			else
 				main_event->menu->main_loop();
 		}
