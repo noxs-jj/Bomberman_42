@@ -7,6 +7,7 @@
 #include <boss.class.hpp>
 #include <soundrender.class.hpp>
 #include <Menu.class.hpp>
+#include <mapparser.class.hpp>
 
 Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 	this->map = NULL;
@@ -54,10 +55,27 @@ void	Event::make_new_game( int new_level ) {
 	fill_border_map();
 	this->actual_level += new_level;
 	std::cout << "new wall level " << this->actual_level << std::endl;
-	if (this->multi > 0)
-		gen_level_multi(this->actual_level, this->multi);
-	else
-		gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
+	if (this->multi > 0) {
+		std::cout << "this->multi > 0" << std::endl;
+		// gen_level_multi(this->actual_level, this->multi);
+		if (this->ac >= 2)
+			this->map = Mapparser::map_from_file(av[1]);
+		else
+			gen_level_multi(this->actual_level, this->multi);
+	}
+	else {
+		std::cout << "this->multi > 0 else " << this->ac << std::endl;
+		// gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
+		if (this->ac >= 2) {
+			std::cout << "this->ac >= 2" << this->ac << std::endl;
+			this->map = Mapparser::map_from_file(av[1]);
+			// this->map = Mapparser::map_from_file("src/map/test/test1.ntm");
+		}
+		else {
+			gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
+		}
+	}
+		// main_event->print_map(); // DEBUGG
 }
 
 void	Event::parse_command(int ac, char **av) {
@@ -118,6 +136,7 @@ bool	Event::check_coord(int mode, float x, float y) {
 }
 
 void	Event::gen_level_campaign(int level, int boss, bool coop) {
+	std::cout << "gen_level_campaign " << std::endl;
 	int tmpx = 0, tmpy = 0;
 	int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
 	int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
@@ -179,18 +198,14 @@ void	Event::print_map( void ) {
 		std::cout << std::endl;
 		y++;
 	}
+	std::cout << "print_map END" << std::endl;
 }
 
 void	Event::init( int ac, char **av ) {
-	this->parse_command(ac, av);
-	fill_border_map();
-	std::cout << "this->multi " << this->multi << std::endl;
-	if (this->multi > 0)
-		gen_level_multi(1, this->multi);
-	else
-		gen_level_campaign(actual_level, this->actual_level % 3, this->coop);
+	this->ac = ac;
+	this->av = av;
 
-	// main_event->print_map(); // DEBUGG
+
 }
 
 void	Event::exit_free( void ) {	// free here
@@ -380,9 +395,10 @@ void	Event::load_sounds(void) {
 				&& this->soundrender->loadSound("ready", "sound/Ready megaman.wav")
 				&& this->soundrender->loadSound("menu2", "sound/Mega menu 2.wav")
 				&& this->soundrender->loadSound("menu1", "sound/Mega menu 1.wav")
-				&& this->soundrender->loadSound("victory", "sound/victory.wav")
 				&& this->soundrender->loadSound("finish", "sound/finish.wav")
 				// music
+				&& this->soundrender->loadMusic("victory", "sound/victory_finalfantasy.wav")
+				&& this->soundrender->loadMusic("victory_multiplayer", "sound/victory.wav")
 				&& this->soundrender->loadMusic("music", "sound/bgm.wav")
 			)) {
 			std::cout << "loadsound error" << std::endl;

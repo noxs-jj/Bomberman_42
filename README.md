@@ -2,6 +2,11 @@
 Bomberman Group Project @ 42Born2code
 
 
+event.class.cpp line 71
+this->map = Mapparser::map_from_file(av[1]);
+this->map = Mapparser::map_from_file(chemin_relatif);
+
+
 rcargou @42born2code
 
 vjacquie @42born2code

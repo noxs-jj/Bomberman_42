@@ -95,7 +95,9 @@ bool SoundRender::loadMusic(std::string musicName, std::string fileName) {
 }
 
 bool SoundRender::playMusic(std::string musicName) const {
-    // play music forever
+	// stop other musics before doing anything
+	Mix_HaltMusic();
+	// play music forever
     if (Mix_PlayMusic(mMusics.at(musicName), -1) == -1) {
         std::printf("Mix_PlayMusic: %s\n", Mix_GetError());
         // well, there's no music, but most games don't break without music...

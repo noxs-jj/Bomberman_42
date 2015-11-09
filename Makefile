@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/11/07 17:21:35 by nmohamed         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 PLATFORM := $(shell uname)
 
 #Mac --	brew install sdl2 sdl2_image sdl2_mixer sdl2_ttf
@@ -95,11 +83,6 @@ soundtest:
 
 loggertest:
 	$(CXX) src/logger.class.cpp $(CFLAGS) $(INCLUDE) $(CFLAGS) "tests/logger.test.cpp" -lpthread
-
-mapparsertest:
-	clear
-	clang++ $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(GLUT) $(SRC) $(HEAD) $(SDL_LIB) \
-	tests/mapparser.text.cpp
 
 sdltest:
 	$(CXX) $(CFLAGS) -stdlib=libc++ -o testsdl2 test/test_sdl2.cpp \

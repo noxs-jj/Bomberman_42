@@ -6,7 +6,7 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/07 13:27:34 by jmoiroux          #+#    #+#             */
-/*   Updated: 2015/11/07 18:05:58 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2015/11/07 20:05:03 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,12 @@ static std::map<std::string, int> const g_mapcase = {
   {"2#4", ENEMY4},
   {"3#a", BOSS_A},
   {"3#b", BOSS_B},
-  {"3#c", BOSS_C}
+  {"3#c", BOSS_C},
+  {"3#c", BOSS_C},
+  {"4#1", PLAYER1},
+  {"4#2", PLAYER2},
+  {"4#3", PLAYER3},
+  {"4#4", PLAYER4}
 
 };
 

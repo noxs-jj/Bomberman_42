@@ -6,21 +6,27 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/07 13:27:58 by jmoiroux          #+#    #+#             */
-/*   Updated: 2015/11/07 18:08:39 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2015/11/07 20:09:21 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <mapparser.class.hpp>
-# include <entity.class.hpp>
+#include <mapparser.class.hpp>
+#include <entity.class.hpp>
+#include <wall.class.hpp>
+#include <bomb.class.hpp>
+#include <fire.class.hpp>
+#include <player.class.hpp>
+#include <enemy.class.hpp>
+#include <boss.class.hpp>
 
-Entity ***  Mapparser::map_from_file( char *map_path ) {
-  Entity ***  tmp = Mapparser::map_alloc();
+Entity ***      Mapparser::map_from_file( char *map_path ) {
+  Entity ***    tmp = Mapparser::map_alloc();
   std::fstream  file;
   std::string   line;
   std::string   casemap;
-  int         i = 0,
-              j = 0,
-              x = 0;
+  int           i = 0,
+                j = 0,
+                x = 0;
 
   Mapparser::valid_map(map_path);
 
@@ -43,7 +49,7 @@ Entity ***  Mapparser::map_from_file( char *map_path ) {
 
       std::cout << casemap;
       casemap.clear();
-      i += 3;
+      i += 4;
       x++;
 
       if ( i >= (int)line.length() )
@@ -53,32 +59,38 @@ Entity ***  Mapparser::map_from_file( char *map_path ) {
     j++;
   }
 
+  std::cout << "Mapparser::map_from_file LOADED" << std::endl;
   return tmp;
 }
 
 
 Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, float y) {
-  Entity * tmp = NULL;
+  Entity *  tmp = NULL;
 
-  if ( g_mapcase.count(casemap) != 0) {
+  if ( g_mapcase.count(casemap) == 0) {
     main_event->w_full("Map file Case Syntax error/doesn't exist");
     throw std::exception();
   }
   else {
-    switch (g_mapcase.count(casemap)) {
-      case EMPTY:                 main_event->Event::create_empty(x, y); break;
-      case WALL_INDESTRUCTIBLE:   main_event->Event::create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_INDESTRUCTIBLE); break;
-      case WALL_HP_1:             main_event->Event::create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_1); break;
-      case WALL_HP_2:             main_event->Event::create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_2); break;
-      case WALL_HP_3:             main_event->Event::create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_3); break;
-      case WALL_HP_4:             main_event->Event::create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_4); break;
-      case ENEMY1:                main_event->Event::create_enemy(ENEMY, x, y, ENEMY1); break;
-      case ENEMY2:                main_event->Event::create_enemy(ENEMY, x, y, ENEMY2); break;
-      case ENEMY3:                main_event->Event::create_enemy(ENEMY, x, y, ENEMY3); break;
-      case ENEMY4:                main_event->Event::create_enemy(ENEMY, x, y, ENEMY4); break;
-      case BOSS_A:                main_event->create_boss(BOSS, x, y, BOSS_A, BOSS_A); break;
-      case BOSS_B:                main_event->create_boss(BOSS, x, y, BOSS_B, BOSS_B); break;
-      case BOSS_C:                main_event->create_boss(BOSS, x, y, BOSS_B, BOSS_B); break;
+    switch (g_mapcase.at(casemap)) {
+      case EMPTY:                 return static_cast<Entity*>( main_event->create_empty(x, y) );
+      case WALL_INDESTRUCTIBLE:   return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_INDESTRUCTIBLE) );
+      case WALL_HP_1:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_1) );
+      case WALL_HP_2:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_2) );
+      case WALL_HP_3:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_3) );
+      case WALL_HP_4:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_4) );
+      case ENEMY1:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY1) );
+      case ENEMY2:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY2) );
+      case ENEMY3:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY3) );
+      case ENEMY4:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY4) );
+      case BOSS_A:                return static_cast<Entity*>( main_event->create_boss(BOSS, x, y, BOSS_A, BOSS_A) );
+      case BOSS_B:                return static_cast<Entity*>( main_event->create_boss(BOSS, x, y, BOSS_B, BOSS_B) );
+      case BOSS_C:                return static_cast<Entity*>( main_event->create_boss(BOSS, x, y, BOSS_C, BOSS_C) );
+      case PLAYER1:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER1) );
+      case PLAYER2:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER2) );
+      case PLAYER3:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER3) );
+      case PLAYER4:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER4) );
+      default:                    return static_cast<Entity*>( main_event->create_empty(x, y) );
     }
   }
 
