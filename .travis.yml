@@ -4,7 +4,7 @@ language: C
 
 install:
   - brew install sdl
-  - brew install std2
+  - brew install sdl2
   - brew install sdl_net
   - brew install sdl_ttf
   - brew install sdl_image
