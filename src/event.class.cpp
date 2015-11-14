@@ -391,10 +391,10 @@ void	Event::load_sounds(void) {
 		if (!(
 				   this->soundrender->loadSound("blast", "sound/blast.wav")
 				&& this->soundrender->loadSound("startup", "sound/ps1.wav")
-				&& this->soundrender->loadSound("die", "sound/Megaman dies.wav")
-				&& this->soundrender->loadSound("ready", "sound/Ready megaman.wav")
-				&& this->soundrender->loadSound("menu2", "sound/Mega menu 2.wav")
-				&& this->soundrender->loadSound("menu1", "sound/Mega menu 1.wav")
+				&& this->soundrender->loadSound("die", "sound/megamandies.wav")
+				&& this->soundrender->loadSound("ready", "sound/readymegaman.wav")
+				&& this->soundrender->loadSound("menu2", "sound/megamenu2.wav")
+				&& this->soundrender->loadSound("menu1", "sound/menu1.wav")
 				&& this->soundrender->loadSound("finish", "sound/finish.wav")
 				// music
 				&& this->soundrender->loadMusic("victory", "sound/victory_finalfantasy.wav")

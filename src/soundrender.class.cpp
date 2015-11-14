@@ -66,13 +66,17 @@ bool SoundRender::loadSound(std::string soundName, std::string fileName) {
 }
 
 bool SoundRender::playSound(std::string soundName) const {
-    (void)soundName;
-    if (Mix_PlayChannel(-1, mChunks.at(soundName), 0) == -1) {
-        std::printf("SoundRender::playSound: %s\n",Mix_GetError());
-        // may be critical error, or maybe just no channels were free.
-        // you could allocated another channel in that case...
-        return false;
-    }
+	try {
+	    if (Mix_PlayChannel(-1, mChunks.at(soundName), 0) == -1) {
+	        std::printf("SoundRender::playSound: %s\n", Mix_GetError());
+	        // may be critical error, or maybe just no channels were free.
+	        // you could allocated another channel in that case...
+	        return false;
+	    }
+	} catch (std::exception const & e) {
+		std::printf("SoundRender::playSound exception: %s\n", e.what());
+		return false;
+	}
     return true;
 }
 
@@ -95,12 +99,17 @@ bool SoundRender::loadMusic(std::string musicName, std::string fileName) {
 }
 
 bool SoundRender::playMusic(std::string musicName) const {
-	// stop other musics before doing anything
-	Mix_HaltMusic();
-	// play music forever
-    if (Mix_PlayMusic(mMusics.at(musicName), -1) == -1) {
-        std::printf("Mix_PlayMusic: %s\n", Mix_GetError());
-        // well, there's no music, but most games don't break without music...
+    try {
+        // stop other musics before doing anything
+    	Mix_HaltMusic();
+    	// play music forever
+        if (Mix_PlayMusic(mMusics.at(musicName), -1) == -1) {
+            std::printf("Mix_PlayMusic: %s\n", Mix_GetError());
+            // well, there's no music, but most games don't break without music...
+            return false;
+        }
+    } catch (std::exception const & e) {
+		std::printf("SoundRender::playMusic exception: %s\n", e.what());
         return false;
     }
     return true;
