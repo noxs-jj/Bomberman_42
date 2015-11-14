@@ -6,7 +6,7 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/07 13:27:58 by jmoiroux          #+#    #+#             */
-/*   Updated: 2015/11/14 15:49:32 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2015/11/14 17:08:28 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, floa
     switch (g_mapcase.at(casemap)) {
       case EMPTY:                 return static_cast<Entity*>( main_event->create_empty(x, y) );
       case WALL_INDESTRUCTIBLE:   return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_INDESTRUCTIBLE) );
-      case WALL_HP_1:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_1) );
-      case WALL_HP_2:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_2) );
-      case WALL_HP_3:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_3) );
-      case WALL_HP_4:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_4) );
+      case WALL_HP_1:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_1, x, y, WALL_HP_1) );
+      case WALL_HP_2:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_2, x, y, WALL_HP_2) );
+      case WALL_HP_3:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_3, x, y, WALL_HP_3) );
+      case WALL_HP_4:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_4, x, y, WALL_HP_4) );
       case ENEMY1:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY1) );
       case ENEMY2:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY2) );
       case ENEMY3:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY3) );
