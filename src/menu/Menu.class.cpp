@@ -336,7 +336,7 @@ void  Menu::menu_keyboard(void) {
   SDL_Event           event;
   int i = 0;
 
-  while (SDL_PollEvent(&event)) {
+  while (SDL_PollEvent(&event) && main_event->event_running == true) {
     if (event.type == SDL_KEYDOWN) {
       std::cout << "(event).key.keysym.sym " << (event).key.keysym.sym << std::endl;
       switch((event).key.keysym.sym) {
