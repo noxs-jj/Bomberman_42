@@ -1,5 +1,5 @@
 log/*.log
-bomberman
+./bomberman
 *~
 ~*
 .DS_Store
