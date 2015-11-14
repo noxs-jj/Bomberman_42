@@ -21,6 +21,7 @@
 
 Entity ***      Mapparser::map_from_file( char *map_path ) {
   Entity ***    tmp = Mapparser::map_alloc();
+  Entity *      elem = NULL;
   std::fstream  file;
   std::string   line;
   std::string   casemap;
@@ -45,8 +46,13 @@ Entity ***      Mapparser::map_from_file( char *map_path ) {
       casemap += line[i + 1];
       casemap += line[i + 2];
 
-      tmp[j][x] = Mapparser::get_entity_from_map( casemap, (float)x, (float)j );
-
+      elem = Mapparser::get_entity_from_map( casemap, (float)x, (float)j );
+      if (elem->type == PLAYER || elem->type == ENEMY || elem->type == BOSS) {
+        tmp[j][x] = main_event->create_empty((int)x, (int)j);
+        main_event->char_list.push_back(elem);
+      }
+      else
+        tmp[j][x] = elem;
       std::cout << casemap;
       casemap.clear();
       i += 4;

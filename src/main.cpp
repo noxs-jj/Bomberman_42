@@ -40,7 +40,7 @@ int main( int ac, char **av ) {
 		}
 
 		ft42::logg = true; // ceci active les debugg ecran et fichier
-		std::atexit(TTF_Quit);
+		// std::atexit(TTF_Quit);
 		srand(clock());
 		globject::init();
 		main_event->mode_menu = true;
@@ -68,6 +68,8 @@ int main( int ac, char **av ) {
 			if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 				continue ;
 			keyboard();
+			if (main_event->event_running == false)
+				break;
 			main_event->dec_timer();
 			time = clock();
 				const Uint8 *state = SDL_GetKeyboardState(NULL);

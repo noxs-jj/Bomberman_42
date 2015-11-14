@@ -209,6 +209,7 @@ void	Event::init( int ac, char **av ) {
 }
 
 void	Event::exit_free( void ) {	// free here
+	this->event_running = false;
 	// FREE menu
 	if (NULL != this->menu) {
 		this->w_full("Delete menu");
