@@ -5,10 +5,14 @@ Menu 2D:
 - bloque video max resolution 1920x1080 + 1600x1080
 
 sortie de programme:
-- penser a free tout les object de menu, puis menu
-- penser a free tout les object de soundrender, puis soundrender
 - penser a free tout les object de main_event, puis main_event
 - voir pour la liberation des assets models, shaders, liberation carte graphique ?
+- move:: utiliser la speed des entities
 
 BUG::
-- le menu rotate: cloturer le globject et ouvrir une fenetre pour menu ?
+
+RENDER::
+- implementer WALL_HP_4
+- implementer BOSS_B
+- implementer BOSS_C
+- Implementer 4 skin ennemies different
