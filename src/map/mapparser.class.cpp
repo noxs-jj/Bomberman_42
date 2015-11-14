@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapparser.class.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/07 13:27:58 by jmoiroux          #+#    #+#             */
-/*   Updated: 2015/11/14 14:45:28 by nmohamed         ###   ########.fr       */
+/*   Updated: 2015/11/14 15:49:32 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ Entity ***      Mapparser::map_from_file( char *map_path ) {
   std::string   line;
   std::string   casemap;
   int           i = 0,
-                j = 0,
+                j = globject::mapY_size - 1,
                 x = 0;
 
   Mapparser::valid_map(map_path);
@@ -36,16 +36,17 @@ Entity ***      Mapparser::map_from_file( char *map_path ) {
   for (int x = 0; x < 3; x++)
     std::getline(file, line);
 
-  while (j < globject::mapY_size) {
-    i = 0;
-    x = 0;
+  while (j >= 0) {
+    i = ((globject::mapX_size - 1) * 4 );
+    x = globject::mapX_size - 1;
     std::getline(file, line);
     // std::cout << line << std::endl;
 
-    while (i < (globject::mapX_size * 4 - 1) ) {
+    while (i >= 0) {
       casemap += line[i];
       casemap += line[i + 1];
       casemap += line[i + 2];
+      std::cout << casemap;
 
       elem = Mapparser::get_entity_from_map( casemap, (float)x, (float)j );
       if (elem->type == PLAYER || elem->type == ENEMY || elem->type == BOSS) {
@@ -54,22 +55,21 @@ Entity ***      Mapparser::map_from_file( char *map_path ) {
       }
       else
         tmp[j][x] = elem;
-      std::cout << casemap;
-      casemap.clear();
-      i += 4;
-      x++;
 
-      if ( i >= (int)line.length() )
+      casemap.clear();
+      i -= 4;
+      x--;
+
+      if ( i < 0 )
         break;
     }
     std::cout << std::endl;
-    j++;
+    j--;
   }
 
   std::cout << "Mapparser::map_from_file LOADED" << std::endl;
   return tmp;
 }
-
 
 Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, float y) {
   Entity *  tmp = NULL;
