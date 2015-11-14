@@ -8,7 +8,20 @@ before_install:
   - sudo apt-get update -qq
 
 install:
-  - sudo apt-get install libXxf86vm-dev cmake libsdl2-dev
+  - brew install sdl
+  - brew install std2
+  - brew install sdl_net
+  - brew install sdl_ttf
+  - brew install sdl_image
+os:
+  - osx
+
+env:
+    - BUILD=native CC=clang MODE=release
+    - BUILD=native CC=clang MODE=debug
+    - BUILD=native CC=gcc MODE=release
+    - BUILD=native CC=gcc MODE=debug
+
 script:
   - make
 
