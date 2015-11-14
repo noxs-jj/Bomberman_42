@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   globject.class.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/11/01 14:51:18 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2015/11/14 14:21:12 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void globject::load_bmp()
     for (size_t i = 0; i < parser._textNum; i++)
     {
         name = "texture";
-        path ="textures/";
+        path ="render/textures/";
 		if (globject::space)
-			path = "spacestextures/";
+			path = "render/spacestextures/";
 		path += parser._texture[i];
 		std::cout << path.c_str() << std::endl;
         SDL_Surface *imp = IMG_Load(path.c_str());
@@ -130,27 +130,27 @@ void		globject::init(void)
 
 	/* load Models */
 
-	globject("models/cube.obj", WALL_HP_1, 1);
-	globject("models/cube1.obj", WALL_HP_2, 1);
-	globject("models/cube2.obj", WALL_HP_3, 1);
-    globject("models/cube_floor.obj", FLOOR, 1);
-	globject("models/rock.obj", WALL_INDESTRUCTIBLE, 1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.03);
-	globject("models/Bomberman/Bomberman.obj", PLAYER1, 0.03);
-	globject("models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
-	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
-	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY4, 0.3);
-	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
-	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS_B, 1);
-	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS_C, 1);
-	globject("models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
-	globject("models/icosphere.obj", MAX_ENUM, 1);
-	globject("models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
-	globject("models/menu.obj", MENU, 1);
+	globject("render/models/cube.obj", WALL_HP_1, 1);
+	globject("render/models/cube1.obj", WALL_HP_2, 1);
+	globject("render/models/cube2.obj", WALL_HP_3, 1);
+    globject("render/models/cube_floor.obj", FLOOR, 1);
+	globject("render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
+	globject("render/models/Bomberman/Bomberman.obj", PLAYER, 0.03);
+	globject("render/models/Bomberman/Bomberman.obj", PLAYER1, 0.03);
+	globject("render/models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
+	globject("render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
+	globject("render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
+	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
+	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
+	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
+	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY4, 0.3);
+	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
+	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_B, 1);
+	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_C, 1);
+	globject("render/models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
+	globject("render/models/icosphere.obj", MAX_ENUM, 1);
+	globject("render/models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
+	globject("render/models/menu.obj", MENU, 1);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -500,8 +500,8 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader)
 
 void		globject::load_shaders()
 {
-	char a[] = "shaders/frag.shader";
-	char b[]  = "shaders/vertex.shader";
+	char a[] = "render/shaders/frag.shader";
+	char b[]  = "render/shaders/vertex.shader";
 	glUseProgram(loadshaders(a, b));
 }
 
