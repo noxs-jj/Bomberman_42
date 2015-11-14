@@ -1,6 +1,7 @@
 #include <main.hpp>
 #include <list>
 #include <Menu.class.hpp>
+#include <ia.class.hpp>
 void			keyboard( void ); // A Mettre dans main.hpp
 Event *		main_event = new Event(); // GLOBAL
 
@@ -8,6 +9,8 @@ int main( int ac, char **av ) {
 	(void)(av);
 	(void)(ac);
 	ft42::logg = true;
+	int _time = 0;
+	Ia * ia_play = new Ia();
 
 	// TEST mapparser
 	// try {
@@ -32,6 +35,10 @@ int main( int ac, char **av ) {
 		main_event->menu = new Menu(main_event);
 		if (main_event->menu == NULL) {
 			main_event->w_full("Menu allocation error");
+			throw std::exception();
+		}
+		if (ia_play == NULL) {
+			ia_play->w_full("Menu allocation error");
 			throw std::exception();
 		}
 		if (TTF_Init() != 0){
@@ -67,7 +74,10 @@ int main( int ac, char **av ) {
 		while (true == main_event->event_running) {
 			if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 				continue ;
+				_time++;
+				_time = _time % 60;
 			keyboard();
+			ia_play->start(time);
 			if (main_event->event_running == false)
 				break;
 			main_event->dec_timer();

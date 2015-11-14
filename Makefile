@@ -39,7 +39,8 @@ HEAD = 			includes/ft42.class.hpp \
 						includes/soundrender.class.hpp \
 						includes/Menu.class.hpp \
 						includes/GameLauncher.class.hpp \
-						includes/mapparser.class.hpp
+						includes/mapparser.class.hpp \
+						includes/ia.class.hpp
 
 SRC = 			src/ft42.class.cpp \
 						src/entity.class.cpp \
@@ -57,7 +58,8 @@ SRC = 			src/ft42.class.cpp \
 						src/soundrender.class.cpp \
 						src/menu/Menu.class.cpp \
 						src/GameLauncher.class.cpp \
-						src/map/mapparser.class.cpp
+						src/map/mapparser.class.cpp \
+						src/ia.class.cpp
 
 OBJ = 			$(SRC:.cpp=.cpp.o)
 

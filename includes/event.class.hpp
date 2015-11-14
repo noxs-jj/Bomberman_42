@@ -61,8 +61,9 @@ public:
 	Entity *	create_empty(int x, int y);
 
 	void      load_sounds(void); //loads all sounds
-	void			player_move(int id, int dir);
-	void			player_bomb(int id);
+	void			player_move(int model, int dir);
+	void			player_bomb(int model);
+	void			ia_bomb(int id);
 	void			dec_timer( void );
 	void			init( int ac, char **av );
 	void			exit_free( void );

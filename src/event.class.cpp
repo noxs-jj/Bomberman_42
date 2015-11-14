@@ -369,6 +369,23 @@ void	Event::player_bomb(int model) {
 	}
 }
 
+void	Event::ia_bomb(int id) {
+	if (this->game_pause == true)
+		return ;
+	std::list<Entity *>::iterator it = this->char_list.begin();
+	std::list<Entity *>::iterator end = this->char_list.end();
+
+	while (it != end) {
+		if ((*it)->id == id) {
+			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
+				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius);
+				return ;
+			}
+		}
+		it++;
+	}
+}
+
 void	Event::dec_timer( void ) {
 	int x, y = 0;
 

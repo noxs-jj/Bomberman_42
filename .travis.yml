@@ -16,10 +16,14 @@ os:
   - osx
 
 env:
-    - BUILD=native CC=clang MODE=release
-    - BUILD=native CC=clang MODE=debug
-    - BUILD=native CC=gcc MODE=release
-    - BUILD=native CC=gcc MODE=debug
+  - BUILD=native CC=clang MODE=release
+  - BUILD=native CC=clang MODE=debug
+  - BUILD=native CC=gcc MODE=release
+  - BUILD=native CC=gcc MODE=debug
+
+env:
+  - ARCH=x86_64
+  - ARCH=i686
 
 script:
   - make
