@@ -21,6 +21,7 @@ public:
 	bool									run;
 	Entity ***						map;
 	std::list<Entity *>		char_list;
+	bool									gen_level;
 	bool									coop; // false si campaign
 	int 									actual_level;
 	int										multi; // 0 == non activer, 2 player, 3, 4, 5
@@ -50,6 +51,7 @@ public:
 	void			gen_level_multi(int level, int coop);
 	bool			check_coord(int mode, float x, float y);
 	void			gen_obstacle(int difficulty);
+	void			gen_level_arena(int level, int coop);
 	Wall *		create_wall(int status, float x, float y, int model);
 	Bomb *		create_bomb(int status, float x, float y, int model);
 	Fire *		create_fire(int status, float x, float y, int model);
