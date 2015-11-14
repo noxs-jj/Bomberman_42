@@ -8,6 +8,7 @@
 #include <soundrender.class.hpp>
 #include <Menu.class.hpp>
 #include <mapparser.class.hpp>
+#include <globject.class.hpp> // pour la variable mapX_size
 
 Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 	this->map = NULL;
@@ -33,9 +34,9 @@ Event::~Event( void ) {
 void 	Event::free_game( void ) {
 	int x, y = 0;
 
-	while (y < MAP_Y_SIZE) {
+	while (y < globject::mapY_size) {
 		x = 0;
-		while (x < MAP_X_SIZE) {
+		while (x < globject::mapX_size) {
 			delete this->map[y][x];
 			x++;
 		}
@@ -99,12 +100,12 @@ int rand_range(int min, int max) {
 
 void	Event::gen_obstacle(int difficulty) {
 	std::cout << difficulty << std::endl;
-	int block = ((MAP_X_SIZE - 2) * (MAP_Y_SIZE - 2));
+	int block = ((globject::mapX_size - 2) * (globject::mapY_size - 2));
 	int tmpx = 0, tmpy = 0;
 
 	while (block >= 0) {
-		tmpx = 1 + (rand() % (MAP_X_SIZE - 2));
-		tmpy = 1 + (rand() % (MAP_Y_SIZE - 2));
+		tmpx = 1 + (rand() % (globject::mapX_size - 2));
+		tmpy = 1 + (rand() % (globject::mapY_size - 2));
 		if (check_coord(1, (float)tmpx, (float)tmpy) == true) {
 			delete this->map[tmpy][tmpx];
 			if (rand() % 20 <= 2)
@@ -138,18 +139,18 @@ bool	Event::check_coord(int mode, float x, float y) {
 void	Event::gen_level_campaign(int level, int boss, bool coop) {
 	std::cout << "gen_level_campaign " << std::endl;
 	int tmpx = 0, tmpy = 0;
-	int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
-	int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+	int p_x = 2 + (rand() % (globject::mapX_size - 4));
+	int p_y = 2 + (rand() % (globject::mapY_size - 4));
 	boss = (boss > 0) ? 0 : 1;
 
 	this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1)); // change model
 	std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
 	if (coop == true) {
-		p_x = 2 + (rand() % (MAP_X_SIZE - 4));
-		p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+		p_x = 2 + (rand() % (globject::mapX_size - 4));
+		p_y = 2 + (rand() % (globject::mapY_size - 4));
 		while (check_coord(0, (float)p_x, (float)p_y) != true) {
-			p_x = 2 + (rand() % (MAP_X_SIZE - 4));
-			p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+			p_x = 2 + (rand() % (globject::mapX_size - 4));
+			p_y = 2 + (rand() % (globject::mapY_size - 4));
 			}
 			this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER2)); // change model
 			std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
@@ -159,8 +160,8 @@ void	Event::gen_level_campaign(int level, int boss, bool coop) {
 
 	int i = 0;
 	while (i < (level % 3) + boss) {
-		tmpx = 2 + (rand() % (MAP_X_SIZE - 4));
-		tmpy = 2 + (rand() % (MAP_Y_SIZE - 4));
+		tmpx = 2 + (rand() % (globject::mapX_size - 4));
+		tmpy = 2 + (rand() % (globject::mapY_size - 4));
 		if (check_coord(0, (float)tmpx, (float)tmpy) == true) {
 			if (boss == 1)
 				this->char_list.push_back(create_boss(0, (float)tmpx, (float)tmpy, BOSS_A, BOSS_A)); // change model
@@ -176,8 +177,8 @@ void	Event::gen_level_multi(int level, int coop) {
 	int i = 0;
 
 	while (i < coop) {
-		int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
-		int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+		int p_x = 2 + (rand() % (globject::mapX_size - 4));
+		int p_y = 2 + (rand() % (globject::mapY_size - 4));
 		if (check_coord(0, (float)p_x, (float)p_y) == true) {
 			this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1 + i)); // change model
 			i++;
@@ -189,9 +190,9 @@ void	Event::gen_level_multi(int level, int coop) {
 void	Event::print_map( void ) {
 	int y = 0, x;
 	std::cout << "print_map" << std::endl;
-	while (y < MAP_Y_SIZE) {
+	while (y < globject::mapY_size) {
 		x = 0;
-		while (x < MAP_X_SIZE) {
+		while (x < globject::mapX_size) {
 			std::cout << this->map[y][x]->type << " ";
 			x++;
 		}
@@ -339,9 +340,9 @@ void	Event::player_bomb(int model) {
 void	Event::dec_timer( void ) {
 	int x, y = 0;
 
-	while (y < MAP_Y_SIZE) {
+	while (y < globject::mapY_size) {
 		x = 0;
-		while (x < MAP_X_SIZE) {
+		while (x < globject::mapX_size) {
 			if (this->map[y][x]->type == BOMB)
 				static_cast<Bomb*>(main_event->map[y][x])->bomb_timer();
 			if (this->map[y][x]->type == FIRE)
@@ -356,22 +357,22 @@ void	Event::fill_border_map(void) {
 	int 	y = 0,
 			x = 0;
 
-	this->map = (Entity ***)std::malloc(sizeof(Entity **) * MAP_Y_SIZE);
+	this->map = (Entity ***)std::malloc(sizeof(Entity **) * globject::mapY_size);
 	if (this->map == NULL) {
 		this->w_error("fill_border_map:: this->map Malloc error");
 		throw std::exception();
 	}
 
-	while (y < MAP_Y_SIZE) {
+	while (y < globject::mapY_size) {
 		this->map[y] = NULL;
-		this->map[y] = (Entity **)std::malloc(sizeof(Entity *) * MAP_X_SIZE);
+		this->map[y] = (Entity **)std::malloc(sizeof(Entity *) * globject::mapX_size);
 		if (this->map[y] == NULL) {
 			this->w_error("fill_border_map:: this->map[y] Malloc error");
 			throw std::exception();
 		}
 		x = 0;
-		while (x < MAP_X_SIZE) {
-			if (y == 0 || y == MAP_Y_SIZE - 1 || x == 0 || x == MAP_X_SIZE - 1) {
+		while (x < globject::mapX_size) {
+			if (y == 0 || y == globject::mapY_size - 1 || x == 0 || x == globject::mapX_size - 1) {
 				this->map[y][x] = create_wall(WALL_INDESTRUCTIBLE, (float)x, (float)y, WALL_INDESTRUCTIBLE);
 				if (this->map[y][x] == NULL) {
 					this->w_error("fill_border_map:: this->map[y][x] Malloc error");

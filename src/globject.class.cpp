@@ -6,7 +6,7 @@
 /*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/11/14 14:21:12 by nmohamed         ###   ########.fr       */
+/*   Updated: 2015/11/14 14:34:07 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ GLfloat				globject::spinx;
 GLfloat				globject::spinz;
 int					globject::doIspin;
 int					globject::space = 1;
+int					globject::mapX_size = 4;
+int					globject::mapY_size = 4;
 
 globject::globject(void)
 {

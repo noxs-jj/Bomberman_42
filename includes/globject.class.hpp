@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   globject.class.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/10/31 12:42:07 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2015/11/14 14:31:59 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ class globject {
 		static SDL_RendererInfo		_displayRendererInfo;
 		static						globject _object[100];
 		parser						parser;
+		static int					mapX_size;
+		static int					mapY_size;
 
 		// Jean-Jacques modification pour affichage mise en public pour acces
 		static void			display_menu(SDL_Surface *menu);
