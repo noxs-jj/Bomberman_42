@@ -1,4 +1,5 @@
 #include <ft42.class.hpp>
+#include <globject.class.hpp>
 
 std::string			ft42::logFileName;
 std::ofstream		ft42::lodFD;
@@ -55,7 +56,7 @@ std::string		ft42::logTime( std::string const & sentence ) {
 }
 
 bool		ft42::check_coord_exist( int x, int y ) {
-	if (x >= 0 && x < MAP_X_SIZE && y >= 0 && y < MAP_Y_SIZE)
+	if (x >= 0 && x < globject::mapX_size && y >= 0 && y < globject::mapY_size)
 		return true;
 	return false;
 }

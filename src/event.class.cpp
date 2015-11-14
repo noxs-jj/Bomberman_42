@@ -202,18 +202,18 @@ void	Event::gen_level_arena(int level, int coop) {
 	int i = 0, tmpx = 0, tmpy = 0;
 
 	while (i < coop) {
-		int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
-		int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+		int p_x = 2 + (rand() % (globject::mapX_size - 4));
+		int p_y = 2 + (rand() % (globject::mapY_size - 4));
 		if (check_coord(0, (float)p_x, (float)p_y) == true) {
 			this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1 + i));
 			i++;
 		}
 	}
-	tmpx = 2 + (rand() % (MAP_X_SIZE - 4));
-	tmpy = 2 + (rand() % (MAP_Y_SIZE - 4));
+	tmpx = 2 + (rand() % (globject::mapX_size - 4));
+	tmpy = 2 + (rand() % (globject::mapY_size - 4));
 	while (check_coord(0, (float)tmpx, (float)tmpy) != true) {
-		tmpx = 2 + (rand() % (MAP_X_SIZE - 4));
-		tmpy = 2 + (rand() % (MAP_Y_SIZE - 4));
+		tmpx = 2 + (rand() % (globject::mapX_size - 4));
+		tmpy = 2 + (rand() % (globject::mapY_size - 4));
 	}
 	this->char_list.push_back(create_boss(0, (float)tmpx, (float)tmpy, BOSS_A, BOSS_A));
 	gen_obstacle((level / 3));
