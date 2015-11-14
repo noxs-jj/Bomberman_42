@@ -11,6 +11,7 @@
 
 Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 	this->map = NULL;
+	this->gen_level = false;
 	this->game_pause = false;
 	this->draw_winner_multi = 0;
 	this->draw_winner_campaign = 0;
@@ -58,16 +59,24 @@ void	Event::make_new_game( int new_level ) {
 	if (this->multi > 0) {
 		std::cout << "this->multi > 0" << std::endl;
 		// gen_level_multi(this->actual_level, this->multi);
-		if (this->ac >= 2)
+		if (this->gen_level == false)
 			this->map = Mapparser::map_from_file(av[1]);
 		else
 			gen_level_multi(this->actual_level, this->multi);
 	}
+	else if (this->arena > 0) {
+		std::cout << "this->arena > 0" << std::endl;
+		// gen_level_multi(this->actual_level, this->multi);
+		if (this->gen_level == false)
+			this->map = Mapparser::map_from_file(av[1]);
+		else
+			gen_level_arena(this->actual_level, this->multi);
+	}
 	else {
 		std::cout << "this->multi > 0 else " << this->ac << std::endl;
 		// gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
-		if (this->ac >= 2) {
-			std::cout << "this->ac >= 2" << this->ac << std::endl;
+		if (this->gen_level == false) {
+			// std::cout << "this->ac >= 2" << this->ac << std::endl;
 			this->map = Mapparser::map_from_file(av[1]);
 			// this->map = Mapparser::map_from_file("src/map/test/test1.ntm");
 		}
@@ -84,6 +93,8 @@ void	Event::parse_command(int ac, char **av) {
 	while ( i < ac ) {
 		if ( 0 == strcmp(av[i], "-log") )
 			ft42::logg = true;
+		if (strcmp(av[i], "-gen") == 0)
+			this->gen_level = true;
 		i++;
 	}
 }
@@ -186,6 +197,27 @@ void	Event::gen_level_multi(int level, int coop) {
 	gen_obstacle((level / 3));
 }
 
+void	Event::gen_level_arena(int level, int coop) {
+	int i = 0, tmpx = 0, tmpy = 0;
+
+	while (i < coop) {
+		int p_x = 2 + (rand() % (MAP_X_SIZE - 4));
+		int p_y = 2 + (rand() % (MAP_Y_SIZE - 4));
+		if (check_coord(0, (float)p_x, (float)p_y) == true) {
+			this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1 + i));
+			i++;
+		}
+	}
+	tmpx = 2 + (rand() % (MAP_X_SIZE - 4));
+	tmpy = 2 + (rand() % (MAP_Y_SIZE - 4));
+	while (check_coord(0, (float)tmpx, (float)tmpy) != true) {
+		tmpx = 2 + (rand() % (MAP_X_SIZE - 4));
+		tmpy = 2 + (rand() % (MAP_Y_SIZE - 4));
+	}
+	this->char_list.push_back(create_boss(0, (float)tmpx, (float)tmpy, BOSS_A, BOSS_A));
+	gen_obstacle((level / 3));
+}
+
 void	Event::print_map( void ) {
 	int y = 0, x;
 	std::cout << "print_map" << std::endl;
@@ -205,7 +237,7 @@ void	Event::init( int ac, char **av ) {
 	this->ac = ac;
 	this->av = av;
 
-
+	parse_command(ac, av);
 }
 
 void	Event::exit_free( void ) {	// free here
