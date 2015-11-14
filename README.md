@@ -1,4 +1,5 @@
 # Bomberman_42
+[![Build Status](https://travis-ci.org/noxsnono/Bomberman_42.svg?branch=master)](https://travis-ci.org/noxsnono/Bomberman_42)
 Bomberman Group Project @ 42Born2code
 
 

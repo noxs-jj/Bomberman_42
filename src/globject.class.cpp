@@ -6,7 +6,7 @@
 /*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/11/14 14:34:07 by nmohamed         ###   ########.fr       */
+/*   Updated: 2015/11/14 14:50:30 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ GLfloat				globject::spinx;
 GLfloat				globject::spinz;
 int					globject::doIspin;
 int					globject::space = 1;
-int					globject::mapX_size = 4;
-int					globject::mapY_size = 4;
+int					globject::mapX_size = 20;
+int					globject::mapY_size = 20;
 
 globject::globject(void)
 {
@@ -352,12 +352,12 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
 	for (int y = 0; y < 1; y++)
 	{
-	for (int i = -MAP_Y_SIZE / 2; i < MAP_Y_SIZE / 2; i++)
+	for (int i = -mapY_size / 2; i < mapY_size / 2; i++)
 	{
-			for (int j = -MAP_X_SIZE / 2; j < MAP_X_SIZE / 2; j++)
+			for (int j = -mapX_size / 2; j < mapX_size / 2; j++)
 			{
-				if (!(j == -MAP_X_SIZE / 2 || j == MAP_X_SIZE / 2 - 1)
-					&& !(i == -MAP_Y_SIZE / 2 || i == MAP_Y_SIZE / 2 - 1) && !(y == 0))
+				if (!(j == -mapX_size / 2 || j == mapX_size / 2 - 1)
+					&& !(i == -mapY_size / 2 || i == mapY_size / 2 - 1) && !(y == 0))
 				continue ;
 				modelDir.x = 1;
 				modelDir.z = 0;
@@ -372,9 +372,9 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 		}
 	}
 
-	for (int i = -MAP_Y_SIZE / 2; i <  MAP_Y_SIZE / 2; i++)
+	for (int i = -mapY_size / 2; i <  mapY_size / 2; i++)
 	{
-		for (int j = -MAP_X_SIZE / 2; j < MAP_X_SIZE / 2; j++)
+		for (int j = -mapX_size / 2; j < mapX_size / 2; j++)
 		{
 			zoomMul = 1;
 			modelDir.x = 1;
@@ -383,29 +383,29 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 			modelPos.y = 0;
 			modelPos.x = i;
 			modelPos.z = j;
-			modelPos.x = map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->pos_y - 10;
-			modelPos.z = map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->pos_x - 10;
-			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == -1)
+			modelPos.x = map[i + mapY_size / 2][j + mapX_size / 2]->pos_y - 10;
+			modelPos.z = map[i + mapY_size / 2][j + mapX_size / 2]->pos_x - 10;
+			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == -1)
 				continue ;
-			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model >= WALL_HP_1 &&
-				map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model <= WALL_HP_4)
-				map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model =
-				map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->status;
-			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == BOMB)
-				if (!(a % (1 + (dynamic_cast<Bomb*>(map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2])->timer) / 2)))
+			if (map[i + mapY_size / 2][j + mapX_size / 2]->model >= WALL_HP_1 &&
+				map[i + mapY_size / 2][j + mapX_size / 2]->model <= WALL_HP_4)
+				map[i + mapY_size / 2][j + mapX_size / 2]->model =
+				map[i + mapY_size / 2][j + mapX_size / 2]->status;
+			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == BOMB)
+				if (!(a % (1 + (dynamic_cast<Bomb*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer) / 2)))
 				{
 					zoomMul *= 1 + 3.0f / (static_cast<float>
-					((dynamic_cast<Bomb*>(map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2])->timer)));
+					((dynamic_cast<Bomb*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer)));
 				}
-            if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == FIRE_2)
+            if (map[i + mapY_size / 2][j + mapX_size / 2]->model == FIRE_2)
 			{
 				zoomMul *= 1.0f - (1.0f / (static_cast<float>
-									 ((dynamic_cast<Fire*>(map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2])->timer))));
+									 ((dynamic_cast<Fire*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer))));
 			}
 			Model = Matrix::model_matrix(modelPos, modelDir,
-				globject::_object[map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model]._zoom * zoomMul);
+				globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model]._zoom * zoomMul);
 			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-			globject::_object[map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model].render(0);
+			globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model].render(0);
 		}
 	}
 

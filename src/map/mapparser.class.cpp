@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapparser.class.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/07 13:27:58 by jmoiroux          #+#    #+#             */
-/*   Updated: 2015/11/07 20:09:21 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2015/11/14 14:45:28 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <player.class.hpp>
 #include <enemy.class.hpp>
 #include <boss.class.hpp>
+#include <globject.class.hpp>
 
 Entity ***      Mapparser::map_from_file( char *map_path ) {
   Entity ***    tmp = Mapparser::map_alloc();
@@ -35,13 +36,13 @@ Entity ***      Mapparser::map_from_file( char *map_path ) {
   for (int x = 0; x < 3; x++)
     std::getline(file, line);
 
-  while (j < MAP_Y_SIZE) {
+  while (j < globject::mapY_size) {
     i = 0;
     x = 0;
     std::getline(file, line);
     // std::cout << line << std::endl;
 
-    while (i < (MAP_X_SIZE * 4 - 1) ) {
+    while (i < (globject::mapX_size * 4 - 1) ) {
       casemap += line[i];
       casemap += line[i + 1];
       casemap += line[i + 2];
@@ -155,14 +156,14 @@ Entity ***  Mapparser::map_alloc() { // return map 2d without entity
   int         y = 0;
   Entity ***  new_map = NULL;
 
-  new_map = (Entity ***)std::malloc(sizeof(Entity **) * MAP_Y_SIZE);
+  new_map = (Entity ***)std::malloc(sizeof(Entity **) * globject::mapY_size);
   if (new_map == NULL) {
     main_event->w_error("Mapparser::map_alloc() new_map Allocation error");
     throw std::exception();
   }
-  while (y < MAP_Y_SIZE) {
+  while (y < globject::mapY_size) {
     new_map[y] = NULL;
-    new_map[y] = (Entity **)std::malloc(sizeof(Entity *) * MAP_X_SIZE);
+    new_map[y] = (Entity **)std::malloc(sizeof(Entity *) * globject::mapX_size);
     if (new_map[y] == NULL) {
       main_event->w_error("Mapparser::map_alloc() new_map[y] Allocation error");
       throw std::exception();
