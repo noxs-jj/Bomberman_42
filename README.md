@@ -1,4 +1,4 @@
-# Bomberman Group Project @ 42Born2code
+# Bomberman Group Project @42Born2code
 [![Build Status](https://travis-ci.org/noxsnono/Bomberman_42.svg?branch=master)](https://travis-ci.org/noxsnono/Bomberman_42)
 
 ## Requierements, Install
@@ -11,7 +11,6 @@
 
 #### Windows (Not Supported)
 
----
 ## How to Play (Binding)
 Key | Player 1 (Keyboard) | Player 2 (Keyboard)
 ------------ | ------------- | -------------
@@ -20,26 +19,23 @@ Key | Player 1 (Keyboard) | Player 2 (Keyboard)
 **LEFT** | A | 4
 **RIGHT** | D | 6
 **Bomb** | SPACE | 0
----
+
 KEY | Player 3 (Joystick) | Player 4 (Keyboard)
 ------------ | ------------- | -------------
 **UP** | Axis Y | S
 **DOWN** | Axix Y | W
 **LEFT** | Axix X | A
 **RIGHT** | Axix X | D
-**Bomb** | Button 1 | n
----
+**Bomb** | Button 1 | N
+
 ## Credits
- * rcargou @42born2code
- * vjacquie @42born2code
- * adjivas @42born2code
- * nmohamed @42born2code
-   * naki.md@gmail.com
-   * twitter @naki_md
- * jmoiroux @42born2code (Jean-Jacques MOIROUX)
- * jjmoiroux@gmail.com
-* twitter @jjmoiroux
-* http://www.noxs.net
+Whois @42born2code | Jobs
+------------ | -------------
+rcargou  | 3D OpenGL engineer
+vjacquie | Game Logic, Game Design
+adjivas | IA engineer
+nmohamed naki.md@gmail.com twitter@naki_md | Sound Design, input engineer
+jmoiroux jjmoiroux@gmail.com twitter@jjmoiroux | Project Manager, Level Design, Game Design, Os Platform compatibility
 
 #### Devs
 event.class.cpp line 71
