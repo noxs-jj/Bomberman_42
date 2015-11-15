@@ -106,13 +106,14 @@ void keyboard(void) {
 							case SDLK_KP_8:     key2.key_down = 1; break;
 							case SDLK_KP_6:    	key2.key_right = 1; break;
 							case SDLK_KP_4:     key2.key_left = 1; break;
-							case SDLK_SPACE:    main_event->player_bomb(main_event->config[1]); break;
+							case SDLK_KP_0:    	main_event->player_bomb(main_event->config[1]); break;
+
 
 							case SDLK_s:     		key.key_up = 1; break;
 							case SDLK_w:       	key.key_down = 1; break;
 							case SDLK_d:    		key.key_right = 1; break;
 							case SDLK_a:     		key.key_left = 1; break;
-							case SDLK_KP_0:    	main_event->player_bomb(main_event->config[0]); break;
+							case SDLK_SPACE:    main_event->player_bomb(main_event->config[0]); break;
 
 							case SDLK_k:     		key4.key_up = 1; break;
 							case SDLK_i:       	key4.key_down = 1; break;
@@ -131,15 +132,15 @@ void keyboard(void) {
 				}
         if (event.type == SDL_KEYUP) {
             switch((event).key.keysym.sym) {
-							case SDLK_KP_5:     key.key_up = 0; break;
-							case SDLK_KP_8:     key.key_down = 0; break;
-							case SDLK_KP_6:     key.key_right = 0; break;
-							case SDLK_KP_4:     key.key_left = 0; break;
+							case SDLK_KP_5:     key2.key_up = 0; break;
+							case SDLK_KP_8:     key2.key_down = 0; break;
+							case SDLK_KP_6:     key2.key_right = 0; break;
+							case SDLK_KP_4:     key2.key_left = 0; break;
 
-							case SDLK_s:     		key2.key_up = 0; break;
-							case SDLK_w:       	key2.key_down = 0; break;
-							case SDLK_d:    		key2.key_right = 0; break;
-							case SDLK_a:     		key2.key_left = 0; break;
+							case SDLK_s:     		key.key_up = 0; break;
+							case SDLK_w:       	key.key_down = 0; break;
+							case SDLK_d:    		key.key_right = 0; break;
+							case SDLK_a:     		key.key_left = 0; break;
 
 							case SDLK_k:     		key4.key_up = 0; break;
 							case SDLK_i:       	key4.key_down = 0; break;
