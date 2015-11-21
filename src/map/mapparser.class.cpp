@@ -6,7 +6,7 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/07 13:27:58 by jmoiroux          #+#    #+#             */
-/*   Updated: 2015/11/07 20:09:21 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2015/11/14 17:08:28 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,16 @@
 #include <player.class.hpp>
 #include <enemy.class.hpp>
 #include <boss.class.hpp>
+#include <globject.class.hpp>
 
 Entity ***      Mapparser::map_from_file( char *map_path ) {
   Entity ***    tmp = Mapparser::map_alloc();
+  Entity *      elem = NULL;
   std::fstream  file;
   std::string   line;
   std::string   casemap;
   int           i = 0,
-                j = 0,
+                j = globject::mapY_size - 1,
                 x = 0;
 
   Mapparser::valid_map(map_path);
@@ -34,35 +36,40 @@ Entity ***      Mapparser::map_from_file( char *map_path ) {
   for (int x = 0; x < 3; x++)
     std::getline(file, line);
 
-  while (j < MAP_Y_SIZE) {
-    i = 0;
-    x = 0;
+  while (j >= 0) {
+    i = ((globject::mapX_size - 1) * 4 );
+    x = globject::mapX_size - 1;
     std::getline(file, line);
     // std::cout << line << std::endl;
 
-    while (i < (MAP_X_SIZE * 4 - 1) ) {
+    while (i >= 0) {
       casemap += line[i];
       casemap += line[i + 1];
       casemap += line[i + 2];
-
-      tmp[j][x] = Mapparser::get_entity_from_map( casemap, (float)x, (float)j );
-
       std::cout << casemap;
-      casemap.clear();
-      i += 4;
-      x++;
 
-      if ( i >= (int)line.length() )
+      elem = Mapparser::get_entity_from_map( casemap, (float)x, (float)j );
+      if (elem->type == PLAYER || elem->type == ENEMY || elem->type == BOSS) {
+        tmp[j][x] = main_event->create_empty((int)x, (int)j);
+        main_event->char_list.push_back(elem);
+      }
+      else
+        tmp[j][x] = elem;
+
+      casemap.clear();
+      i -= 4;
+      x--;
+
+      if ( i < 0 )
         break;
     }
     std::cout << std::endl;
-    j++;
+    j--;
   }
 
   std::cout << "Mapparser::map_from_file LOADED" << std::endl;
   return tmp;
 }
-
 
 Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, float y) {
   Entity *  tmp = NULL;
@@ -75,10 +82,10 @@ Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, floa
     switch (g_mapcase.at(casemap)) {
       case EMPTY:                 return static_cast<Entity*>( main_event->create_empty(x, y) );
       case WALL_INDESTRUCTIBLE:   return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_INDESTRUCTIBLE) );
-      case WALL_HP_1:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_1) );
-      case WALL_HP_2:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_2) );
-      case WALL_HP_3:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_3) );
-      case WALL_HP_4:             return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_HP_4) );
+      case WALL_HP_1:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_1, x, y, WALL_HP_1) );
+      case WALL_HP_2:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_2, x, y, WALL_HP_2) );
+      case WALL_HP_3:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_3, x, y, WALL_HP_3) );
+      case WALL_HP_4:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_4, x, y, WALL_HP_4) );
       case ENEMY1:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY1) );
       case ENEMY2:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY2) );
       case ENEMY3:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY3) );
@@ -149,14 +156,14 @@ Entity ***  Mapparser::map_alloc() { // return map 2d without entity
   int         y = 0;
   Entity ***  new_map = NULL;
 
-  new_map = (Entity ***)std::malloc(sizeof(Entity **) * MAP_Y_SIZE);
+  new_map = (Entity ***)std::malloc(sizeof(Entity **) * globject::mapY_size);
   if (new_map == NULL) {
     main_event->w_error("Mapparser::map_alloc() new_map Allocation error");
     throw std::exception();
   }
-  while (y < MAP_Y_SIZE) {
+  while (y < globject::mapY_size) {
     new_map[y] = NULL;
-    new_map[y] = (Entity **)std::malloc(sizeof(Entity *) * MAP_X_SIZE);
+    new_map[y] = (Entity **)std::malloc(sizeof(Entity *) * globject::mapX_size);
     if (new_map[y] == NULL) {
       main_event->w_error("Mapparser::map_alloc() new_map[y] Allocation error");
       throw std::exception();

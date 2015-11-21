@@ -22,6 +22,7 @@ public:
 	bool									run;
 	Entity ***						map;
 	std::list<Entity *>		char_list;
+	bool									gen_level;
 	bool									coop; // false si campaign
 	int 									actual_level;
 	int										multi; // 0 == non activer, 2 player, 3, 4, 5
@@ -52,6 +53,7 @@ public:
 	void			gen_level_multi(int level, int coop);
 	bool			check_coord(int mode, float x, float y);
 	void			gen_obstacle(int difficulty);
+	void			gen_level_arena(int level, int coop);
 	Wall *		create_wall(int status, float x, float y, int model);
 	Bomb *		create_bomb(int status, float x, float y, int model);
 	Fire *		create_fire(int status, float x, float y, int model);
@@ -61,8 +63,9 @@ public:
 	Entity *	create_empty(int x, int y);
 
 	void      load_sounds(void); //loads all sounds
-	void			player_move(int id, int dir);
-	void			player_bomb(int id);
+	void			player_move(int model, int dir);
+	void			player_bomb(int model);
+	void			ia_bomb(int id);
 	void			dec_timer( void );
 	void			init( int ac, char **av );
 	void			exit_free( void );

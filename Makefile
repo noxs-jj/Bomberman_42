@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/05/29 14:06:15 by vjacquie          #+#    #+#              #
-#    Updated: 2015/11/08 12:41:37 by noxsnono         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 PLATFORM := $(shell uname)
 
 #Mac --	brew install sdl2 sdl2_image sdl2_mixer sdl2_ttf
@@ -55,7 +43,8 @@ HEAD = 			includes/ft42.class.hpp \
 						includes/soundrender.class.hpp \
 						includes/Menu.class.hpp \
 						includes/GameLauncher.class.hpp \
-						includes/mapparser.class.hpp
+						includes/mapparser.class.hpp \
+						includes/ia.class.hpp
 
 SRC = 			src/ft42.class.cpp \
 						src/entity.class.cpp \
@@ -73,7 +62,8 @@ SRC = 			src/ft42.class.cpp \
 						src/soundrender.class.cpp \
 						src/menu/Menu.class.cpp \
 						src/GameLauncher.class.cpp \
-						src/map/mapparser.class.cpp
+						src/map/mapparser.class.cpp \
+						src/ia.class.cpp
 
 OBJ = 			$(SRC:.cpp=.cpp.o)
 

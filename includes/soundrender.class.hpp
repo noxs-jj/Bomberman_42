@@ -1,9 +1,11 @@
-#include <string>
-#include <ft42.class.hpp>
-#include <SDL.h>
-#include <SDL_mixer.h>
-#include <map>
-#include <stdexcept>
+#ifndef SOUNDRENDER_CLASS_HPP
+# define SOUNDRENDER_CLASS_HPP
+# include <string>
+# include <ft42.class.hpp>
+# include <SDL.h>
+# include <SDL_mixer.h>
+# include <map>
+# include <stdexcept>
 
 class SoundRender : ft42 {
 
@@ -36,3 +38,5 @@ class SoundRender : ft42 {
         std::map<std::string, Mix_Chunk*> mChunks;
         std::map<std::string, Mix_Music*> mMusics;
 };
+
+#endif // SOUNDRENDER_CLASS_HPP

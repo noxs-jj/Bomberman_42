@@ -2,13 +2,29 @@
 sudo: false
 language: C
 
-before_install:
-  - sudo add-apt-repository -y ppa:kalakris/cmake
-  - sudo add-apt-repository -y ppa:team-xbmc/ppa
-  - sudo apt-get update -qq
-
 install:
-  - sudo apt-get install libXxf86vm-dev cmake libsdl2-dev
+  - brew install sdl
+  - brew install sdl2
+  - brew install sdl_ttf
+  - brew install sdl2_ttf
+  - brew install sdl_image
+  - brew install sdl2_image
+  - brew install sdl_mixer
+  - brew install sdl2_mixer
+
+os:
+  - osx
+
+env:
+  - BUILD=native CC=clang MODE=release
+  - BUILD=native CC=clang MODE=debug
+  - BUILD=native CC=gcc MODE=release
+  - BUILD=native CC=gcc MODE=debug
+
+env:
+  - ARCH=x86_64
+  - ARCH=i686
+
 script:
   - make
 

@@ -1,20 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   globject.class.cpp                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/11/08 13:18:41 by noxsnono         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <globject.class.hpp>
 #include <bomb.class.hpp>
 #include <fire.class.hpp>
 
-globject			globject::_object[100];
+globject				globject::_object[100];
 SDL_Window			*globject::_displayWindow;
 SDL_Renderer		*globject::_displayRenderer;
 SDL_RendererInfo	globject::_displayRendererInfo;
@@ -27,6 +15,8 @@ GLfloat				globject::spinx;
 GLfloat				globject::spinz;
 int					globject::doIspin;
 int					globject::space = 1;
+int					globject::mapX_size = 20;
+int					globject::mapY_size = 20;
 
 globject::globject(void)
 {
@@ -35,15 +25,24 @@ globject::globject(void)
 
 globject::globject(std::string path, GLuint ID, GLfloat zoom) : _ID(ID), _zoom(zoom)
 {
+	std::cout << "AAA" << std::endl;
 	int neg;
 
 	neg = (ID == WALL_HP_1 || ID == FLOOR || ID == WALL_INDESTRUCTIBLE);
 	neg = 0;
+	std::cout << "parsing" << std::endl;
 	parser.parse(path, neg);
+	std::cout << "parsed" << std::endl;
+	std::cout << "filling" << std::endl;
 	fill_vao();
+	std::cout << "filled" << std::endl;
 	_textNumber = parser._textNum;
+	std::cout << "loading bmp" << std::endl;
 	load_bmp();
+	std::cout << "loaded bmp" << std::endl;
+	std::cout << "copying into array" << std::endl;
 	globject::_object[ID] = *this;
+	std::cout << "copy success" << std::endl;
 }
 
 globject::~globject(void)
@@ -65,26 +64,58 @@ void globject::load_bmp()
     for (size_t i = 0; i < parser._textNum; i++)
     {
         name = "texture";
-        path ="textures/";
+        path ="render/textures/";
 		if (globject::space)
-			path = "spacestextures/";
+			path = "render/spacestextures/";
 		path += parser._texture[i];
 		std::cout << path.c_str() << std::endl;
+		std::cout << "LOL1" << std::endl;
         SDL_Surface *imp = IMG_Load(path.c_str());
 		if (imp == NULL)
-			return ;
+		{
+			std::cerr << "FAILFAIL" << std::endl;
+			throw std::exception() ;
+		}
+		std::cout << "LOL2" << std::endl;
 		glGenTextures(1, &(_textID[i]));
+		std::cout << "LOL3" << std::endl;
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		if ((_ID >= BOSS_A && _ID <= BOSS_C) || (_ID >= PLAYER && _ID <= PLAYER4)
-			|| _ID == BOMB || (_ID >= ENEMY && _ID <= ENEMY4) || _ID == MENU || (globject::space && _ID == MAX_ENUM))
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
-				imp->w, imp->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
+		std::cout << "LOL4" << std::endl;
+		if ((_ID >= BOSS_A && _ID <= BOSS_C)
+			|| (_ID >= PLAYER && _ID <= PLAYER4)
+			|| _ID == BOMB
+			|| (_ID >= ENEMY && _ID <= ENEMY4)
+			|| _ID == MENU
+			|| (globject::space && _ID == MAX_ENUM))
+			{
+				std::cout << "LOL4.1" << std::endl;
+
+				GLenum err = glGetError();
+				if (err != GL_NO_ERROR)
+				{
+					std::cerr << err << std::endl;
+				}
+
+				// XXX XXX XXX
+				// glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+				// 							imp->w, imp->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
+				// XXX XXX XXX
+				std::cout << "LOL4.2" << std::endl;
+			}
 		else
+		{
+			std::cout << "LOL4.3" << std::endl;
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
 				imp->w, imp->h, 0, GL_BGR, GL_UNSIGNED_BYTE, imp->pixels);
+				std::cout << "LOL4.5" << std::endl;
+		}
+			std::cout << "LOL5" << std::endl;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		std::cout << "LOL6" << std::endl;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		std::cout << "LOL7" << std::endl;
 		name += std::to_string(i);
+		std::cout << "LOL8" << std::endl;
 		_textLoc[i] = glGetUniformLocation(globject::_progid, name.c_str());
 	}
 }
@@ -108,7 +139,7 @@ void		globject::init(void)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	globject::_displayWindow = SDL_CreateWindow("Bomberman", SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, 1200, 1200, SDL_WINDOW_OPENGL);
+		SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_OPENGL);
 
 	/* Init OpenGL */
 	std::cout << "deb -997" << std::endl;
@@ -119,6 +150,7 @@ void		globject::init(void)
 		_exit(0);
 	}
 
+	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
 	if(err != GLEW_OK) {
 		std::cerr << "glew failed" << glewGetErrorString(err) << std::endl;
@@ -139,30 +171,30 @@ void		globject::init(void)
 	std::cout << "deb -998" << std::endl;
 
 	/* load Models */
+
 	std::cout << "yhnm 2" << std::endl;
-	globject("models/cube.obj", WALL_HP_1, 1);
+	globject("render/models/cube.obj", WALL_HP_1, 1);
 	std::cout << "yhnm 2.1" << std::endl;
-	globject("models/cube1.obj", WALL_HP_2, 1);
-	globject("models/cube2.obj", WALL_HP_3, 1);
-    globject("models/cube_floor.obj", FLOOR, 1);
-	globject("models/rock.obj", WALL_INDESTRUCTIBLE, 1);
-	globject("models/Bomberman/Bomberman.obj", PLAYER, 0.03);
-	globject("models/Bomberman/Bomberman.obj", PLAYER1, 0.03);
-	globject("models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
-	globject("models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
-	globject("models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
-	globject("models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY4, 0.3);
-	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
-	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS_B, 1);
-	globject("models/BOSS_Titan/BOSS_Titan.obj", BOSS_C, 1);
-	globject("models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
-	globject("models/icosphere.obj", MAX_ENUM, 1);
-	globject("models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
-	std::cout << "yhnm 1" << std::endl;
-	globject("models/menu.obj", MENU, 1);
+	globject("render/models/cube1.obj", WALL_HP_2, 1);
+	globject("render/models/cube2.obj", WALL_HP_3, 1);
+    globject("render/models/cube_floor.obj", FLOOR, 1);
+	globject("render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
+	globject("render/models/Bomberman/Bomberman.obj", PLAYER, 0.03);
+	globject("render/models/Bomberman/Bomberman.obj", PLAYER1, 0.03);
+	globject("render/models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
+	globject("render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
+	globject("render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
+	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
+	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
+	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
+	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY4, 0.3);
+	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
+	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_B, 1);
+	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_C, 1);
+	globject("render/models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
+	globject("render/models/icosphere.obj", MAX_ENUM, 1);
+	globject("render/models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
+	globject("render/models/menu.obj", MENU, 1);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -362,12 +394,12 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
 	for (int y = 0; y < 1; y++)
 	{
-	for (int i = -MAP_Y_SIZE / 2; i < MAP_Y_SIZE / 2; i++)
+	for (int i = -mapY_size / 2; i < mapY_size / 2; i++)
 	{
-			for (int j = -MAP_X_SIZE / 2; j < MAP_X_SIZE / 2; j++)
+			for (int j = -mapX_size / 2; j < mapX_size / 2; j++)
 			{
-				if (!(j == -MAP_X_SIZE / 2 || j == MAP_X_SIZE / 2 - 1)
-					&& !(i == -MAP_Y_SIZE / 2 || i == MAP_Y_SIZE / 2 - 1) && !(y == 0))
+				if (!(j == -mapX_size / 2 || j == mapX_size / 2 - 1)
+					&& !(i == -mapY_size / 2 || i == mapY_size / 2 - 1) && !(y == 0))
 				continue ;
 				modelDir.x = 1;
 				modelDir.z = 0;
@@ -382,9 +414,9 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 		}
 	}
 
-	for (int i = -MAP_Y_SIZE / 2; i <  MAP_Y_SIZE / 2; i++)
+	for (int i = -mapY_size / 2; i <  mapY_size / 2; i++)
 	{
-		for (int j = -MAP_X_SIZE / 2; j < MAP_X_SIZE / 2; j++)
+		for (int j = -mapX_size / 2; j < mapX_size / 2; j++)
 		{
 			zoomMul = 1;
 			modelDir.x = 1;
@@ -393,29 +425,29 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 			modelPos.y = 0;
 			modelPos.x = i;
 			modelPos.z = j;
-			modelPos.x = map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->pos_y - 10;
-			modelPos.z = map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->pos_x - 10;
-			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == -1)
+			modelPos.x = map[i + mapY_size / 2][j + mapX_size / 2]->pos_y - 10;
+			modelPos.z = map[i + mapY_size / 2][j + mapX_size / 2]->pos_x - 10;
+			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == -1)
 				continue ;
-			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model >= WALL_HP_1 &&
-				map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model <= WALL_HP_4)
-				map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model =
-				map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->status;
-			if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == BOMB)
-				if (!(a % (1 + (dynamic_cast<Bomb*>(map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2])->timer) / 2)))
+			if (map[i + mapY_size / 2][j + mapX_size / 2]->model >= WALL_HP_1 &&
+				map[i + mapY_size / 2][j + mapX_size / 2]->model <= WALL_HP_4)
+				map[i + mapY_size / 2][j + mapX_size / 2]->model =
+				map[i + mapY_size / 2][j + mapX_size / 2]->status;
+			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == BOMB)
+				if (!(a % (1 + (dynamic_cast<Bomb*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer) / 2)))
 				{
 					zoomMul *= 1 + 3.0f / (static_cast<float>
-					((dynamic_cast<Bomb*>(map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2])->timer)));
+					((dynamic_cast<Bomb*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer)));
 				}
-            if (map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model == FIRE_2)
+            if (map[i + mapY_size / 2][j + mapX_size / 2]->model == FIRE_2)
 			{
 				zoomMul *= 1.0f - (1.0f / (static_cast<float>
-									 ((dynamic_cast<Fire*>(map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2])->timer))));
+									 ((dynamic_cast<Fire*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer))));
 			}
 			Model = Matrix::model_matrix(modelPos, modelDir,
-				globject::_object[map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model]._zoom * zoomMul);
+				globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model]._zoom * zoomMul);
 			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-			globject::_object[map[i + MAP_Y_SIZE / 2][j + MAP_X_SIZE / 2]->model].render(0);
+			globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model].render(0);
 		}
 	}
 
@@ -526,11 +558,9 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader)
 
 void		globject::load_shaders()
 {
-	std::cout << "try 0" << std::endl;
-	char a[] = "shaders/frag.shader";
-	std::cout << "try 1" << std::endl;
-	char b[]  = "shaders/vertex.shader";
-	std::cout << "try 2" << std::endl;
+
+	char a[] = "render/shaders/frag.shader";
+	char b[]  = "render/shaders/vertex.shader";
 	glUseProgram(loadshaders(a, b));
 	std::cout << "try 3" << std::endl;
 }
@@ -541,16 +571,30 @@ void		globject::fill_vao(void)
 	GLuint textBufferID;
 	GLuint textureBufferID;
 
+	std::cout << "111" << std::endl;
+
 	glGenVertexArrays(1, &(_vaoID));
+		std::cout << "qwe" << std::endl;
+
 	glGenBuffers(1, &(vertexBufferID));
+
+		std::cout << "asd" << std::endl;
 	glGenBuffers(1, &(textBufferID));
+
+		std::cout << "zxc" << std::endl;
 	glGenBuffers(1, &(textureBufferID));
+
+		std::cout << "jkl" << std::endl;
 	glBindVertexArray(_vaoID);
+
+		std::cout << "222" << std::endl;
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * parser._finalVertexSize, parser._finalVertex, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(0);
+
+		std::cout << "333" << std::endl;
 
 	glBindBuffer(GL_ARRAY_BUFFER, textBufferID);
 	glBufferData(GL_ARRAY_BUFFER, parser._finalTextSize * sizeof(GLfloat), parser._finalText, GL_STATIC_DRAW);

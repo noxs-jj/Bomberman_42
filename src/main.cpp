@@ -1,8 +1,8 @@
 #include <main.hpp>
 #include <list>
 #include <Menu.class.hpp>
-
-void		keyboard( void ); // A Mettre dans main.hpp
+#include <ia.class.hpp>
+void			keyboard( void ); // A Mettre dans main.hpp
 
 Event *		main_event = new Event(); // GLOBAL
 
@@ -10,21 +10,8 @@ int main( int ac, char **av ) {
 	(void)(av);
 	(void)(ac);
 	ft42::logg = true;
-
-	// TEST mapparser
-	// try {
-	// 	std::cout << "ac " << ac << " -- av " << av[1] << std::endl;
-	//
-	// 	Entity *** new_map = Mapparser::map_from_file(av[1]);
-	//
-	// 	(void)new_map;
-	//
-	// }
-	// catch (std::exception & e){
-	// 	std::cerr << "EXIT_FAILURE " << std::endl;
-	// 	return (EXIT_FAILURE);
-	// }
-	// END mapparser
+	int _time = 0;
+	Ia * ia_play = new Ia();
 
 	try {
 		if (main_event == NULL) {
@@ -34,6 +21,10 @@ int main( int ac, char **av ) {
 		main_event->menu = new Menu(main_event);
 		if (main_event->menu == NULL) {
 			main_event->w_full("Menu allocation error");
+			throw std::exception();
+		}
+		if (ia_play == NULL) {
+			ia_play->w_full("Menu allocation error");
 			throw std::exception();
 		}
 		if (TTF_Init() != 0){
@@ -49,7 +40,7 @@ int main( int ac, char **av ) {
 
 
 		ft42::logg = true; // ceci active les debugg ecran et fichier
-		std::atexit(TTF_Quit);
+		// std::atexit(TTF_Quit);
 		srand(clock());
 		globject::init();
 		// main_event->render->init();
@@ -77,7 +68,12 @@ int main( int ac, char **av ) {
 		while (true == main_event->event_running) {
 			if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
 				continue ;
+				_time++;
+				_time = _time % 60;
 			keyboard();
+			ia_play->start(time);
+			if (main_event->event_running == false)
+				break;
 			main_event->dec_timer();
 			time = clock();
 				const Uint8 *state = SDL_GetKeyboardState(NULL);
@@ -116,23 +112,24 @@ void keyboard(void) {
 							case SDLK_ESCAPE:   main_event->exit_free();
 																	break;
 
-							case SDLK_KP_5:     key.key_up = 1; break;
-							case SDLK_KP_8:     key.key_down = 1; break;
-							case SDLK_KP_6:    	key.key_right = 1; break;
-							case SDLK_KP_4:     key.key_left = 1; break;
-							case SDLK_KP_0:    	main_event->player_bomb(main_event->config[0]); break;
+							case SDLK_KP_5:     key2.key_up = 1; break;
+							case SDLK_KP_8:     key2.key_down = 1; break;
+							case SDLK_KP_6:    	key2.key_right = 1; break;
+							case SDLK_KP_4:     key2.key_left = 1; break;
+							case SDLK_KP_0:    	main_event->player_bomb(main_event->config[1]); break;
 
-							case SDLK_s:     		key2.key_up = 1; break;
-							case SDLK_w:       	key2.key_down = 1; break;
-							case SDLK_d:    		key2.key_right = 1; break;
-							case SDLK_a:     		key2.key_left = 1; break;
-							case SDLK_SPACE:    main_event->player_bomb(main_event->config[1]); break;
+
+							case SDLK_s:     		key.key_up = 1; break;
+							case SDLK_w:       	key.key_down = 1; break;
+							case SDLK_d:    		key.key_right = 1; break;
+							case SDLK_a:     		key.key_left = 1; break;
+							case SDLK_SPACE:    main_event->player_bomb(main_event->config[0]); break;
 
 							case SDLK_k:     		key4.key_up = 1; break;
 							case SDLK_i:       	key4.key_down = 1; break;
 							case SDLK_l:    		key4.key_right = 1; break;
 							case SDLK_j:     		key4.key_left = 1; break;
-							case SDLK_n:    main_event->player_bomb(main_event->config[3]); break;
+							case SDLK_n:    		main_event->player_bomb(main_event->config[3]); break;
 
 							case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
 																		main_event->mode_menu = false;
@@ -145,15 +142,15 @@ void keyboard(void) {
 				}
         if (event.type == SDL_KEYUP) {
             switch((event).key.keysym.sym) {
-							case SDLK_KP_5:     key.key_up = 0; break;
-							case SDLK_KP_8:       key.key_down = 0; break;
-							case SDLK_KP_6:    key.key_right = 0; break;
-							case SDLK_KP_4:     key.key_left = 0; break;
+							case SDLK_KP_5:     key2.key_up = 0; break;
+							case SDLK_KP_8:     key2.key_down = 0; break;
+							case SDLK_KP_6:     key2.key_right = 0; break;
+							case SDLK_KP_4:     key2.key_left = 0; break;
 
-							case SDLK_s:     		key2.key_up = 0; break;
-							case SDLK_w:       	key2.key_down = 0; break;
-							case SDLK_d:    		key2.key_right = 0; break;
-							case SDLK_a:     		key2.key_left = 0; break;
+							case SDLK_s:     		key.key_up = 0; break;
+							case SDLK_w:       	key.key_down = 0; break;
+							case SDLK_d:    		key.key_right = 0; break;
+							case SDLK_a:     		key.key_left = 0; break;
 
 							case SDLK_k:     		key4.key_up = 0; break;
 							case SDLK_i:       	key4.key_down = 0; break;

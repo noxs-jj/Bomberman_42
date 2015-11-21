@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   globject.class.hpp                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: noxsnono <noxsnono@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/11/08 13:12:34 by noxsnono         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef GLOBJECT_CLASS_HPP
 # define GLOBJECT_CLASS_HPP
 
@@ -24,6 +12,8 @@
 # include <parser.class.hpp>
 # include <fcntl.h>
 # include <cstring>
+# include <algorithm>
+# include <vector>
 
 class globject {
 
@@ -61,9 +51,10 @@ class globject {
 		static SDL_Window			*_displayWindow;
 		static SDL_Renderer			*_displayRenderer;
 		static SDL_RendererInfo		_displayRendererInfo;
-		static					globject _object[100];
-
+		static globject			_object[100];
 		Parser						parser;
+		static int					mapX_size;
+		static int					mapY_size;
 
 		// Jean-Jacques modification pour affichage mise en public pour acces
 		static void			display_menu(SDL_Surface *menu);
