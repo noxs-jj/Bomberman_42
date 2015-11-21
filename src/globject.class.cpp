@@ -136,10 +136,17 @@ void		globject::init(void)
 	}
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	globject::_displayWindow = SDL_CreateWindow("Bomberman", SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_OPENGL);
+
+	# ifdef linux
+		globject::_displayWindow = SDL_CreateWindow("Bomberman", SDL_WINDOWPOS_CENTERED,
+						SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_OPENGL);
+	# endif
+	# ifdef __APPLE__
+		globject::_displayWindow = SDL_CreateWindow("Bomberman", SDL_WINDOWPOS_CENTERED,
+						SDL_WINDOWPOS_CENTERED, 1200, 1200, SDL_WINDOW_OPENGL);
+	# endif
 
 	/* Init OpenGL */
 	std::cout << "deb -997" << std::endl;
@@ -150,12 +157,14 @@ void		globject::init(void)
 		_exit(0);
 	}
 
-	glewExperimental = GL_TRUE;
-	GLenum err = glewInit();
-	if(err != GLEW_OK) {
-		std::cerr << "glew failed" << glewGetErrorString(err) << std::endl;
-		_exit(0);
-	}
+	# ifdef linux
+		glewExperimental = GL_TRUE;
+		GLenum err = glewInit();
+		if(err != GLEW_OK) {
+			std::cerr << "glew failed" << glewGetErrorString(err) << std::endl;
+			_exit(0);
+		}
+	# endif
 
 	std::cout << "deb -996" << std::endl;
     glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
