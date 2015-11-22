@@ -135,5 +135,5 @@ void	Entity::put_bomb(int status, float x, float y, int model, int blast) {
 	delete main_event->map[(int)y][(int)x];
 	// main_event->map[(int)y][(int)x] = main_event->create_empty((int)x, (int)y);
 	main_event->map[(int)y][(int)x] = main_event->create_bomb(status, (int)x + 0.5, (int)y + 0.5, model);
-	main_event->map[(int)y][(int)x]->blast_radius = blast;
+	main_event->map[(int)y][(int)x]->blast_radius = blast + BLAST_SIZE;
 }
