@@ -26,6 +26,7 @@ public:
 	Entity & operator=( Entity const & rhs );
 	virtual ~Entity( void );
 	Entity( void );
+	int	pretest_move( int dir );
 	void	move( int dir );
 	int		check_move( float x, float y );
 	void	die( void );

@@ -30,6 +30,22 @@ int		Entity::check_move( float x, float y ) {
 	return EMPTY;
 }
 
+int	Entity::pretest_move( int dir ) {
+	float	x = 0;//this->pos_x;
+	float	y = 0;//this->pos_y;
+
+	frame += 0.3;
+	if (dir == DIR_UP)
+		y += -0.08f;
+	else if (dir == DIR_BOTTOM)
+		y += 0.08f;
+	else if (dir == DIR_LEFT)
+		x += -0.08f;
+	else if (dir == DIR_RIGHT)
+		x += 0.08f;
+	return (check_move(x * 3 + this->pos_x, y + this->pos_y));
+}
+
 void	Entity::move( int dir ) {
 	float	x = 0;//this->pos_x;
 	float	y = 0;//this->pos_y;

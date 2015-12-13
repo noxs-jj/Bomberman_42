@@ -2,6 +2,7 @@
 # define IA_CLASS_HPP
 
 # include <ft42.class.hpp>
+# include <entity.class.hpp>
 
 class Ia : public ft42 {
 public:
@@ -13,6 +14,7 @@ public:
 	virtual ~Ia( void );
 	Ia( void );
 	void	start( int time );
+  bool get_paths(Entity *it, int dir, int or_dir);
 };
 
 #endif
