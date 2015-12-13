@@ -7,6 +7,7 @@
 class Ia : public ft42 {
 public:
   unsigned long layer;
+  int direction;
 
 	Ia( int layer );
 	Ia( Ia const & src );
