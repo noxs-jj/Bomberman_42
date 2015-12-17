@@ -15,7 +15,8 @@ public:
 	virtual ~Ia( void );
 	Ia( void );
 	void start( int time );
-  bool play_enemy(Entity *it);
+  bool must_move( Entity *it );
+  bool play_enemy( Entity *it );
 };
 
 #endif

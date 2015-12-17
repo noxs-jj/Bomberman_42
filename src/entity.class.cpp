@@ -38,28 +38,34 @@ std::vector<int>	Entity::pretest_moves( int dir ) {
 	float	x; //this->pos_x;
 	float	y; //this->pos_y;
 	int pre_move = 0;
-	unsigned int pass = 0;
 
 	x = y = 0;
-	while (++pass) {
+	std::cout << dir << " -> ";
+	while (42) {
 		if (dir == DIR_UP)
-			y += -0.08f * 10;
+			y += -0.08f + 1;
 		else if (dir == DIR_BOTTOM)
-			y += 0.08f * 10;
+			y += 0.08f + 1;
 		else if (dir == DIR_LEFT)
-			x += -0.08f * 3 * 10;
+			x += -0.08f * 3 + 1;
 		else if (dir == DIR_RIGHT)
-			x += 0.08f * 3 * 10;
+			x += 0.08f * 3 + 1;
 		pre_move = check_move (
 			(x + this->pos_x),
 			(y + this->pos_y)
 		);
+		if (pre_move == EMPTY
+		&&  main_event->map[(int)(x + this->pos_x)][(int)(y + this->pos_y)]->type == PLAYER) {
+			pre_move = PLAYER;
+		}
 		line.push_back(pre_move);
 		std::cout << '['
 							<< (int)(x + this->pos_x)
 		          << ';'
 							<< (int)(y + this->pos_y)
-							<< "], ";
+							<< "]->"
+							<< pre_move
+							<< ", ";
 		if (pre_move != EMPTY) {
 			break ;
 		}
