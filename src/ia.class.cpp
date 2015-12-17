@@ -28,7 +28,7 @@ int heuristic(std::vector<int> line) {
     it != line.end();
     ++it
   ) {
-    if (*it == PLAYER1) {
+    if (*it == PLAYER) {
       return (score - 5);
     }
     score += 1;
@@ -73,15 +73,13 @@ bool    Ia::play_enemy(Entity *it) {
   if (direction != EMPTY) {
     Ia::must_move(it);
   }
-  else {
-    std::cout << "ok\n";
-  }
   (*it).move((*it).dir);
   return (true);
 }
 
 void     Ia::start( int time ) {
   std::list<Entity *>::iterator it = main_event->char_list.begin();
+  std::list<Entity *>::iterator cit = main_event->char_list.begin();
   std::list<Entity *>::iterator end = main_event->char_list.end();
   (void)time;
   while (it != end) {
@@ -90,6 +88,17 @@ void     Ia::start( int time ) {
       break ;
     }
     it++;
+  }
+  while (cit != end) {
+    if ((*cit)->type == PLAYER) {
+      /*std::cout << '\t'
+                << (int)((*cit)->pos_x)
+                << ';'
+                << (int)((*cit)->pos_y)
+                << '\n';*/
+      break ;
+    }
+    cit++;
   }
 }
 

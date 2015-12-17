@@ -43,20 +43,26 @@ std::vector<int>	Entity::pretest_moves( int dir ) {
 	std::cout << dir << " -> ";
 	while (42) {
 		if (dir == DIR_UP)
-			y += -0.08f + 1;
+			y += -0.08f - 1;
 		else if (dir == DIR_BOTTOM)
 			y += 0.08f + 1;
 		else if (dir == DIR_LEFT)
-			x += -0.08f * 3 + 1;
+			x += -0.08f * 3 - 1;
 		else if (dir == DIR_RIGHT)
 			x += 0.08f * 3 + 1;
 		pre_move = check_move (
 			(x + this->pos_x),
 			(y + this->pos_y)
 		);
-		if (pre_move == EMPTY
-		&&  main_event->map[(int)(x + this->pos_x)][(int)(y + this->pos_y)]->type == PLAYER) {
-			pre_move = PLAYER;
+		if (pre_move == EMPTY) {
+			int contain = main_event->map[(int)(x + this->pos_x)]
+												           [(int)(y + this->pos_y)]->type;
+			if (contain == PLAYER1
+			||  contain == PLAYER2
+		  ||  contain == PLAYER3
+	    ||  contain == PLAYER4) {
+				pre_move = PLAYER;
+			}
 		}
 		line.push_back(pre_move);
 		std::cout << '['
