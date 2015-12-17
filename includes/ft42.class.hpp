@@ -72,7 +72,7 @@ enum STATUS {
 	ENEMY3,
 	ENEMY4,
 	BONUS,
-	EMPTY,
+	EMPTY, //15
 
 	////
 	//// BOSS NAME

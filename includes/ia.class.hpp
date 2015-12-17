@@ -14,8 +14,8 @@ public:
 	Ia & operator=( Ia const & rhs );
 	virtual ~Ia( void );
 	Ia( void );
-	void	start( int time );
-  bool get_paths(Entity *it, int dir, int or_dir);
+	void start( int time );
+  bool play_enemy(Entity *it);
 };
 
 #endif

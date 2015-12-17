@@ -3,6 +3,9 @@
 #include <bomb.class.hpp>
 #include <globject.class.hpp>
 
+#include <iostream>
+#include <vector>
+
 int		Entity::autoincrement = 0;
 
 
@@ -30,11 +33,45 @@ int		Entity::check_move( float x, float y ) {
 	return EMPTY;
 }
 
+std::vector<int>	Entity::pretest_moves( int dir ) {
+	std::vector<int> line;
+	float	x; //this->pos_x;
+	float	y; //this->pos_y;
+	int pre_move = 0;
+	unsigned int pass = 0;
+
+	x = y = 0;
+	while (++pass) {
+		if (dir == DIR_UP)
+			y += -0.08f * 10;
+		else if (dir == DIR_BOTTOM)
+			y += 0.08f * 10;
+		else if (dir == DIR_LEFT)
+			x += -0.08f * 3 * 10;
+		else if (dir == DIR_RIGHT)
+			x += 0.08f * 3 * 10;
+		pre_move = check_move (
+			(x + this->pos_x),
+			(y + this->pos_y)
+		);
+		line.push_back(pre_move);
+		std::cout << '['
+							<< (int)(x + this->pos_x)
+		          << ';'
+							<< (int)(y + this->pos_y)
+							<< "], ";
+		if (pre_move != EMPTY) {
+			break ;
+		}
+	}
+	std::cout << '\n';
+	return (line);
+}
+
 int	Entity::pretest_move( int dir ) {
 	float	x = 0;//this->pos_x;
 	float	y = 0;//this->pos_y;
 
-	frame += 0.3;
 	if (dir == DIR_UP)
 		y += -0.08f;
 	else if (dir == DIR_BOTTOM)

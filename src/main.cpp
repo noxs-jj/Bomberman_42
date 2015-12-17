@@ -6,6 +6,7 @@ void			keyboard( void ); // A Mettre dans main.hpp
 Event *		main_event = new Event(); // GLOBAL
 
 int main( int ac, char **av ) {
+	std::srand(std::time(0));
 	(void)(av);
 	(void)(ac);
 	ft42::logg = true;
