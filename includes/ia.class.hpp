@@ -4,6 +4,7 @@
 # include <ft42.class.hpp>
 # include <entity.class.hpp>
 # include <enemy.class.hpp>
+# include <boss.class.hpp>
 
 class Ia : public ft42 {
 public:
@@ -16,8 +17,9 @@ public:
 	virtual ~Ia( void );
 	Ia( void );
 	void start( int time );
-  int must_move_to( Enemy *it );
+  int must_move_to( Entity *it );
   bool play_enemy( Enemy *it );
+  bool play_boss(Boss *it, int time);
 };
 
 #endif

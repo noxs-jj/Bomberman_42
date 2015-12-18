@@ -43,7 +43,7 @@ int heuristic(std::vector<int> line) {
 }
 
 
-int    Ia::must_move_to( Enemy *it ) {
+int    Ia::must_move_to( Entity *it ) {
   std::vector<int> lines [4] = {
     (*it).pretest_moves(DIR_UP),
     (*it).pretest_moves(DIR_BOTTOM),
@@ -77,8 +77,7 @@ int    Ia::must_move_to( Enemy *it ) {
 }
 
 bool    Ia::play_enemy(Enemy *it) {
-  if ((*it).dir == ((*it).dir = Ia::must_move_to(it))) {
-    std::cout << (*it).memory << "\n";
+  if ((*it).dir == ((*it).dir = Ia::must_move_to(static_cast<Entity*>(it)))) {
     if ((*it).memory < 5) {
       (*it).put_bomb (
         BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
@@ -96,14 +95,41 @@ bool    Ia::play_enemy(Enemy *it) {
   return (true);
 }
 
-void     Ia::start( int time ) {
+bool    Ia::play_boss(Boss *it, int time) {
+  std::list<Entity *>::iterator heros = main_event->char_list.begin();
+  std::list<Entity *>::iterator end = main_event->char_list.end();
+
+  (void)time;
+  while (heros != end) {
+    if ((*heros)->type == PLAYER) {
+      if ((*it).dir == ((*it).dir = Ia::must_move_to(
+        static_cast<Entity*>(it)
+      ))) {
+        if (time % 50 == 1) {
+          (*heros)->put_bomb (
+            BOMB_SEC_3, (*heros)->pos_x, (*heros)->pos_y,
+            BOMB, (*heros)->blast_radius
+          );
+        }
+      }
+      (*it).move((*it).dir);
+    }
+    heros++;
+  }
+  return (false);
+}
+
+void     Ia::start(int time) {
   std::list<Entity *>::iterator it = main_event->char_list.begin();
   std::list<Entity *>::iterator end = main_event->char_list.end();
 
   (void)time;
   while (it != end) {
-    if ((*it)->type == ENEMY
-    &&  Ia::play_enemy(static_cast<Enemy*> (*it)) ) {
+    if ((*it)->type == ENEMY) {
+      Ia::play_enemy(static_cast<Enemy*>(*it));
+    }
+    else if ((*it)->type == BOSS) {
+      Ia::play_boss(static_cast<Boss*>(*it), time);
     }
     it++;
   }
