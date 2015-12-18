@@ -3,6 +3,8 @@
 Enemy::~Enemy( void ) {}
 
 Enemy::Enemy( float x, float y, int status, int model ) : Entity( ENEMY, x, y, status ) {
+	this->memory = 0;
+
 	this->frame = 0;
 	this->speed = 1;
 	this->dir = DIR_UP;

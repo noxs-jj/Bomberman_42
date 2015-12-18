@@ -56,7 +56,6 @@ std::vector<int>	Entity::pretest_moves( int dir ) {
 	int pre_move = 0;
 
 	x = y = 0;
-	std::cout << dir << " -> ";
 	while (42) {
 		if (dir == DIR_UP)
 			y += -0.08f * 3;
@@ -75,23 +74,14 @@ std::vector<int>	Entity::pretest_moves( int dir ) {
 				(x + this->pos_x),
 				(y + this->pos_y)
 			)) {
-				std::cout << "oui\n";
 				pre_move = PLAYER;
 			}
 		}
 		line.push_back(pre_move);
-		/*std::cout << '['
-							<< (int)(x + this->pos_x)
-		          << ';'
-							<< (int)(y + this->pos_y)
-							<< "]->"
-							<< pre_move
-							<< ", ";*/
 		if (pre_move != EMPTY) {
 			break ;
 		}
 	}
-	std::cout << '\n';
 	return (line);
 }
 
@@ -127,8 +117,6 @@ void	Entity::move( int dir ) {
 	else
 		frame = 0;
 	ret = check_move(x * 3 + this->pos_x, y + this->pos_y);
-//	std::cout << "pos real " << this->pos_x << " " << this->pos_y << std::endl;
-	//std::cout << "pos real " << x << " " << y << std::endl;
 	if (ret == EMPTY) {
 		this->dir = dir;
 		this->pos_x = x + this->pos_x;
