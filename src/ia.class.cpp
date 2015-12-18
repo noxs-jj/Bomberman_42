@@ -28,20 +28,25 @@ int heuristic(std::vector<int> line) {
     it != line.end();
     ++it
   ) {
-    if (*it == PLAYER) {
-      return (score - 5);
+    if (*it == PLAYER || *it == BOMB) {
+      if (*it == PLAYER) {
+          return (score - 50);
+      }
+      else {
+        return (score - 60);
+      }
     }
     score += 1;
   }
 
   std::cout << score << '\n';
-  /*for (std::vector<int>::iterator i = line.begin(); i != line.end(); ++i)
-      std::cout << *i << ',';
-  std::cout << '\n';*/
+  for (std::vector<int>::iterator i = line.begin(); i != line.end(); ++i)
+    std::cout << *i << ',';
+  std::cout << '\n';
   return (score);
 }
 
-bool    Ia::must_move( Entity *it ) {
+int    Ia::must_move_to( Entity *it ) {
   std::vector<int> lines [4] = {
     (*it).pretest_moves(DIR_UP),
     (*it).pretest_moves(DIR_BOTTOM),
@@ -64,14 +69,15 @@ bool    Ia::must_move( Entity *it ) {
   std::cout << '='
             << DIR_UP + max[1]
             << '\n';
-  (*it).dir = DIR_UP + max[1];
-  return (true);
+  return (DIR_UP + max[1]);
 }
 
 bool    Ia::play_enemy(Entity *it) {
-  int direction = (*it).pretest_move((*it).dir);
-  if (direction != EMPTY) {
-    Ia::must_move(it);
+  if ((*it).dir == ((*it).dir = Ia::must_move_to(it))) {
+    /*(*it).put_bomb (
+      BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
+      BOMB, (*it).blast_radius
+    );*/
   }
   (*it).move((*it).dir);
   return (true);
@@ -85,7 +91,7 @@ void     Ia::start( int time ) {
   while (it != end) {
     if ((*it)->type == ENEMY
     &&  Ia::play_enemy(*it) ) {
-      break ;
+
     }
     it++;
   }
@@ -95,7 +101,7 @@ void     Ia::start( int time ) {
                 << (int)((*cit)->pos_x)
                 << ';'
                 << (int)((*cit)->pos_y)
-                << '\n';*/
+                << ' ';*/
       break ;
     }
     cit++;

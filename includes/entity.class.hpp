@@ -33,6 +33,7 @@ public:
 	void	die( void );
 	void	take_damage( void );
 	void	put_bomb(int status, float x, float y, int model, int blast);
+	bool position_is_player( float x, float y );
 	int		count_entity(int type);
 };
 

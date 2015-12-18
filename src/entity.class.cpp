@@ -33,6 +33,22 @@ int		Entity::check_move( float x, float y ) {
 	return EMPTY;
 }
 
+bool Entity::position_is_player( float x, float y ) {
+	std::list<Entity *>::iterator it = main_event->char_list.begin();
+	std::list<Entity *>::iterator end = main_event->char_list.end();
+
+	while (it != end) {
+    if ((*it)->type == PLAYER) {
+      if ((int)x == (int)((*it)->pos_x)
+			&&  (int)y == (int)((*it)->pos_y)) {
+				return (true);
+			}
+    }
+    it++;
+  }
+	return (false);
+}
+
 std::vector<int>	Entity::pretest_moves( int dir ) {
 	std::vector<int> line;
 	float	x; //this->pos_x;
@@ -43,35 +59,34 @@ std::vector<int>	Entity::pretest_moves( int dir ) {
 	std::cout << dir << " -> ";
 	while (42) {
 		if (dir == DIR_UP)
-			y += -0.08f - 1;
+			y += -0.08f * 3;
 		else if (dir == DIR_BOTTOM)
-			y += 0.08f + 1;
+			y += 0.08f * 3;
 		else if (dir == DIR_LEFT)
-			x += -0.08f * 3 - 1;
+			x += -0.08f * 3;
 		else if (dir == DIR_RIGHT)
-			x += 0.08f * 3 + 1;
+			x += 0.08f * 3;
 		pre_move = check_move (
 			(x + this->pos_x),
 			(y + this->pos_y)
 		);
 		if (pre_move == EMPTY) {
-			int contain = main_event->map[(int)(x + this->pos_x)]
-												           [(int)(y + this->pos_y)]->type;
-			if (contain == PLAYER1
-			||  contain == PLAYER2
-		  ||  contain == PLAYER3
-	    ||  contain == PLAYER4) {
+			if (Entity::position_is_player (
+				(x + this->pos_x),
+				(y + this->pos_y)
+			)) {
+				std::cout << "oui\n";
 				pre_move = PLAYER;
 			}
 		}
 		line.push_back(pre_move);
-		std::cout << '['
+		/*std::cout << '['
 							<< (int)(x + this->pos_x)
 		          << ';'
 							<< (int)(y + this->pos_y)
 							<< "]->"
 							<< pre_move
-							<< ", ";
+							<< ", ";*/
 		if (pre_move != EMPTY) {
 			break ;
 		}
