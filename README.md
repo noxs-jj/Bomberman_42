@@ -1,6 +1,8 @@
 # Bomberman Group Project @42Born2code
 [![Build Status](https://travis-ci.org/noxsnono/Bomberman_42.svg?branch=master)](https://travis-ci.org/noxsnono/Bomberman_42)
 
+![Screen Shot](https://raw.githubusercontent.com/noxsnono/Bomberman_42/ia/screenshot.gif)
+
 ## Requierements, Install
 #### MacOsX (Supported & tested):
     - brew update && brew install sdl2 sdl2_image sdl2_mixer sdl2_ttf
