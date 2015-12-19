@@ -20,7 +20,6 @@ Ia::~Ia( void ) {
     // delete this->soundrender;
 }
 
-
 int heuristic(std::vector<int> line) {
   int score = 0;
 
@@ -42,19 +41,44 @@ int heuristic(std::vector<int> line) {
   return (score);
 }
 
-
+#ifdef KAMIKAZE
 int    Ia::must_move_to( Entity *it ) {
-  std::vector<int> lines [4] = {
-    (*it).pretest_moves(DIR_UP),
-    (*it).pretest_moves(DIR_BOTTOM),
-    (*it).pretest_moves(DIR_LEFT),
-    (*it).pretest_moves(DIR_RIGHT),
-  };
   int  paths [4][2] = {
-    {heuristic(lines[0]), DIR_UP},
-    {heuristic(lines[1]), DIR_BOTTOM},
-    {heuristic(lines[2]), DIR_LEFT},
-    {heuristic(lines[3]), DIR_RIGHT},
+    {heuristic((*it).pretest_moves(DIR_UP)), DIR_UP},
+    {heuristic((*it).pretest_moves(DIR_BOTTOM)), DIR_BOTTOM},
+    {heuristic((*it).pretest_moves(DIR_LEFT)), DIR_LEFT},
+    {heuristic((*it).pretest_moves(DIR_RIGHT)), DIR_RIGHT},
+  };
+  int  max [2] = {paths[0][0], 0};
+  int  min [2] = {paths[0][0], 0};
+  for ( int n=0 ; n<4 ; ++n ) {
+    if (max[0] < paths[n][0]) {
+      max[0] = paths[n][0];
+      max[1] = n;
+    }
+    if (min[0] > paths[n][0]) {
+      min[0] = paths[n][0];
+      min[1] = n;
+    }
+  }
+  if (min[0] <= 0 || ((*it).pretest_move((*it).dir) != EMPTY)) {
+    return (DIR_UP + max[1]);
+  }
+  else {
+    (*it).put_bomb (
+      BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
+      BOMB, (*it).blast_radius
+    );
+    return ((*it).dir);
+  }
+}
+#else
+int    Ia::must_move_to( Entity *it ) {
+  int  paths [4][2] = {
+    {heuristic((*it).pretest_moves(DIR_UP)), DIR_UP},
+    {heuristic((*it).pretest_moves(DIR_BOTTOM)), DIR_BOTTOM},
+    {heuristic((*it).pretest_moves(DIR_LEFT)), DIR_LEFT},
+    {heuristic((*it).pretest_moves(DIR_RIGHT)), DIR_RIGHT},
   };
   int  max [2] = {paths[0][0], 0};
   int  min [2] = {paths[0][0], 0};
@@ -75,16 +99,19 @@ int    Ia::must_move_to( Entity *it ) {
     return ((*it).dir);
   }
 }
+#endif
 
 bool    Ia::play_enemy(Enemy *it) {
   if ((*it).dir == ((*it).dir = Ia::must_move_to(static_cast<Entity*>(it)))) {
-    if ((*it).memory < 5) {
-      (*it).put_bomb (
-        BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
-        BOMB, (*it).blast_radius
-      );
+    if ((*it).memory > 400) {
+      if (!(*it).friend_zone((*it).pos_x, (*it).pos_y)) {
+        (*it).put_bomb (
+          BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
+          BOMB, (*it).blast_radius
+        );
+      }
     }
-    if ((*it).memory < 230) {
+    if ((*it).memory < 410) {
       (*it).memory += 1;
     }
     else {
@@ -106,10 +133,14 @@ bool    Ia::play_boss(Boss *it, int time) {
         static_cast<Entity*>(it)
       ))) {
         if (time % 50 == 1) {
-          (*heros)->put_bomb (
-            BOMB_SEC_3, (*heros)->pos_x, (*heros)->pos_y,
-            BOMB, (*heros)->blast_radius
-          );
+          main_event->char_list.push_back(main_event->create_enemy (
+            ENEMY,
+            (*heros)->pos_x,
+            (*heros)->pos_y,
+            ENEMY1
+          ));
+          /*ENEMY, (*heros)->pos_x, (*heros)->pos_y,
+          ENEMY, (*heros)->blast_radius*/
         }
       }
       (*it).move((*it).dir);

@@ -33,6 +33,29 @@ int		Entity::check_move( float x, float y ) {
 	return EMPTY;
 }
 
+bool Entity::friend_zone( float x, float y ) {
+	std::list<Entity *>::iterator it = main_event->char_list.begin();
+	std::list<Entity *>::iterator end = main_event->char_list.end();
+
+	while (it != end) {
+		if ((int)x -3 < (int)((*it)->pos_x)
+		&&  (int)y -3 < (int)((*it)->pos_y)
+		&&  (int)((*it)->pos_x) < (int)x +3
+		&&  (int)((*it)->pos_y) < (int)y +3
+		) {
+	    if ((*it)->type == PLAYER) {
+				return (false);
+			}
+			else if ((*it)->type == ENEMY
+			||  (*it)->type == ENEMY) {
+				return (true);
+			}
+		}
+    it++;
+  }
+	return (false);
+}
+
 bool Entity::position_is_player( float x, float y ) {
 	std::list<Entity *>::iterator it = main_event->char_list.begin();
 	std::list<Entity *>::iterator end = main_event->char_list.end();

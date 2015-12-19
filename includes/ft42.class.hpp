@@ -39,6 +39,7 @@
 # define MAP_Y_SIZE 20
 # define MAP_X_SIZE 20
 # define BLAST_SIZE 3 // default = 0 (blast = 2 + BLAST_SIZE)
+// #define KAMIKAZE // ia became not nice
 
 typedef struct	s_point {
 	float x;
