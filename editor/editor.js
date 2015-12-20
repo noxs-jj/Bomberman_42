@@ -7,24 +7,24 @@ document.body.onload = function () {
     var mousePos = { x: 0, y: 0 };
 
     var tiles = [
-        { string_value: "   ", color: "#333", description: "EMPTY" },
-        { string_value: "1##", color: "#f00", description: "WALL_INDESTRUCTIBLE" },
-        { string_value: "1#1", color: "#0f0", description: "WALL_HP_1" },
-        { string_value: "1#2", color: "#00f", description: "WALL_HP_2" },
-        { string_value: "1#3", color: "#ff0", description: "WALL_HP_3" },
-        { string_value: "1#4", color: "#0ff", description: "WALL_HP_4" },
-        { string_value: "2#1", color: "#f09", description: "ENEMY1" },
-        { string_value: "2#2", color: "#9f0", description: "ENEMY2" },
-        { string_value: "2#3", color: "#90f", description: "ENEMY3" },
-        { string_value: "2#4", color: "#0ff", description: "ENEMY4" },
-        { string_value: "3#a", color: "#ff0", description: "BOSS_A" },
-        { string_value: "3#b", color: "#fff", description: "BOSS_B" },
-        { string_value: "3#c", color: "#990", description: "BOSS_C" },
-        { string_value: "3#c", color: "#099", description: "BOSS_C" },
-        { string_value: "4#1", color: "#06f", description: "PLAYER1" },
-        { string_value: "4#2", color: "#f60", description: "PLAYER2" },
-        { string_value: "4#3", color: "#606", description: "PLAYER3" },
-        { string_value: "4#4", color: "#096", description: "PLAYER4 "}
+        { string_value: "   ", color: "#222", description: "EMPTY" },
+        { string_value: "1##", color: "#777", description: "WALL_INDESTRUCTIBLE" },
+        { string_value: "1#1", color: "#666", description: "WALL_HP_1" },
+        { string_value: "1#2", color: "#555", description: "WALL_HP_2" },
+        { string_value: "1#3", color: "#444", description: "WALL_HP_3" },
+        { string_value: "1#4", color: "#333", description: "WALL_HP_4" },
+        { string_value: "2#1", color: "#900", description: "ENEMY1" },
+        { string_value: "2#2", color: "#f00", description: "ENEMY2" },
+        { string_value: "2#3", color: "#f90", description: "ENEMY3" },
+        { string_value: "2#4", color: "#f60", description: "ENEMY4" },
+        { string_value: "3#a", color: "#f00", description: "BOSS_A" },
+        { string_value: "3#b", color: "#f00", description: "BOSS_B" },
+        { string_value: "3#c", color: "#f00", description: "BOSS_C" },
+        { string_value: "3#c", color: "#f00", description: "BOSS_C" },
+        { string_value: "4#1", color: "#06a", description: "PLAYER1" },
+        { string_value: "4#2", color: "#06f", description: "PLAYER2" },
+        { string_value: "4#3", color: "#0af", description: "PLAYER3" },
+        { string_value: "4#4", color: "#0fa", description: "PLAYER4 "}
     ];
 
     var create2dArray = function (sizeX, sizeY) {
@@ -37,7 +37,7 @@ document.body.onload = function () {
 
     var mapSize = 20;
     var tileMap = create2dArray(mapSize, mapSize);
-    var currentChoice = 0;
+    var currentChoice = 1;
     var tileSize = 30;
 
     context.canvas.width = 1280;
@@ -106,7 +106,7 @@ document.body.onload = function () {
         mousePos = getMousePos(canvas, evt);
     });
 
-    var updateSource = function () {
+    var updateMapCode = function () {
         var outputDiv = document.querySelector('div#output pre');
         var tmp = "";
 
@@ -114,6 +114,7 @@ document.body.onload = function () {
             for (var x = 0; x < mapSize; x++) {
                 var e = tileMap[x][y] || tiles[0];
                 tmp += e.string_value + " ";
+                localStorage.map
             }
             tmp += "\n";
         }
@@ -131,10 +132,11 @@ document.body.onload = function () {
         {
             var x = parseInt((mousePos.x - mapViewMargin.x) / tileSize);
             var y = parseInt((mousePos.y - mapViewMargin.y) / tileSize);
+
             console.log("x : " + x + " ; y : " + y);
             tileMap[x][y] = tiles[currentChoice];
 
-            updateSource();
+            updateMapCode();
         }
     });
 
