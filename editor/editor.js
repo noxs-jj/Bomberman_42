@@ -7,24 +7,24 @@ document.body.onload = function () {
     var mousePos = { x: 0, y: 0 };
 
     var tiles = [
-        { string_value: "   ", color: "#333", description: "EMPTY"},
-        { string_value: "1##", color: "#f00", description: "WALL_INDESTRUCTIBLE"},
-        { string_value: "1#1", color: "#0f0", description: "WALL_HP_1"},
-        { string_value: "1#2", color: "#00f", description: "WALL_HP_2"},
-        { string_value: "1#3", color: "#ff0", description: "WALL_HP_3"},
-        { string_value: "1#4", color: "#0ff", description: "WALL_HP_4"},
-        { string_value: "2#1", color: "#f09", description: "ENEMY1"},
-        { string_value: "2#2", color: "#9f0", description: "ENEMY2"},
-        { string_value: "2#3", color: "#90f", description: "ENEMY3"},
-        { string_value: "2#4", color: "#0ff", description: "ENEMY4"},
-        { string_value: "3#a", color: "#ff0", description: "BOSS_A"},
-        { string_value: "3#b", color: "#fff", description: "BOSS_B"},
-        { string_value: "3#c", color: "#990", description: "BOSS_C"},
-        { string_value: "3#c", color: "#099", description: "BOSS_C"},
-        { string_value: "4#1", color: "#06f", description: "PLAYER1"},
-        { string_value: "4#2", color: "#f60", description: "PLAYER2"},
-        { string_value: "4#3", color: "#606", description: "PLAYER3"},
-        { string_value: "4#4", color: "#096", description: "PLAYER4"}
+        { string_value: "   ", color: "#333", description: "EMPTY" },
+        { string_value: "1##", color: "#f00", description: "WALL_INDESTRUCTIBLE" },
+        { string_value: "1#1", color: "#0f0", description: "WALL_HP_1" },
+        { string_value: "1#2", color: "#00f", description: "WALL_HP_2" },
+        { string_value: "1#3", color: "#ff0", description: "WALL_HP_3" },
+        { string_value: "1#4", color: "#0ff", description: "WALL_HP_4" },
+        { string_value: "2#1", color: "#f09", description: "ENEMY1" },
+        { string_value: "2#2", color: "#9f0", description: "ENEMY2" },
+        { string_value: "2#3", color: "#90f", description: "ENEMY3" },
+        { string_value: "2#4", color: "#0ff", description: "ENEMY4" },
+        { string_value: "3#a", color: "#ff0", description: "BOSS_A" },
+        { string_value: "3#b", color: "#fff", description: "BOSS_B" },
+        { string_value: "3#c", color: "#990", description: "BOSS_C" },
+        { string_value: "3#c", color: "#099", description: "BOSS_C" },
+        { string_value: "4#1", color: "#06f", description: "PLAYER1" },
+        { string_value: "4#2", color: "#f60", description: "PLAYER2" },
+        { string_value: "4#3", color: "#606", description: "PLAYER3" },
+        { string_value: "4#4", color: "#096", description: "PLAYER4 "}
     ];
 
     var create2dArray = function (sizeX, sizeY) {
@@ -56,12 +56,6 @@ document.body.onload = function () {
         };
     };
 
-    var writeMessage = function (canvas, message) {
-        context.font = '18pt Calibri';
-        context.fillStyle = '#ffffff';
-        context.fillText(message, 10, 25);
-    };
-
     var update = function (delta) {
 
     };
@@ -82,24 +76,21 @@ document.body.onload = function () {
 
     var drawSideBar = function () {
         context.clearRect(0, 0, canvas.width, canvas.height);
-        tiles.forEach(function (e, i, a) {
+        tiles.forEach(function (tile, i, a) {
             var x = 0;
             var y = i * tileSize;
-            var width = tileSize;
-            var height = tileSize;
-            context.fillStyle = tiles[i].color;
-            context.fillRect(x, y, width, height);
+
+            context.fillStyle = tile.color;
+            context.fillRect(x, y, tileSize, tileSize);
 
             context.font = tileSize / 2 + 'px menlo';
             context.fillStyle = '#FFF';
-            context.fillText(tiles[i].description, width * 1.5, y - height / 3);
+            context.fillText(tile.description, tileSize * 1.5, y + tileSize * 0.65);
         });
     }
 
     var render = function () {
         drawSideBar();
-        context.fillStyle = "#FFFFFF";
-        writeMessage(canvas, 'x: ' + mousePos.x + ', y: ' + mousePos.y);
         drawMap();
         context.fillStyle = tiles[currentChoice].color;
         context.globalAlpha = 0.5;
