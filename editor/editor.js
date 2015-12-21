@@ -148,7 +148,8 @@ document.body.onload = function () {
 
     var loadMap = function () {
         var item = localStorage.getItem("tileMap");
-        if (!!item)
+        console.log(item);
+        if (!!item && item != "undefined")
         {
             tileMap = JSON.parse(item);
         }
