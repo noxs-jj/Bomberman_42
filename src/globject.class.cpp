@@ -45,10 +45,7 @@ globject::globject(std::string path, GLuint ID, GLfloat zoom) : _ID(ID), _zoom(z
 	std::cout << "copy success" << std::endl;
 }
 
-globject::~globject(void)
-{
-
-}
+globject::~globject(void) {}
 
 void globject::reinit_level(int env)
 {
@@ -90,15 +87,18 @@ void globject::load_bmp()
 			{
 				std::cout << "LOL4.1" << std::endl;
 
-				GLenum err = glGetError();
-				if (err != GL_NO_ERROR)
-				{
-					std::cerr << err << std::endl;
-				}
+				// GLenum err = glGetError();
+				// if (err != GL_NO_ERROR)
+				// {
+				// 	std::cerr << err << std::endl;
+				// }
 
 				// XXX XXX XXX
-				// glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
-				// 							imp->w, imp->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
+				glTexImage2D(GL_TEXTURE_2D, 0,
+											GL_RGB,
+											imp->w, imp->h, 0,
+											GL_BGR, // GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, GL_ALPHA
+											GL_UNSIGNED_BYTE, imp->pixels);
 				// XXX XXX XXX
 				std::cout << "LOL4.2" << std::endl;
 			}
@@ -140,8 +140,15 @@ void		globject::init(void)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	# ifdef linux
-		globject::_displayWindow = SDL_CreateWindow("Bomberman", SDL_WINDOWPOS_CENTERED,
-						SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_OPENGL);
+		globject::_displayWindow = SDL_CreateWindow("Bomberman",
+									SDL_WINDOWPOS_CENTERED,
+									SDL_WINDOWPOS_CENTERED,
+									800, 800,
+									SDL_WINDOW_OPENGL
+								//	| SDL_WINDOW_BORDERLESS
+								//	| SDL_WINDOW_RESIZABLE
+								//	| SDL_WINDOW_FULLSCREEN
+						);
 	# endif
 	# ifdef __APPLE__
 		globject::_displayWindow = SDL_CreateWindow("Bomberman", SDL_WINDOWPOS_CENTERED,

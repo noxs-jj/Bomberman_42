@@ -7,7 +7,7 @@
 #### Linux (working on)
     - You ust install Drivers for use OpenGL 4.0 (open source libMesa only surpport OpenGL 3.2 at this moment), try to install owner's drivers, then install packages followings
 
-    - sudo apt-get update && sudo apt-get install glee-dev libglew-dev libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
+    - sudo apt-get update && sudo apt-get install glee-dev libglew-dev libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev freeglut3-dev
 
 #### Windows (Not Supported)
 
