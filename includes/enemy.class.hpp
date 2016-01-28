@@ -6,6 +6,7 @@
 class Entity;
 class Enemy : public Entity {
 public:
+  int memory;
 
 	Enemy( float x, float y, int status, int model );
 	Enemy( Enemy const & src );

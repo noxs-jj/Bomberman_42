@@ -26,11 +26,15 @@ public:
 	Entity & operator=( Entity const & rhs );
 	virtual ~Entity( void );
 	Entity( void );
+	int	pretest_move( int dir );
+	std::vector<int>	pretest_moves(int dir);
 	void	move( int dir );
 	int		check_move( float x, float y );
 	void	die( void );
 	void	take_damage( void );
 	void	put_bomb(int status, float x, float y, int model, int blast);
+	bool position_is_player( float x, float y );
+	bool friend_zone( float x, float y );
 	int		count_entity(int type);
 };
 

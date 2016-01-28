@@ -3,6 +3,9 @@
 #include <bomb.class.hpp>
 #include <globject.class.hpp>
 
+#include <iostream>
+#include <vector>
+
 int		Entity::autoincrement = 0;
 
 
@@ -30,6 +33,96 @@ int		Entity::check_move( float x, float y ) {
 	return EMPTY;
 }
 
+bool Entity::friend_zone( float x, float y ) {
+	std::list<Entity *>::iterator it = main_event->char_list.begin();
+	std::list<Entity *>::iterator end = main_event->char_list.end();
+
+	while (it != end) {
+		if ((int)x -3 < (int)((*it)->pos_x)
+		&&  (int)y -3 < (int)((*it)->pos_y)
+		&&  (int)((*it)->pos_x) < (int)x +3
+		&&  (int)((*it)->pos_y) < (int)y +3
+		) {
+	    if ((*it)->type == PLAYER) {
+				return (false);
+			}
+			else if ((*it)->type == ENEMY
+			||  (*it)->type == ENEMY) {
+				return (true);
+			}
+		}
+    it++;
+  }
+	return (false);
+}
+
+bool Entity::position_is_player( float x, float y ) {
+	std::list<Entity *>::iterator it = main_event->char_list.begin();
+	std::list<Entity *>::iterator end = main_event->char_list.end();
+
+	while (it != end) {
+    if ((*it)->type == PLAYER) {
+      if ((int)x == (int)((*it)->pos_x)
+			&&  (int)y == (int)((*it)->pos_y)) {
+				return (true);
+			}
+    }
+    it++;
+  }
+	return (false);
+}
+
+std::vector<int>	Entity::pretest_moves( int dir ) {
+	std::vector<int> line;
+	float	x; //this->pos_x;
+	float	y; //this->pos_y;
+	int pre_move = 0;
+
+	x = y = 0;
+	while (42) {
+		if (dir == DIR_UP)
+			y += -0.08f * 3;
+		else if (dir == DIR_BOTTOM)
+			y += 0.08f * 3;
+		else if (dir == DIR_LEFT)
+			x += -0.08f * 3;
+		else if (dir == DIR_RIGHT)
+			x += 0.08f * 3;
+		pre_move = check_move (
+			(x + this->pos_x),
+			(y + this->pos_y)
+		);
+		if (pre_move == EMPTY) {
+			if (Entity::position_is_player (
+				(x + this->pos_x),
+				(y + this->pos_y)
+			)) {
+				pre_move = PLAYER;
+			}
+		}
+		line.push_back(pre_move);
+		if (pre_move != EMPTY) {
+			break ;
+		}
+	}
+	return (line);
+}
+
+int	Entity::pretest_move( int dir ) {
+	float	x = 0;//this->pos_x;
+	float	y = 0;//this->pos_y;
+
+	if (dir == DIR_UP)
+		y += -0.08f;
+	else if (dir == DIR_BOTTOM)
+		y += 0.08f;
+	else if (dir == DIR_LEFT)
+		x += -0.08f;
+	else if (dir == DIR_RIGHT)
+		x += 0.08f;
+	return (check_move(x * 3 + this->pos_x, y + this->pos_y));
+}
+
 void	Entity::move( int dir ) {
 	float	x = 0;//this->pos_x;
 	float	y = 0;//this->pos_y;
@@ -47,8 +140,6 @@ void	Entity::move( int dir ) {
 	else
 		frame = 0;
 	ret = check_move(x * 3 + this->pos_x, y + this->pos_y);
-//	std::cout << "pos real " << this->pos_x << " " << this->pos_y << std::endl;
-	//std::cout << "pos real " << x << " " << y << std::endl;
 	if (ret == EMPTY) {
 		this->dir = dir;
 		this->pos_x = x + this->pos_x;
@@ -135,5 +226,5 @@ void	Entity::put_bomb(int status, float x, float y, int model, int blast) {
 	delete main_event->map[(int)y][(int)x];
 	// main_event->map[(int)y][(int)x] = main_event->create_empty((int)x, (int)y);
 	main_event->map[(int)y][(int)x] = main_event->create_bomb(status, (int)x + 0.5, (int)y + 0.5, model);
-	main_event->map[(int)y][(int)x]->blast_radius = blast;
+	main_event->map[(int)y][(int)x]->blast_radius = blast + BLAST_SIZE;
 }
