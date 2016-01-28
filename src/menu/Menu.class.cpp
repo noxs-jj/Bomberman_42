@@ -82,7 +82,7 @@ void Menu::init() {
   this->blue = {0, 0, 255, 1};
   this->red = {255, 0, 0, 1};
   SDL_JoystickEventState(SDL_ENABLE);
-  this->manette1 = SDL_GameControllerOpen(0);
+  this->manette1 = SDL_JoystickOpen(0);
   if (this->manette1 < NULL) {
     std::cerr << "Could not open gamecontroller " << SDL_GetError() << std::endl;
     throw std::exception();
@@ -383,29 +383,41 @@ void  Menu::menu_keyboard(void) {
         default: break;
       }
     }
-    else if (event.type == SDL_CONTROLLERBUTTONDOWN) {
-      fprintf(stdout, "Appui bouton joystick :\n");
-      fprintf(stdout, "\tjoystick : %d\n",event.jbutton.which);
-      fprintf(stdout, "\tbutton : %d\n",event.jbutton.button);
-      fprintf(stdout, "\tétat : %d\n",event.jbutton.state);
+    // JOYSTICK BUTTON
+    else if (event.type == SDL_JOYBUTTONDOWN) {
       switch (event.cbutton.button) {
-        case SDL_CONTROLLER_BUTTON_A             : change_menu(); break;
-        case SDL_CONTROLLER_BUTTON_B             : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_X             : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_Y             : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_BACK          : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_GUIDE         : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_START         : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_LEFTSTICK     : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_RIGHTSTICK    : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_LEFTSHOULDER  : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_DPAD_UP       : move_menu_ver(-1); break;
-        case SDL_CONTROLLER_BUTTON_DPAD_DOWN     : move_menu_ver(1); break;
-        case SDL_CONTROLLER_BUTTON_DPAD_LEFT     : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_DPAD_RIGHT    : (void)0; break;
-        case SDL_CONTROLLER_BUTTON_MAX           : (void)0; break;
+        case 0:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 1:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 2:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 3:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 4:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 5:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 7:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 8:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 9:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 10:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 11:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+        case 12:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
         default: break;
+      }
+    }
+    // JOYSTICK CROIX DIRECTIONNEL
+    else if (event.type == SDL_JOYHATMOTION) {
+      if (0 == event.jhat.hat && 0 != event.jhat.value)
+      {
+        switch (event.jhat.value) {
+          case SDL_HAT_UP:        fprintf(stdout, "joystick[%d] UP state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+          case SDL_HAT_LEFTUP:    fprintf(stdout, "joystick[%d] UP+LEFT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+          case SDL_HAT_LEFT:      fprintf(stdout, "joystick[%d] LEFT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+          case SDL_HAT_LEFTDOWN:  fprintf(stdout, "joystick[%d] DOWN+LEFT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+          case SDL_HAT_DOWN:      fprintf(stdout, "joystick[%d] DOWN state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+          case SDL_HAT_RIGHTDOWN: fprintf(stdout, "joystick[%d] DOWN+RIGHT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+          case SDL_HAT_RIGHT:     fprintf(stdout, "joystick[%d] RIGHT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+          case SDL_HAT_RIGHTUP:   fprintf(stdout, "joystick[%d] UP+RIGHT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+          case SDL_HAT_CENTERED:  fprintf(stdout, "joystick[%d] CENTERED state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+          default:                break;
+        }
       }
     }
   }

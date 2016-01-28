@@ -145,7 +145,7 @@ void		globject::init(void)
 
 	# ifdef linux
 		globject::_displayWindow = SDL_CreateWindow("Bomberman",
-									0,
+									700,
 									0,
 									800, 800,
 									SDL_WINDOW_OPENGL
