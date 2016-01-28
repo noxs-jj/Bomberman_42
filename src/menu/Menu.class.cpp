@@ -77,16 +77,28 @@ void  Menu::big_menu() {
 }
 
 void Menu::init() {
+  int devices = SDL_NumJoysticks();
+
   this->SansPosterBold = TTF_OpenFont("src/menu/fonts/GoldenAge.ttf", 64);
   this->white = {255, 255, 255, 1};
   this->blue = {0, 0, 255, 1};
   this->red = {255, 0, 0, 1};
   SDL_JoystickEventState(SDL_ENABLE);
-  this->manette1 = SDL_JoystickOpen(0);
-  if (this->manette1 < NULL) {
-    std::cerr << "Could not open gamecontroller " << SDL_GetError() << std::endl;
-    throw std::exception();
+  if (devices > 0) {
+    this->manette1 = SDL_JoystickOpen(0);
+    if (this->manette1 < NULL) {
+      std::cerr << "Could not open joystick 1 " << SDL_GetError() << std::endl;
+      throw std::exception();
+    }
   }
+  if (devices > 1) {
+    this->manette2 = SDL_JoystickOpen(1);
+    if (this->manette2 < NULL) {
+      std::cerr << "Could not open joystick 2 " << SDL_GetError() << std::endl;
+      throw std::exception();
+    }
+  }
+
 
   this->menu_selected = BIG_MENU;
   this->detail_menu_selected = MENU_CAMPAIGN;
