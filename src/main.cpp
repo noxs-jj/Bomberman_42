@@ -162,6 +162,7 @@ void keyboard(void) {
 				    }
         }
 				else if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+					std::cout << "controller key down" << std::endl;
 				  switch (event.cbutton.button) {
 						case SDL_CONTROLLER_BUTTON_A             : main_event->player_bomb(main_event->config[2]); break;
 						case SDL_CONTROLLER_BUTTON_B             : (void)0; break;

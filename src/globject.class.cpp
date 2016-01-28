@@ -130,7 +130,11 @@ void		globject::init(void)
 {
 
 	/* Init SDL */
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER) < 0) {
+	if (SDL_Init(SDL_INIT_VIDEO
+			| SDL_INIT_AUDIO
+			| SDL_INIT_GAMECONTROLLER
+			| SDL_INIT_JOYSTICK
+		) < 0) {
 		std::cerr << "globject::init SDL_Init() error = " << SDL_GetError() << std::endl;
 		throw std::exception();
 	}
@@ -141,8 +145,8 @@ void		globject::init(void)
 
 	# ifdef linux
 		globject::_displayWindow = SDL_CreateWindow("Bomberman",
-									SDL_WINDOWPOS_CENTERED,
-									SDL_WINDOWPOS_CENTERED,
+									0,
+									0,
 									800, 800,
 									SDL_WINDOW_OPENGL
 								//	| SDL_WINDOW_BORDERLESS

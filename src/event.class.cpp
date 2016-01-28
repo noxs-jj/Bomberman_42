@@ -50,6 +50,8 @@ void 	Event::free_game( void ) {
 }
 
 void	Event::make_new_game( int new_level ) {
+	char map_name[64] = {0};
+
 	if (this->game_playing == true)
 		this->free_game();
 		main_event->game_pause = false;
@@ -60,26 +62,33 @@ void	Event::make_new_game( int new_level ) {
 	if (this->multi > 0) {
 		std::cout << "this->multi > 0" << std::endl;
 		// gen_level_multi(this->actual_level, this->multi);
-		if (this->gen_level == false)
-			this->map = Mapparser::map_from_file(av[1]);
+		if (this->gen_level == false) {
+			sprintf(map_name, "src/map/multiplayer/multi_%d.ntm", main_event->multi);
+			this->map = Mapparser::map_from_file(map_name);
+		}
 		else
 			gen_level_multi(this->actual_level, this->multi);
 	}
 	else if (this->arena > 0) {
 		std::cout << "this->arena > 0" << std::endl;
 		// gen_level_multi(this->actual_level, this->multi);
-		if (this->gen_level == false)
-			this->map = Mapparser::map_from_file(av[1]);
+		if (this->gen_level == false) {
+			sprintf(map_name, "src/map/arena/arena_%d.ntm", main_event->arena);
+			this->map = Mapparser::map_from_file(map_name);
+		}
 		else
 			gen_level_arena(this->actual_level, this->multi);
 	}
 	else {
 		std::cout << "this->multi > 0 else " << this->ac << std::endl;
 		// gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
-		if (this->gen_level == false) {
-			// std::cout << "this->ac >= 2" << this->ac << std::endl;
-			this->map = Mapparser::map_from_file(av[1]);
-			// this->map = Mapparser::map_from_file("src/map/test/test1.ntm");
+		if (this->gen_level == false && main_event->coop > 0) {
+			sprintf(map_name, "src/map/story/story_coop_%d.ntm", main_event->actual_level);
+			this->map = Mapparser::map_from_file(map_name);
+		}
+		else if (this->gen_level == false && main_event->coop == 0) {
+			sprintf(map_name, "src/map/story/story_%d.ntm", main_event->actual_level);
+			this->map = Mapparser::map_from_file(map_name);
 		}
 		else {
 			gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);

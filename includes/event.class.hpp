@@ -42,6 +42,7 @@ public:
 	Menu *								menu = NULL;
 	globject *						render = NULL;
 	bool									event_running = true;
+	bool									to_die_entity = false;
 
 	Event( void );
 	Event( Event const & src );
