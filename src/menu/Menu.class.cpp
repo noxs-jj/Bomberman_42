@@ -5,149 +5,155 @@
 #include <soundrender.class.hpp>
 #include <joystick.hpp>
 
-void  Menu::winner_multi() {
-  std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
-  print_surface(this->winner[main_event->draw_winner_multi], this->winner[main_event->draw_winner_multi], 400, 400, 0);
+void	Menu::winner_multi() {
+	std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
+	print_surface(this->winner[main_event->draw_winner_multi], this->winner[main_event->draw_winner_multi], 400, 400, 0);
 }
 
-void  Menu::winner_campaign() {
-  std::cout << "main_event->winner_campaign " << main_event->draw_winner_campaign << std::endl;
-  print_surface(this->winner_campaign_txt, this->winner_campaign_txt, 400, 400, 0);
+void	Menu::winner_campaign() {
+	std::cout << "main_event->winner_campaign " << main_event->draw_winner_campaign << std::endl;
+	print_surface(this->winner_campaign_txt, this->winner_campaign_txt, 400, 400, 0);
 }
 
-void  Menu::lose_campaign() {
-  std::cout << "main_event->lose_campaign " << main_event->draw_lose_campaign << std::endl;
-  print_surface(this->lose_campaign_txt, this->lose_campaign_txt, 400, 400, 0);
+void	Menu::lose_campaign() {
+	std::cout << "main_event->lose_campaign " << main_event->draw_lose_campaign << std::endl;
+	print_surface(this->lose_campaign_txt, this->lose_campaign_txt, 400, 400, 0);
 }
 
-void  Menu::end_campaign() {
-  std::cout << "main_event->end_campaign " << main_event->draw_end_campaign << std::endl;
-  print_surface(this->winner_game_txt, this->winner_game_txt, 400, 400, 0);
+void	Menu::end_campaign() {
+	std::cout << "main_event->end_campaign " << main_event->draw_end_campaign << std::endl;
+	print_surface(this->winner_game_txt, this->winner_game_txt, 400, 400, 0);
 }
 
-void  Menu::campaign() {
-  print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 400, MENU_CAMPAIGN_NEW);
-  print_surface(this->str_campaign_continue, this->str_campaign_continue_selected, 400, 500, MENU_CAMPAIGN_CONTINUE);
-  print_surface(this->str_campaign_coop, this->str_campaign_coop_selected, 400, 600, MENU_CAMPAIGN_COOP);
-  print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_CAMPAIGN_RETURN);
+void	Menu::campaign() {
+	print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 400, MENU_CAMPAIGN_NEW);
+	print_surface(this->str_campaign_continue, this->str_campaign_continue_selected, 400, 500, MENU_CAMPAIGN_CONTINUE);
+	print_surface(this->str_campaign_coop, this->str_campaign_coop_selected, 400, 600, MENU_CAMPAIGN_COOP);
+	print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_CAMPAIGN_RETURN);
 }
 
-void  Menu::arena() {
-  print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_ARENA_2P);
-  print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_ARENA_3P);
-  print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_ARENA_4P);
-  print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_ARENA_RETURN);
+void	Menu::arena() {
+	print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_ARENA_2P);
+	print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_ARENA_3P);
+	print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_ARENA_4P);
+	print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_ARENA_RETURN);
 }
 
-void  Menu::multiplayer() {
-  print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_MULTI_2P);
-  print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_MULTI_3P);
-  print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_MULTI_4P);
-  print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_MULTI_RETURN);
+void	Menu::multiplayer() {
+	print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_MULTI_2P);
+	print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_MULTI_3P);
+	print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_MULTI_4P);
+	print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_MULTI_RETURN);
 }
 
-void  Menu::config() {
-  print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 400, MENU_CONFIG_NAME);
-  print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 500, MENU_CONFIG_NAMEA);
-  print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 600, MENU_CONFIG_NAMEB);
-  print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_CONFIG_RETURN);
+void	Menu::config() {
+	print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 400, MENU_CONFIG_NAME);
+	print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 500, MENU_CONFIG_NAMEA);
+	print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 600, MENU_CONFIG_NAMEB);
+	print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_CONFIG_RETURN);
 }
 
-void  Menu::exit_game() {
-  print_surface(this->str_exit_confirm, this->str_exit_confirm_selected, 400, 400, MENU_EXIT_CONFIRM);
-  print_surface(this->str_return, this->str_return_selected, 400, 500, MENU_EXIT_RETURN);
+void	Menu::exit_game() {
+	print_surface(this->str_exit_confirm, this->str_exit_confirm_selected, 400, 400, MENU_EXIT_CONFIRM);
+	print_surface(this->str_return, this->str_return_selected, 400, 500, MENU_EXIT_RETURN);
 }
 
-void  Menu::print_surface(SDL_Surface * str, SDL_Surface * str_select, int x, int y, int type) {
-  this->position.x = x;
-  this->position.y = y;
-  if (type == this->detail_menu_selected)
-    SDL_BlitSurface(str_select, NULL, this->ecran_menu, &this->position);
-  else
-    SDL_BlitSurface(str, NULL, this->ecran_menu, &this->position);
+void	Menu::print_surface(SDL_Surface * str, SDL_Surface * str_select, int x, int y, int type) {
+	this->position.x = x;
+	this->position.y = y;
+	if (type == this->detail_menu_selected)
+		SDL_BlitSurface(str_select, NULL, this->ecran_menu, &this->position);
+	else
+		SDL_BlitSurface(str, NULL, this->ecran_menu, &this->position);
 }
 
 void  Menu::big_menu() {
-  if (true == main_event->game_playing) // Si partie en cours
-    print_surface(this->str_resume_game, this->str_resume_game_selected, 400, 300, RESUME_GAME);
-  print_surface(this->str_campaign, this->str_campaign_selected, 400, 400, MENU_CAMPAIGN);
-  print_surface(this->str_arena, this->str_arena_selected, 400, 500, MENU_ARENA);
-  print_surface(this->str_multiplayer, this->str_multiplayer_selected, 400, 600, MENU_MULTIPLAYER);
-  print_surface(this->str_config, str_config_selected, 400, 700, MENU_CONFIG);
-  print_surface(this->str_exit, this->str_exit_selected, 400, 800, MENU_EXIT);
+	if (true == main_event->game_playing) // Si partie en cours
+		print_surface(this->str_resume_game, this->str_resume_game_selected, 400, 300, RESUME_GAME);
+	print_surface(this->str_campaign, this->str_campaign_selected, 400, 400, MENU_CAMPAIGN);
+	print_surface(this->str_arena, this->str_arena_selected, 400, 500, MENU_ARENA);
+	print_surface(this->str_multiplayer, this->str_multiplayer_selected, 400, 600, MENU_MULTIPLAYER);
+	print_surface(this->str_config, str_config_selected, 400, 700, MENU_CONFIG);
+
+	if (true == main_event->option_arcade)
+		print_surface(this->str_arcade, this->str_arcade_selected, 400, 800, MENU_EXIT);
+	else
+		print_surface(this->str_exit, this->str_exit_selected, 400, 800, MENU_EXIT);
 }
 
 void Menu::init() {
-  int devices = SDL_NumJoysticks();
+	int devices = SDL_NumJoysticks();
 
-  this->SansPosterBold = TTF_OpenFont("src/menu/fonts/GoldenAge.ttf", 64);
-  this->white = {255, 255, 255, 1};
-  this->blue = {0, 0, 255, 1};
-  this->red = {255, 0, 0, 1};
-  SDL_JoystickEventState(SDL_ENABLE);
-  if (devices > 0) {
-    this->manette1 = SDL_JoystickOpen(0);
-    if (this->manette1 < NULL) {
-      std::cerr << "Could not open joystick 1 " << SDL_GetError() << std::endl;
-      throw std::exception();
-    }
-  }
-  if (devices > 1) {
-    this->manette2 = SDL_JoystickOpen(1);
-    if (this->manette2 < NULL) {
-      std::cerr << "Could not open joystick 2 " << SDL_GetError() << std::endl;
-      throw std::exception();
-    }
-  }
+	this->SansPosterBold = TTF_OpenFont("src/menu/fonts/GoldenAge.ttf", 64);
+	this->white = {255, 255, 255, 1};
+	this->blue = {0, 0, 255, 1};
+	this->red = {255, 0, 0, 1};
+	SDL_JoystickEventState(SDL_ENABLE);
+	if (devices > 0) {
+		this->manette1 = SDL_JoystickOpen(0);
+		if (this->manette1 < NULL) {
+			std::cerr << "Could not open joystick 1 " << SDL_GetError() << std::endl;
+			throw std::exception();
+		}
+	}
+	if (devices > 1) {
+		this->manette2 = SDL_JoystickOpen(1);
+		if (this->manette2 < NULL) {
+			std::cerr << "Could not open joystick 2 " << SDL_GetError() << std::endl;
+			throw std::exception();
+		}
+ 	}
 
 
-  this->menu_selected = BIG_MENU;
-  this->detail_menu_selected = MENU_CAMPAIGN;
-  this->str_resume_game = TTF_RenderText_Blended(this->SansPosterBold, "Resume Game", this->white);
-  this->str_resume_game_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Resume Game <<", this->red);
-  this->str_campaign = TTF_RenderText_Blended(this->SansPosterBold, "Campaign", this->white);
-  this->str_campaign_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Campaign <<", this->red);
-  this->str_campaign_new = TTF_RenderText_Blended(this->SansPosterBold, "New", this->white);
-  this->str_campaign_new_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> New <<", this->red);
-  this->str_campaign_coop = TTF_RenderText_Blended(this->SansPosterBold, "Coop", this->white);
-  this->str_campaign_coop_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Coop <<", this->red);
-  this->str_campaign_continue = TTF_RenderText_Blended(this->SansPosterBold, "Continue", this->white);
-  this->str_campaign_continue_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Continue <<", this->red);
-  this->str_arena = TTF_RenderText_Blended(this->SansPosterBold, "Arena", this->white);
-  this->str_arena_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Arena <<", this->red);
-  this->str_2players = TTF_RenderText_Blended(this->SansPosterBold, "2 Players", this->white);
-  this->str_2players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 2 Players <<", this->red);
-  this->str_3players = TTF_RenderText_Blended(this->SansPosterBold, "3 Players", this->white);
-  this->str_3players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 3 Players <<", this->red);
-  this->str_4players = TTF_RenderText_Blended(this->SansPosterBold, "4 Players", this->white);
-  this->str_4players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 4 Players <<", this->red);
-  this->str_5players = TTF_RenderText_Blended(this->SansPosterBold, "5 Players", this->white);
-  this->str_5players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 5 Players <<", this->red);
-  this->str_multiplayer = TTF_RenderText_Blended(this->SansPosterBold, "Multi Players", this->white);
-  this->str_multiplayer_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Multi Players <<", this->red);
-  this->str_config = TTF_RenderText_Blended(this->SansPosterBold, "Config", this->white);
-  this->str_config_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Config <<", this->red);
-  this->str_exit = TTF_RenderText_Blended(this->SansPosterBold, "Exit Game", this->white);
-  this->str_exit_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Exit Game <<", this->red);
-  this->str_exit_confirm = TTF_RenderText_Blended(this->SansPosterBold, "Confirm exit game", this->white);
-  this->str_exit_confirm_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Confirm exit game <<", this->red);
-  this->str_return = TTF_RenderText_Blended(this->SansPosterBold, "Return", this->white);
-  this->str_return_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Return <<", this->red);
+	this->menu_selected = BIG_MENU;
+	this->detail_menu_selected = MENU_CAMPAIGN;
+	this->str_resume_game = TTF_RenderText_Blended(this->SansPosterBold, "Resume Game", this->white);
+	this->str_resume_game_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Resume Game <<", this->red);
+	this->str_campaign = TTF_RenderText_Blended(this->SansPosterBold, "Campaign", this->white);
+	this->str_campaign_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Campaign <<", this->red);
+	this->str_campaign_new = TTF_RenderText_Blended(this->SansPosterBold, "New", this->white);
+	this->str_campaign_new_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> New <<", this->red);
+	this->str_campaign_coop = TTF_RenderText_Blended(this->SansPosterBold, "Coop", this->white);
+	this->str_campaign_coop_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Coop <<", this->red);
+	this->str_campaign_continue = TTF_RenderText_Blended(this->SansPosterBold, "Continue", this->white);
+	this->str_campaign_continue_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Continue <<", this->red);
+	this->str_arena = TTF_RenderText_Blended(this->SansPosterBold, "Arena", this->white);
+	this->str_arena_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Arena <<", this->red);
+	this->str_2players = TTF_RenderText_Blended(this->SansPosterBold, "2 Players", this->white);
+	this->str_2players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 2 Players <<", this->red);
+	this->str_3players = TTF_RenderText_Blended(this->SansPosterBold, "3 Players", this->white);
+	this->str_3players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 3 Players <<", this->red);
+	this->str_4players = TTF_RenderText_Blended(this->SansPosterBold, "4 Players", this->white);
+	this->str_4players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 4 Players <<", this->red);
+	this->str_5players = TTF_RenderText_Blended(this->SansPosterBold, "5 Players", this->white);
+	this->str_5players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 5 Players <<", this->red);
+	this->str_multiplayer = TTF_RenderText_Blended(this->SansPosterBold, "Multi Players", this->white);
+	this->str_multiplayer_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Multi Players <<", this->red);
+	this->str_config = TTF_RenderText_Blended(this->SansPosterBold, "Config", this->white);
+	this->str_config_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Config <<", this->red);
+	this->str_arcade = TTF_RenderText_Blended(this->SansPosterBold, "Arcade MODE", this->white);
+	this->str_arcade_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> NO EXIT <<", this->red);
+	this->str_exit = TTF_RenderText_Blended(this->SansPosterBold, "Exit Game", this->white);
+	this->str_exit_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Exit Game <<", this->red);
+	this->str_exit_confirm = TTF_RenderText_Blended(this->SansPosterBold, "Confirm exit game", this->white);
+	this->str_exit_confirm_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Confirm exit game <<", this->red);
+	this->str_return = TTF_RenderText_Blended(this->SansPosterBold, "Return", this->white);
+	this->str_return_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Return <<", this->red);
 
-  this->lose_campaign_txt = TTF_RenderText_Blended(this->SansPosterBold, "You Lose !", this->red);
-  this->winner_campaign_txt = TTF_RenderText_Blended(this->SansPosterBold, "You win ! Next level...", this->red);
-  this->winner_game_txt = TTF_RenderText_Blended(this->SansPosterBold, "You win the game !", this->red);
+	this->lose_campaign_txt = TTF_RenderText_Blended(this->SansPosterBold, "You Lose !", this->red);
+	this->winner_campaign_txt = TTF_RenderText_Blended(this->SansPosterBold, "You win ! Next level...", this->red);
+	this->winner_game_txt = TTF_RenderText_Blended(this->SansPosterBold, "You win the game !", this->red);
 
-  this->winner = (SDL_Surface **)std::malloc(sizeof(SDL_Surface *) * 5);
-  if (NULL == this->winner) {
-    this->w_error("Menu::init winner allocation error");
-    throw std::exception();
-  }
-  this->winner[0] = TTF_RenderText_Blended(this->SansPosterBold, "Player 1 Victory", this->blue);
-  this->winner[1] = TTF_RenderText_Blended(this->SansPosterBold, "Player 2 Victory", this->blue);
-  this->winner[2] = TTF_RenderText_Blended(this->SansPosterBold, "Player 3 Victory", this->blue);
-  this->winner[3] = TTF_RenderText_Blended(this->SansPosterBold, "Player 4 Victory", this->blue);
-  this->winner[4] = TTF_RenderText_Blended(this->SansPosterBold, "Player 5 Victory", this->blue);
+	this->winner = (SDL_Surface **)std::malloc(sizeof(SDL_Surface *) * 5);
+	if (NULL == this->winner) {
+		this->w_error("Menu::init winner allocation error");
+		throw std::exception();
+	}
+	this->winner[0] = TTF_RenderText_Blended(this->SansPosterBold, "Player 1 Victory", this->blue);
+	this->winner[1] = TTF_RenderText_Blended(this->SansPosterBold, "Player 2 Victory", this->blue);
+	this->winner[2] = TTF_RenderText_Blended(this->SansPosterBold, "Player 3 Victory", this->blue);
+	this->winner[3] = TTF_RenderText_Blended(this->SansPosterBold, "Player 4 Victory", this->blue);
+	this->winner[4] = TTF_RenderText_Blended(this->SansPosterBold, "Player 5 Victory", this->blue);
 }
 
 void Menu::intro_start() {
@@ -205,12 +211,12 @@ void  Menu::menu_selection() {
   }
   else {
     switch(this->menu_selected) {
-      case BIG_MENU: this->big_menu(); break;
-      case CAMPAIGN: this->campaign(); break;
-      case ARENA: this->arena(); break;
-      case MULTIPLAYER: this->multiplayer(); break;
-      case CONFIG: this->config(); break;
-      case EXIT: this->exit_game(); break;
+      case BIG_MENU:	this->big_menu(); break;
+      case CAMPAIGN:	this->campaign(); break;
+      case ARENA:		this->arena(); break;
+      case MULTIPLAYER:	this->multiplayer(); break;
+      case CONFIG:		this->config(); break;
+      case EXIT:		this->exit_game();
     }
   }
 
@@ -231,21 +237,21 @@ void  Menu::main_loop() {
 }
 
 void  Menu::move_menu_ver(int dir) {
-  main_event->soundrender->playSound("menu1");
-  if (this->menu_selected == BIG_MENU) {
-    if (dir == -1 && main_event->game_playing == true && this->detail_menu_selected == MENU_CAMPAIGN)
-      this->detail_menu_selected = RESUME_GAME;
-    else if (dir == -1 && main_event->game_playing == false && this->detail_menu_selected == MENU_CAMPAIGN)
-      this->detail_menu_selected = MENU_EXIT;
-    else if (dir == -1 && this->detail_menu_selected == RESUME_GAME)
-      this->detail_menu_selected = MENU_EXIT;
-    else if (dir == 1 && main_event->game_playing == true && this->detail_menu_selected == MENU_EXIT)
-      this->detail_menu_selected = RESUME_GAME;
-    else if (dir == 1 && main_event->game_playing == false && this->detail_menu_selected == MENU_EXIT)
-      this->detail_menu_selected = MENU_CAMPAIGN;
-    else
-     this->detail_menu_selected += dir;
-  }
+	main_event->soundrender->playSound("menu1");
+	if (this->menu_selected == BIG_MENU) {
+		if (dir == -1 && main_event->game_playing == true && this->detail_menu_selected == MENU_CAMPAIGN)
+			this->detail_menu_selected = RESUME_GAME;
+		else if (dir == -1 && main_event->game_playing == false && this->detail_menu_selected == MENU_CAMPAIGN)
+			this->detail_menu_selected = MENU_EXIT;
+		else if (dir == -1 && this->detail_menu_selected == RESUME_GAME)
+			this->detail_menu_selected = MENU_EXIT;
+		else if (dir == 1 && main_event->game_playing == true && this->detail_menu_selected == MENU_EXIT)
+			this->detail_menu_selected = RESUME_GAME;
+		else if (dir == 1 && main_event->game_playing == false && this->detail_menu_selected == MENU_EXIT)
+			this->detail_menu_selected = MENU_CAMPAIGN;
+		else
+		this->detail_menu_selected += dir;
+	}
 
   else if (this->menu_selected == CAMPAIGN) {
     if (dir == -1 && this->detail_menu_selected == MENU_CAMPAIGN_NEW)
@@ -339,8 +345,11 @@ void  Menu::change_menu() {
     this->menu_selected = BIG_MENU;
   }
   else if (this->detail_menu_selected == MENU_EXIT) {
-    this->detail_menu_selected = MENU_EXIT_CONFIRM;
-    this->menu_selected = EXIT;
+		if (false == main_event->option_arcade)
+		{
+			this->detail_menu_selected = MENU_EXIT_CONFIRM;
+	    this->menu_selected = EXIT;
+		}
   }
   else if (this->detail_menu_selected == MENU_EXIT_CONFIRM)
     main_event->exit_free();
@@ -463,7 +472,9 @@ Menu::~Menu() {
   SDL_FreeSurface(this->str_multiplayer);
   SDL_FreeSurface(this->str_multiplayer_selected);
   SDL_FreeSurface(this->str_config);
-  SDL_FreeSurface(this->str_config_selected);
+	SDL_FreeSurface(this->str_config_selected);
+	SDL_FreeSurface(this->str_arcade);
+  SDL_FreeSurface(this->str_arcade_selected);
   SDL_FreeSurface(this->str_exit);
   SDL_FreeSurface(this->str_exit_selected);
   SDL_FreeSurface(this->str_exit_confirm);

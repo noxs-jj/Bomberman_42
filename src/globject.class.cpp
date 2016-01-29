@@ -162,7 +162,11 @@ void		globject::init(void)
 	# endif
 	# ifdef __APPLE__
 		globject::_displayWindow = SDL_CreateWindow("Bomberman", SDL_WINDOWPOS_CENTERED,
-						SDL_WINDOWPOS_CENTERED, 1200, 1200, SDL_WINDOW_OPENGL);
+						SDL_WINDOWPOS_CENTERED, 1400, 1400,
+						SDL_WINDOW_OPENGL
+						| SDL_WINDOW_RESIZABLE
+						// | SDL_WINDOW_BORDERLESS
+					);
 	# endif
 
 	/* Init OpenGL */

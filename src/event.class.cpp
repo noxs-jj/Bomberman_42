@@ -13,6 +13,7 @@
 Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 	this->map = NULL;
 	this->gen_level = false;
+	this->option_arcade = false;
 	this->game_pause = false;
 	this->draw_winner_multi = 0;
 	this->draw_winner_campaign = 0;
@@ -103,8 +104,10 @@ void	Event::parse_command(int ac, char **av) {
 	while ( i < ac ) {
 		if ( 0 == strcmp(av[i], "-log") )
 			ft42::logg = true;
-		if (strcmp(av[i], "-gen") == 0)
+		else if (strcmp(av[i], "-gen") == 0)
 			this->gen_level = true;
+		else if (strcmp(av[i], "-arcade") == 0)
+			this->option_arcade = true;
 		i++;
 	}
 }
