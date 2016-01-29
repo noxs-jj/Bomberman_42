@@ -1,10 +1,10 @@
 // ************************************************************************** //
-//                                                                            //
-//                                                        :::      ::::::::   //
-//   Matrix.cpp                                         :+:      :+:    :+:   //
-//                                                    +:+ +:+         +:+     //
-//   By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+        //
-//                                                +#+#+#+#+#+   +#+           //
+//   24 Bomb                                                                  //
+//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
+//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
+//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
+//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
+//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
 //   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
 //   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
 //                                                                            //
@@ -12,18 +12,15 @@
 
 # include <Matrix.hpp>
 
-Matrix::Matrix(void)
-{
+Matrix::Matrix(void) {
 	identity_matrix();
 }
 
-Matrix::~Matrix(void)
-{
+Matrix::~Matrix(void) {
 	//delete [] _matrix;
 }
 
-void Matrix::rot_matrix(float rotx, float roty, float rotz)
-{
+void Matrix::rot_matrix(float rotx, float roty, float rotz) {
 	Matrix	a;
 	Matrix	b;
 	Matrix	c;
@@ -52,8 +49,7 @@ void Matrix::rot_matrix(float rotx, float roty, float rotz)
 	*this = *this * a * b * c;
 }
 
-void Matrix::trans_matrix(float x, float y, float z)
-{
+void Matrix::trans_matrix(float x, float y, float z) {
 	Matrix	tmp;
 
 	tmp._matrix[3] = x;
@@ -62,14 +58,11 @@ void Matrix::trans_matrix(float x, float y, float z)
 	*this = *this * tmp;
 }
 
-Matrix Matrix::operator*(Matrix & b)
-{
-
-	Matrix tmp;
-
-	float *dst;
-	float *s;
-	float t[16];
+Matrix Matrix::operator*(Matrix & b) {
+	Matrix	tmp;
+	float	*dst;
+	float	*s;
+	float	t[16];
 
 	dst = _matrix;
 	s = b._matrix;
@@ -96,14 +89,12 @@ Matrix Matrix::operator*(Matrix & b)
 	return (tmp);
 }
 
-Matrix Matrix::operator=(Matrix src)
-{
+Matrix Matrix::operator=(Matrix src) {
 	memcpy(_matrix, src._matrix, sizeof(float) * 16);
 	return (*this);
 }
 
-void Matrix::scale_matrix(float zoom)
-{
+void Matrix::scale_matrix(float zoom) {
 	Matrix tmp;
 	float *m;
 
@@ -114,11 +105,10 @@ void Matrix::scale_matrix(float zoom)
 	*this = *this * tmp;
 }
 
-Matrix Matrix::projection_matrix(float fov, float near, float far, float aspect)
-{
-	float   x_scale;
-	float   y_scale;
-	float   frustrum;
+Matrix Matrix::projection_matrix(float fov, float near, float far, float aspect) {
+	float	x_scale;
+	float	y_scale;
+	float	frustrum;
 	Matrix	n;
 	float	*m;
 
@@ -135,9 +125,8 @@ Matrix Matrix::projection_matrix(float fov, float near, float far, float aspect)
 	return (n);
 }
 
-Matrix Matrix::view_matrix(t_point pos, t_point rot, float zoom)
-{
-	Matrix n;
+Matrix Matrix::view_matrix(t_point pos, t_point rot, float zoom) {
+	Matrix	n;
 
 	n.scale_matrix(zoom);
 	n.rot_matrix(rot.x, rot.y, rot.z);
@@ -145,9 +134,8 @@ Matrix Matrix::view_matrix(t_point pos, t_point rot, float zoom)
 	return (n);
 }
 
-Matrix Matrix::model_matrix(t_point pos, t_point dir, float zoom)
-{
-	Matrix n;
+Matrix Matrix::model_matrix(t_point pos, t_point dir, float zoom) {
+	Matrix	n;
 
 	n.scale_matrix(zoom);
 	n.rot_matrix(0, -atan2(dir.z, dir.x), 0);
@@ -155,8 +143,7 @@ Matrix Matrix::model_matrix(t_point pos, t_point dir, float zoom)
 	return (n);
 }
 
-void Matrix::identity_matrix(void)
-{
+void Matrix::identity_matrix(void) {
 	_matrix[0] = 1;
 	_matrix[1] = 0;
 	_matrix[2] = 0;
@@ -175,14 +162,11 @@ void Matrix::identity_matrix(void)
 	_matrix[15] = 1;
 }
 
-std::ostream & operator<<(std::ostream & o, Matrix & src)
-{
-	for (int i = 0; i < 16; i++)
-	{
+std::ostream & operator<<(std::ostream & o, Matrix & src) {
+	for (int i = 0; i < 16; i++) 	{
 		o << src._matrix[i] << " ";
 		if (!((i + 1) % 4))
 			o << "\n";
 	}
 	return (o);
 }
-

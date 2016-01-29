@@ -5,3 +5,4 @@
 - un boss affiche
 - map genere aleatoirement
 - packs de testure de l'espace SKYBOX
+- gestion 5 manettes
