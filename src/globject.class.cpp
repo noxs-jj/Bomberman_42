@@ -94,6 +94,8 @@ void globject::load_bmp()
 				// }
 
 				// XXX XXX XXX
+				// XXX XXX XXX
+				// XXX XXX XXX
 				# ifdef linux
 					glTexImage2D(GL_TEXTURE_2D, 0,
 												GL_RGB,
@@ -105,6 +107,8 @@ void globject::load_bmp()
 					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
 						imp->w, imp->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
 				# endif
+				// XXX XXX XXX
+				// XXX XXX XXX
 				// XXX XXX XXX
 				std::cout << "LOL4.2" << std::endl;
 			}
@@ -138,7 +142,6 @@ void		globject::init(void)
 	/* Init SDL */
 	if (SDL_Init(SDL_INIT_VIDEO
 			| SDL_INIT_AUDIO
-			| SDL_INIT_GAMECONTROLLER
 			| SDL_INIT_JOYSTICK
 		) < 0) {
 		std::cerr << "globject::init SDL_Init() error = " << SDL_GetError() << std::endl;
@@ -214,6 +217,8 @@ void		globject::init(void)
 	globject("render/models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
 	globject("render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
 	globject("render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
+	globject("render/models/Bomberman/Bomberman5.obj", PLAYER5, 0.03);
+	// globject("render/models/Bomberman/BeautyBomber/BeautyWhopper.obj", PLAYER5, 0.03);
 	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
 	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
 	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
