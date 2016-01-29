@@ -73,7 +73,7 @@ int main( int ac, char **av ) {
 				continue ;
 				_time++;
 				_time = _time % 60;
-			keyboard();
+			main_event->joystick->read_key(1);
 			ia_play->start(time);
 			if (main_event->event_running == false)
 				break;
@@ -102,42 +102,12 @@ int main( int ac, char **av ) {
 	return (EXIT_SUCCESS);
 }
 
-
-void do_linux_stuff(void) {
-	int num_joysticks = SDL_NumJoysticks();
-  int i;
-  for(i = 0; i < num_joysticks; ++i)
-  {
-    SDL_Joystick* js = SDL_JoystickOpen(i);
-    if (js)
-    {
-      SDL_JoystickGUID guid = SDL_JoystickGetGUID(js);
-      char guid_str[1024];
-      SDL_JoystickGetGUIDString(guid, guid_str, sizeof(guid_str));
-      const char* name = SDL_JoystickName(js);
-
-      int num_axes = SDL_JoystickNumAxes(js);
-      int num_buttons = SDL_JoystickNumButtons(js);
-      int num_hats = SDL_JoystickNumHats(js);
-      int num_balls = SDL_JoystickNumBalls(js);
-
-      printf("%s \"%s\" axes:%d buttons:%d hats:%d balls:%d\n",
-             guid_str, name,
-             num_axes, num_buttons, num_hats, num_balls);
-
-      SDL_JoystickClose(js);
-    }
-  }
-}
-
 void keyboard(void) {
 	SDL_Event       event;
 	static t_key		key = {0, 0, 0, 0};
 	static t_key		key2 = {0, 0, 0, 0}; // key for p2
 	static t_key		key3 = {0, 0, 0, 0};
 	static t_key		key4 = {0, 0, 0, 0};
-
-	// do_linux_stuff();
 
 	while (SDL_PollEvent(&event)) {
         if (event.type == SDL_KEYDOWN) {
