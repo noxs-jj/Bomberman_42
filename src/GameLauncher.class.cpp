@@ -30,6 +30,7 @@ void  Gamelauncher::campaign_new_coop() {
   main_event->multi = 0;
   main_event->arena = 0;
   main_event->config[0] = PLAYER1; // player 1 get config number x
+  main_event->config[1] = PLAYER2; // player 1 get config number x
   main_event->mode_menu = false; // desactive menu render
   // if (main_event->game_playing == true)
     main_event->make_new_game(0);

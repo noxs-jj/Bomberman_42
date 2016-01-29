@@ -10,6 +10,7 @@ public:
 	Joystick();
 	virtual ~Joystick();
 	void read_key(int mode);
+	void change_dir_joystick(t_key *key, int dir);
 
 private:
 
