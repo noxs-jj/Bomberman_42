@@ -31,7 +31,7 @@ public:
 	int										multi; // 0 == non activer, 2 player, 3, 4, 5
 	int										arena; // 0 == non activer, 2 player, 3, 4, 5
 	bool									new_game; // false == continue (load fichier sauvegarde)
-	int 									config[4]; // config[1](3)  == (joueur 2, config 3)
+	int 									config[5]; // config[1](3)  == (joueur 2, config 3)
 	bool									general_sound; // activer son general du jeux
 	bool									music; // activer musique de fond
 	bool									mode_menu; // si en menu ou pas

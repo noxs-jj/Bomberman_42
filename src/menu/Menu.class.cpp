@@ -35,15 +35,17 @@ void	Menu::campaign() {
 void	Menu::arena() {
 	print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_ARENA_2P);
 	print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_ARENA_3P);
-	print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_ARENA_4P);
-	print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_ARENA_RETURN);
+  print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_ARENA_4P);
+	print_surface(this->str_5players, this->str_5players_selected, 400, 700, MENU_ARENA_5P);
+	print_surface(this->str_return, this->str_return_selected, 400, 800, MENU_ARENA_RETURN);
 }
 
 void	Menu::multiplayer() {
 	print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_MULTI_2P);
 	print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_MULTI_3P);
-	print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_MULTI_4P);
-	print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_MULTI_RETURN);
+  print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_MULTI_4P);
+	print_surface(this->str_5players, this->str_5players_selected, 400, 700, MENU_MULTI_5P);
+	print_surface(this->str_return, this->str_return_selected, 400, 800, MENU_MULTI_RETURN);
 }
 
 void	Menu::config() {
@@ -316,6 +318,8 @@ void  Menu::change_menu() {
     this->detail_menu_selected = MENU_CONFIG_NAME;
     this->menu_selected = CONFIG;
   }
+  else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_5P )
+    Gamelauncher::run_multi_5(); // Multiplayer 4 Players Launcher game
   else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_4P )
     Gamelauncher::run_multi_4(); // Multiplayer 4 Players Launcher game
   else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_3P )
@@ -326,6 +330,8 @@ void  Menu::change_menu() {
     this->detail_menu_selected = MENU_MULTI_2P;
     this->menu_selected = MULTIPLAYER;
   }
+  else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_5P )
+    Gamelauncher::run_arena_5();
   else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_4P )
     Gamelauncher::run_arena_4();
   else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_3P )
