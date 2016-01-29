@@ -3,13 +3,13 @@
 
 # include <ft42.class.hpp>
 
-class parser {
+class Parser {
 
 public :
 
-	parser(void);
-	parser(std::string path);
-	~parser(void);
+	Parser(void);
+	Parser(std::string path);
+	~Parser(void);
 
 	void parse(std::string path, int Neg);
 

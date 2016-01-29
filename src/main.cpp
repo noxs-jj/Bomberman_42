@@ -3,6 +3,7 @@
 #include <Menu.class.hpp>
 #include <ia.class.hpp>
 void			keyboard( void ); // A Mettre dans main.hpp
+
 Event *		main_event = new Event(); // GLOBAL
 
 int main( int ac, char **av ) {
@@ -32,10 +33,18 @@ int main( int ac, char **av ) {
 			throw std::exception();
 		}
 
+		// main_event->render = new globject();
+		// if (main_event->render == NULL) {
+		// 	std::cerr << "main_event->render globject allocation error" << std::endl;
+		// 	throw std::exception();
+		// }
+
+
 		ft42::logg = true; // ceci active les debugg ecran et fichier
 		// std::atexit(TTF_Quit);
 		srand(clock());
 		globject::init();
+		// main_event->render->init();
 		main_event->mode_menu = true;
 		main_event->menu->init();
 		main_event->menu->introstart = false;
@@ -54,7 +63,7 @@ int main( int ac, char **av ) {
 		main_event->soundrender->playMusic("music");
 
 		// for (int i = 0; i < 30; i++) {
-		// 	std::cout << globject::_object[WALL].parser._textID[i] << std::endl;
+		// 	std::cout << main_event->render->_object[WALL].parser._textID[i] << std::endl;
 		// }
 		static float time = 0;
 		while (true == main_event->event_running) {
@@ -70,10 +79,10 @@ int main( int ac, char **av ) {
 			time = clock();
 				const Uint8 *state = SDL_GetKeyboardState(NULL);
 			if (state[SDL_SCANCODE_RETURN]) {
-				globject::resize(1300, 1300);
+				main_event->render->resize(1300, 1300);
 			}
 			if (false == main_event->mode_menu)
-				globject::render_all(main_event->map, main_event->char_list, NULL);
+				main_event->render->render_all(main_event->map, main_event->char_list, NULL);
 			else
 				main_event->menu->main_loop();
 		}
@@ -87,7 +96,36 @@ int main( int ac, char **av ) {
 		return (EXIT_FAILURE);
 	}
   std::cout << "EXIT_SUCCESS" << std::endl;
+
 	return (EXIT_SUCCESS);
+}
+
+
+void do_linux_stuff(void) {
+	int num_joysticks = SDL_NumJoysticks();
+  int i;
+  for(i = 0; i < num_joysticks; ++i)
+  {
+    SDL_Joystick* js = SDL_JoystickOpen(i);
+    if (js)
+    {
+      SDL_JoystickGUID guid = SDL_JoystickGetGUID(js);
+      char guid_str[1024];
+      SDL_JoystickGetGUIDString(guid, guid_str, sizeof(guid_str));
+      const char* name = SDL_JoystickName(js);
+
+      int num_axes = SDL_JoystickNumAxes(js);
+      int num_buttons = SDL_JoystickNumButtons(js);
+      int num_hats = SDL_JoystickNumHats(js);
+      int num_balls = SDL_JoystickNumBalls(js);
+
+      printf("%s \"%s\" axes:%d buttons:%d hats:%d balls:%d\n",
+             guid_str, name,
+             num_axes, num_buttons, num_hats, num_balls);
+
+      SDL_JoystickClose(js);
+    }
+  }
 }
 
 void keyboard(void) {
@@ -96,6 +134,8 @@ void keyboard(void) {
 	static t_key		key2 = {0, 0, 0, 0}; // key for p2
 	static t_key		key3 = {0, 0, 0, 0};
 	static t_key		key4 = {0, 0, 0, 0};
+
+	// do_linux_stuff();
 
 	while (SDL_PollEvent(&event)) {
         if (event.type == SDL_KEYDOWN) {
@@ -108,7 +148,6 @@ void keyboard(void) {
 							case SDLK_KP_6:    	key2.key_right = 1; break;
 							case SDLK_KP_4:     key2.key_left = 1; break;
 							case SDLK_KP_0:    	main_event->player_bomb(main_event->config[1]); break;
-
 
 							case SDLK_s:     		key.key_up = 1; break;
 							case SDLK_w:       	key.key_down = 1; break;
@@ -151,48 +190,49 @@ void keyboard(void) {
 				      default: break;
 				    }
         }
-				else if (event.type == SDL_CONTROLLERBUTTONDOWN) {
-				  switch (event.cbutton.button) {
-						case SDL_CONTROLLER_BUTTON_A             : main_event->player_bomb(main_event->config[2]); break;
-						case SDL_CONTROLLER_BUTTON_B             : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_X             : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_Y             : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_BACK          : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_GUIDE         : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_START         : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_LEFTSTICK     : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_RIGHTSTICK    : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_LEFTSHOULDER  : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_DPAD_UP       : key3.key_down = true; break;
-						case SDL_CONTROLLER_BUTTON_DPAD_DOWN     : key3.key_up = true; break;
-						case SDL_CONTROLLER_BUTTON_DPAD_LEFT     : key3.key_left = true; break;
-						case SDL_CONTROLLER_BUTTON_DPAD_RIGHT    : key3.key_right = true; break;
-						case SDL_CONTROLLER_BUTTON_MAX           : (void)0; break;
-						default: break;
-				  }
-				}
-				else if (event.type == SDL_CONTROLLERBUTTONUP) {
-				  switch (event.cbutton.button) {
-						case SDL_CONTROLLER_BUTTON_A             : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_B             : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_X             : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_Y             : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_BACK          : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_GUIDE         : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_START         : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_LEFTSTICK     : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_RIGHTSTICK    : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_LEFTSHOULDER  : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER : (void)0; break;
-						case SDL_CONTROLLER_BUTTON_DPAD_UP       : key3.key_down = false; break;
-						case SDL_CONTROLLER_BUTTON_DPAD_DOWN     : key3.key_up = false; break;
-						case SDL_CONTROLLER_BUTTON_DPAD_LEFT     : key3.key_left = false; break;
-						case SDL_CONTROLLER_BUTTON_DPAD_RIGHT    : key3.key_right = false; break;
-						case SDL_CONTROLLER_BUTTON_MAX           : (void)0; break;
-						default: break;
-				  }
-				}
+				// else if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+				// 	std::cout << "controller key down" << std::endl;
+				//   switch (event.cbutton.button) {
+				// 		case SDL_CONTROLLER_BUTTON_A             : main_event->player_bomb(main_event->config[2]); break;
+				// 		case SDL_CONTROLLER_BUTTON_B             : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_X             : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_Y             : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_BACK          : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_GUIDE         : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_START         : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_LEFTSTICK     : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_RIGHTSTICK    : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_LEFTSHOULDER  : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_DPAD_UP       : key3.key_down = true; break;
+				// 		case SDL_CONTROLLER_BUTTON_DPAD_DOWN     : key3.key_up = true; break;
+				// 		case SDL_CONTROLLER_BUTTON_DPAD_LEFT     : key3.key_left = true; break;
+				// 		case SDL_CONTROLLER_BUTTON_DPAD_RIGHT    : key3.key_right = true; break;
+				// 		case SDL_CONTROLLER_BUTTON_MAX           : (void)0; break;
+				// 		default: break;
+				//   }
+				// }
+				// else if (event.type == SDL_CONTROLLERBUTTONUP) {
+				//   switch (event.cbutton.button) {
+				// 		case SDL_CONTROLLER_BUTTON_A             : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_B             : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_X             : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_Y             : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_BACK          : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_GUIDE         : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_START         : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_LEFTSTICK     : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_RIGHTSTICK    : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_LEFTSHOULDER  : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER : (void)0; break;
+				// 		case SDL_CONTROLLER_BUTTON_DPAD_UP       : key3.key_down = false; break;
+				// 		case SDL_CONTROLLER_BUTTON_DPAD_DOWN     : key3.key_up = false; break;
+				// 		case SDL_CONTROLLER_BUTTON_DPAD_LEFT     : key3.key_left = false; break;
+				// 		case SDL_CONTROLLER_BUTTON_DPAD_RIGHT    : key3.key_right = false; break;
+				// 		case SDL_CONTROLLER_BUTTON_MAX           : (void)0; break;
+				// 		default: break;
+				//   }
+				// }
     }
 
 	if (key.key_right)

@@ -15,8 +15,12 @@ void	Bomb::damage_entity(int x, int y ) {
 
 	while (it != end) {
 		if ((int)(*it)->pos_x == (int)x && (int)(*it)->pos_y == (int)y
-			&& ((*it)->type == ENEMY || (*it)->type == BOSS || (*it)->type == PLAYER))
-			(*it)->take_damage();
+			&& ((*it)->type == ENEMY || (*it)->type == BOSS || (*it)->type == PLAYER)) {
+				(*it)->take_damage();
+				if (main_event->to_die_entity == true)
+					it = main_event->char_list.begin();
+			}
+
 		it++;
 	}
 }

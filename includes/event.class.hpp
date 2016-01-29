@@ -13,6 +13,7 @@ class Enemy;
 class Boss;
 class SoundRender;
 class Menu;
+class globject;
 
 class Event : public ft42 {
 public:
@@ -39,7 +40,9 @@ public:
 	int										draw_end_campaign;
 	SoundRender *					soundrender = NULL;
 	Menu *								menu = NULL;
+	globject *						render = NULL;
 	bool									event_running = true;
+	bool									to_die_entity = false;
 
 	Event( void );
 	Event( Event const & src );

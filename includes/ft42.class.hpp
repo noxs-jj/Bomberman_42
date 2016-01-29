@@ -24,7 +24,11 @@
 # define MAX_LEVEL 9
 
 # ifdef linux
-#		include <GL/gl3.h>
+#   include <GL/glew.h>
+#   include <SDL2/SDL.h>
+#		include <SDL2/SDL_image.h>
+#		include <SDL2/SDL_mixer.h>
+#		include <SDL2/SDL_ttf.h>
 # endif
 # ifdef __APPLE__
 # 	include <OpenGL/gl3.h>

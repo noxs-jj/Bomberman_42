@@ -52,7 +52,8 @@ public:
   bool                  launch_action;
 
   TTF_Font *            SansPosterBold;
-  SDL_GameController *  manette1;
+  SDL_Joystick *        manette1;
+  SDL_Joystick *        manette2;
 
   SDL_Color             white;
   SDL_Color             blue;

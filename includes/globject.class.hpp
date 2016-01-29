@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   globject.class.hpp                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/16 16:59:35 by rcargou           #+#    #+#             */
-/*   Updated: 2015/11/14 14:41:22 by nmohamed         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef GLOBJECT_CLASS_HPP
 # define GLOBJECT_CLASS_HPP
 
@@ -24,6 +12,8 @@
 # include <parser.class.hpp>
 # include <fcntl.h>
 # include <cstring>
+# include <algorithm>
+# include <vector>
 
 class globject {
 
@@ -34,7 +24,7 @@ class globject {
 		~globject(void);
 
 		static void		init(void);
-		void			render (int status);
+		void					render (int status);
 		static void		render_all(Entity ***map, std::list<Entity*> players, SDL_Surface *menu);
 		static void		resize(int x, int y);
 		static void		spin(float x, float y);
@@ -61,8 +51,8 @@ class globject {
 		static SDL_Window			*_displayWindow;
 		static SDL_Renderer			*_displayRenderer;
 		static SDL_RendererInfo		_displayRendererInfo;
-		static						globject _object[100];
-		parser						parser;
+		static globject			_object[100];
+		Parser						parser;
 		static int					mapX_size;
 		static int					mapY_size;
 

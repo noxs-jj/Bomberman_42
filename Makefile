@@ -7,15 +7,23 @@ ifeq "$(PLATFORM)" "Darwin"
 endif
 
 #Linux -- apt-get install libsdl2-dev libsdl2-gfx-dev freeglut3 freeglut3-dev
+# libsdl2-image-dev libsdl2-mixer-dev glee-dev libgles2-mesa-dev
+# freeglut3 freeglut3-dev libglew-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx
+# libglfw3-dev
 ifeq "$(PLATFORM)" "Linux"
-	GLUT = -lGL -lGLU -lglut
+	GLUT = -lGL -lGLU -lglut -lSDL2 -lSDL2main -lGLEW -lGLU -lGL -lSDL2 -lSDL2main -lGLEW -lGLU -lGL
 	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
 endif
 
-CXX = 				clang++
-NAME =				bomberman
-CFLAGS =			-std=gnu++11 -Wall -Wextra -Werror -pedantic
-INCLUDE =			-I includes/ -I rc_lib/rc_math/
+CXX = 			clang++
+
+NAME =			bomberman
+
+
+CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror -pedantic
+
+INCLUDE =		-I includes/ -I rc_lib/rc_math/
+
 SDL_INCLUDE =	`sdl2-config --cflags` -I $(HOME)/.brew/include/SDL
 SDL_LIB =			`sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
