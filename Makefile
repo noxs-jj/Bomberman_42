@@ -20,7 +20,7 @@ CXX = 			clang++
 NAME =			bomberman
 
 
-CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror -pedantic
+CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror -pedantic	
 
 INCLUDE =		-I includes/ -I rc_lib/rc_math/
 
@@ -44,7 +44,8 @@ HEAD = 			includes/ft42.class.hpp \
 						includes/Menu.class.hpp \
 						includes/GameLauncher.class.hpp \
 						includes/mapparser.class.hpp \
-						includes/ia.class.hpp
+						includes/ia.class.hpp \
+						includes/joystick.hpp
 
 SRC = 			src/ft42.class.cpp \
 						src/entity.class.cpp \
@@ -63,7 +64,8 @@ SRC = 			src/ft42.class.cpp \
 						src/menu/Menu.class.cpp \
 						src/GameLauncher.class.cpp \
 						src/map/mapparser.class.cpp \
-						src/ia.class.cpp
+						src/ia.class.cpp \
+						src/joystick/joystick.cpp
 
 OBJ := $(SRC:.cpp=.cpp.o)
 

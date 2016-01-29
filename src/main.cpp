@@ -2,6 +2,8 @@
 #include <list>
 #include <Menu.class.hpp>
 #include <ia.class.hpp>
+#include <joystick.hpp>
+
 void			keyboard( void ); // A Mettre dans main.hpp
 
 Event *		main_event = new Event(); // GLOBAL
@@ -57,7 +59,7 @@ int main( int ac, char **av ) {
 		main_event->init(ac, av);
 
 		main_event->menu->main_loop();
-
+		main_event->joystick = new Joystick();
 
 		// music
 		main_event->soundrender->playMusic("music");

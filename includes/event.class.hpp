@@ -3,6 +3,7 @@
 
 # include <ft42.class.hpp>
 # include <entity.class.hpp>
+# include <joystick.hpp>
 
 class Entity;
 class Wall;
@@ -14,6 +15,7 @@ class Boss;
 class SoundRender;
 class Menu;
 class globject;
+class Joystick;
 
 class Event : public ft42 {
 public:
@@ -43,7 +45,7 @@ public:
 	globject *						render = NULL;
 	bool									event_running = true;
 	bool									to_die_entity = false;
-
+	Joystick *						joystick = NULL;
 	Event( void );
 	Event( Event const & src );
 	Event & operator=( Event const & rhs );
