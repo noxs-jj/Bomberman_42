@@ -10,8 +10,8 @@ Joystick::~Joystick(void) {}
 void Joystick::read_key(int mode) {
   SDL_Event           event;
   int i = 0;
-  static float time = 0;
-  int _time = 0;
+  // static float time = 0;
+  // int _time = 0;
   static t_key		key = {0, 0, 0, 0};
 	static t_key		key2 = {0, 0, 0, 0}; // key for p2
 	static t_key		key3 = {0, 0, 0, 0};
@@ -24,10 +24,20 @@ void Joystick::read_key(int mode) {
   arr_key[3] = &key4;
   arr_key[4] = &key5;
 
-  if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
-    return ;
-    _time++;
-    _time = _time % 60;
+  // std::list<Entity *>::iterator it = main_event->char_list.begin();
+	// std::list<Entity *>::iterator end = main_event->char_list.end();
+  //
+	// while (it != end) {
+  //   if ((*it)->type == PLAYER) {
+  //     printf("%d\n", (*it)->id);
+	// 	}
+  //   it++;
+  // }
+
+  // if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
+  //   return ;
+  //   _time++;
+  //   _time = _time % 60;
   if (mode == 0){
     while (SDL_PollEvent(&event) && main_event->event_running == true) {
       if (event.type == SDL_KEYDOWN) {
@@ -177,9 +187,6 @@ void Joystick::read_key(int mode) {
             }
             // JOYSTICK CROIX DIRECTIONNEL
             else if (event.type == SDL_JOYHATMOTION) {
-              printf("%s\n", "lol");
-              // if (0 == event.jhat.hat && 0 != event.jhat.value)
-              // {
                 switch (event.jhat.value) {
                   case SDL_HAT_UP:        arr_key[event.jbutton.which]->key_down = 1; break;
                   case SDL_HAT_LEFT:      arr_key[event.jbutton.which]->key_left = 1; break;
@@ -192,7 +199,6 @@ void Joystick::read_key(int mode) {
                                           break;
                   default:                break;
                 }
-              // }
             }
             if (event.type == SDL_KEYUP) {
                 switch((event).key.keysym.sym) {
