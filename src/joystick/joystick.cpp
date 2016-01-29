@@ -2,7 +2,8 @@
 #include <event.class.hpp>
 #include <Menu.class.hpp>
 
-Joystick::Joystick(void) {}
+Joystick::Joystick() {}
+Joystick::~Joystick() {}
 // Joystick::Joystick( Joystick const & src ) {}
 // Joystick::Joystick & operator=( Joystick const & rhs ) {}
 
