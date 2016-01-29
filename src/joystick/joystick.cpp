@@ -26,10 +26,12 @@ void Joystick::read_key(int mode) {
 
   // std::list<Entity *>::iterator it = main_event->char_list.begin();
 	// std::list<Entity *>::iterator end = main_event->char_list.end();
-  //
+
+  printf("%d\n", main_event->config[0]);
+  printf("%d\n", main_event->config[1]);
 	// while (it != end) {
   //   if ((*it)->type == PLAYER) {
-  //     printf("%d\n", (*it)->id);
+  //     printf("id %d player %d\n", (*it)->id, (*it)->model);
 	// 	}
   //   it++;
   // }
