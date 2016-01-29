@@ -3,6 +3,7 @@
 #include <event.class.hpp>
 #include <GameLauncher.class.hpp>
 #include <soundrender.class.hpp>
+#include <joystick.hpp>
 
 void  Menu::winner_multi() {
   std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
@@ -223,7 +224,8 @@ void  Menu::main_loop() {
       this->intro_start();
     else
       this->menu_selection();
-    this->menu_keyboard();
+    main_event->joystick->read_key(0);
+    // this->menu_keyboard();
     usleep(50000);
   }
 }
