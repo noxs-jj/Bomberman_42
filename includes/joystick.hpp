@@ -12,6 +12,7 @@ public:
 	// Joystick & operator=( Joystick const & rhs );
 	virtual ~Joystick( void );
 	void read_key(int mode);
+	void change_dir_joystick(t_key *key, int dir);
 
 private:
 

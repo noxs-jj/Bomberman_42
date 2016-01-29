@@ -27,8 +27,8 @@ void Joystick::read_key(int mode) {
   // std::list<Entity *>::iterator it = main_event->char_list.begin();
 	// std::list<Entity *>::iterator end = main_event->char_list.end();
 
-  printf("%d\n", main_event->config[0]);
-  printf("%d\n", main_event->config[1]);
+  // printf("%d\n", main_event->config[0]);
+  // printf("%d\n", main_event->config[1]);
 	// while (it != end) {
   //   if ((*it)->type == PLAYER) {
   //     printf("id %d player %d\n", (*it)->id, (*it)->model);
@@ -48,17 +48,18 @@ void Joystick::read_key(int mode) {
           case SDLK_ESCAPE:   main_event->exit_free();
           break;
 
-          case SDLK_SPACE:    if (false == main_event->menu->introstart) {
-            main_event->menu->introstart = true;
-            main_event->mode_menu = true;
-          }
-          break;
+          // case SDLK_SPACE:
+          // break;
 
           case SDLK_DOWN:     main_event->menu->move_menu_ver(1); break;
           case SDLK_UP:       main_event->menu->move_menu_ver(-1); break;
           case SDLK_RIGHT:    std::cout << "hey" << std::endl; break;
           case SDLK_LEFT:     std::cout << "hey" << std::endl; break;
-          case SDLK_RETURN:   if (main_event->draw_winner_multi != 0
+          case SDLK_RETURN:   if (false == main_event->menu->introstart) {
+            main_event->menu->introstart = true;
+            main_event->mode_menu = true;
+          }
+          else if (main_event->draw_winner_multi != 0
             || main_event->draw_winner_campaign != 0
             || main_event->draw_lose_campaign != 0
             || main_event->draw_end_campaign != 0) {
@@ -90,7 +91,11 @@ void Joystick::read_key(int mode) {
         // JOYSTICK BUTTON
         else if (event.type == SDL_JOYBUTTONDOWN) {
           switch (event.cbutton.button) {
-            case 0:   if (main_event->draw_winner_multi != 0
+            case 0:   if (false == main_event->menu->introstart) {
+              main_event->menu->introstart = true;
+              main_event->mode_menu = true;
+            }
+            else if (main_event->draw_winner_multi != 0
               || main_event->draw_winner_campaign != 0
               || main_event->draw_lose_campaign != 0
               || main_event->draw_end_campaign != 0) {
@@ -110,7 +115,11 @@ void Joystick::read_key(int mode) {
             case 5:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 7:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-            case 8:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+            case 8:   if (true == main_event->mode_menu && main_event->game_playing == true)
+            main_event->mode_menu = false;
+            else if (main_event->game_playing == true)
+            main_event->mode_menu = true;
+            break;
             case 9:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 10:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 11:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
@@ -179,7 +188,11 @@ void Joystick::read_key(int mode) {
                 case 5:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 7:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 8:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                case 8:   if (true == main_event->mode_menu && main_event->game_playing == true)
+                main_event->mode_menu = false;
+                else if (main_event->game_playing == true)
+                main_event->mode_menu = true;
+                break;
                 case 9:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 10:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 11:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
@@ -190,15 +203,11 @@ void Joystick::read_key(int mode) {
             // JOYSTICK CROIX DIRECTIONNEL
             else if (event.type == SDL_JOYHATMOTION) {
                 switch (event.jhat.value) {
-                  case SDL_HAT_UP:        arr_key[event.jbutton.which]->key_down = 1; break;
-                  case SDL_HAT_LEFT:      arr_key[event.jbutton.which]->key_left = 1; break;
-                  case SDL_HAT_DOWN:      arr_key[event.jbutton.which]->key_up = 1; break;
-                  case SDL_HAT_RIGHT:     arr_key[event.jbutton.which]->key_right = 1; break;
-                  case SDL_HAT_CENTERED:  arr_key[event.jbutton.which]->key_down = 0;
-                                          arr_key[event.jbutton.which]->key_up = 0;
-                                          arr_key[event.jbutton.which]->key_left = 0;
-                                          arr_key[event.jbutton.which]->key_right = 0;
-                                          break;
+                  case SDL_HAT_UP:        change_dir_joystick(arr_key[event.jbutton.which], DIR_UP); break;
+                  case SDL_HAT_LEFT:      change_dir_joystick(arr_key[event.jbutton.which], DIR_LEFT); break;
+                  case SDL_HAT_DOWN:      change_dir_joystick(arr_key[event.jbutton.which], DIR_BOTTOM); break;
+                  case SDL_HAT_RIGHT:     change_dir_joystick(arr_key[event.jbutton.which], DIR_RIGHT); break;
+                  case SDL_HAT_CENTERED:  change_dir_joystick(arr_key[event.jbutton.which], -1); break;
                   default:                break;
                 }
             }
@@ -260,6 +269,19 @@ void Joystick::read_key(int mode) {
     	if (key4.key_down)
     		main_event->player_move(main_event->config[3], DIR_BOTTOM);
     }
-
-
   }
+
+void Joystick::change_dir_joystick(t_key *key, int dir) {
+  key->key_up = 0;
+  key->key_down = 0;
+  key->key_left = 0;
+  key->key_right = 0;
+  if (dir == DIR_UP)
+    key->key_down = 1;
+  if (dir == DIR_BOTTOM)
+    key->key_up = 1;
+  if (dir == DIR_LEFT)
+    key->key_left = 1;
+  if (dir == DIR_RIGHT)
+    key->key_right = 1;
+}
