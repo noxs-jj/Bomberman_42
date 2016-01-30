@@ -3,7 +3,6 @@ sortie de programme:
 - move:: utiliser la speed des entities
 
 BUG::
-- segfault: arena die
 
 LOGIC:
 - bonus nombre de bombe + MODEL
