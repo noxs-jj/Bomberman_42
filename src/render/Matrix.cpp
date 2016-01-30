@@ -111,7 +111,7 @@ Matrix Matrix::projection_matrix(float fov, float near, float far, float aspect)
 	float	frustrum;
 	Matrix	n;
 	float	*m;
-aspect = 1.77;
+
 	m = n._matrix;
 	y_scale = (float)((1.0f / tan((fov / 2.0f) / 57.295)) * aspect);
 	x_scale = y_scale / aspect;

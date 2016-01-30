@@ -83,12 +83,12 @@ void globject::load_bmp() {
 		std::cout << "LOL3" << std::endl;
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
 		std::cout << "LOL4" << std::endl;
-		if ((_ID >= BOSS_A && _ID <= BOSS_C)
+		if (((_ID >= BOSS_A && _ID <= BOSS_C)
 			|| (_ID >= PLAYER && _ID <= PLAYER4)
 			|| _ID == BOMB
 			|| (_ID >= ENEMY && _ID <= ENEMY4)
 			|| _ID == MENU
-			|| (globject::space && _ID == MAX_ENUM)) {
+			|| (globject::space && _ID == MAX_ENUM))) {
 
 				// GLenum err = glGetError();
 				// if (err != GL_NO_ERROR)
@@ -272,6 +272,7 @@ void		globject::display_menu(SDL_Surface *imp) {
 
 	if (!imp)
 		return ;
+		glUniform1f(globject::_keyFrameID, 0);
 	glGenTextures(1, &_textID);
 	globject::_object[MENU]._textNumber = 1;
 	glBindTexture(GL_TEXTURE_2D, _textID);
@@ -284,9 +285,11 @@ void		globject::display_menu(SDL_Surface *imp) {
 	glBindTexture(GL_TEXTURE_2D, _textID);
 	glUniform1i(loc, 0);
 	a.scale_matrix(1);
+
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, a._matrix);
 	a.scale_matrix(1 / 1);
 	a.trans_matrix(0, 0, -1.75);
+
 	glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, a._matrix);
 	glBindVertexArray(globject::_object[MENU]._vaoID);
 	glDrawArrays(GL_TRIANGLES, \
@@ -390,6 +393,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	//SDL_GL_SwapWindow(globject::_displayWindow);
 	//return ;
 	//test
+	display_menu(menu);
+
 	viewDir.x = 1.1;
 	viewDir.y = 1.57;
 	viewDir.z = 0;
@@ -482,6 +487,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 		modelPos.y = 0;
 		modelPos.x = ((*it)->pos_y - 10);
 		modelPos.z = (((*it)->pos_x - 10));
+		if ((*it)->model == ENEMY1)
+			modelPos.z += 0.5;
 		Model = Matrix::model_matrix(modelPos, modelDir, \
 			globject::_object[(*it)->model]._zoom);
 		glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
@@ -490,7 +497,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 		globject::_object[(*it)->model].render(0);
 		it++;
 	}
-	display_menu(menu);
+
 	SDL_GL_SwapWindow(globject::_displayWindow);
 }
 
