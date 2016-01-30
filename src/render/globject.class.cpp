@@ -26,7 +26,7 @@ GLuint				globject::_legPos;
 GLfloat				globject::spinx;
 GLfloat				globject::spinz;
 int					globject::doIspin;
-int					globject::space = 1;
+int					globject::space = 0; //Change the graphical envirronnement.
 int					globject::mapX_size = 20;
 int					globject::mapY_size = 20;
 
@@ -89,12 +89,12 @@ void globject::load_bmp() {
 			|| (_ID >= ENEMY && _ID <= ENEMY4)
 			|| _ID == MENU
 			|| (globject::space && _ID == MAX_ENUM)) {
-				std::cout << "LOL4.1" << std::endl;
 
 				// GLenum err = glGetError();
 				// if (err != GL_NO_ERROR)
 				// {
 				// 	std::cerr << err << std::endl;
+				std::cout << "LOL4.1" << std::endl;
 				// }
 
 				// XXX XXX XXX
@@ -104,7 +104,7 @@ void globject::load_bmp() {
 					glTexImage2D(GL_TEXTURE_2D, 0,
 												GL_RGB,
 												imp->w, imp->h, 0,
-												GL_BGR, // GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, GL_ALPHA
+												GL_BGRA, // GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, GL_ALPHA
 												GL_UNSIGNED_BYTE, imp->pixels);
 				# endif
 				# ifdef __APPLE__
@@ -139,7 +139,7 @@ void globject::resize(int x, int y) {
 	glViewport(0, 0, x, y);
 }
 
-void		globject::init(void) {
+void		globject::init(float sizeX, float sizeY) {
 	/* Init SDL */
 	if (SDL_Init(SDL_INIT_VIDEO
 			| SDL_INIT_AUDIO
@@ -156,19 +156,19 @@ void		globject::init(void) {
 	# ifdef linux
 		globject::_displayWindow = SDL_CreateWindow(
 			"Bomberman",
-			700,
 			0,
-			800, 800,
+			0,
+			sizeX, sizeY,
 			SDL_WINDOW_OPENGL
-			//	| SDL_WINDOW_BORDERLESS
-			//	| SDL_WINDOW_RESIZABLE
-			//	| SDL_WINDOW_FULLSCREEN
+				| SDL_WINDOW_BORDERLESS
+				| SDL_WINDOW_RESIZABLE
+				//| SDL_WINDOW_FULLSCREEN
 		);
 	# endif
 	# ifdef __APPLE__
 		globject::_displayWindow = SDL_CreateWindow(
 			"Bomberman", SDL_WINDOWPOS_CENTERED,
-			SDL_WINDOWPOS_CENTERED, 1400, 1400,
+			SDL_WINDOWPOS_CENTERED, sizeX, sizeY,
 			SDL_WINDOW_OPENGL
 			| SDL_WINDOW_RESIZABLE
 			// | SDL_WINDOW_BORDERLESS
@@ -235,7 +235,7 @@ void		globject::init(void) {
 	glProgramUniformMatrix4fv(_progid, \
 		glGetUniformLocation(_progid, "P"), \
 		1, GL_FALSE, \
-		(GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, 1)._matrix));
+		(GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, sizeX / sizeY)._matrix));
 	globject::_viewMatID = glGetUniformLocation(_progid, "V");
 	globject::_modelMatID = glGetUniformLocation(_progid, "M");
 	globject::_keyFrameID = glGetUniformLocation(_progid, "keyframe");
@@ -401,7 +401,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	}
 	viewPos.x = 0;
 	viewPos.y = 0;
-	viewPos.z = -28;
+	viewPos.z = -38;
 	if (doIspin) {
 		viewDir.x = 1.57;
 		viewDir.y += prog;

@@ -35,7 +35,7 @@ class globject {
 		globject(std::string path, GLuint ID, float zoom);
 		~globject(void);
 
-		static void		init(void);
+		static void		init(float sizeX, float sizeY);
 		void					render (int status);
 		static void		render_all(Entity ***map, std::list<Entity*> players, SDL_Surface *menu);
 		static void		resize(int x, int y);
