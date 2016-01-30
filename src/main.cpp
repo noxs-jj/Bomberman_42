@@ -45,7 +45,8 @@ int main( int ac, char **av ) {
 		ft42::logg = true; // ceci active les debugg ecran et fichier
 		// std::atexit(TTF_Quit);
 		srand(clock());
-		globject::init(1600, 900);
+		// globject::init(1600, 900);
+		globject::init(2560, 1440);
 		// main_event->render->init();
 		main_event->mode_menu = true;
 		main_event->menu->init();
