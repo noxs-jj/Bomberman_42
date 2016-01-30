@@ -78,6 +78,10 @@ enum STATUS {
 	ENEMY3,
 	ENEMY4,
 	BONUS,
+	// BONUS_LIGHT,
+	// BONUS_PLUS,
+	// BONUS_KICK,
+	// BONUS_CHANGE,
 	EMPTY, //15
 
 	////

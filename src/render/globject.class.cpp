@@ -116,6 +116,14 @@ void globject::load_bmp() {
 				// XXX XXX XXX
 				std::cout << "LOL4.2" << std::endl;
 			}
+			else if (_ID == PLAYER5)
+			{
+				glTexImage2D(GL_TEXTURE_2D, 0,
+											GL_RGB,
+											imp->w, imp->h, 0,
+											GL_BGRA, // GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, GL_ALPHA
+											GL_UNSIGNED_BYTE, imp->pixels);
+			}
 		else
 		{
 			std::cout << "LOL4.3" << std::endl;
@@ -210,14 +218,17 @@ void		globject::init(float sizeX, float sizeY) {
 	globject("render/models/cube1.obj", WALL_HP_2, 1);
 	globject("render/models/cube2.obj", WALL_HP_3, 1);
 	globject("render/models/cube_floor.obj", FLOOR, 1);
+	// globject("render/Lighting/ltmThunder.obj", BONUS_LIGHT, 1);
+	// globject("render/quille/rock.obj", WALL_INDESTRUCTIBLE, 1);
+	// globject("render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
 	globject("render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
 	globject("render/models/Bomberman/Bomberman.obj", PLAYER, 0.03);
 	globject("render/models/Bomberman/Bomberman.obj", PLAYER1, 0.03);
 	globject("render/models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
 	globject("render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
 	globject("render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
-	globject("render/models/Bomberman/Bomberman5.obj", PLAYER5, 0.03);
-	// globject("render/models/Bomberman/BeautyBomber/BeautyWhopper.obj", PLAYER5, 0.03);
+	//globject("render/models/Bomberman/Bomberman5.obj", PLAYER5, 0.03);
+	 globject("render/models/Bomberman/BeautyBomber/BeautyWhopper.obj", PLAYER5, 0.04);
 	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
 	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
 	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
@@ -232,6 +243,10 @@ void		globject::init(float sizeX, float sizeY) {
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
+	// BONUS_LIGHT,
+	// BONUS_PLUS,
+	// BONUS_KICK,
+	// BONUS_CHANGE,
 	glProgramUniformMatrix4fv(_progid, \
 		glGetUniformLocation(_progid, "P"), \
 		1, GL_FALSE, \

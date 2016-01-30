@@ -97,6 +97,7 @@ Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, floa
       case PLAYER2:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER2) );
       case PLAYER3:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER3) );
       case PLAYER4:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER4) );
+	  case PLAYER5:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER5) );
       default:                    return static_cast<Entity*>( main_event->create_empty(x, y) );
     }
   }
