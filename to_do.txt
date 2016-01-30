@@ -1,18 +1,19 @@
-RENDER
-- penser au resize
-
-Menu 2D:
-- bloque video max resolution 1920x1080 + 1600x1080
-
 sortie de programme:
 - penser a free tout les object de main_event, puis main_event
-- voir pour la liberation des assets models, shaders, liberation carte graphique ?
 - move:: utiliser la speed des entities
 
 BUG::
+- segfault: arena die
+
+LOGIC:
+- bonus nombre de bombe + MODEL
+- bonus puissance bombre (distance) + MODEL
+- bonus kick coup de pied bomb sur ligne droite + MODEL
+- bonus change skin bombe + MODEL
 
 RENDER::
 - implementer WALL_HP_4
 - implementer BOSS_B
 - implementer BOSS_C
 - Implementer 4 skin ennemies different
+- animation BOSS
