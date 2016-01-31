@@ -2,27 +2,46 @@
 #include <event.class.hpp>
 #include <Menu.class.hpp>
 
-Joystick::Joystick(void) {}
+Joystick::Joystick(void) {
+	int	devices = SDL_NumJoysticks();
+
+	SDL_JoystickEventState(SDL_ENABLE);
+	if (devices > 0) {
+		this->manette1 = SDL_JoystickOpen(0);
+		if (this->manette1 < 0) {
+			std::cerr << "Could not open joystick 1 " << SDL_GetError() << std::endl;
+			throw std::exception();
+		}
+	}
+	if (devices > 1) {
+		this->manette2 = SDL_JoystickOpen(1);
+		if (this->manette2 < 0) {
+			std::cerr << "Could not open joystick 2 " << SDL_GetError() << std::endl;
+			throw std::exception();
+		}
+	}
+}
 Joystick::~Joystick(void) {}
 // Joystick::Joystick( Joystick const & src ) {}
 // Joystick::Joystick & operator=( Joystick const & rhs ) {}
 
 void Joystick::read_key(int mode) {
-  SDL_Event           event;
-  int i = 0;
+	SDL_Event			event;
+	int					i = 0;
   // static float time = 0;
   // int _time = 0;
-  static t_key		key = {0, 0, 0, 0};
+	static t_key		key = {0, 0, 0, 0};
 	static t_key		key2 = {0, 0, 0, 0}; // key for p2
 	static t_key		key3 = {0, 0, 0, 0};
-  static t_key		key4 = {0, 0, 0, 0};
+	static t_key		key4 = {0, 0, 0, 0};
 	static t_key		key5 = {0, 0, 0, 0};
-  t_key *         arr_key[5];
-  arr_key[0] = &key;
-  arr_key[1] = &key2;
-  arr_key[2] = &key3;
-  arr_key[3] = &key4;
-  arr_key[4] = &key5;
+	t_key *				arr_key[5];
+
+	arr_key[0] = &key;
+	arr_key[1] = &key2;
+	arr_key[2] = &key3;
+	arr_key[3] = &key4;
+	arr_key[4] = &key5;
 
   // std::list<Entity *>::iterator it = main_event->char_list.begin();
 	// std::list<Entity *>::iterator end = main_event->char_list.end();

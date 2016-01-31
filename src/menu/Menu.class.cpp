@@ -93,14 +93,14 @@ void Menu::init() {
 	SDL_JoystickEventState(SDL_ENABLE);
 	if (devices > 0) {
 		this->manette1 = SDL_JoystickOpen(0);
-		if (this->manette1 < NULL) {
+		if (this->manette1 < 0) {
 			std::cerr << "Could not open joystick 1 " << SDL_GetError() << std::endl;
 			throw std::exception();
 		}
 	}
 	if (devices > 1) {
 		this->manette2 = SDL_JoystickOpen(1);
-		if (this->manette2 < NULL) {
+		if (this->manette2 < 0) {
 			std::cerr << "Could not open joystick 2 " << SDL_GetError() << std::endl;
 			throw std::exception();
 		}
@@ -165,7 +165,8 @@ void Menu::intro_start() {
     if (NULL == this->ecran_menu)
       SDL_FreeSurface(this->current);
     this->current = NULL;
-    this->current = IMG_Load("src/menu/assets/intro_start-2.bmp");
+	this->current = IMG_Load("src/menu/assets/intro_start-2.bmp");
+    // this->current = IMG_Load("src/menu/assets/bomberman-intro-3.bmp");
     if (NULL == this->current) {
       std::cerr << "Menu::intro_start load image error " << SDL_GetError() << std::endl;
       throw std::exception();
@@ -233,7 +234,6 @@ void  Menu::main_loop() {
     else
       this->menu_selection();
     main_event->joystick->read_key(0);
-    // this->menu_keyboard();
     usleep(50000);
   }
 }
@@ -361,138 +361,47 @@ void  Menu::change_menu() {
     main_event->exit_free();
 }
 
-void  Menu::menu_keyboard(void) {
-  SDL_Event           event;
-  int i = 0;
-
-  while (SDL_PollEvent(&event) && main_event->event_running == true) {
-    if (event.type == SDL_KEYDOWN) {
-      std::cout << "(event).key.keysym.sym " << (event).key.keysym.sym << std::endl;
-      switch((event).key.keysym.sym) {
-        case SDLK_ESCAPE:   main_event->exit_free();
-                            break;
-
-        case SDLK_SPACE:    if (false == this->introstart) {
-                              this->introstart = true;
-                              main_event->mode_menu = true;
-                            }
-                            break;
-
-        case SDLK_DOWN:     move_menu_ver(1); break;
-        case SDLK_UP:       move_menu_ver(-1); break;
-        case SDLK_RIGHT:    std::cout << "hey" << std::endl; break;
-        case SDLK_LEFT:     std::cout << "hey" << std::endl; break;
-        case SDLK_RETURN:   if (main_event->draw_winner_multi != 0
-                            || main_event->draw_winner_campaign != 0
-                            || main_event->draw_lose_campaign != 0
-                            || main_event->draw_end_campaign != 0) {
-                              main_event->draw_winner_multi = 0;
-                              main_event->draw_winner_campaign = 0;
-                              main_event->draw_lose_campaign = 0;
-                              main_event->draw_end_campaign = 0;
-                              main_event->mode_menu = false;
-                            }
-                            else
-                              change_menu();
-                            break;
-
-        case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
-                              main_event->mode_menu = false;
-                            else if (main_event->game_playing == true)
-                              main_event->mode_menu = true;
-                            break;
-
-        case SDLK_c:        std::cout << "SDL_NumJoysticks(void) " << SDL_NumJoysticks() << std::endl;
-        while ( i < SDL_NumJoysticks() ){
-          printf("    %s\n", SDL_GameControllerNameForIndex(i) );
-          i++;
-        }
-        break;
-
-        default: break;
-      }
-    }
-    // JOYSTICK BUTTON
-    else if (event.type == SDL_JOYBUTTONDOWN) {
-      switch (event.cbutton.button) {
-        case 0:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 1:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 2:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 3:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 4:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 5:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 7:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 8:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 9:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 10:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 11:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        case 12:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-        default: break;
-      }
-    }
-    // JOYSTICK CROIX DIRECTIONNEL
-    else if (event.type == SDL_JOYHATMOTION) {
-      if (0 == event.jhat.hat && 0 != event.jhat.value)
-      {
-        switch (event.jhat.value) {
-          case SDL_HAT_UP:        fprintf(stdout, "joystick[%d] UP state[%d]\n", event.jbutton.which, event.jhat.hat); break;
-          case SDL_HAT_LEFTUP:    fprintf(stdout, "joystick[%d] UP+LEFT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
-          case SDL_HAT_LEFT:      fprintf(stdout, "joystick[%d] LEFT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
-          case SDL_HAT_LEFTDOWN:  fprintf(stdout, "joystick[%d] DOWN+LEFT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
-          case SDL_HAT_DOWN:      fprintf(stdout, "joystick[%d] DOWN state[%d]\n", event.jbutton.which, event.jhat.hat); break;
-          case SDL_HAT_RIGHTDOWN: fprintf(stdout, "joystick[%d] DOWN+RIGHT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
-          case SDL_HAT_RIGHT:     fprintf(stdout, "joystick[%d] RIGHT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
-          case SDL_HAT_RIGHTUP:   fprintf(stdout, "joystick[%d] UP+RIGHT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
-          case SDL_HAT_CENTERED:  fprintf(stdout, "joystick[%d] CENTERED state[%d]\n", event.jbutton.which, event.jhat.hat); break;
-          default:                break;
-        }
-      }
-    }
-  }
-}
-
 Menu::Menu(Event * event) : event(event), current(NULL) {}
 
 Menu::~Menu() {
-  SDL_FreeSurface(this->str_resume_game);
-  SDL_FreeSurface(this->str_resume_game_selected);
-  SDL_FreeSurface(this->str_campaign);
-  SDL_FreeSurface(this->str_campaign_selected);
-  SDL_FreeSurface(this->str_campaign_new);
-  SDL_FreeSurface(this->str_campaign_new_selected);
-  SDL_FreeSurface(this->str_campaign_coop);
-  SDL_FreeSurface(this->str_campaign_coop_selected);
-  SDL_FreeSurface(this->str_campaign_continue);
-  SDL_FreeSurface(this->str_campaign_continue_selected);
-  SDL_FreeSurface(this->str_arena);
-  SDL_FreeSurface(this->str_arena_selected);
-  SDL_FreeSurface(this->str_2players);
-  SDL_FreeSurface(this->str_2players_selected);
-  SDL_FreeSurface(this->str_3players);
-  SDL_FreeSurface(this->str_3players_selected);
-  SDL_FreeSurface(this->str_4players);
-  SDL_FreeSurface(this->str_4players_selected);
-  SDL_FreeSurface(this->str_5players);
-  SDL_FreeSurface(this->str_5players_selected);
-  SDL_FreeSurface(this->str_multiplayer);
-  SDL_FreeSurface(this->str_multiplayer_selected);
-  SDL_FreeSurface(this->str_config);
+	SDL_FreeSurface(this->str_resume_game);
+	SDL_FreeSurface(this->str_resume_game_selected);
+	SDL_FreeSurface(this->str_campaign);
+	SDL_FreeSurface(this->str_campaign_selected);
+	SDL_FreeSurface(this->str_campaign_new);
+	SDL_FreeSurface(this->str_campaign_new_selected);
+	SDL_FreeSurface(this->str_campaign_coop);
+	SDL_FreeSurface(this->str_campaign_coop_selected);
+	SDL_FreeSurface(this->str_campaign_continue);
+	SDL_FreeSurface(this->str_campaign_continue_selected);
+	SDL_FreeSurface(this->str_arena);
+	SDL_FreeSurface(this->str_arena_selected);
+	SDL_FreeSurface(this->str_2players);
+	SDL_FreeSurface(this->str_2players_selected);
+	SDL_FreeSurface(this->str_3players);
+	SDL_FreeSurface(this->str_3players_selected);
+	SDL_FreeSurface(this->str_4players);
+	SDL_FreeSurface(this->str_4players_selected);
+	SDL_FreeSurface(this->str_5players);
+	SDL_FreeSurface(this->str_5players_selected);
+	SDL_FreeSurface(this->str_multiplayer);
+	SDL_FreeSurface(this->str_multiplayer_selected);
+	SDL_FreeSurface(this->str_config);
 	SDL_FreeSurface(this->str_config_selected);
 	SDL_FreeSurface(this->str_arcade);
-  SDL_FreeSurface(this->str_arcade_selected);
-  SDL_FreeSurface(this->str_exit);
-  SDL_FreeSurface(this->str_exit_selected);
-  SDL_FreeSurface(this->str_exit_confirm);
-  SDL_FreeSurface(this->str_exit_confirm_selected);
-  SDL_FreeSurface(this->str_return);
-  SDL_FreeSurface(this->str_return_selected);
+	SDL_FreeSurface(this->str_arcade_selected);
+	SDL_FreeSurface(this->str_exit);
+	SDL_FreeSurface(this->str_exit_selected);
+	SDL_FreeSurface(this->str_exit_confirm);
+	SDL_FreeSurface(this->str_exit_confirm_selected);
+	SDL_FreeSurface(this->str_return);
+	SDL_FreeSurface(this->str_return_selected);
 
-  SDL_FreeSurface(this->winner[0]);
-  SDL_FreeSurface(this->winner[1]);
-  SDL_FreeSurface(this->winner[2]);
-  SDL_FreeSurface(this->winner[3]);
-  SDL_FreeSurface(this->winner[4]);
+	SDL_FreeSurface(this->winner[0]);
+	SDL_FreeSurface(this->winner[1]);
+	SDL_FreeSurface(this->winner[2]);
+	SDL_FreeSurface(this->winner[3]);
+	SDL_FreeSurface(this->winner[4]);
 
-  std::free(this->winner);
+	std::free(this->winner);
 }

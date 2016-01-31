@@ -33,24 +33,15 @@ int					globject::mapY_size = 20;
 globject::globject(void) {}
 
 globject::globject(std::string path, GLuint ID, GLfloat zoom) : _ID(ID), _zoom(zoom) {
-	std::cout << "AAA" << std::endl;
-	int neg;
+	int	neg;
 
 	neg = (ID == WALL_HP_1 || ID == FLOOR || ID == WALL_INDESTRUCTIBLE);
 	neg = 0;
-	std::cout << "parsing" << std::endl;
 	parser.parse(path, neg);
-	std::cout << "parsed" << std::endl;
-	std::cout << "filling" << std::endl;
 	fill_vao();
-	std::cout << "filled" << std::endl;
 	_textNumber = parser._textNum;
-	std::cout << "loading bmp" << std::endl;
 	load_bmp();
-	std::cout << "loaded bmp" << std::endl;
-	std::cout << "copying into array" << std::endl;
 	globject::_object[ID] = *this;
-	std::cout << "copy success" << std::endl;
 }
 
 globject::~globject(void) {}
@@ -72,72 +63,51 @@ void globject::load_bmp() {
 			path = "render/spacestextures/";
 		path += parser._texture[i];
 		std::cout << path.c_str() << std::endl;
-		std::cout << "LOL1" << std::endl;
 		SDL_Surface *imp = IMG_Load(path.c_str());
 		if (imp == NULL) 		{
 			std::cerr << "FAILFAIL" << std::endl;
 			throw std::exception() ;
 		}
-		std::cout << "LOL2" << std::endl;
 		glGenTextures(1, &(_textID[i]));
-		std::cout << "LOL3" << std::endl;
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		std::cout << "LOL4" << std::endl;
 		if (((_ID >= BOSS_A && _ID <= BOSS_C)
 			|| (_ID >= PLAYER && _ID <= PLAYER4)
 			|| _ID == BOMB
 			|| (_ID >= ENEMY && _ID <= ENEMY4)
 			|| _ID == MENU
 			|| (globject::space && _ID == MAX_ENUM))) {
-
-				// GLenum err = glGetError();
-				// if (err != GL_NO_ERROR)
-				// {
-				// 	std::cerr << err << std::endl;
-				std::cout << "LOL4.1" << std::endl;
-				// }
-
-				// XXX XXX XXX
-				// XXX XXX XXX
-				// XXX XXX XXX
-				# ifdef linux
-					glTexImage2D(GL_TEXTURE_2D, 0,
-												GL_RGB,
-												imp->w, imp->h, 0,
-												GL_BGRA, // GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, GL_ALPHA
-												GL_UNSIGNED_BYTE, imp->pixels);
-				# endif
-				# ifdef __APPLE__
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
-							0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
-				# endif
-				// XXX XXX XXX
-				// XXX XXX XXX
-				// XXX XXX XXX
-				std::cout << "LOL4.2" << std::endl;
-			}
-			else if (_ID == PLAYER5)
-			{
+			// XXX XXX XXX
+			// XXX XXX XXX
+			// XXX XXX XXX
+			# ifdef linux
 				glTexImage2D(GL_TEXTURE_2D, 0,
-											GL_RGB,
-											imp->w, imp->h, 0,
-											GL_BGRA, // GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, GL_ALPHA
-											GL_UNSIGNED_BYTE, imp->pixels);
+					GL_RGB,
+					imp->w, imp->h, 0,
+					GL_BGRA, // GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, GL_ALPHA
+					GL_UNSIGNED_BYTE, imp->pixels);
+			# endif
+			# ifdef __APPLE__
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
+					0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
+			# endif
+			// XXX XXX XXX
+			// XXX XXX XXX
+			// XXX XXX XXX
 			}
-		else
-		{
-			std::cout << "LOL4.3" << std::endl;
+			else if (_ID == PLAYER5) {
+				glTexImage2D(GL_TEXTURE_2D, 0,
+					GL_RGB,
+					imp->w, imp->h, 0,
+					GL_BGRA, // GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, GL_ALPHA
+					GL_UNSIGNED_BYTE, imp->pixels);
+			}
+		else {
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
-					0, GL_BGR, GL_UNSIGNED_BYTE, imp->pixels);
-				std::cout << "LOL4.5" << std::endl;
+				0, GL_BGR, GL_UNSIGNED_BYTE, imp->pixels);
 		}
-			std::cout << "LOL5" << std::endl;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		std::cout << "LOL6" << std::endl;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		std::cout << "LOL7" << std::endl;
 		name += std::to_string(i);
-		std::cout << "LOL8" << std::endl;
 		_textLoc[i] = glGetUniformLocation(globject::_progid, name.c_str());
 	}
 }
@@ -168,9 +138,9 @@ void		globject::init(float sizeX, float sizeY) {
 			0,
 			sizeX, sizeY,
 			SDL_WINDOW_OPENGL
-				| SDL_WINDOW_BORDERLESS
-				| SDL_WINDOW_RESIZABLE
-				//| SDL_WINDOW_FULLSCREEN
+			| SDL_WINDOW_BORDERLESS
+			| SDL_WINDOW_RESIZABLE
+			//| SDL_WINDOW_FULLSCREEN
 		);
 	# endif
 	# ifdef __APPLE__
@@ -198,22 +168,16 @@ void		globject::init(float sizeX, float sizeY) {
 			_exit(0);
 		}
 	# endif
-
-	std::cout << "deb -996" << std::endl;
     glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
     glEnable(GL_DEPTH_TEST);
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	SDL_GL_SwapWindow(globject::_displayWindow);
 	glEnable(GL_BLEND);
-	std::cout << "deb -995" << std::endl;
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	/* load shaders */
-	std::cout << "deb -994" << std::endl;
 	globject::load_shaders();
-	std::cout << "deb -998" << std::endl;
 
 	/* load Models */
-
 	globject("render/models/cube.obj", WALL_HP_1, 1);
 	globject("render/models/cube1.obj", WALL_HP_2, 1);
 	globject("render/models/cube2.obj", WALL_HP_3, 1);
@@ -228,7 +192,7 @@ void		globject::init(float sizeX, float sizeY) {
 	globject("render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
 	globject("render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
 	//globject("render/models/Bomberman/Bomberman5.obj", PLAYER5, 0.03);
-	 globject("render/models/Bomberman/BeautyBomber/BeautyWhopper.obj", PLAYER5, 0.04);
+	globject("render/models/Bomberman/BeautyBomber/BeautyWhopper.obj", PLAYER5, 0.04);
 	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
 	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
 	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
@@ -550,24 +514,12 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader) {
 	int		InfoLogLength;
 	char	FragmentShaderErrorMessage[1000];
 
-		// GLenum err = glewInit();
-    // if(err != GLEW_OK) {
-		// 	std::cerr << "glew failed" << std::endl;
-		// 	std::cerr << glewGetErrorString(err) << std::endl;
-		// 	_exit(0);
-		// }
-
-	std::cout << "fgh 0" << std::endl;
 	vshaderid = glCreateShader(GL_VERTEX_SHADER);
-	std::cout << "fgh 3" << std::endl;
 	fshaderid = glCreateShader(GL_FRAGMENT_SHADER);
-	std::cout << "fgh 2" << std::endl;
 	buff = filetobuff(vertexshader);
 	// glShaderSource(vshaderid, 1, (const char *const *)(&buff), NULL);
 	glShaderSource(vshaderid, 1, (const char **)(&buff), NULL);
 	glCompileShader(vshaderid);
-
-	std::cout << "fgh 1" << std::endl;
 
 	glGetShaderiv(vshaderid, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(vshaderid, GL_INFO_LOG_LENGTH, &InfoLogLength);
@@ -589,7 +541,6 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader) {
 	glAttachShader(progid, fshaderid);
 	glLinkProgram(progid);
 	globject::_progid = progid;
-	std::cout << "yhnm 0" << std::endl;
 	return (progid);
 }
 
@@ -598,7 +549,6 @@ void		globject::load_shaders() {
 	char	b[] = "render/shaders/vertex.shader";
 
 	glUseProgram(loadshaders(a, b));
-	std::cout << "try 3" << std::endl;
 }
 
 void		globject::fill_vao(void) {
@@ -606,24 +556,17 @@ void		globject::fill_vao(void) {
 	GLuint	textBufferID;
 	GLuint	textureBufferID;
 
-	std::cout << "111" << std::endl;
 	glGenVertexArrays(1, &(_vaoID));
-	std::cout << "qwe" << std::endl;
 	glGenBuffers(1, &(vertexBufferID));
-	std::cout << "asd" << std::endl;
 	glGenBuffers(1, &(textBufferID));
-	std::cout << "zxc" << std::endl;
 	glGenBuffers(1, &(textureBufferID));
-	std::cout << "jkl" << std::endl;
 	glBindVertexArray(_vaoID);
-	std::cout << "222" << std::endl;
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * parser._finalVertexSize, \
 			parser._finalVertex, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(0);
-	std::cout << "333" << std::endl;
 	glBindBuffer(GL_ARRAY_BUFFER, textBufferID);
 	glBufferData(GL_ARRAY_BUFFER, parser._finalTextSize * sizeof(GLfloat), \
 			parser._finalText, GL_STATIC_DRAW);

@@ -5,7 +5,9 @@
 
 class Joystick : public ft42 {
 public:
-	int		timer;
+	int				timer;
+	SDL_Joystick *	manette1;
+	SDL_Joystick *	manette2;
 
 	Joystick(void);
 	// Joystick( Joystick const & src );
