@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   globject.class.cpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/01 12:13:00 by jmoiroux         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <globject.class.hpp>
 #include <bomb.class.hpp>
@@ -70,36 +70,24 @@ void globject::load_bmp() {
 		}
 		glGenTextures(1, &(_textID[i]));
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		if (((_ID >= BOSS_A && _ID <= BOSS_C)
-			|| (_ID >= PLAYER && _ID <= PLAYER4)
-			|| _ID == BOMB
-			|| (_ID >= ENEMY && _ID <= ENEMY4)
-			|| _ID == MENU
+		if (((_ID >= BOSS_A && _ID <= BOSS_C) \
+			|| (_ID >= PLAYER && _ID <= PLAYER4) \
+			|| _ID == BOMB \
+			|| (_ID >= ENEMY && _ID <= ENEMY4) \
+			|| _ID == MENU \
 			|| (globject::space && _ID == MAX_ENUM))) {
-			// XXX XXX XXX
-			// XXX XXX XXX
-			// XXX XXX XXX
 			# ifdef linux
-				glTexImage2D(GL_TEXTURE_2D, 0,
-					GL_RGB,
-					imp->w, imp->h, 0,
-					GL_BGRA, // GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, GL_ALPHA
-					GL_UNSIGNED_BYTE, imp->pixels);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
+					0, GL_BGRA,  GL_UNSIGNED_BYTE, imp->pixels);
 			# endif
 			# ifdef __APPLE__
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
 					0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
 			# endif
-			// XXX XXX XXX
-			// XXX XXX XXX
-			// XXX XXX XXX
 			}
 			else if (_ID == PLAYER5) {
-				glTexImage2D(GL_TEXTURE_2D, 0,
-					GL_RGB,
-					imp->w, imp->h, 0,
-					GL_BGRA, // GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, GL_ALPHA
-					GL_UNSIGNED_BYTE, imp->pixels);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
+					0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
 			}
 		else {
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
@@ -132,11 +120,9 @@ void		globject::init(float sizeX, float sizeY) {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	# ifdef linux
-		globject::_displayWindow = SDL_CreateWindow(
-			"Bomberman",
-			0,
-			0,
-			sizeX, sizeY,
+		globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
+			0, 0, \
+			sizeX, sizeY, \
 			SDL_WINDOW_OPENGL
 			| SDL_WINDOW_BORDERLESS
 			| SDL_WINDOW_RESIZABLE
@@ -144,9 +130,9 @@ void		globject::init(float sizeX, float sizeY) {
 		);
 	# endif
 	# ifdef __APPLE__
-		globject::_displayWindow = SDL_CreateWindow(
-			"Bomberman", SDL_WINDOWPOS_CENTERED,
-			SDL_WINDOWPOS_CENTERED, sizeX, sizeY,
+		globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
+			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
+			sizeX, sizeY, \
 			SDL_WINDOW_OPENGL
 			| SDL_WINDOW_RESIZABLE
 			// | SDL_WINDOW_BORDERLESS
@@ -157,7 +143,7 @@ void		globject::init(float sizeX, float sizeY) {
 	SDL_GLContext glcontext = SDL_GL_CreateContext(globject::_displayWindow);
 	if(NULL == glcontext) {
 		std::cerr << "SDL_GLContext failed " <<  SDL_GetError() << std::endl;
-		_exit(0);
+		throw std::exception();
 	}
 
 	# ifdef linux
@@ -165,7 +151,7 @@ void		globject::init(float sizeX, float sizeY) {
 		GLenum err = glewInit();
 		if(err != GLEW_OK) {
 			std::cerr << "glew failed" << glewGetErrorString(err) << std::endl;
-			_exit(0);
+			throw std::exception();
 		}
 	# endif
     glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
@@ -212,8 +198,7 @@ void		globject::init(float sizeX, float sizeY) {
 	// BONUS_KICK,
 	// BONUS_CHANGE,
 	glProgramUniformMatrix4fv(_progid, \
-		glGetUniformLocation(_progid, "P"), \
-		1, GL_FALSE, \
+		glGetUniformLocation(_progid, "P"), 1, GL_FALSE, \
 		(GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, sizeX / sizeY)._matrix));
 	globject::_viewMatID = glGetUniformLocation(_progid, "V");
 	globject::_modelMatID = glGetUniformLocation(_progid, "M");
@@ -222,7 +207,7 @@ void		globject::init(float sizeX, float sizeY) {
 }
 
 t_point		set_dir(int d) {
-	t_point dir;
+	t_point	dir;
 
 	dir.y = 0;
 	if (d == DIR_UP) {
@@ -245,13 +230,13 @@ t_point		set_dir(int d) {
 }
 
 void		globject::display_menu(SDL_Surface *imp) {
-	GLuint _textID;
-	GLuint loc;
-	Matrix a;
+	GLuint	_textID;
+	GLuint	loc;
+	Matrix	a;
 
 	if (!imp)
 		return ;
-		glUniform1f(globject::_keyFrameID, 0);
+	glUniform1f(globject::_keyFrameID, 0);
 	glGenTextures(1, &_textID);
 	globject::_object[MENU]._textNumber = 1;
 	glBindTexture(GL_TEXTURE_2D, _textID);
