@@ -1,3 +1,15 @@
+// ************************************************************************** //
+//   24 Bomb                                                                  //
+//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
+//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
+//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
+//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
+//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
+//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
+//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
+//                                                                            //
+// ************************************************************************** //
+
 #include <main.hpp>
 #include <list>
 #include <Menu.class.hpp>
@@ -40,12 +52,19 @@ int		main( int ac, char **av ) {
 			main_event->w_full("Joystick allocation error");
 			throw std::exception();
 		}
-
+		main_event->init(ac, av);
 		ft42::logg = true; // ceci active les debugg ecran et fichier
 		// std::atexit(TTF_Quit);
 		srand(clock());
 		# ifdef linux
-			globject::init(1600, 900);
+			if (RESOLUTION_1600 == main_event->option_resolution)
+				globject::init(1600, 900);
+			else if (RESOLUTION_1920 == main_event->option_resolution)
+				globject::init(1920, 1080);
+			else if (RESOLUTION_2560 == main_event->option_resolution)
+				globject::init(2560, 900);
+			else
+				globject::init(1600, 900);
 		#endif
 		# ifdef __APPLE__
 			globject::init(2560, 1440);
@@ -59,7 +78,6 @@ int		main( int ac, char **av ) {
 		main_event->load_sounds();
 		main_event->soundrender->playSound("startup");
 
-		main_event->init(ac, av);
 		main_event->menu->main_loop();
 
 		// music

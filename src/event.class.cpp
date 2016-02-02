@@ -1,3 +1,15 @@
+// ************************************************************************** //
+//   24 Bomb                                                                  //
+//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
+//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
+//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
+//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
+//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
+//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
+//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
+//                                                                            //
+// ************************************************************************** //
+
 #include <event.class.hpp>
 #include <wall.class.hpp>
 #include <bomb.class.hpp>
@@ -14,6 +26,7 @@ Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 	this->map = NULL;
 	this->gen_level = false;
 	this->option_arcade = false;
+	this->option_resolution = RESOLUTION_NOT_SET;
 	this->game_pause = false;
 	this->draw_winner_multi = 0;
 	this->draw_winner_campaign = 0;
@@ -99,15 +112,21 @@ void	Event::make_new_game( int new_level ) {
 }
 
 void	Event::parse_command(int ac, char **av) {
-	int i = 0;
+	int	i = 0;
 
 	while ( i < ac ) {
-		if ( 0 == strcmp(av[i], "-log") )
+		if (strcmp(av[i], "-log") == 0)
 			ft42::logg = true;
 		else if (strcmp(av[i], "-gen") == 0)
 			this->gen_level = true;
 		else if (strcmp(av[i], "-arcade") == 0)
 			this->option_arcade = true;
+		else if (strcmp(av[i], "-2560") == 0)
+			this->option_resolution = RESOLUTION_2560;
+		else if (strcmp(av[i], "-1920") == 0)
+			this->option_resolution = RESOLUTION_1920;
+		else if (strcmp(av[i], "-1600") == 0)
+			this->option_resolution = RESOLUTION_1600;
 		i++;
 	}
 }
