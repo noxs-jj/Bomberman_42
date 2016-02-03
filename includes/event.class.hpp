@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   event.class.hpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/03 17:04:29 by vjacquie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef EVENT_CLASS_HPP
 # define EVENT_CLASS_HPP
@@ -20,6 +20,7 @@
 class Entity;
 class Wall;
 class Bomb;
+class Bonus;
 class Fire;
 class Player;
 class Enemy;
@@ -73,7 +74,8 @@ public:
 	void		gen_obstacle(int difficulty);
 	void		gen_level_arena(int level, int coop);
 	Wall *		create_wall(int status, float x, float y, int model);
-	Bomb *		create_bomb(int status, float x, float y, int model);
+	Bonus *		create_bonus(int status, float x, float y, int model);
+	Bomb *		create_bomb(int status, float x, float y, int model, int id);
 	Fire *		create_fire(int status, float x, float y, int model);
 	Player *	create_player(int status, float x, float y, int model);
 	Enemy *		create_enemy(int status, float x, float y, int model);
