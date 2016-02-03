@@ -1,18 +1,19 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   event.class.cpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/03 17:11:54 by vjacquie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <event.class.hpp>
 #include <wall.class.hpp>
 #include <bomb.class.hpp>
+#include <bonus.class.hpp>
 #include <fire.class.hpp>
 #include <player.class.hpp>
 #include <enemy.class.hpp>
@@ -309,8 +310,18 @@ Wall *	Event::create_wall(int status, float x, float y, int model) {
 	return wall;
 }
 
-Bomb *	Event::create_bomb(int status, float x, float y, int model) {
-	Bomb * bomb = new Bomb(x, y, status, model);
+Bonus *	Event::create_bonus(int status, float x, float y, int model) {
+	Bonus * bonus = new Bonus(x, y, status, model);
+	if (bonus == NULL) {
+		this->w_full("create_bonus:: bonus Malloc error");
+		throw std::exception();
+	}
+
+	return bonus;
+}
+
+Bomb *	Event::create_bomb(int status, float x, float y, int model, int id) {
+	Bomb * bomb = new Bomb(x, y, status, model, id);
 	if (bomb == NULL) {
 		this->w_full("create_bomb:: bomb Malloc error");
 		throw std::exception();
@@ -392,7 +403,10 @@ void	Event::player_bomb(int model) {
 	while (it != end) {
 		if ((*it)->model == model) {
 			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
-				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius);
+				if ((*it)->bomb_nbr > 0) {
+					(*it)->bomb_nbr--;
+					(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius, (*it)->id);
+				}
 				return ;
 			}
 		}
@@ -409,7 +423,10 @@ void	Event::ia_bomb(int id) {
 	while (it != end) {
 		if ((*it)->id == id) {
 			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
-				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius);
+				if ((*it)->bomb_nbr > 0) {
+					(*it)->bomb_nbr--;
+					(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius, id);
+				}
 				return ;
 			}
 		}

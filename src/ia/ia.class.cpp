@@ -67,7 +67,8 @@ int    Ia::must_move_to( Entity *it ) {
   else {
     (*it).put_bomb (
       BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
-      BOMB, (*it).blast_radius
+      BOMB, (*it).blast_radius,
+      (*it).id
     );
     return ((*it).dir);
   }
@@ -107,7 +108,8 @@ bool    Ia::play_enemy(Enemy *it) {
       if (!(*it).friend_zone((*it).pos_x, (*it).pos_y)) {
         (*it).put_bomb (
           BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
-          BOMB, (*it).blast_radius
+          BOMB, (*it).blast_radius,
+          (*it).id
         );
       }
     }

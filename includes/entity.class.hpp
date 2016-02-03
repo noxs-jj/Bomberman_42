@@ -19,6 +19,7 @@ public:
   int		speed;
   int		blast_radius;
   float	zoom_m;
+	int		bomb_nbr = 1;
 	static int		autoincrement;
 
 	Entity( int type, float x, float y, int status );
@@ -32,7 +33,7 @@ public:
 	int		check_move( float x, float y );
 	void	die( void );
 	void	take_damage( void );
-	void	put_bomb(int status, float x, float y, int model, int blast);
+	void	put_bomb(int status, float x, float y, int model, int blast, int id);
 	bool position_is_player( float x, float y );
 	bool friend_zone( float x, float y );
 	int		count_entity(int type);

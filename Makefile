@@ -1,14 +1,14 @@
-## ************************************************************************** ##
-##   24 Bomb                                                                  ##
-##   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   ##
-##   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   ##
-##   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     ##
-##   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        ##
-##   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           ##
-##   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             ##
-##   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       ##
-##                                                                            ##
-## ************************************************************************** ##
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#              #
+#    Updated: 2016/02/03 16:36:00 by vjacquie         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 PLATFORM := $(shell uname)
 
@@ -57,6 +57,7 @@ HEAD =	includes/bomb.class.hpp \
 		includes/parser.class.hpp \
 		includes/player.class.hpp \
 		includes/soundrender.class.hpp \
+		includes/bonus.class.hpp \
 		includes/wall.class.hpp
 
 SRC =	src/entity/bomb.class.cpp \
@@ -78,6 +79,7 @@ SRC =	src/entity/bomb.class.cpp \
 		src/render/Matrix.cpp \
 		src/render/parser.class.cpp \
 		src/sound/soundrender.class.cpp \
+		src/entity/bonus.class.cpp
 
 OBJ := $(SRC:.cpp=.cpp.o)
 
