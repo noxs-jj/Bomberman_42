@@ -130,6 +130,7 @@ void	Entity::move( int dir ) {
 	float	x = 0;//this->pos_x;
 	float	y = 0;//this->pos_y;
 	int		ret = EMPTY;
+	int		tmp_x = this->pos_x, tmp_y = this->pos_y;
 
 	frame += 0.3;
 	if (dir == DIR_UP)
@@ -159,10 +160,18 @@ void	Entity::move( int dir ) {
 		take_damage();
 	}
 	else if (ret == BOMB) {
-		std::cout << "bomb detected kick =" << this->kick_bomb << " id= " << this->id << " bomb_id= " << static_cast<Bomb*>(main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)])->creator_id << std::endl;
-		if (this->kick_bomb == true && static_cast<Bomb*>(main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)])->creator_id == this->id){
-			static_cast<Bomb*>(main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)])->pushed = true;
-			static_cast<Bomb*>(main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)])->pushed_dir = dir;
+		if (dir == DIR_UP)
+			tmp_y--;
+		else if (dir == DIR_BOTTOM)
+			tmp_y++;
+		else if (dir == DIR_LEFT)
+			tmp_x--;
+		else if (dir == DIR_RIGHT)
+			tmp_x++;
+		// std::cout << "bomb detected kick =" << this->kick_bomb << " id= " << this->id << " bomb_id= " << static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->creator_id << std::endl;
+		if (this->kick_bomb == true && static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->creator_id == this->id){
+			static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->pushed = true;
+			static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->pushed_dir = dir;
 		}
 	}
 	if (frame >= 4)
