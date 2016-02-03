@@ -31,14 +31,14 @@ void Bomb::add_bonus(int x, int y) {
 	int rd = rand() % 10;
 	int bonus = BONUS_POWER_UP;
 
-	if (rd < 4)
-		bonus = BONUS_POWER_UP;
-	else if (rd < 7)
-		bonus = BONUS_PLUS_ONE;
-	else if (rd < 9)
-		bonus = BONUS_CHANGE;
-	else
+	if (rd == 9)
 		bonus = BONUS_KICK;
+	else if (rd == 8)
+		bonus = BONUS_CHANGE;
+	if (rd % 2 == 0)
+		bonus = BONUS_POWER_UP;
+	else
+		bonus = BONUS_PLUS_ONE;
 
 	main_event->map[y][x] = main_event->create_bonus(BONUS, x, y, bonus);
 }
