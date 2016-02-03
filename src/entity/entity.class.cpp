@@ -1,6 +1,7 @@
 #include <entity.class.hpp>
 #include <main.hpp>
 #include <bomb.class.hpp>
+#include <bonus.class.hpp>
 #include <globject.class.hpp>
 
 #include <iostream>
@@ -30,6 +31,8 @@ int		Entity::check_move( float x, float y ) {
 		return BOMB;
 	else if (main_event->map[(int)y][(int)x]->type == FIRE)
 		return FIRE;
+	else if (main_event->map[(int)y][(int)x]->type == BONUS)
+		return BONUS;
 	return EMPTY;
 }
 
@@ -140,10 +143,16 @@ void	Entity::move( int dir ) {
 	else
 		frame = 0;
 	ret = check_move(x * 3 + this->pos_x, y + this->pos_y);
-	if (ret == EMPTY) {
+	if (ret == EMPTY || ret == BONUS) {
 		this->dir = dir;
 		this->pos_x = x + this->pos_x;
 		this->pos_y = y + this->pos_y;
+		if (ret == BONUS)
+		{
+			static_cast<Bonus*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->affect(this);
+			delete main_event->map[(int)this->pos_y][(int)this->pos_x];
+			main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
+		}
 		// change frame here
 	}
 	else if (ret == FIRE) {
@@ -257,5 +266,5 @@ void	Entity::put_bomb(int status, float x, float y, int model, int blast, int id
 	delete main_event->map[(int)y][(int)x];
 	// main_event->map[(int)y][(int)x] = main_event->create_empty((int)x, (int)y);
 	main_event->map[(int)y][(int)x] = main_event->create_bomb(status, (int)x + 0.5, (int)y + 0.5, model, id);
-	main_event->map[(int)y][(int)x]->blast_radius = blast + BLAST_SIZE;
+	main_event->map[(int)y][(int)x]->blast_radius = blast;
 }
