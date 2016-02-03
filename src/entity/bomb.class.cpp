@@ -31,9 +31,9 @@ void Bomb::add_bonus(int x, int y) {
 	int rd = rand() % 10;
 	int bonus = BONUS_POWER_UP;
 
-	if (rd == 9)
+	if (rd == 9 || rd == 8)
 		bonus = BONUS_KICK;
-	else if (rd == 8)
+	else if (rd == 7 || rd == 6)
 		bonus = BONUS_CHANGE;
 	if (rd % 2 == 0)
 		bonus = BONUS_POWER_UP;
@@ -53,7 +53,7 @@ int		Bomb::blast_case(int y, int x) {
 			main_event->map[y][x]->status = WALL_HP_1;
 		else if (main_event->map[y][x]->status == WALL_HP_1) {
 			delete main_event->map[y][x];
-			if ((rand() % 20) > 8)
+			if ((rand() % 20) <= 8)
 				add_bonus(x, y);
 			else
 				main_event->map[y][x] = main_event->create_empty(x, y);
