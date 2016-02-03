@@ -35,7 +35,7 @@ void Bomb::add_bonus(int x, int y) {
 		bonus = BONUS_KICK;
 	else if (rd == 7 || rd == 6)
 		bonus = BONUS_CHANGE;
-	if (rd % 2 == 0)
+	else if (rd % 2 == 0)
 		bonus = BONUS_POWER_UP;
 	else
 		bonus = BONUS_PLUS_ONE;
