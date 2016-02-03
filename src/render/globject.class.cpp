@@ -6,7 +6,7 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/03 17:10:25 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2016/02/03 17:19:27 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,11 +168,12 @@ void		globject::init(float sizeX, float sizeY) {
 	globject("render/models/cube1.obj", WALL_HP_2, 1);
 	globject("render/models/cube2.obj", WALL_HP_3, 1);
 	globject("render/models/cube_floor.obj", FLOOR, 1);
-	globject("render/bonus_item/power_up/power_up.obj", BONUS_POWER_UP, 1); // BONUS_POWER_UP
-	globject("render/bonus_item/power_up/bomb_plus_one.obj", BONUS_PLUS_ONE, 1); // BONUS_PLUS_ONE
-	globject("render/bonus_item/power_up/bomb_kick.obj", BONUS_KICK, 1); // BONUS_KICK
+	globject("render/bonus_item/power_up/power_up.obj", BONUS_POWER_UP, 0.8); // BONUS_POWER_UP
+	globject("render/bonus_item/power_up/bomb_plus_one.obj", BONUS_PLUS_ONE, 0.8); // BONUS_PLUS_ONE
+	globject("render/bonus_item/power_up/bomb_kick.obj", BONUS_KICK, 0.8); // BONUS_KICK
+	globject("render/bonus_item/power_up/bomb_change.obj", BONUS_CHANGE, 0.8); // BONUS_CHANGE
 	// globject("render/quille/rock.obj", WALL_INDESTRUCTIBLE, 1);
-	// globject("render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
+	globject("render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
 	globject("render/models/Bomberman/Bomberman.obj", PLAYER, 0.03);
 	globject("render/models/Bomberman/Bomberman.obj", PLAYER1, 0.03);
 	globject("render/models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
