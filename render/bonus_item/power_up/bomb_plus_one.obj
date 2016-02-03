@@ -27,7 +27,7 @@ vt 1.0 1.0  # vt=4 is lower right of texture
 
 # remember, syntax is v/vt/vn
 g back face
-usemtl ItmThunder2.bmp
+usemtl bonus_plus_one.bmp
 
 f  1/4/2  7/1/2  5/2/2
 f  1/4/2  3/3/2  7/1/2
