@@ -20,6 +20,8 @@ public:
   int		blast_radius;
   float	zoom_m;
 	int		bomb_nbr = 1;
+	bool	kick_bomb = false;
+	int		bomb_model = BOMB;
 	static int		autoincrement;
 
 	Entity( int type, float x, float y, int status );

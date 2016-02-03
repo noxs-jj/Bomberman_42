@@ -12,6 +12,7 @@ public:
 	Bonus( Bonus const & src );
 	Bonus & operator=( Bonus const & rhs );
 	virtual ~Bonus( void );
+	void	affect(Entity *ent);
 private:
 	Bonus( void );
 };
