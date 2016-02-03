@@ -159,10 +159,10 @@ void	Entity::move( int dir ) {
 		take_damage();
 	}
 	else if (ret == BOMB) {
-		if (this->kick_bomb == true && static_cast<Bomb*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->creator_id == this->id){
-			static_cast<Bomb*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->pushed = true;
-			static_cast<Bomb*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->pushed_dir = dir;
-			std::cout << "set pushed" << std::endl;
+		std::cout << "bomb detected kick =" << this->kick_bomb << " id= " << this->id << " bomb_id= " << static_cast<Bomb*>(main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)])->creator_id << std::endl;
+		if (this->kick_bomb == true && static_cast<Bomb*>(main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)])->creator_id == this->id){
+			static_cast<Bomb*>(main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)])->pushed = true;
+			static_cast<Bomb*>(main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)])->pushed_dir = dir;
 		}
 	}
 	if (frame >= 4)
