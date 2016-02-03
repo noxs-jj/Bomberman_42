@@ -18,6 +18,7 @@ public:
 	void	bomb_timer( void );
 	void	damage_entity(int x, int y );
 	void	add_bomb_nbr(int id);
+	void	add_bonus(int x, int y);
 private:
 	Bomb( void );
 };

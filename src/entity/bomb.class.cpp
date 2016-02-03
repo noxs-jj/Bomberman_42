@@ -27,6 +27,22 @@ void	Bomb::damage_entity(int x, int y ) {
 	}
 }
 
+void Bomb::add_bonus(int x, int y) {
+	int rd = rand() % 10;
+	int bonus = BONUS_POWER_UP;
+
+	if (rd < 4)
+		bonus = BONUS_POWER_UP;
+	else if (rd < 7)
+		bonus = BONUS_PLUS_ONE;
+	else if (rd < 9)
+		bonus = BONUS_CHANGE;
+	else
+		bonus = BONUS_KICK;
+
+	main_event->map[y][x] = main_event->create_bonus(BONUS, x, y, bonus);
+}
+
 int		Bomb::blast_case(int y, int x) {
 	if (main_event->map[y][x]->type == WALL) {
 		if (main_event->map[y][x]->status == WALL_HP_4)
@@ -38,7 +54,7 @@ int		Bomb::blast_case(int y, int x) {
 		else if (main_event->map[y][x]->status == WALL_HP_1) {
 			delete main_event->map[y][x];
 			if ((rand() % 20) > 8)
-				main_event->map[y][x] = main_event->create_bonus(BONUS, x, y, BONUS + 1 + (rand() % 4));
+				add_bonus(x, y);
 			else
 				main_event->map[y][x] = main_event->create_empty(x, y);
 			// main_event->map[y][x] = main_event->create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
