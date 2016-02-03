@@ -6,7 +6,7 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/03 18:00:33 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2016/02/03 18:58:58 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,10 @@ void		globject::init(float sizeX, float sizeY) {
 	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
 	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_B, 1);
 	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_C, 1);
-	globject("render/models/GameCube - Bomberman Generation - Bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
+	globject("render/bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
+	globject("render/bombs/AquaBomb/AquaBomb.obj", BOMB_WATER, 0.1);
+	globject("render/bombs/LightBomb/LightBomb.obj", BOMB_LIGHT, 0.1);
+	globject("render/bombs/WindBomb/WindBomb.obj", BOMB_WIND, 0.1);
 	globject("render/models/icosphere.obj", MAX_ENUM, 1);
 	globject("render/models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
 	globject("render/models/menu.obj", MENU, 1);

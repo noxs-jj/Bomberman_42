@@ -162,6 +162,7 @@ void	Entity::move( int dir ) {
 		if (this->kick_bomb == true && static_cast<Bomb*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->creator_id == this->id){
 			static_cast<Bomb*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->pushed = true;
 			static_cast<Bomb*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->pushed_dir = dir;
+			std::cout << "set pushed" << std::endl;
 		}
 	}
 	if (frame >= 4)

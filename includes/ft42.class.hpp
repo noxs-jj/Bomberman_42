@@ -6,7 +6,7 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/03 17:10:20 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2016/02/03 18:27:21 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,10 @@ enum STATUS {
 	////
 	WALL = 0,
 	BOMB,
+	BOMB_DEFAULT, // Megabomb
+	BOMB_WATER, // AquaBomb
+	BOMB_LIGHT, // LightBomb
+	BOMB_WIND, // WindBomb
 	FIRE,
 	PLAYER,
 	PLAYER1,

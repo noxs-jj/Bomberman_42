@@ -143,7 +143,7 @@ vt 0.176390 0.091740
 vt 0.175600 0.125490
 vt 0.225710 0.145510
 vt 0.169130 0.030820
-usemtl textureA.bmp
+usemtl bomb_megabomb_textureA.bmp
 s 1
 f 3/1 66/2 70/3
 f 3/1 70/3 69/4
@@ -169,7 +169,7 @@ f 67/15 74/10 19/13
 f 73/20 48/16 67/15
 f 67/15 71/8 74/10
 f 71/8 72/9 74/10
-usemtl textureB.bmp
+usemtl bomb_megabomb_textureB.bmp
 f 21/21 9/22 37/23
 f 49/24 69/25 13/25
 f 49/24 13/25 17/25
@@ -290,7 +290,7 @@ f 33/32 59/31 34/42
 f 30/28 1/41 31/33
 f 31/33 35/31 29/31
 f 35/31 2/31 29/31
-usemtl textureC.bmp
+usemtl bomb_megabomb_textureC.bmp
 f 77/46 80/47 82/48
 f 82/48 80/47 75/49
 f 81/49 80/47 86/48

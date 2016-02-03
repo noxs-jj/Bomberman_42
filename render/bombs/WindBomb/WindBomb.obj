@@ -145,7 +145,7 @@ vt 0.045040 0.823240
 vt 0.144650 0.823240
 vt 0.045040 0.930480
 vt 0.859250 0.971070
-usemtl texture.png
+usemtl bomb_windbomb_texture.bmp
 s 1
 f 10/1 1/2 11/3
 f 10/1 11/3 2/4

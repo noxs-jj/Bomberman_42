@@ -182,7 +182,7 @@ vt 0.345760 0.465760
 vt 0.290280 0.465760
 vt 0.331540 0.444030
 vt 0.381530 0.465760
-usemtl texture.png
+usemtl bomb_aquabomb_texture.bmp
 s 1
 f 1/1 2/2 56/3
 f 56/3 2/2 4/4

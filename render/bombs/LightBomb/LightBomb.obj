@@ -210,7 +210,7 @@ vt 0.227110 0.788330
 vt 0.104190 0.500980
 vt 0.149600 0.428410
 vt 0.314270 0.428410
-usemtl texture.png
+usemtl bomb_lightbomb_texture.bmp
 s 1
 f 42/1 1/2 48/3
 f 48/3 1/2 4/4

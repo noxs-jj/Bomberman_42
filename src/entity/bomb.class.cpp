@@ -127,6 +127,7 @@ void	Bomb::push_bomb() {
 	float	x = 0;//this->pos_x;
 	float	y = 0;//this->pos_y;
 	int		ret = EMPTY;
+	std::cout << "pushed" << std::endl;
 
 	if (this->pushed_dir == DIR_UP)
 		y += -0.08f;
