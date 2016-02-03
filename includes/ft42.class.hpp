@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft42.class.hpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/03 16:30:01 by jmoiroux         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef FT42_CLASS_HPP
 # define FT42_CLASS_HPP
@@ -38,9 +38,9 @@
 # ifdef linux
 #   include <GL/glew.h>
 #   include <SDL2/SDL.h>
-#		include <SDL2/SDL_image.h>
-#		include <SDL2/SDL_mixer.h>
-#		include <SDL2/SDL_ttf.h>
+#	include <SDL2/SDL_image.h>
+#	include <SDL2/SDL_mixer.h>
+#	include <SDL2/SDL_ttf.h>
 # endif
 # ifdef __APPLE__
 # 	include <OpenGL/gl3.h>
@@ -89,11 +89,15 @@ enum STATUS {
 	ENEMY2,
 	ENEMY3,
 	ENEMY4,
+	//
+	// BONUS
+	//
 	BONUS,
-	// BONUS_LIGHT,
-	// BONUS_PLUS,
-	// BONUS_KICK,
-	// BONUS_CHANGE,
+	BONUS_POWER_UP,
+	BONUS_PLUS_ONE,
+	BONUS_KICK,
+	BONUS_CHANGE,
+
 	EMPTY, //15
 
 	////

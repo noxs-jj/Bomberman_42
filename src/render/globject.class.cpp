@@ -6,7 +6,7 @@
 /*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/01 12:13:00 by jmoiroux         ###   ########.fr       */
+/*   Updated: 2016/02/03 16:31:44 by jmoiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void globject::load_bmp() {
 					0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
 			# endif
 			}
-			else if (_ID == PLAYER5) {
+			else if (_ID == PLAYER5 || _ID == BONUS_POWER_UP) {
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
 					0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
 			}
@@ -168,16 +168,14 @@ void		globject::init(float sizeX, float sizeY) {
 	globject("render/models/cube1.obj", WALL_HP_2, 1);
 	globject("render/models/cube2.obj", WALL_HP_3, 1);
 	globject("render/models/cube_floor.obj", FLOOR, 1);
-	// globject("render/Lighting/ltmThunder.obj", BONUS_LIGHT, 1);
+	globject("render/bonus_item/power_up/power_up.obj", BONUS_POWER_UP, 0.5); // BONUS_POWER_UP
 	// globject("render/quille/rock.obj", WALL_INDESTRUCTIBLE, 1);
-	// globject("render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
 	globject("render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
 	globject("render/models/Bomberman/Bomberman.obj", PLAYER, 0.03);
 	globject("render/models/Bomberman/Bomberman.obj", PLAYER1, 0.03);
 	globject("render/models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
 	globject("render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
 	globject("render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
-	//globject("render/models/Bomberman/Bomberman5.obj", PLAYER5, 0.03);
 	globject("render/models/Bomberman/BeautyBomber/BeautyWhopper.obj", PLAYER5, 0.04);
 	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
 	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
