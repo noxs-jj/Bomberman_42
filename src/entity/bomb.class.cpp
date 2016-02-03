@@ -123,7 +123,43 @@ void	Bomb::detonate( void ) {
 	main_event->soundrender->playSound("blast");
 }
 
+void	Bomb::push_bomb() {
+	float	x = 0;//this->pos_x;
+	float	y = 0;//this->pos_y;
+	int		ret = EMPTY;
+
+	if (this->pushed_dir == DIR_UP)
+		y += -0.08f;
+	else if (this->pushed_dir == DIR_BOTTOM)
+		y += 0.08f;
+	else if (this->pushed_dir == DIR_LEFT)
+		x += -0.08f;
+	else if (this->pushed_dir == DIR_RIGHT)
+		x += 0.08f;
+	ret = check_move(x * 3 + this->pos_x, y + this->pos_y);
+	if (ret == EMPTY) {
+		if ((int)this->pos_x != (int)(x + this->pos_x) || (int)this->pos_y != (int)(y + this->pos_y)) {
+			delete main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)];
+			main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)] = main_event->map[(int)this->pos_y][(int)this->pos_x];
+			// delete main_event->map[(int)this->pos_y][(int)this->pos_x];
+			main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
+			this->pos_x = x + this->pos_x;
+			this->pos_y = y + this->pos_y;
+			// delete main_event->map[(int)this->pos_y][(int)this->pos_x];
+			// main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
+		}
+		else {
+			this->pos_x = x + this->pos_x;
+			this->pos_y = y + this->pos_y;
+		}
+	}
+	else
+		this->pushed = false;
+}
+
 void	Bomb::bomb_timer( void ) {
+	if (this->pushed == true)
+		push_bomb();
 	if (this->timer - 1 > 0) {
 		if (this->timer % 9 == 0)
 			this->frame++;

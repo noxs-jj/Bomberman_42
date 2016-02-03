@@ -158,6 +158,12 @@ void	Entity::move( int dir ) {
 	else if (ret == FIRE) {
 		take_damage();
 	}
+	else if (ret == BOMB) {
+		if (this->kick_bomb == true && main_event->map[(int)this->pos_y][(int)this->pos_x]->id == this->id){
+			static_cast<Bomb*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->pushed = true;
+			static_cast<Bomb*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->pushed_dir = dir;
+		}
+	}
 	if (frame >= 4)
 		frame = 0;
 }

@@ -8,6 +8,8 @@ class Bomb : public Entity {
 public:
 	int		timer;
 	int		creator_id;
+	bool	pushed = false;
+	int		pushed_dir = 0;
 
 	Bomb( float x, float y, int status, int model, int id );
 	Bomb( Bomb const & src );
@@ -19,6 +21,7 @@ public:
 	void	damage_entity(int x, int y );
 	void	add_bomb_nbr(int id);
 	void	add_bonus(int x, int y);
+	void	push_bomb();
 private:
 	Bomb( void );
 };
