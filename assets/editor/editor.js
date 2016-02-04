@@ -1,12 +1,3 @@
-/**
- * Puisque bomberman est un projet C++ et pas Javascript,
- * on va pusher ça sur un fichier ZIP distant, le même
- * fichier que pour les ressources graphiques
- * avec les GLSL et les sons. Si ils sont particulierement
- * soignés ils peuvent etre comptés comme des bonus même si
- * c'est pas un projet "Photoshop"
- */
-
 "use strict";
 
 document.body.onload = function () {
@@ -32,7 +23,13 @@ document.body.onload = function () {
         { string_value: "4#1", color: "#069", description: "PLAYER1" },
         { string_value: "4#2", color: "#039", description: "PLAYER2" },
         { string_value: "4#3", color: "#096", description: "PLAYER3" },
-        { string_value: "4#4", color: "#0fa", description: "PLAYER4 "}
+        { string_value: "4#4", color: "#0fa", description: "PLAYER4" },
+        { string_value: "5#1", color: "#faa", description: "BONUS_POWER_UP" },
+        { string_value: "5#2", color: "#fbb", description: "BONUS_PLUS_ONE" },
+        { string_value: "5#3", color: "#fcc", description: "BONUS_KICK" },
+        { string_value: "5#4", color: "#fdd", description: "BONUS_CHANGE" },
+        { string_value: "5#5", color: "#fcb", description: "BONUS_REMOTE_BOMB" },
+        { string_value: "5#6", color: "#fbc", description: "BONUS_SPEED_UP" }
     ];
 
     var create2dArray = function (sizeX, sizeY) {
