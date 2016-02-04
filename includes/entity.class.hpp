@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   entity.class.hpp                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/04 17:41:39 by vjacquie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef ENTITY_CLASS_HPP
 # define ENTITY_CLASS_HPP
@@ -33,7 +33,7 @@ public:
   float	zoom_m;
 	int		bomb_nbr = 1;
 	bool	kick_bomb = false;
-	int		bomb_model = BOMB;
+	int		bomb_model = BOMB_DEFAULT;
 	static int		autoincrement;
 
 	Entity( int type, float x, float y, int status );

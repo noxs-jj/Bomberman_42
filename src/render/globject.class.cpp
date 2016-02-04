@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   globject.class.cpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/04 17:47:00 by vjacquie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <globject.class.hpp>
 #include <bomb.class.hpp>
@@ -72,7 +72,7 @@ void globject::load_bmp() {
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
 		if (((_ID >= BOSS_A && _ID <= BOSS_C) \
 			|| (_ID >= PLAYER && _ID <= PLAYER4) \
-			|| _ID == BOMB \
+			|| (_ID >= BOMB_DEFAULT && _ID <= BOMB_WIND) \
 			|| (_ID >= ENEMY && _ID <= ENEMY4) \
 			|| _ID == MENU \
 			|| (globject::space && _ID == MAX_ENUM))) {
@@ -188,7 +188,7 @@ void		globject::init(float sizeX, float sizeY) {
 	globject("assets/render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
 	globject("assets/render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_B, 1);
 	globject("assets/render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_C, 1);
-	globject("assets/render/bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
+	globject("assets/render/bombs/MegaBomb/MegaBomb.obj", BOMB_DEFAULT, 0.1);
 	globject("assets/render/bombs/AquaBomb/AquaBomb.obj", BOMB_WATER, 0.1);
 	globject("assets/render/bombs/LightBomb/LightBomb.obj", BOMB_LIGHT, 0.1);
 	globject("assets/render/bombs/WindBomb/WindBomb.obj", BOMB_WIND, 0.1);

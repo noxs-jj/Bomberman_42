@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ia.class.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/04 17:43:39 by vjacquie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <ia.class.hpp>
 
@@ -79,7 +79,7 @@ int    Ia::must_move_to( Entity *it ) {
   else {
     (*it).put_bomb (
       BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
-      BOMB, (*it).blast_radius,
+      (*it).bomb_model, (*it).blast_radius,
       (*it).id
     );
     return ((*it).dir);
@@ -120,7 +120,7 @@ bool    Ia::play_enemy(Enemy *it) {
       if (!(*it).friend_zone((*it).pos_x, (*it).pos_y)) {
         (*it).put_bomb (
           BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
-          BOMB, (*it).blast_radius,
+          (*it).bomb_model, (*it).blast_radius,
           (*it).id
         );
       }

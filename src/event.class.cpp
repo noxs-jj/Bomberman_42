@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 17:36:32 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 17:42:47 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -428,7 +428,7 @@ void	Event::player_bomb(int model) {
 			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
 				if ((*it)->bomb_nbr > 0) {
 					(*it)->bomb_nbr--;
-					(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius, (*it)->id);
+					(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, (*it)->bomb_model, (*it)->blast_radius, (*it)->id);
 				}
 				return ;
 			}
@@ -448,7 +448,7 @@ void	Event::ia_bomb(int id) {
 			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY) {
 				if ((*it)->bomb_nbr > 0) {
 					(*it)->bomb_nbr--;
-					(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB, (*it)->blast_radius, id);
+					(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, (*it)->bomb_model, (*it)->blast_radius, id);
 				}
 				return ;
 			}
