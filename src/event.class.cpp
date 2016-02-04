@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 17:42:47 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 18:35:14 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ void Event::cheat_stats( void ) {
 		if ((*it)->type == PLAYER) {
 				(*it)->bomb_nbr = 99;
 				(*it)->blast_radius = 100;
+				(*it)->remote = true;
+				(*it)->remote_nbr = 1;
 			}
 		it++;
 	}
@@ -413,6 +415,45 @@ void	Event::player_move(int model, int dir) {
 	while (it != end) {
 		if ((*it)->model == model)
 			(*it)->move(dir);
+		it++;
+	}
+}
+
+void Event::remote_detonate( int model ) {
+	if (this->game_pause == true)
+		return ;
+	std::list<Entity *>::iterator it = this->char_list.begin();
+	std::list<Entity *>::iterator end = this->char_list.end();
+
+	while (it != end) {
+		if ((*it)->model == model) {
+
+
+
+
+		}
+		it++;
+	}
+}
+
+void Event::remote_put( int model ) {
+	if (this->game_pause == true)
+		return ;
+	std::list<Entity *>::iterator it = this->char_list.begin();
+	std::list<Entity *>::iterator end = this->char_list.end();
+
+	while (it != end) {
+		if ((*it)->model == model) {
+			if ((*it)->remote == false)
+				return ;
+
+			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY && (*it)->remote_nbr > 0) {
+				(*it)->remote_nbr--;
+				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB_REMOTE, (*it)->blast_radius, (*it)->id);
+				(*it)->remote_lst.push_back(new remote_pos((int)(*it)->pos_x, (int)(*it)->pos_y));
+			}
+			return ;
+		}
 		it++;
 	}
 }

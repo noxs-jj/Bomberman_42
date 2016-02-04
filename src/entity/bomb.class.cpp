@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bomb.class.cpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/04 18:28:44 by vjacquie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <bomb.class.hpp>
 #include <fire.class.hpp>
@@ -40,13 +40,15 @@ void	Bomb::damage_entity(int x, int y ) {
 }
 
 void Bomb::add_bonus(int x, int y) {
-	int rd = rand() % 10;
+	int rd = rand() % 12;
 	int bonus = BONUS_POWER_UP;
 
 	if (rd == 9 || rd == 8)
 		bonus = BONUS_KICK;
 	else if (rd == 7 || rd == 6)
 		bonus = BONUS_CHANGE;
+	else if (rd == 5 || rd == 4)
+		bonus = BONUS_REMOTE_BOMB;
 	else if (rd % 2 == 0)
 		bonus = BONUS_POWER_UP;
 	else
@@ -101,7 +103,10 @@ void	Bomb::add_bomb_nbr(int id) {
 
 	while (it != end) {
 		if ((*it)->id == id) {
-				(*it)->bomb_nbr++;
+				if (this->model == BOMB_REMOTE)
+					(*it)->remote_nbr++;
+				else
+					(*it)->bomb_nbr++;
 				return ;
 			}
 		it++;
@@ -172,6 +177,8 @@ void	Bomb::push_bomb() {
 void	Bomb::bomb_timer( void ) {
 	if (this->pushed == true)
 		push_bomb();
+	if (this->model == BOMB_REMOTE)
+	 	return ;
 	if (this->timer - 1 > 0) {
 		if (this->timer % 9 == 0)
 			this->frame++;

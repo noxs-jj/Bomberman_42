@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 17:49:59 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 18:09:17 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,8 @@ void	Bonus::affect(Entity *ent) {
 		ent->kick_bomb = true;
 	else if (this->model == BONUS_CHANGE)
 		change_bomb(ent);
+	else if (this->model == BONUS_REMOTE_BOMB) {
+		ent->remote = true;
+		ent->remote_nbr++;
+	}
 }
