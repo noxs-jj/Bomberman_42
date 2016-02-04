@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   entity.class.cpp                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/04 14:00:39 by vjacquie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <entity.class.hpp>
 #include <main.hpp>
@@ -225,10 +225,14 @@ void	Entity::die( void ) {
 				main_event->char_list.erase(it); // delete this ?
 				main_event->to_die_entity = true;
 				it = main_event->char_list.begin();
+				end = main_event->char_list.end();
 			}
-			else if ((*it)->type == PLAYER)
+			else if ((*it)->type == PLAYER) {
 				main_event->draw_winner_multi = (*it)->model - PLAYER;
-			it++;
+				it++;
+			}
+			else
+				it++;
 		}
 		std::cout << "deb1.3 " << std::endl;
 		main_event->game_pause = true;

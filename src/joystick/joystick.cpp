@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 13:10:07 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 13:48:01 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ void Joystick::read_key(int mode) {
             main_event->menu->introstart = true;
             main_event->mode_menu = true;
           }
-          else if (main_event->draw_winner_multi != 0
-            || main_event->draw_winner_campaign != 0
-            || main_event->draw_lose_campaign != 0
-            || main_event->draw_end_campaign != 0) {
-              main_event->draw_winner_multi = 0;
-              main_event->draw_winner_campaign = 0;
-              main_event->draw_lose_campaign = 0;
-              main_event->draw_end_campaign = 0;
+          else if (main_event->draw_winner_multi >= 0
+            || main_event->draw_winner_campaign >= 0
+            || main_event->draw_lose_campaign >= 0
+            || main_event->draw_end_campaign >= 0) {
+              main_event->draw_winner_multi = -1;
+              main_event->draw_winner_campaign = -1;
+              main_event->draw_lose_campaign = -1;
+              main_event->draw_end_campaign = -1;
               main_event->mode_menu = false;
             }
             else
@@ -126,20 +126,28 @@ void Joystick::read_key(int mode) {
               main_event->menu->introstart = true;
               main_event->mode_menu = true;
             }
-            else if (main_event->draw_winner_multi != 0
-              || main_event->draw_winner_campaign != 0
-              || main_event->draw_lose_campaign != 0
-              || main_event->draw_end_campaign != 0) {
-                main_event->draw_winner_multi = 0;
-                main_event->draw_winner_campaign = 0;
-                main_event->draw_lose_campaign = 0;
-                main_event->draw_end_campaign = 0;
+            else if (main_event->draw_winner_multi >= 0
+              || main_event->draw_winner_campaign >= 0
+              || main_event->draw_lose_campaign >= 0
+              || main_event->draw_end_campaign >= 0) {
+                main_event->draw_winner_multi = -1;
+                main_event->draw_winner_campaign = -1;
+                main_event->draw_lose_campaign = -1;
+                main_event->draw_end_campaign = -1;
                 main_event->mode_menu = false;
               }
               else
                 main_event->menu->change_menu();
               break;
-            case 1:   main_event->menu->change_menu_back(); break;
+            case 1:   if (main_event->menu->menu_selected == BIG_MENU)
+												this->code++;
+											else
+												this->code = 0;
+											if (this->code >= 5) {
+												this->code = 0;
+
+											}
+											main_event->menu->change_menu_back(); break;
             case 2:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 3:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 4:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
