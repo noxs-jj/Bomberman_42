@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 14:09:46 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 17:26:00 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ void  Menu::menu_selection() {
   glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
   SDL_FillRect(this->ecran_menu, NULL, SDL_MapRGB(this->ecran_menu->format, 0, 0, 0) );
 
-	std::cout << "winer multi is " << main_event->draw_winner_multi << std::endl;
+	// std::cout << "winer multi is " << main_event->draw_winner_multi << std::endl;
   if (main_event->draw_winner_multi >= 0) { // Affichage du victorieu
     this->winner_multi();
   }

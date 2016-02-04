@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 15:12:19 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 17:30:01 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	Event::make_new_game( int new_level ) {
 		return ;
 	}
 	this->actual_level += new_level;
+	if (this->actual_level > 9)
+		this->actual_level = 1;
 	std::cout << "new wall level " << this->actual_level << std::endl;
 	if (this->multi > 0) {
 		std::cout << "this->multi > 0" << std::endl;

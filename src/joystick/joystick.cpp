@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 15:14:08 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 17:27:25 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,18 @@ void Joystick::read_key(int mode) {
             else if (main_event->game_playing == true)
             main_event->mode_menu = true;
             break;
-						case SDLK_1: 		if (main_event->menu->menu_selected == BIG_MENU) {
-														this->code = 1;
-														// next level
-														this->code = 0;
+						case SDLK_1: 		if (main_event->menu->menu_selected == BIG_MENU && main_event->game_playing == true
+															&& main_event->multi == 0 && main_event->arena == 0) {
+														main_event->draw_winner_multi = -1;
+													  main_event->draw_winner_campaign = -1;
+													  main_event->draw_lose_campaign = -1;
+													  main_event->draw_end_campaign = -1;
+														main_event->config[0] = PLAYER1;
+														if (main_event->coop > 0)
+													  	main_event->config[1] = PLAYER2;
+													  main_event->mode_menu = false;
+													  main_event->make_new_game(1);
+													  main_event->game_playing = true;
 													}
 													break;
 						case SDLK_2:	if (main_event->menu->menu_selected == BIG_MENU) {
