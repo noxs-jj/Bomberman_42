@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   event.class.cpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/04 13:45:50 by vjacquie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <event.class.hpp>
 #include <wall.class.hpp>
@@ -29,10 +29,10 @@ Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 	this->option_arcade = false;
 	this->option_resolution = RESOLUTION_NOT_SET;
 	this->game_pause = false;
-	this->draw_winner_multi = 0;
-	this->draw_winner_campaign = 0;
-	this->draw_lose_campaign = 0;
-	this->draw_end_campaign = 0;
+	this->draw_winner_multi = -1;
+	this->draw_winner_campaign = -1;
+	this->draw_lose_campaign = -1;
+	this->draw_end_campaign = -1;
 	srand(time(NULL));
 }
 

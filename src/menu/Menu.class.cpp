@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 13:21:48 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 14:09:46 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void	Menu::winner_multi() {
 	std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
-	print_surface(this->winner[main_event->draw_winner_multi], this->winner[main_event->draw_winner_multi], 400, 400, 0);
+	print_surface(this->winner[main_event->draw_winner_multi - 1], this->winner[main_event->draw_winner_multi - 1], 400, 400, 0);
 }
 
 void	Menu::winner_campaign() {
@@ -202,11 +202,11 @@ void  Menu::menu_selection() {
   glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
   SDL_FillRect(this->ecran_menu, NULL, SDL_MapRGB(this->ecran_menu->format, 0, 0, 0) );
 
-  if (main_event->draw_winner_multi != 0) { // Affichage du victorieu
+	std::cout << "winer multi is " << main_event->draw_winner_multi << std::endl;
+  if (main_event->draw_winner_multi >= 0) { // Affichage du victorieu
     this->winner_multi();
-    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
   }
-  else if (main_event->draw_winner_campaign != 0) { // Affichage du victorieu
+  else if (main_event->draw_winner_campaign >= 0) { // Affichage du victorieu
     this->winner_campaign();
 
     if (main_event->draw_winner_campaign == 1) {
@@ -216,11 +216,11 @@ void  Menu::menu_selection() {
 
     // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
   }
-  else if (main_event->draw_lose_campaign != 0) { // Affichage du victorieu
+  else if (main_event->draw_lose_campaign >= 0) { // Affichage du victorieu
     this->lose_campaign();
     // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
   }
-  else if (main_event->draw_end_campaign != 0) { // Affichage du victorieu
+  else if (main_event->draw_end_campaign >= 0) { // Affichage du victorieu
     this->end_campaign();
     // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
   }
