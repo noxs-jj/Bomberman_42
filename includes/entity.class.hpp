@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 17:41:39 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 18:24:55 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 # include <ft42.class.hpp>
 # include <event.class.hpp>
 // # include <wall.class.hpp>
-
+typedef std::tuple<int, int> remote_pos; // (x, y)
 
 class Entity : public ft42 {
 public:
+	std::list<remote_pos *>		remote_lst;
 	int		type;
 	int		id;
 	int		model;
@@ -34,6 +35,8 @@ public:
 	int		bomb_nbr = 1;
 	bool	kick_bomb = false;
 	int		bomb_model = BOMB_DEFAULT;
+	bool	remote = false;
+	int 	remote_nbr = 0;
 	static int		autoincrement;
 
 	Entity( int type, float x, float y, int status );

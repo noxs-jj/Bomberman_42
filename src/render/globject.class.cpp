@@ -192,6 +192,7 @@ void		globject::init(float sizeX, float sizeY) {
 	globject("assets/render/bombs/AquaBomb/AquaBomb.obj", BOMB_WATER, 0.1);
 	globject("assets/render/bombs/LightBomb/LightBomb.obj", BOMB_LIGHT, 0.1);
 	globject("assets/render/bombs/WindBomb/WindBomb.obj", BOMB_WIND, 0.1);
+	globject("assets/render/bombs/RemoteBomb/RemoteBomb.obj", BOMB_REMOTE, 0.1);
 	globject("assets/render/models/icosphere.obj", MAX_ENUM, 1);
 	globject("assets/render/models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
 	globject("assets/render/models/menu.obj", MENU, 1);
