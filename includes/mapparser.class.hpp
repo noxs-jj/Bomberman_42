@@ -35,7 +35,13 @@ static std::map<std::string, int> const g_mapcase = {
 	{"4#2", PLAYER2},
 	{"4#3", PLAYER3},
 	{"4#4", PLAYER4},
-	{"4#5", PLAYER5}
+	{"4#5", PLAYER5},
+	{"5#1", BONUS_POWER_UP},
+	{"5#2", BONUS_PLUS_ONE},
+	{"5#3", BONUS_KICK},
+	{"5#4", BONUS_CHANGE},
+	{"5#5", BONUS_REMOTE_BOMB},
+	{"5#6", BONUS_SPEED_UP},
 };
 
 class Entity;

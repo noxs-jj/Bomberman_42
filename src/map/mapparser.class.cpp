@@ -98,6 +98,12 @@ Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, floa
       case PLAYER3:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER3) );
       case PLAYER4:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER4) );
 	  case PLAYER5:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER5) );
+	  case BONUS_POWER_UP:        return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_POWER_UP) );
+	  case BONUS_PLUS_ONE:        return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_PLUS_ONE) );
+	  case BONUS_KICK:            return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_KICK) );
+	  case BONUS_CHANGE:          return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_CHANGE) );
+	  case BONUS_REMOTE_BOMB:     return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_REMOTE_BOMB) );
+	  case BONUS_SPEED_UP:        return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_SPEED_UP) );
       default:                    return static_cast<Entity*>( main_event->create_empty(x, y) );
     }
   }
