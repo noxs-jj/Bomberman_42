@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 18:35:14 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 19:45:56 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void Event::cheat_stats( void ) {
 				(*it)->bomb_nbr = 99;
 				(*it)->blast_radius = 100;
 				(*it)->remote = true;
-				(*it)->remote_nbr = 1;
+				(*it)->remote_nbr = 2;
 			}
 		it++;
 	}
@@ -427,10 +427,18 @@ void Event::remote_detonate( int model ) {
 
 	while (it != end) {
 		if ((*it)->model == model) {
+			if ((*it)->remote == false)
+				return ;
 
-
-
-
+			std::list<Entity *>::iterator it_lst = (*it)->remote_lst.begin();
+			std::list<Entity *>::iterator end_lst = (*it)->remote_lst.end();
+			while (it_lst != end_lst) {
+				if (this->map[(int)(*it_lst)->pos_y][(int)(*it_lst)->pos_x]->model == BOMB_REMOTE)
+					static_cast<Bomb*>(this->map[(int)(*it_lst)->pos_y][(int)(*it_lst)->pos_x])->detonate();
+				it_lst++;
+			}
+			(*it)->remote_lst.clear();
+			return ;
 		}
 		it++;
 	}
@@ -450,7 +458,8 @@ void Event::remote_put( int model ) {
 			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY && (*it)->remote_nbr > 0) {
 				(*it)->remote_nbr--;
 				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB_REMOTE, (*it)->blast_radius, (*it)->id);
-				(*it)->remote_lst.push_back(new remote_pos((int)(*it)->pos_x, (int)(*it)->pos_y));
+				// (*it)->remote_lst.push_back(this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]);
+				(*it)->remote_lst.push_back(create_bomb(BOMB_SEC_3, (int)(*it)->pos_x + 0.5, (int)(*it)->pos_y + 0.5, BOMB_REMOTE, (*it)->id));
 			}
 			return ;
 		}

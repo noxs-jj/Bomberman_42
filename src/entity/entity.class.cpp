@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 18:11:05 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 19:38:01 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ Entity::Entity( int type, float x, float y, int status ) : type(type), pos_x(x),
 															pos_y(y), status(status), zoom_m(1) {
 	Entity::autoincrement++;
 	this->id = Entity::autoincrement;
+	this->remote_lst.clear();
 }
 
 int		Entity::check_move( float x, float y ) {

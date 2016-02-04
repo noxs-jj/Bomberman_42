@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 18:28:44 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 19:33:22 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,28 @@ void	Bomb::add_bomb_nbr(int id) {
 	}
 }
 
+// void Bomb::suppr_remote_lst( void ) {
+// 	std::list<Entity *>::iterator it = main_event->char_list.begin();
+// 	std::list<Entity *>::iterator end = main_event->char_list.end();
+//
+// 	while (it != end) {
+// 		if ((*it)->id == this->creator_id) {
+// 			std::list<Entity *>::iterator itt = (*it)->remote_lst.begin();
+// 			std::list<Entity *>::iterator endd = (*it)->remote_lst.end();
+//
+// 			while (itt != endd) {
+// 				if ((*itt)->id == this->id) {
+// 					(*it)->remote_lst.erase(itt);
+// 					return ;
+// 				}
+// 				it++;
+// 			}
+// 			return ;
+// 		}
+// 		it++;
+// 	}
+// }
+
 void	Bomb::detonate( void ) {
 	int i = 0;
 	int dir[4] = {0};
@@ -138,6 +160,8 @@ void	Bomb::detonate( void ) {
 		i++;
 	}
 	main_event->soundrender->playSound("blast");
+	// if (this->model == BOMB_REMOTE)
+		// suppr_remote_lst();
 }
 
 void	Bomb::push_bomb() {
