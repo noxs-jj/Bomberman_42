@@ -2,13 +2,13 @@ sortie de programme:
 - penser a free tout les object de main_event, puis main_event
 - move:: utiliser la speed des entities
 
-BUG::
+BUG:
+	Logic::Menu
+		- Si on relance le jeux apres un pause et qu'on fait "resume game",
+		on a plus acces au menu, on est bloquer dans le jeux
 
 LOGIC:
-- bonus nombre de bombe + MODEL
-- bonus puissance bombre (distance) + MODEL
-- bonus kick coup de pied bomb sur ligne droite + MODEL
-- bonus change skin bombe + MODEL
+
 
 RENDER::
 - implementer WALL_HP_4
