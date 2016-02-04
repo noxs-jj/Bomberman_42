@@ -59,7 +59,7 @@ void 	Event::free_game( void ) {
 		y++;
 	}
 
-	while (this->char_list.size() > 0) {
+	while (this->char_list.empty() == false) {
 		this->char_list.pop_front();
 	}
 }
@@ -67,8 +67,10 @@ void 	Event::free_game( void ) {
 void	Event::make_new_game( int new_level ) {
 	char map_name[64] = {0};
 
-	if (this->game_playing == true)
+	if (this->game_playing == true) {
+		std::cout << "        this->game_playing == true FREE AOLD MAP DEBUGG" << std::endl;
 		this->free_game();
+	}
 		main_event->game_pause = false;
 		Entity::autoincrement = 0;
 	fill_border_map();
@@ -78,7 +80,7 @@ void	Event::make_new_game( int new_level ) {
 		std::cout << "this->multi > 0" << std::endl;
 		// gen_level_multi(this->actual_level, this->multi);
 		if (this->gen_level == false) {
-			sprintf(map_name, "src/map/multiplayer/multi_%d.ntm", main_event->multi);
+			sprintf(map_name, "assets/map/multiplayer/multi_%d.ntm", main_event->multi);
 			this->map = Mapparser::map_from_file(map_name);
 		}
 		else
@@ -88,7 +90,7 @@ void	Event::make_new_game( int new_level ) {
 		std::cout << "this->arena > 0" << std::endl;
 		// gen_level_multi(this->actual_level, this->multi);
 		if (this->gen_level == false) {
-			sprintf(map_name, "src/map/arena/arena_%d.ntm", main_event->arena);
+			sprintf(map_name, "assets/map/arena/arena_%d.ntm", main_event->arena);
 			this->map = Mapparser::map_from_file(map_name);
 		}
 		else
@@ -98,11 +100,11 @@ void	Event::make_new_game( int new_level ) {
 		std::cout << "this->multi > 0 else " << this->ac << std::endl;
 		// gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
 		if (this->gen_level == false && main_event->coop > 0) {
-			sprintf(map_name, "src/map/story/story_coop_%d.ntm", main_event->actual_level);
+			sprintf(map_name, "assets/map/story/story_coop_%d.ntm", main_event->actual_level);
 			this->map = Mapparser::map_from_file(map_name);
 		}
 		else if (this->gen_level == false && main_event->coop == 0) {
-			sprintf(map_name, "src/map/story/story_%d.ntm", main_event->actual_level);
+			sprintf(map_name, "assets/map/story/story_%d.ntm", main_event->actual_level);
 			this->map = Mapparser::map_from_file(map_name);
 		}
 		else {
@@ -488,17 +490,17 @@ void	Event::load_sounds(void) {
 	this->soundrender = new SoundRender();
 	if (this->soundrender != NULL) {
 		if (!(
-				   this->soundrender->loadSound("blast", "sound/blast.wav")
-				&& this->soundrender->loadSound("startup", "sound/ps1.wav")
-				&& this->soundrender->loadSound("die", "sound/megamandies.wav")
-				&& this->soundrender->loadSound("ready", "sound/readymegaman.wav")
-				&& this->soundrender->loadSound("menu2", "sound/megamenu2.wav")
-				&& this->soundrender->loadSound("menu1", "sound/menu1.wav")
-				&& this->soundrender->loadSound("finish", "sound/finish.wav")
+				   this->soundrender->loadSound("blast", "assets/sound/blast.wav")
+				&& this->soundrender->loadSound("startup", "assets/sound/ps1.wav")
+				&& this->soundrender->loadSound("die", "assets/sound/megamandies.wav")
+				&& this->soundrender->loadSound("ready", "assets/sound/readymegaman.wav")
+				&& this->soundrender->loadSound("menu2", "assets/sound/megamenu2.wav")
+				&& this->soundrender->loadSound("menu1", "assets/sound/menu1.wav")
+				&& this->soundrender->loadSound("finish", "assets/sound/finish.wav")
 				// music
-				&& this->soundrender->loadMusic("victory", "sound/victory_finalfantasy.wav")
-				&& this->soundrender->loadMusic("victory_multiplayer", "sound/victory.wav")
-				&& this->soundrender->loadMusic("music", "sound/bgm.wav")
+				&& this->soundrender->loadMusic("victory", "assets/sound/victory_finalfantasy.wav")
+				&& this->soundrender->loadMusic("victory_multiplayer", "assets/sound/victory.wav")
+				&& this->soundrender->loadMusic("music", "assets/sound/bgm.wav")
 			)) {
 			std::cout << "loadsound error" << std::endl;
 		}

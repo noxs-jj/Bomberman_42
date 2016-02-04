@@ -58,9 +58,9 @@ void globject::load_bmp() {
 	for (size_t i = 0; i < parser._textNum; i++)
 	{
 		name = "texture";
-		path ="render/textures/";
+		path ="assets/render/textures/";
 		if (globject::space)
-			path = "render/spacestextures/";
+			path = "assets/render/spacestextures/";
 		path += parser._texture[i];
 		std::cout << path.c_str() << std::endl;
 		SDL_Surface *imp = IMG_Load(path.c_str());
@@ -164,37 +164,37 @@ void		globject::init(float sizeX, float sizeY) {
 	globject::load_shaders();
 
 	/* load Models */
-	globject("render/models/cube.obj", WALL_HP_1, 1);
-	globject("render/models/cube1.obj", WALL_HP_2, 1);
-	globject("render/models/cube2.obj", WALL_HP_3, 1);
-	globject("render/models/cube_floor.obj", FLOOR, 1);
-	globject("render/bonus_item/bomb_fire_up.obj", BONUS_POWER_UP, 1); // BONUS_POWER_UP
-	globject("render/bonus_item/bomb_plus_one.obj", BONUS_PLUS_ONE, 1); // BONUS_PLUS_ONE
-	globject("render/bonus_item/bomb_kick.obj", BONUS_KICK, 1); // BONUS_KICK
-	globject("render/bonus_item/bomb_change.obj", BONUS_CHANGE, 1); // BONUS_CHANGE
-	globject("render/bonus_item/bomb_remote.obj", BONUS_REMOTE_BOMB, 1); // BONUS_REMOTE_BOMB
-	globject("render/bonus_item/move_speed_up.obj", BONUS_SPEED_UP, 1); // BONUS_SPEED_UP
-	globject("render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
-	globject("render/models/Bomberman/Bomberman.obj", PLAYER, 0.03);
-	globject("render/models/Bomberman/Bomberman.obj", PLAYER1, 0.03);
-	globject("render/models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
-	globject("render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
-	globject("render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
-	globject("render/models/Bomberman/BeautyBomber/BeautyWhopper.obj", PLAYER5, 0.04);
-	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
-	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
-	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
-	globject("render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY4, 0.3);
-	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
-	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_B, 1);
-	globject("render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_C, 1);
-	globject("render/bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
-	globject("render/bombs/AquaBomb/AquaBomb.obj", BOMB_WATER, 0.1);
-	globject("render/bombs/LightBomb/LightBomb.obj", BOMB_LIGHT, 0.1);
-	globject("render/bombs/WindBomb/WindBomb.obj", BOMB_WIND, 0.1);
-	globject("render/models/icosphere.obj", MAX_ENUM, 1);
-	globject("render/models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
-	globject("render/models/menu.obj", MENU, 1);
+	globject("assets/render/models/cube.obj", WALL_HP_1, 1);
+	globject("assets/render/models/cube1.obj", WALL_HP_2, 1);
+	globject("assets/render/models/cube2.obj", WALL_HP_3, 1);
+	globject("assets/render/models/cube_floor.obj", FLOOR, 1);
+	globject("assets/render/bonus_item/bomb_fire_up.obj", BONUS_POWER_UP, 1); // BONUS_POWER_UP
+	globject("assets/render/bonus_item/bomb_plus_one.obj", BONUS_PLUS_ONE, 1); // BONUS_PLUS_ONE
+	globject("assets/render/bonus_item/bomb_kick.obj", BONUS_KICK, 1); // BONUS_KICK
+	globject("assets/render/bonus_item/bomb_change.obj", BONUS_CHANGE, 1); // BONUS_CHANGE
+	globject("assets/render/bonus_item/bomb_remote.obj", BONUS_REMOTE_BOMB, 1); // BONUS_REMOTE_BOMB
+	globject("assets/render/bonus_item/move_speed_up.obj", BONUS_SPEED_UP, 1); // BONUS_SPEED_UP
+	globject("assets/render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
+	globject("assets/render/models/Bomberman/Bomberman.obj", PLAYER, 0.03);
+	globject("assets/render/models/Bomberman/Bomberman.obj", PLAYER1, 0.03);
+	globject("assets/render/models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
+	globject("assets/render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
+	globject("assets/render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
+	globject("assets/render/models/Bomberman/BeautyBomber/BeautyWhopper.obj", PLAYER5, 0.04);
+	globject("assets/render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
+	globject("assets/render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
+	globject("assets/render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
+	globject("assets/render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY4, 0.3);
+	globject("assets/render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
+	globject("assets/render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_B, 1);
+	globject("assets/render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_C, 1);
+	globject("assets/render/bombs/MegaBomb/MegaBomb.obj", BOMB, 0.1);
+	globject("assets/render/bombs/AquaBomb/AquaBomb.obj", BOMB_WATER, 0.1);
+	globject("assets/render/bombs/LightBomb/LightBomb.obj", BOMB_LIGHT, 0.1);
+	globject("assets/render/bombs/WindBomb/WindBomb.obj", BOMB_WIND, 0.1);
+	globject("assets/render/models/icosphere.obj", MAX_ENUM, 1);
+	globject("assets/render/models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
+	globject("assets/render/models/menu.obj", MENU, 1);
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
@@ -531,8 +531,8 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader) {
 }
 
 void		globject::load_shaders() {
-	char	a[] = "render/shaders/frag.shader";
-	char	b[] = "render/shaders/vertex.shader";
+	char	a[] = "assets/render/shaders/frag.shader";
+	char	b[] = "assets/render/shaders/vertex.shader";
 
 	glUseProgram(loadshaders(a, b));
 }
