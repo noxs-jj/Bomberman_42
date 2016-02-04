@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/03 17:04:29 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 17:35:03 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ public:
 	Boss *		create_boss(int status, float x, float y, int name, int model);
 	Entity *	create_empty(int x, int y);
 
+	void		cheat_stats( void );
 	void		load_sounds(void); //loads all sounds
 	void		player_move(int model, int dir);
 	void		player_bomb(int model);

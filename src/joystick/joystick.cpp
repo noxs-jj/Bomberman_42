@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 17:27:25 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 17:34:12 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void Joystick::read_key(int mode) {
 													  main_event->game_playing = true;
 													}
 													break;
-						case SDLK_2:	if (main_event->menu->menu_selected == BIG_MENU) {
+						case SDLK_2:	if (main_event->menu->menu_selected == BIG_MENU && main_event->game_playing == false) {
 														this->test = 1;
 														main_event->make_new_game(0);
 														main_event->mode_menu = false;
@@ -130,6 +130,10 @@ void Joystick::read_key(int mode) {
 														main_event->config[0] = PLAYER1;
 
 														this->test = 0;
+													}
+													break;
+						case SDLK_3:	if (main_event->menu->menu_selected == BIG_MENU && main_event->game_playing == true) {
+														main_event->cheat_stats();
 													}
 													break;
             case SDLK_c:        std::cout << "SDL_NumJoysticks(void) " << SDL_NumJoysticks() << std::endl;

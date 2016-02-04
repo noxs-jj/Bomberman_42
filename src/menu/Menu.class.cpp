@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 17:26:00 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 17:37:57 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@
 #include <joystick.hpp>
 
 void	Menu::winner_multi() {
-	std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
+	// std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
 	print_surface(this->winner[main_event->draw_winner_multi - 1], this->winner[main_event->draw_winner_multi - 1], 400, 400, 0);
 }
 
 void	Menu::winner_campaign() {
-	std::cout << "main_event->winner_campaign " << main_event->draw_winner_campaign << std::endl;
+	// std::cout << "main_event->winner_campaign " << main_event->draw_winner_campaign << std::endl;
 	print_surface(this->winner_campaign_txt, this->winner_campaign_txt, 400, 400, 0);
 }
 
 void	Menu::lose_campaign() {
-	std::cout << "main_event->lose_campaign " << main_event->draw_lose_campaign << std::endl;
+	// std::cout << "main_event->lose_campaign " << main_event->draw_lose_campaign << std::endl;
 	print_surface(this->lose_campaign_txt, this->lose_campaign_txt, 400, 400, 0);
 }
 
 void	Menu::end_campaign() {
-	std::cout << "main_event->end_campaign " << main_event->draw_end_campaign << std::endl;
+	// std::cout << "main_event->end_campaign " << main_event->draw_end_campaign << std::endl;
 	print_surface(this->winner_game_txt, this->winner_game_txt, 400, 400, 0);
 }
 

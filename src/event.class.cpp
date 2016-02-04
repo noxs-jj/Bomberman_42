@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 17:30:01 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 17:36:32 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,20 @@ void	Event::make_new_game( int new_level ) {
 	}
 		// main_event->print_map(); // DEBUGG
 }
+
+void Event::cheat_stats( void ) {
+	std::list<Entity *>::iterator it = main_event->char_list.begin();
+	std::list<Entity *>::iterator end = main_event->char_list.end();
+
+	while (it != end) {
+		if ((*it)->type == PLAYER) {
+				(*it)->bomb_nbr = 99;
+				(*it)->blast_radius = 100;
+			}
+		it++;
+	}
+}
+
 
 void	Event::parse_command(int ac, char **av) {
 	int	i = 0;
