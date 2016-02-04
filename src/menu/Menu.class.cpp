@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Menu.class.cpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/04 13:21:48 by vjacquie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <Menu.class.hpp>
 #include <globject.class.hpp>
@@ -311,6 +311,17 @@ void  Menu::move_menu_ver(int dir) {
   }
 }
 
+void  Menu::change_menu_back() {
+	if (this->menu_selected == CAMPAIGN || this->menu_selected == ARENA
+		|| this->menu_selected == MULTIPLAYER || this->menu_selected == CONFIG){
+			this->menu_selected = BIG_MENU;
+			if (main_event->game_playing == true)
+				this->detail_menu_selected = RESUME_GAME;
+			else
+				this->detail_menu_selected = MENU_CAMPAIGN;
+		}
+}
+
 void  Menu::change_menu() {
   std::cout << this->menu_selected << " vs " << RESUME_GAME << std::endl;
   main_event->soundrender->playSound("menu2");
@@ -323,7 +334,7 @@ void  Menu::change_menu() {
     this->menu_selected = CAMPAIGN;
   }
   else if (main_event->game_playing == true && this->detail_menu_selected == RESUME_GAME) {
-    main_event->game_playing = false;
+    // main_event->game_playing = false;
     main_event->mode_menu = false;
   }
   else if (this->detail_menu_selected == MENU_CONFIG) {
