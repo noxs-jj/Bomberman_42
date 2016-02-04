@@ -168,11 +168,12 @@ void		globject::init(float sizeX, float sizeY) {
 	globject("render/models/cube1.obj", WALL_HP_2, 1);
 	globject("render/models/cube2.obj", WALL_HP_3, 1);
 	globject("render/models/cube_floor.obj", FLOOR, 1);
-	globject("render/bonus_item/power_up/power_up.obj", BONUS_POWER_UP, 0.8); // BONUS_POWER_UP
-	globject("render/bonus_item/power_up/bomb_plus_one.obj", BONUS_PLUS_ONE, 0.8); // BONUS_PLUS_ONE
-	globject("render/bonus_item/power_up/bomb_kick.obj", BONUS_KICK, 0.8); // BONUS_KICK
-	globject("render/bonus_item/power_up/bomb_change.obj", BONUS_CHANGE, 0.8); // BONUS_CHANGE
-	// globject("render/quille/rock.obj", WALL_INDESTRUCTIBLE, 1);
+	globject("render/bonus_item/bomb_fire_up.obj", BONUS_POWER_UP, 1); // BONUS_POWER_UP
+	globject("render/bonus_item/bomb_plus_one.obj", BONUS_PLUS_ONE, 1); // BONUS_PLUS_ONE
+	globject("render/bonus_item/bomb_kick.obj", BONUS_KICK, 1); // BONUS_KICK
+	globject("render/bonus_item/bomb_change.obj", BONUS_CHANGE, 1); // BONUS_CHANGE
+	globject("render/bonus_item/bomb_remote.obj", BONUS_REMOTE_BOMB, 1); // BONUS_REMOTE_BOMB
+	globject("render/bonus_item/move_speed_up.obj", BONUS_SPEED_UP, 1); // BONUS_SPEED_UP
 	globject("render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
 	globject("render/models/Bomberman/Bomberman.obj", PLAYER, 0.03);
 	globject("render/models/Bomberman/Bomberman.obj", PLAYER1, 0.03);
@@ -197,10 +198,6 @@ void		globject::init(float sizeX, float sizeY) {
 	//std::cout << "teoswag"  << std::endl;
 	/* Load Uniform Variable */
 
-	// BONUS_LIGHT,
-	// BONUS_PLUS,
-	// BONUS_KICK,
-	// BONUS_CHANGE,
 	glProgramUniformMatrix4fv(_progid, \
 		glGetUniformLocation(_progid, "P"), 1, GL_FALSE, \
 		(GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, sizeX / sizeY)._matrix));
