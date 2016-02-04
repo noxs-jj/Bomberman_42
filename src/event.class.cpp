@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 13:45:50 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 15:12:19 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ void	Event::make_new_game( int new_level ) {
 		main_event->game_pause = false;
 		Entity::autoincrement = 0;
 	fill_border_map();
+	if (this->joystick->test == 1) {
+		sprintf(map_name, "assets/map/test/test1.ntm");
+		this->map = Mapparser::map_from_file(map_name);
+		return ;
+	}
 	this->actual_level += new_level;
 	std::cout << "new wall level " << this->actual_level << std::endl;
 	if (this->multi > 0) {

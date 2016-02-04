@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 13:25:45 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/04 14:22:46 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ class Joystick : public ft42 {
 public:
 	int				timer;
 	int				code = 0;
+	int				test = 0;
 	SDL_Joystick *	manette1;
 	SDL_Joystick *	manette2;
 
