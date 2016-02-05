@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 13:11:59 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/05 13:23:46 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ enum MENU_SELECTED {
 	MENU_MULTI_4P,
 	MENU_MULTI_5P,
 	MENU_MULTI_RETURN,
-	MENU_CONFIG_NAME,
-	MENU_CONFIG_NAMEA,
-	MENU_CONFIG_NAMEB,
+	MENU_CONFIG_PLAYER1,
+	MENU_CONFIG_PLAYER2,
+	MENU_CONFIG_PLAYER3,
+	MENU_CONFIG_PLAYER4,
+	MENU_CONFIG_PLAYER5,
 	MENU_CONFIG_RETURN,
 	MENU_EXIT_CONFIRM,
 	MENU_EXIT_RETURN
@@ -107,10 +109,22 @@ public:
   SDL_Surface *   str_exit;
   SDL_Surface *   str_exit_selected;
   SDL_Surface *   str_exit_confirm;
-  SDL_Surface *   str_exit_confirm_selected;
+	SDL_Surface *   str_exit_confirm_selected;
+	SDL_Surface *   str_player_controller_selected;
+	SDL_Surface *   str_player_keyboard_selected;
+	SDL_Surface *   str_config_1;
+	SDL_Surface *   str_config_2;
+	SDL_Surface *   str_config_3;
+	SDL_Surface *   str_config_4;
+	SDL_Surface *   str_config_5;
+	SDL_Surface *   str_config_1_selected;
+	SDL_Surface *   str_config_2_selected;
+	SDL_Surface *   str_config_3_selected;
+	SDL_Surface *   str_config_4_selected;
+	SDL_Surface *   str_config_5_selected;
   SDL_Surface *   lose_campaign_txt;
   SDL_Surface *   winner_campaign_txt;
-  SDL_Surface *   winner_game_txt;
+	SDL_Surface *   winner_game_txt;
   SDL_Surface **  winner;
 
 
@@ -138,6 +152,7 @@ public:
   void            winner_campaign();
   void            lose_campaign();
   void            end_campaign();
+	void 						move_menu_hor();
 
 private:
   Menu( void );

@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 18:45:13 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/05 13:23:52 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include <Menu.class.hpp>
 
 Joystick::Joystick(void) {
+	this->config[0] = 1;
+	this->config[1] = 1;
+	this->config[2] = 0;
+	this->config[3] = 0;
+	this->config[4] = 0;
 	int	devices = SDL_NumJoysticks();
 
 	SDL_JoystickEventState(SDL_ENABLE);
@@ -33,9 +38,60 @@ Joystick::Joystick(void) {
 		}
 	}
 }
+
 Joystick::~Joystick(void) {}
 // Joystick::Joystick( Joystick const & src ) {}
 // Joystick::Joystick & operator=( Joystick const & rhs ) {}
+
+void	Joystick::save_config( void ) {
+	FILE *stream;
+	char buf[128] = {0};
+
+	if ((stream = fopen(CONFIG_FILE, "w")) == NULL)
+		return ;
+	sprintf(buf, "%d,%d,%d,%d,%d", this->config[0], this->config[1], this->config[2], this->config[3], this->config[4]);
+	fputs(buf, stream);
+	fclose(stream);
+}
+
+void	Joystick::save_default_config( void ) {
+	FILE *stream;
+
+	if ((stream = fopen(CONFIG_FILE, "w")) == NULL)
+		return ;
+
+	fputs("0,0,1,1,1", stream);
+	fclose(stream);
+	this->config[0] = 1;
+	this->config[1] = 1;
+	this->config[2] = 0;
+	this->config[3] = 0;
+	this->config[4] = 0;
+}
+
+void Joystick::load_config( void ) {
+	FILE *stream;
+	char buff[128] = {0};
+
+	if ((stream = fopen(CONFIG_FILE, "r")) == NULL) {
+		save_default_config();
+		return ;
+	}
+	if ( fgets (buff , 128 , stream) == NULL ) {
+		fclose(stream);
+		save_default_config();
+		return ;
+	}
+
+	if (strlen(buff) < 9)
+		return ;
+	this->config[0] = buff[0] - '0';
+	this->config[1] = buff[2] - '0';
+	this->config[2] = buff[4] - '0';
+	this->config[3] = buff[6] - '0';
+	this->config[4] = buff[8] - '0';
+	fclose(stream);
+}
 
 void Joystick::read_key(int mode) {
 	SDL_Event			event;
@@ -84,8 +140,8 @@ void Joystick::read_key(int mode) {
 
           case SDLK_DOWN:     main_event->menu->move_menu_ver(1); break;
           case SDLK_UP:       main_event->menu->move_menu_ver(-1); break;
-          case SDLK_RIGHT:    std::cout << "hey" << std::endl; break;
-          case SDLK_LEFT:     std::cout << "hey" << std::endl; break;
+					case SDLK_RIGHT:    main_event->menu->move_menu_hor(); break;
+          case SDLK_LEFT:    main_event->menu->move_menu_hor(); break;
           case SDLK_RETURN:   if (false == main_event->menu->introstart) {
             main_event->menu->introstart = true;
             main_event->mode_menu = true;
