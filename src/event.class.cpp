@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 19:45:56 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/05 14:13:13 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void Event::cheat_stats( void ) {
 				(*it)->bomb_nbr = 99;
 				(*it)->blast_radius = 100;
 				(*it)->remote = true;
-				(*it)->remote_nbr = 2;
+				(*it)->remote_nbr = 30;
 			}
 		it++;
 	}

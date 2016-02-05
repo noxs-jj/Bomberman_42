@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 18:21:08 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/05 14:22:29 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ public:
 	int						multi; // 0 == non activer, 2 player, 3, 4, 5
 	int						arena; // 0 == non activer, 2 player, 3, 4, 5
 	bool					new_game; // false == continue (load fichier sauvegarde)
-	int 					config[5]; // config[1](3)  == (joueur 2, config 3)
+	int 					config[5]; // config[1](3)  == (joueur 2, config 3) (controller)
+	int 					config_keyboard[5]; // config[1](3)  == (joueur 2, config 3)
 	bool					general_sound; // activer son general du jeux
 	bool					music; // activer musique de fond
 	bool					mode_menu; // si en menu ou pas

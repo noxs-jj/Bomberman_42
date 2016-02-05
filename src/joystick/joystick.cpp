@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/05 13:23:52 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/05 14:23:02 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	Joystick::save_config( void ) {
 	sprintf(buf, "%d,%d,%d,%d,%d", this->config[0], this->config[1], this->config[2], this->config[3], this->config[4]);
 	fputs(buf, stream);
 	fclose(stream);
+	set_key_config();
 }
 
 void	Joystick::save_default_config( void ) {
@@ -91,6 +92,66 @@ void Joystick::load_config( void ) {
 	this->config[3] = buff[6] - '0';
 	this->config[4] = buff[8] - '0';
 	fclose(stream);
+	set_key();
+}
+
+void Joystick::set_key() {
+	static t_key		key = {0, 0, 0, 0};
+	static t_key		key2 = {0, 0, 0, 0}; // key for p2 (keyboard)
+	static t_key		key3 = {0, 0, 0, 0};
+	static t_key		key4 = {0, 0, 0, 0};
+	static t_key		key5 = {0, 0, 0, 0};
+
+
+	static t_key		ckey = {0, 0, 0, 0};
+	static t_key		ckey2 = {0, 0, 0, 0}; // key for p2 (controller)
+	static t_key		ckey3 = {0, 0, 0, 0};
+	static t_key		ckey4 = {0, 0, 0, 0};
+	static t_key		ckey5 = {0, 0, 0, 0};
+
+	this->arr_key_keyboard[0] = &key;
+	this->arr_key_keyboard[1] = &key2;
+	this->arr_key_keyboard[2] = &key3;
+	this->arr_key_keyboard[3] = &key4;
+	this->arr_key_keyboard[4] = &key5;
+
+	this->arr_key_controller[0] = &ckey;
+	this->arr_key_controller[1] = &ckey2;
+	this->arr_key_controller[2] = &ckey3;
+	this->arr_key_controller[3] = &ckey4;
+	this->arr_key_controller[4] = &ckey5;
+	set_key_config();
+}
+
+void Joystick::set_key_config() {
+	int i = 0;
+	int nbr = 0;
+
+	if (this->config[0] == 0) {
+		main_event->config[nbr] = PLAYER1 + i;
+		nbr++;
+	}
+	i++;
+	if (this->config[1] == 0) {
+		main_event->config[nbr] = PLAYER1 + i;
+		nbr++;
+	}
+	i++;
+	if (this->config[2] == 0) {
+		main_event->config[nbr] = PLAYER1 + i;
+		nbr++;
+	}
+	i++;
+	if (this->config[3] == 0) {
+		main_event->config[nbr] = PLAYER1 + i;
+		nbr++;
+	}
+	i++;
+	if (this->config[4] == 0) {
+		main_event->config[nbr] = PLAYER1 + i;
+		nbr++;
+	}
+	std::cout << "set_key_config " << this->config[2] << " " << main_event->config[0] << " " << PLAYER1 << std::endl;
 }
 
 void Joystick::read_key(int mode) {
@@ -99,17 +160,10 @@ void Joystick::read_key(int mode) {
   // static float time = 0;
   // int _time = 0;
 	static t_key		key = {0, 0, 0, 0};
-	static t_key		key2 = {0, 0, 0, 0}; // key for p2
+	static t_key		key2 = {0, 0, 0, 0}; // key for p2 (keyboard)
 	static t_key		key3 = {0, 0, 0, 0};
 	static t_key		key4 = {0, 0, 0, 0};
-	static t_key		key5 = {0, 0, 0, 0};
-	t_key *				arr_key[5];
 
-	arr_key[0] = &key;
-	arr_key[1] = &key2;
-	arr_key[2] = &key3;
-	arr_key[3] = &key4;
-	arr_key[4] = &key5;
 
   // std::list<Entity *>::iterator it = main_event->char_list.begin();
 	// std::list<Entity *>::iterator end = main_event->char_list.end();
@@ -170,9 +224,9 @@ void Joystick::read_key(int mode) {
 													  main_event->draw_winner_campaign = -1;
 													  main_event->draw_lose_campaign = -1;
 													  main_event->draw_end_campaign = -1;
-														main_event->config[0] = PLAYER1;
-														if (main_event->coop > 0)
-													  	main_event->config[1] = PLAYER2;
+														// main_event->config[0] = PLAYER1;
+														// if (main_event->coop > 0)
+													  	// main_event->config[1] = PLAYER2;
 													  main_event->mode_menu = false;
 													  main_event->make_new_game(1);
 													  main_event->game_playing = true;
@@ -183,7 +237,7 @@ void Joystick::read_key(int mode) {
 														main_event->make_new_game(0);
 														main_event->mode_menu = false;
 														main_event->game_playing = true;
-														main_event->config[0] = PLAYER1;
+														// main_event->config[0] = PLAYER1;
 
 														this->test = 0;
 													}
@@ -247,9 +301,9 @@ void Joystick::read_key(int mode) {
           {
             switch (event.jhat.value) {
               case SDL_HAT_UP:        main_event->menu->move_menu_ver(-1); break;
-              case SDL_HAT_LEFT:      fprintf(stdout, "joystick[%d] LEFT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+              case SDL_HAT_LEFT:      main_event->menu->move_menu_hor(); break;
               case SDL_HAT_DOWN:      main_event->menu->move_menu_ver(1); break;
-              case SDL_HAT_RIGHT:     fprintf(stdout, "joystick[%d] RIGHT state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+              case SDL_HAT_RIGHT:     main_event->menu->move_menu_hor(); break;
               case SDL_HAT_CENTERED:  fprintf(stdout, "joystick[%d] CENTERED state[%d]\n", event.jbutton.which, event.jhat.hat); break;
               default:                break;
             }
@@ -294,7 +348,7 @@ void Joystick::read_key(int mode) {
             // JOYSTICK BUTTON
             else if (event.type == SDL_JOYBUTTONDOWN) {
               switch (event.cbutton.button) {
-                case 0:   main_event->player_bomb(main_event->config[event.jbutton.which]); break;
+                case 0:   std::cout << "before bomb " << event.jbutton.which << " " << main_event->config[0] << std::endl; main_event->player_bomb(main_event->config[event.jbutton.which]); break;
                 case 1:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 2:   main_event->remote_put(main_event->config[event.jbutton.which]); break;
                 case 3:   main_event->remote_detonate(main_event->config[event.jbutton.which]); break;
@@ -317,11 +371,11 @@ void Joystick::read_key(int mode) {
             // JOYSTICK CROIX DIRECTIONNEL
             else if (event.type == SDL_JOYHATMOTION) {
                 switch (event.jhat.value) {
-                  case SDL_HAT_UP:        change_dir_joystick(arr_key[event.jbutton.which], DIR_UP); break;
-                  case SDL_HAT_LEFT:      change_dir_joystick(arr_key[event.jbutton.which], DIR_LEFT); break;
-                  case SDL_HAT_DOWN:      change_dir_joystick(arr_key[event.jbutton.which], DIR_BOTTOM); break;
-                  case SDL_HAT_RIGHT:     change_dir_joystick(arr_key[event.jbutton.which], DIR_RIGHT); break;
-                  case SDL_HAT_CENTERED:  change_dir_joystick(arr_key[event.jbutton.which], -1); break;
+                  case SDL_HAT_UP:        change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_UP); break;
+                  case SDL_HAT_LEFT:      change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_LEFT); break;
+                  case SDL_HAT_DOWN:      change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_BOTTOM); break;
+                  case SDL_HAT_RIGHT:     change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_RIGHT); break;
+                  case SDL_HAT_CENTERED:  change_dir_joystick(this->arr_key_controller[event.jbutton.which], -1); break;
                   default:                break;
                 }
             }
@@ -386,6 +440,7 @@ void Joystick::read_key(int mode) {
   }
 
 void Joystick::change_dir_joystick(t_key *key, int dir) {
+	std::cout << "test" << std::endl;
   key->key_up = 0;
   key->key_down = 0;
   key->key_left = 0;
@@ -398,4 +453,5 @@ void Joystick::change_dir_joystick(t_key *key, int dir) {
     key->key_left = 1;
   if (dir == DIR_RIGHT)
     key->key_right = 1;
+		std::cout << "test end" << std::endl;
 }
