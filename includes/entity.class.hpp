@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 19:03:46 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/06 14:28:18 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ public:
 	bool position_is_player( float x, float y );
 	bool friend_zone( float x, float y );
 	int		count_entity(int type);
+	void 	destroy_bomb_list();
 };
 
 #endif

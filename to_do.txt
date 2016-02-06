@@ -3,9 +3,6 @@ sortie de programme:
 - move:: utiliser la speed des entities
 
 BUG:
-	Logic::Menu
-		- Si on relance le jeux apres un pause et qu'on fait "resume game",
-		on a plus acces au menu, on est bloquer dans le jeux
 		detonate remote quand player die
 		segv quand toute les ia + player meurt via les remote (faute a l'ia ?)
 

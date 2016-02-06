@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/06 14:01:15 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/06 15:18:29 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void Event::cheat_stats( void ) {
 				(*it)->bomb_nbr = 99;
 				(*it)->blast_radius = 100;
 				(*it)->remote = true;
-				(*it)->remote_nbr = 30;
+				(*it)->remote_nbr = 99;
 				(*it)->kick_bomb = true;
 			}
 		it++;
@@ -435,9 +435,15 @@ void Event::remote_detonate( int model ) {
 			std::list<Entity *>::iterator end_lst = (*it)->remote_lst.end();
 
 			while (it_lst != end_lst) {
-				if (this->map[(int)(*it_lst)->pos_y][(int)(*it_lst)->pos_x]->model == BOMB_REMOTE)
+				if (this->map[(int)(*it_lst)->pos_y][(int)(*it_lst)->pos_x]->model == BOMB_REMOTE) {
 					static_cast<Bomb*>(this->map[(int)(*it_lst)->pos_y][(int)(*it_lst)->pos_x])->detonate();
-				it_lst++;
+					it_lst = (*it)->remote_lst.begin();
+					end_lst = (*it)->remote_lst.end();
+				}
+				else
+					it_lst++;
+				if ((*it)->remote_lst.empty() || (*it)->remote_lst.size() <= 0)
+					return ;
 			}
 			(*it)->remote_lst.clear();
 			return ;

@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/04 19:33:22 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/06 15:17:19 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,33 +113,33 @@ void	Bomb::add_bomb_nbr(int id) {
 	}
 }
 
-// void Bomb::suppr_remote_lst( void ) {
-// 	std::list<Entity *>::iterator it = main_event->char_list.begin();
-// 	std::list<Entity *>::iterator end = main_event->char_list.end();
-//
-// 	while (it != end) {
-// 		if ((*it)->id == this->creator_id) {
-// 			std::list<Entity *>::iterator itt = (*it)->remote_lst.begin();
-// 			std::list<Entity *>::iterator endd = (*it)->remote_lst.end();
-//
-// 			while (itt != endd) {
-// 				if ((*itt)->id == this->id) {
-// 					(*it)->remote_lst.erase(itt);
-// 					return ;
-// 				}
-// 				it++;
-// 			}
-// 			return ;
-// 		}
-// 		it++;
-// 	}
-// }
+void Bomb::suppr_remote_lst( void ) {
+	std::list<Entity *>::iterator it = main_event->char_list.begin();
+	std::list<Entity *>::iterator end = main_event->char_list.end();
+
+	while (it != end) {
+		if ((*it)->id == this->creator_id) {
+			std::list<Entity *>::iterator itt = (*it)->remote_lst.begin();
+			std::list<Entity *>::iterator endd = (*it)->remote_lst.end();
+
+			while (itt != endd) {
+				if ((*itt)->id == this->id) {
+					(*it)->remote_lst.erase(itt);
+					return ;
+				}
+				it++;
+			}
+			return ;
+		}
+		it++;
+	}
+}
 
 void	Bomb::detonate( void ) {
 	int i = 0;
 	int dir[4] = {0};
 	add_bomb_nbr(this->creator_id);
-	delete main_event->map[(int)this->pos_y][(int)this->pos_x];
+	// delete main_event->map[(int)this->pos_y][(int)this->pos_x];
 	main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
 	damage_entity((int)this->pos_x ,(int)this->pos_y);
 	// main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_fire(FIRE_2, (int)this->pos_x - 0.5, (int)this->pos_y - 0.5, FIRE_2);
@@ -160,8 +160,8 @@ void	Bomb::detonate( void ) {
 		i++;
 	}
 	main_event->soundrender->playSound("blast");
-	// if (this->model == BOMB_REMOTE)
-		// suppr_remote_lst();
+	if (this->model == BOMB_REMOTE)
+		suppr_remote_lst();
 }
 
 void	Bomb::push_bomb() {
