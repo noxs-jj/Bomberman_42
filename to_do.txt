@@ -6,6 +6,8 @@ BUG:
 	Logic::Menu
 		- Si on relance le jeux apres un pause et qu'on fait "resume game",
 		on a plus acces au menu, on est bloquer dans le jeux
+		gerer deplacement remote bomb (detonate)
+		detonate remote quand player die
 
 LOGIC:
 
