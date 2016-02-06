@@ -49,7 +49,7 @@ class SoundRender : ft42 {
 
     private:
 
-        int const                         mMaxAllocatedChannels = 16;
+        int const                         mMaxAllocatedChannels = 4;
         std::map<std::string, Mix_Chunk*> mChunks;
         std::map<std::string, Mix_Music*> mMusics;
 };

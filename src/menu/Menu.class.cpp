@@ -287,9 +287,9 @@ void  Menu::menu_selection() {
 void  Menu::main_loop() {
   while (true == main_event->mode_menu) {
     if (false == this->introstart)
-      this->intro_start();
+		this->intro_start();
     else
-      this->menu_selection();
+		this->menu_selection();
     main_event->joystick->read_key(0);
     usleep(50000);
   }

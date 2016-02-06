@@ -571,6 +571,7 @@ void	Event::load_sounds(void) {
 				&& this->soundrender->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")
 				&& this->soundrender->loadMusic("victory_final", "assets/sound/victory_finalfantasy.wav")
 				&& this->soundrender->loadMusic("music", "assets/sound/bgm.wav")
+				&& this->soundrender->loadMusic("ps1", "assets/sound/ps1.wav")
 			)) {
 			this->w_full("loadsound error");
 			throw std::exception();

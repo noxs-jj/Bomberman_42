@@ -288,6 +288,6 @@ void	Entity::put_bomb(int status, float x, float y, int model, int blast, int id
 	main_event->map[(int)y][(int)x]->blast_radius = blast;
 	if (model != BOMB_REMOTE)
 	{
-		main_event->soundrender->playSound("timebomb");
+		main_event->soundrender->playSound("bombmove");
 	}
 }
