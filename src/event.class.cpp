@@ -6,7 +6,7 @@
 /*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/06 14:46:54 by nmohamed         ###   ########.fr       */
+/*   Updated: 2016/02/06 14:50:56 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void Event::cheat_stats( void ) {
 				(*it)->blast_radius = 100;
 				(*it)->remote = true;
 				(*it)->remote_nbr = 30;
+				(*it)->kick_bomb = true;
 			}
 		it++;
 	}
@@ -432,6 +433,7 @@ void Event::remote_detonate( int model ) {
 
 			std::list<Entity *>::iterator it_lst = (*it)->remote_lst.begin();
 			std::list<Entity *>::iterator end_lst = (*it)->remote_lst.end();
+
 			while (it_lst != end_lst) {
 				if (this->map[(int)(*it_lst)->pos_y][(int)(*it_lst)->pos_x]->model == BOMB_REMOTE)
 					static_cast<Bomb*>(this->map[(int)(*it_lst)->pos_y][(int)(*it_lst)->pos_x])->detonate();
@@ -458,8 +460,8 @@ void Event::remote_put( int model ) {
 			if (this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]->type == EMPTY && (*it)->remote_nbr > 0) {
 				(*it)->remote_nbr--;
 				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB_REMOTE, (*it)->blast_radius, (*it)->id);
-				// (*it)->remote_lst.push_back(this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]);
-				(*it)->remote_lst.push_back(create_bomb(BOMB_SEC_3, (int)(*it)->pos_x + 0.5, (int)(*it)->pos_y + 0.5, BOMB_REMOTE, (*it)->id));
+				(*it)->remote_lst.push_back(this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]);
+				// (*it)->remote_lst.push_back(create_bomb(BOMB_SEC_3, (int)(*it)->pos_x + 0.5, (int)(*it)->pos_y + 0.5, BOMB_REMOTE, (*it)->id));
 			}
 			return ;
 		}
