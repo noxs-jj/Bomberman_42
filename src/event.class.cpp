@@ -578,12 +578,15 @@ void	Event::load_sounds(void) {
 				&& this->soundrender->loadSound("timebomb", "assets/sound/timebomb.wav")
 				&& this->soundrender->loadSound("bombmove", "assets/sound/bombmove.wav")
 				&& this->soundrender->loadSound("pause", "assets/sound/pause.wav")
+				&& this->soundrender->loadSound("buldingfire", "assets/sound/3s_the_building_is_on_fire.wav")
+				&& this->soundrender->loadSound("dogsout", "assets/sound/3s_who_let_the_dogs_out.wav")
 				// music
 				&& this->soundrender->loadMusic("victory", "assets/sound/victory.wav")
 				&& this->soundrender->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")
 				&& this->soundrender->loadMusic("victory_final", "assets/sound/victory_finalfantasy.wav")
 				&& this->soundrender->loadMusic("music", "assets/sound/bgm.wav")
 				&& this->soundrender->loadMusic("ps1", "assets/sound/ps1.wav")
+				&& this->soundrender->loadMusic("dogsout_long", "assets/sound/10s_who_let_the_dogs_out.wav")
 			)) {
 			this->w_full("loadsound error");
 			throw std::exception();

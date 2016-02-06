@@ -85,7 +85,7 @@ int		main( int ac, char **av ) {
 		// main_event->print_map(); // DEBUGG
 		main_event->load_sounds();
 		main_event->soundrender->playSound("startup");
-		main_event->soundrender->playMusic("music");
+		main_event->soundrender->playMusic("ps1");
 
 		main_event->menu->main_loop();
 
