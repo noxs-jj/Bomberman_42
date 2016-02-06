@@ -6,7 +6,7 @@
 /*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/06 14:28:57 by nmohamed         ###   ########.fr       */
+/*   Updated: 2016/02/06 15:47:05 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <map>
 # include <stdexcept>
 
+# define STEREO 2
+# define MONO 1
+
 class SoundRender : ft42 {
 
     public:
@@ -26,7 +29,7 @@ class SoundRender : ft42 {
         SoundRender();
         SoundRender(SoundRender const & rhs) = default;
         SoundRender & operator=(SoundRender const & rhs) = default;
-        ~SoundRender();
+        virtual ~SoundRender();
 
 		bool init();
 		bool deinit();

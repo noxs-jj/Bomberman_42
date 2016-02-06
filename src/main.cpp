@@ -85,13 +85,9 @@ int		main( int ac, char **av ) {
 		// main_event->print_map(); // DEBUGG
 		main_event->load_sounds();
 		main_event->soundrender->playSound("startup");
+		main_event->soundrender->playMusic("music");
 
 		main_event->menu->main_loop();
-
-		// music
-		if (true == main_event->event_running)
-			main_event->soundrender->playMusic("music");
-
 
 		while (true == main_event->event_running) {
 			if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)

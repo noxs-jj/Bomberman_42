@@ -573,9 +573,11 @@ void	Event::load_sounds(void) {
 				&& this->soundrender->loadMusic("music", "assets/sound/bgm.wav")
 			)) {
 			w_full("loadsound error");
+			throw std::exception();
 		}
 		w_full("sounds loaded");
 	} else {
 		w_full("soundrender = NULL");
+		throw std::exception();
 	}
 }
