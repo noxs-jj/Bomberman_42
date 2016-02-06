@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Menu.class.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/06 13:06:11 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/06 13:58:36 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@
 #include <joystick.hpp>
 
 void	Menu::winner_multi() {
+	main_event->soundrender->playMusic("victory_multiplayer");
 	// std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
 	print_surface(this->winner[main_event->draw_winner_multi - 1], this->winner[main_event->draw_winner_multi - 1], 400, 400, 0);
 }
 
 void	Menu::winner_campaign() {
+	main_event->soundrender->playMusic("victory");
 	// std::cout << "main_event->winner_campaign " << main_event->draw_winner_campaign << std::endl;
 	print_surface(this->winner_campaign_txt, this->winner_campaign_txt, 400, 400, 0);
 }
@@ -33,6 +35,7 @@ void	Menu::lose_campaign() {
 }
 
 void	Menu::end_campaign() {
+	main_event->soundrender->playMusic("victory_final");
 	// std::cout << "main_event->end_campaign " << main_event->draw_end_campaign << std::endl;
 	print_surface(this->winner_game_txt, this->winner_game_txt, 400, 400, 0);
 }

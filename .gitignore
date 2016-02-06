@@ -17,3 +17,4 @@ src/.DS_Store
 **/*.DS_Store
 **/*.o
 *.o
+config/config.txt

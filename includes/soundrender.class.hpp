@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   soundrender.class.hpp                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/06 14:28:57 by nmohamed         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef SOUNDRENDER_CLASS_HPP
 # define SOUNDRENDER_CLASS_HPP
@@ -39,10 +39,10 @@ class SoundRender : ft42 {
         // play the sound 'soundName'
         // which you added via 'loadSound(soundName, fileName);'
         // returns 'false' if it does not exist
-        bool playSound(std::string soundName) const;
+        bool playSound(std::string soundName);
 
         bool loadMusic(std::string musicName, std::string fileName);
-        bool playMusic(std::string musicName) const;
+        bool playMusic(std::string musicName);
 
     private:
 

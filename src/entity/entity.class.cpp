@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   entity.class.cpp                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/06 15:28:03 by vjacquie         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <entity.class.hpp>
 #include <main.hpp>
 #include <bomb.class.hpp>
@@ -298,4 +286,5 @@ void	Entity::put_bomb(int status, float x, float y, int model, int blast, int id
 	// main_event->map[(int)y][(int)x] = main_event->create_empty((int)x, (int)y);
 	main_event->map[(int)y][(int)x] = main_event->create_bomb(status, (int)x + 0.5, (int)y + 0.5, model, id);
 	main_event->map[(int)y][(int)x]->blast_radius = blast;
+	main_event->soundrender->playSound("timebomb");
 }
