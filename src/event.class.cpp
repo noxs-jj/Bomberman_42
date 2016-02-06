@@ -582,6 +582,7 @@ void	Event::load_sounds(void) {
 				&& this->soundrender->loadSound("switchselect", "assets/sound/SE_02.wav")
 				&& this->soundrender->loadSound("return", "assets/sound/SE_07.wav")
 				&& this->soundrender->loadSound("dogsout_long", "assets/sound/10s_who_let_the_dogs_out.wav")
+				&& this->soundrender->loadSound("lose", "assets/sound/deuxheures.wav")
 				// music
 				&& this->soundrender->loadMusic("victory", "assets/sound/victory.wav")
 				&& this->soundrender->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")

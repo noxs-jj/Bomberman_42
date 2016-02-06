@@ -40,6 +40,12 @@ void	Menu::winner_campaign() {
 }
 
 void	Menu::lose_campaign() {
+	static bool musicIsPlaying = false;
+	if (!musicIsPlaying)
+	{
+		musicIsPlaying = true;
+		main_event->soundrender->playSound("lose");
+	}
 	// std::cout << "main_event->lose_campaign " << main_event->draw_lose_campaign << std::endl;
 	print_surface(this->lose_campaign_txt, this->lose_campaign_txt, 400, 400, 0);
 }
