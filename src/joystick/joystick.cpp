@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/06 13:00:11 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/06 13:36:40 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,17 @@ void Joystick::set_key_config() {
 	int nbr = 0;
 	int nbr_keyboard = 0;
 
+	main_event->config_keyboard[0] = -1;
+	main_event->config_keyboard[1] = -1;
+	main_event->config_keyboard[2] = -1;
+	main_event->config_keyboard[3] = -1;
+	main_event->config_keyboard[4] = -1;
+	main_event->config[0] = -1;
+	main_event->config[1] = -1;
+	main_event->config[2] = -1;
+	main_event->config[3] = -1;
+	main_event->config[4] = -1;
+
 	if (this->config[0] == 0) {
 		main_event->config[nbr] = PLAYER1 + i;
 		nbr++;
@@ -192,7 +203,7 @@ void Joystick::set_key_config() {
 		main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
 		nbr_keyboard++;
 	}
-	std::cout << "set_key_config " << this->config[2] << " " << main_event->config[0] << " " << PLAYER1 << std::endl;
+	std::cout << "set_key_config " << main_event->config_keyboard[0] << " " << " " << PLAYER1 << std::endl;
 }
 
 void Joystick::read_key(int mode) {
@@ -387,7 +398,7 @@ void Joystick::read_key(int mode) {
             // JOYSTICK BUTTON
             else if (event.type == SDL_JOYBUTTONDOWN) {
               switch (event.cbutton.button) {
-                case 0:   std::cout << "before bomb " << event.jbutton.which << " " << main_event->config[0] << std::endl; main_event->player_bomb(main_event->config[event.jbutton.which]); break;
+                case 0:   main_event->player_bomb(main_event->config[event.jbutton.which]); break;
                 case 1:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 2:   main_event->remote_put(main_event->config[event.jbutton.which]); break;
                 case 3:   main_event->remote_detonate(main_event->config[event.jbutton.which]); break;
@@ -435,29 +446,75 @@ void Joystick::read_key(int mode) {
     				    }
             }
         }
+			if (this->arr_key_keyboard[0]->key_right)
+				main_event->player_move(main_event->config_keyboard[0], DIR_RIGHT);
+			if (this->arr_key_keyboard[0]->key_left)
+				main_event->player_move(main_event->config_keyboard[0], DIR_LEFT);
+			if (this->arr_key_keyboard[0]->key_up)
+				main_event->player_move(main_event->config_keyboard[0], DIR_UP);
+			if (this->arr_key_keyboard[0]->key_down)
+				main_event->player_move(main_event->config_keyboard[0], DIR_BOTTOM);
 
-    	if (this->arr_key_keyboard[0]->key_right)
-    		main_event->player_move(main_event->config[0], DIR_RIGHT);
-    	if (this->arr_key_keyboard[0]->key_left)
-    		main_event->player_move(main_event->config[0], DIR_LEFT);
-    	if (this->arr_key_keyboard[0]->key_up)
-    		main_event->player_move(main_event->config[0], DIR_UP);
-    	if (this->arr_key_keyboard[0]->key_down)
-    		main_event->player_move(main_event->config[0], DIR_BOTTOM);
+			if (this->arr_key_keyboard[1]->key_right)
+				main_event->player_move(main_event->config_keyboard[1], DIR_RIGHT);
+			if (this->arr_key_keyboard[1]->key_left)
+				main_event->player_move(main_event->config_keyboard[1], DIR_LEFT);
+			if (this->arr_key_keyboard[1]->key_up)
+				main_event->player_move(main_event->config_keyboard[1], DIR_UP);
+			if (this->arr_key_keyboard[1]->key_down)
+				main_event->player_move(main_event->config_keyboard[1], DIR_BOTTOM);
 
-    	if (this->arr_key_keyboard[1]->key_right)
-    		main_event->player_move(main_event->config[1], DIR_RIGHT);
-    	if (this->arr_key_keyboard[1]->key_left)
-    		main_event->player_move(main_event->config[1], DIR_LEFT);
-    	if (this->arr_key_keyboard[1]->key_up)
-    		main_event->player_move(main_event->config[1], DIR_UP);
-    	if (this->arr_key_keyboard[1]->key_down)
-    		main_event->player_move(main_event->config[1], DIR_BOTTOM);
+			if (this->arr_key_controller[0]->key_right)
+				main_event->player_move(main_event->config[0], DIR_RIGHT);
+			if (this->arr_key_controller[0]->key_left)
+				main_event->player_move(main_event->config[0], DIR_LEFT);
+			if (this->arr_key_controller[0]->key_up)
+				main_event->player_move(main_event->config[0], DIR_UP);
+			if (this->arr_key_controller[0]->key_down)
+				main_event->player_move(main_event->config[0], DIR_BOTTOM);
+
+
+			if (this->arr_key_controller[1]->key_right)
+				main_event->player_move(main_event->config[1], DIR_RIGHT);
+			if (this->arr_key_controller[1]->key_left)
+				main_event->player_move(main_event->config[1], DIR_LEFT);
+			if (this->arr_key_controller[1]->key_up)
+				main_event->player_move(main_event->config[1], DIR_UP);
+			if (this->arr_key_controller[1]->key_down)
+				main_event->player_move(main_event->config[1], DIR_BOTTOM);
+
+
+			if (this->arr_key_controller[2]->key_right)
+				main_event->player_move(main_event->config[2], DIR_RIGHT);
+			if (this->arr_key_controller[2]->key_left)
+				main_event->player_move(main_event->config[2], DIR_LEFT);
+			if (this->arr_key_controller[2]->key_up)
+				main_event->player_move(main_event->config[2], DIR_UP);
+			if (this->arr_key_controller[2]->key_down)
+				main_event->player_move(main_event->config[2], DIR_BOTTOM);
+
+
+			if (this->arr_key_controller[3]->key_right)
+				main_event->player_move(main_event->config[3], DIR_RIGHT);
+			if (this->arr_key_controller[3]->key_left)
+				main_event->player_move(main_event->config[3], DIR_LEFT);
+			if (this->arr_key_controller[3]->key_up)
+				main_event->player_move(main_event->config[3], DIR_UP);
+			if (this->arr_key_controller[3]->key_down)
+				main_event->player_move(main_event->config[3], DIR_BOTTOM);
+
+			if (this->arr_key_controller[4]->key_right)
+				main_event->player_move(main_event->config[4], DIR_RIGHT);
+			if (this->arr_key_controller[4]->key_left)
+				main_event->player_move(main_event->config[4], DIR_LEFT);
+			if (this->arr_key_controller[4]->key_up)
+				main_event->player_move(main_event->config[4], DIR_UP);
+			if (this->arr_key_controller[4]->key_down)
+				main_event->player_move(main_event->config[4], DIR_BOTTOM);
     }
   }
 
 void Joystick::change_dir_joystick(t_key *key, int dir) {
-	std::cout << "test" << std::endl;
   key->key_up = 0;
   key->key_down = 0;
   key->key_left = 0;
@@ -470,5 +527,4 @@ void Joystick::change_dir_joystick(t_key *key, int dir) {
     key->key_left = 1;
   if (dir == DIR_RIGHT)
     key->key_right = 1;
-		std::cout << "test end" << std::endl;
 }
