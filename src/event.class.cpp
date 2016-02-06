@@ -581,13 +581,13 @@ void	Event::load_sounds(void) {
 				&& this->soundrender->loadSound("dogsout", "assets/sound/3s_who_let_the_dogs_out.wav")
 				&& this->soundrender->loadSound("switchselect", "assets/sound/SE_02.wav")
 				&& this->soundrender->loadSound("return", "assets/sound/SE_07.wav")
+				&& this->soundrender->loadSound("dogsout_long", "assets/sound/10s_who_let_the_dogs_out.wav")
 				// music
 				&& this->soundrender->loadMusic("victory", "assets/sound/victory.wav")
 				&& this->soundrender->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")
 				&& this->soundrender->loadMusic("victory_final", "assets/sound/victory_finalfantasy.wav")
 				&& this->soundrender->loadMusic("music", "assets/sound/bgm.wav")
 				&& this->soundrender->loadMusic("ps1", "assets/sound/ps1.wav")
-				&& this->soundrender->loadMusic("dogsout_long", "assets/sound/10s_who_let_the_dogs_out.wav")
 			)) {
 			this->w_full("loadsound error");
 			throw std::exception();
