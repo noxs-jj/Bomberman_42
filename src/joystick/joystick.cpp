@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/05 14:23:02 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/06 13:00:11 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	Joystick::save_default_config( void ) {
 	if ((stream = fopen(CONFIG_FILE, "w")) == NULL)
 		return ;
 
-	fputs("0,0,1,1,1", stream);
+	fputs("1,1,0,0,0", stream);
 	fclose(stream);
 	this->config[0] = 1;
 	this->config[1] = 1;
@@ -86,12 +86,32 @@ void Joystick::load_config( void ) {
 
 	if (strlen(buff) < 9)
 		return ;
+	if ((buff[0] - '0' != 1 && buff[0] - '0' != 0)
+		|| (buff[2] - '0' != 1 && buff[2] - '0' != 0)
+		|| (buff[4] - '0' != 1 && buff[4] - '0' != 0)
+		|| (buff[6] - '0' != 1 && buff[6] - '0' != 0)
+		|| (buff[8] - '0' != 1 && buff[8] - '0' != 0))
+			return ;
+
 	this->config[0] = buff[0] - '0';
 	this->config[1] = buff[2] - '0';
 	this->config[2] = buff[4] - '0';
 	this->config[3] = buff[6] - '0';
 	this->config[4] = buff[8] - '0';
 	fclose(stream);
+
+	int i = 0, tmp = 0;
+
+	while (i < 5) {
+		if (this->config[i] == 1)
+			tmp++;
+		if (tmp > 2) {
+			save_default_config();
+			return ;
+		}
+		i++;
+	}
+
 	set_key();
 }
 
@@ -126,30 +146,51 @@ void Joystick::set_key() {
 void Joystick::set_key_config() {
 	int i = 0;
 	int nbr = 0;
+	int nbr_keyboard = 0;
 
 	if (this->config[0] == 0) {
 		main_event->config[nbr] = PLAYER1 + i;
 		nbr++;
+	}
+	else {
+		main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
+		nbr_keyboard++;
 	}
 	i++;
 	if (this->config[1] == 0) {
 		main_event->config[nbr] = PLAYER1 + i;
 		nbr++;
 	}
+	else {
+		main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
+		nbr_keyboard++;
+	}
 	i++;
 	if (this->config[2] == 0) {
 		main_event->config[nbr] = PLAYER1 + i;
 		nbr++;
+	}
+	else {
+		main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
+		nbr_keyboard++;
 	}
 	i++;
 	if (this->config[3] == 0) {
 		main_event->config[nbr] = PLAYER1 + i;
 		nbr++;
 	}
+	else {
+		main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
+		nbr_keyboard++;
+	}
 	i++;
 	if (this->config[4] == 0) {
 		main_event->config[nbr] = PLAYER1 + i;
 		nbr++;
+	}
+	else {
+		main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
+		nbr_keyboard++;
 	}
 	std::cout << "set_key_config " << this->config[2] << " " << main_event->config[0] << " " << PLAYER1 << std::endl;
 }
@@ -159,10 +200,10 @@ void Joystick::read_key(int mode) {
 	int					i = 0;
   // static float time = 0;
   // int _time = 0;
-	static t_key		key = {0, 0, 0, 0};
-	static t_key		key2 = {0, 0, 0, 0}; // key for p2 (keyboard)
-	static t_key		key3 = {0, 0, 0, 0};
-	static t_key		key4 = {0, 0, 0, 0};
+	// static t_key		key = {0, 0, 0, 0};
+	// static t_key		key2 = {0, 0, 0, 0}; // key for p2 (keyboard)
+	// static t_key		key3 = {0, 0, 0, 0};
+	// static t_key		key4 = {0, 0, 0, 0};
 
 
   // std::list<Entity *>::iterator it = main_event->char_list.begin();
@@ -318,23 +359,21 @@ void Joystick::read_key(int mode) {
     							case SDLK_ESCAPE:   main_event->exit_free();
     																	break;
 
-    							case SDLK_KP_5:     key2.key_up = 1; break;
-    							case SDLK_KP_8:     key2.key_down = 1; break;
-    							case SDLK_KP_6:    	key2.key_right = 1; break;
-    							case SDLK_KP_4:     key2.key_left = 1; break;
-    							case SDLK_KP_0:    	main_event->player_bomb(main_event->config[1]); break;
+    							case SDLK_KP_5:     this->arr_key_keyboard[1]->key_up = 1; break;
+    							case SDLK_KP_8:     this->arr_key_keyboard[1]->key_down = 1; break;
+    							case SDLK_KP_6:    	this->arr_key_keyboard[1]->key_right = 1; break;
+    							case SDLK_KP_4:     this->arr_key_keyboard[1]->key_left = 1; break;
+									case SDLK_KP_PLUS: 			main_event->player_bomb(main_event->config_keyboard[1]); break;
+									case SDLK_KP_MINUS: 		main_event->remote_put(main_event->config_keyboard[1]); break;
+									case SDLK_KP_MULTIPLY: 	main_event->remote_detonate(main_event->config_keyboard[1]); break;
 
-    							case SDLK_s:     		key.key_up = 1; break;
-    							case SDLK_w:       	key.key_down = 1; break;
-    							case SDLK_d:    		key.key_right = 1; break;
-    							case SDLK_a:     		key.key_left = 1; break;
-    							case SDLK_SPACE:    main_event->player_bomb(main_event->config[0]); break;
-
-    							case SDLK_k:     		key4.key_up = 1; break;
-    							case SDLK_i:       	key4.key_down = 1; break;
-    							case SDLK_l:    		key4.key_right = 1; break;
-    							case SDLK_j:     		key4.key_left = 1; break;
-    							case SDLK_n:    		main_event->player_bomb(main_event->config[3]); break;
+    							case SDLK_s:     		this->arr_key_keyboard[0]->key_up = 1; break;
+    							case SDLK_w:       	this->arr_key_keyboard[0]->key_down = 1; break;
+    							case SDLK_d:    		this->arr_key_keyboard[0]->key_right = 1; break;
+    							case SDLK_a:     		this->arr_key_keyboard[0]->key_left = 1; break;
+									case SDLK_c: 				main_event->player_bomb(main_event->config_keyboard[0]); break;
+									case SDLK_v: 				main_event->remote_put(main_event->config_keyboard[0]); break;
+									case SDLK_b: 				main_event->remote_detonate(main_event->config_keyboard[0]); break;
 
     							case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
     																		main_event->mode_menu = false;
@@ -381,61 +420,39 @@ void Joystick::read_key(int mode) {
             }
             if (event.type == SDL_KEYUP) {
                 switch((event).key.keysym.sym) {
-    							case SDLK_KP_5:     key2.key_up = 0; break;
-    							case SDLK_KP_8:     key2.key_down = 0; break;
-    							case SDLK_KP_6:     key2.key_right = 0; break;
-    							case SDLK_KP_4:     key2.key_left = 0; break;
+    							case SDLK_KP_5:     this->arr_key_keyboard[1]->key_up = 0; break;
+    							case SDLK_KP_8:     this->arr_key_keyboard[1]->key_down = 0; break;
+    							case SDLK_KP_6:     this->arr_key_keyboard[1]->key_right = 0; break;
+    							case SDLK_KP_4:     this->arr_key_keyboard[1]->key_left = 0; break;
 
-    							case SDLK_s:     		key.key_up = 0; break;
-    							case SDLK_w:       	key.key_down = 0; break;
-    							case SDLK_d:    		key.key_right = 0; break;
-    							case SDLK_a:     		key.key_left = 0; break;
+    							case SDLK_s:     		this->arr_key_keyboard[0]->key_up = 0; break;
+    							case SDLK_w:       	this->arr_key_keyboard[0]->key_down = 0; break;
+    							case SDLK_d:    		this->arr_key_keyboard[0]->key_right = 0; break;
+    							case SDLK_a:     		this->arr_key_keyboard[0]->key_left = 0; break;
 
-    							case SDLK_k:     		key4.key_up = 0; break;
-    							case SDLK_i:       	key4.key_down = 0; break;
-    							case SDLK_l:    		key4.key_right = 0; break;
-    							case SDLK_j:     		key4.key_left = 0; break;
 
     				      default: break;
     				    }
             }
         }
 
-    	if (key.key_right)
+    	if (this->arr_key_keyboard[0]->key_right)
     		main_event->player_move(main_event->config[0], DIR_RIGHT);
-    	if (key.key_left)
+    	if (this->arr_key_keyboard[0]->key_left)
     		main_event->player_move(main_event->config[0], DIR_LEFT);
-    	if (key.key_up)
+    	if (this->arr_key_keyboard[0]->key_up)
     		main_event->player_move(main_event->config[0], DIR_UP);
-    	if (key.key_down)
+    	if (this->arr_key_keyboard[0]->key_down)
     		main_event->player_move(main_event->config[0], DIR_BOTTOM);
 
-    	if (key2.key_right)
+    	if (this->arr_key_keyboard[1]->key_right)
     		main_event->player_move(main_event->config[1], DIR_RIGHT);
-    	if (key2.key_left)
+    	if (this->arr_key_keyboard[1]->key_left)
     		main_event->player_move(main_event->config[1], DIR_LEFT);
-    	if (key2.key_up)
+    	if (this->arr_key_keyboard[1]->key_up)
     		main_event->player_move(main_event->config[1], DIR_UP);
-    	if (key2.key_down)
+    	if (this->arr_key_keyboard[1]->key_down)
     		main_event->player_move(main_event->config[1], DIR_BOTTOM);
-
-    	if (key3.key_right)
-    		main_event->player_move(main_event->config[2], DIR_RIGHT);
-    	if (key3.key_left)
-    		main_event->player_move(main_event->config[2], DIR_LEFT);
-    	if (key3.key_up)
-    		main_event->player_move(main_event->config[2], DIR_UP);
-    	if (key3.key_down)
-    		main_event->player_move(main_event->config[2], DIR_BOTTOM);
-
-    	if (key4.key_right)
-    		main_event->player_move(main_event->config[3], DIR_RIGHT);
-    	if (key4.key_left)
-    		main_event->player_move(main_event->config[3], DIR_LEFT);
-    	if (key4.key_up)
-    		main_event->player_move(main_event->config[3], DIR_UP);
-    	if (key4.key_down)
-    		main_event->player_move(main_event->config[3], DIR_BOTTOM);
     }
   }
 

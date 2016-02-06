@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/05 13:26:26 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/06 13:06:11 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,16 @@ void  Menu::main_loop() {
 
 void Menu::move_menu_hor() {
 	if (this->menu_selected != CONFIG)
+		return ;
+
+	int i = 0, tmp = 0;
+
+	while (i < 5) {
+		if (main_event->joystick->config[i] == 1)
+			tmp++;
+		i++;
+	}
+	if (tmp >= 2 && main_event->joystick->config[this->detail_menu_selected - MENU_CONFIG_PLAYER1] == 0)
 		return ;
 
 	if (this->detail_menu_selected == MENU_CONFIG_PLAYER1)
