@@ -113,6 +113,7 @@ enum STATUS {
 	BOSS_A,
 	BOSS_B,
 	BOSS_C,
+	BOSS_D,
 
 	////
 	//// STATUS

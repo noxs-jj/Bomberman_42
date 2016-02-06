@@ -31,6 +31,7 @@ static std::map<std::string, int> const g_mapcase = {
 	{"3#b", BOSS_B},
 	{"3#c", BOSS_C},
 	{"3#c", BOSS_C},
+	{"3#d", BOSS_D},
 	{"4#1", PLAYER1},
 	{"4#2", PLAYER2},
 	{"4#3", PLAYER3},

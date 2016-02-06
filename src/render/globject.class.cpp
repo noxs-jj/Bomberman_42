@@ -70,7 +70,7 @@ void globject::load_bmp() {
 		}
 		glGenTextures(1, &(_textID[i]));
 		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		if (((_ID >= BOSS_A && _ID <= BOSS_C) \
+		if (((_ID >= BOSS_A && _ID <= BOSS_D) \
 			|| (_ID >= PLAYER && _ID <= PLAYER4) \
 			|| (_ID >= BOMB_DEFAULT && _ID <= BOMB_WIND) \
 			|| (_ID >= ENEMY && _ID <= ENEMY4) \
@@ -185,9 +185,10 @@ void		globject::init(float sizeX, float sizeY) {
 	globject("assets/render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
 	globject("assets/render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
 	globject("assets/render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY4, 0.3);
-	globject("assets/render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_A, 1); //test
-	globject("assets/render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_B, 1);
-	globject("assets/render/models/BOSS_Titan/BOSS_Titan.obj", BOSS_C, 1);
+	globject("assets/render/boss/BossTitan/BOSS_Titan.obj", BOSS_A, 1); //test
+	globject("assets/render/boss/AssaultBomber/AssaultBomber.obj", BOSS_B, 0.06);
+	globject("assets/render/boss/BomberElite/BomberElite.obj", BOSS_C, 0.06);
+	globject("assets/render/boss/EagleBomber/EagleBomber.obj", BOSS_D, 0.06);
 	globject("assets/render/bombs/MegaBomb/MegaBomb.obj", BOMB_DEFAULT, 0.1);
 	globject("assets/render/bombs/AquaBomb/AquaBomb.obj", BOMB_WATER, 0.1);
 	globject("assets/render/bombs/LightBomb/LightBomb.obj", BOMB_LIGHT, 0.1);
