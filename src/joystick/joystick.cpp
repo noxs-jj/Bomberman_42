@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/06 13:59:07 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/06 16:15:40 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -446,6 +446,7 @@ void Joystick::read_key(int mode) {
     				    }
             }
         }
+			}
 			if (this->arr_key_keyboard[0]->key_right)
 				main_event->player_move(main_event->config_keyboard[0], DIR_RIGHT);
 			if (this->arr_key_keyboard[0]->key_left)
@@ -511,7 +512,6 @@ void Joystick::read_key(int mode) {
 				main_event->player_move(main_event->config[4], DIR_UP);
 			if (this->arr_key_controller[4]->key_down)
 				main_event->player_move(main_event->config[4], DIR_BOTTOM);
-    }
   }
 
 void Joystick::change_dir_joystick(t_key *key, int dir) {

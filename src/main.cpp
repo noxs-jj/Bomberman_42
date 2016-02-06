@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/06 14:28:01 by nmohamed         ###   ########.fr       */
+/*   Updated: 2016/02/06 16:14:57 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int		main( int ac, char **av ) {
 		main_event->menu->main_loop();
 
 		// music
-		main_event->soundrender->playMusic("music");
+		if (true == main_event->event_running)
+			main_event->soundrender->playMusic("music");
 
 
 		while (true == main_event->event_running) {
