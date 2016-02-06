@@ -16,34 +16,36 @@
 #### Windows (Not Supported)
 
 ## How to Play (Binding)
-Key | Player 1 (Keyboard) | Player 2 (Keyboard)
+Key | (Keyboard1) | (Keyboard2)
 ------------ | ------------- | -------------
-**UP** | S | 8
-**DOWN** | W | 5
+**UP** | W | 8
+**DOWN** | S | 5
 **LEFT** | A | 4
 **RIGHT** | D | 6
-**Bomb** | SPACE | 0
+**Bomb normal** | C | +
+**Bomb remote** | V | -
+**Activate remote bombs** | B | *
 
-KEY | Player 3 (Joystick) | Player 4 (Keyboard)
------------- | ------------- | -------------
-**UP** | Axis Y | S
-**DOWN** | Axix Y | W
-**LEFT** | Axix X | A
-**RIGHT** | Axix X | D
-**Bomb** | Button 1 | N
+KEY | (Joystick)
+------------ | -------------
+**UP** | HAT UP
+**DOWN** | HAT DOWN
+**LEFT** | HAT LEFT
+**RIGHT** | HAT RIGHT
+**Bomb normal** | Button 1
+**Bomb remote** | Button 2
+**Activate remote bombs** | Button 4
 
 ## Credits
 Whois @42born2code | Jobs
 ------------ | -------------
 rcargou  | 3D OpenGL engineer
-vjacquie | Game Logic, Game Design
+vjacquie | Game Logic, Game Design, input engineer
 adjivas | IA engineer
 nmohamed naki.md@gmail.com twitter@naki_md | Sound Design, input engineer
 jmoiroux jjmoiroux@gmail.com twitter@jjmoiroux | Project Manager, Os Platform compatibility, Level Design, Game Design
 
-#### Devs
-event.class.cpp line 71
-
-this->map = Mapparser::map_from_file(av[1]);
-
-this->map = Mapparser::map_from_file(chemin_relatif);
+#### DEVS
+- Une fois une partie campaing lance, revenir au menu principal et appuyer sur '1' pour passer au niveau suivant
+- Au lancement du jeux, au menu principal (sans partie en cours) appuyer sur '2' pour lancer la maps tests/test1.ntm
+- Une fois une partie lancer en Multi, revenir au menu et appuyer sur '3' pour activer toutes les bombes, puissance max, et remote bomb illimtite

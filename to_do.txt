@@ -1,16 +1,22 @@
 sortie de programme:
-- penser a free tout les object de main_event, puis main_event
-- move:: utiliser la speed des entities
+    - Penser a free tout les object de main_event, puis main_event
 
 BUG:
-
+    - SEGFAULT(Linux): arena 5 plays en laissant tourner le jeux sans rien faire
+	segfault lors de la LOSE, il reste des jouers en jeux au moment du segfault
 
 LOGIC:
-
+    - fin de partie laisser ecran 1-2 sec pour comprendre la fin ? (pas obligatoire)
 
 RENDER::
-- implementer WALL_HP_4
-- implementer BOSS_B
-- implementer BOSS_C
-- Implementer 4 skin ennemies different
-- animation BOSS
+    - animation BOSS (pas obligatoire)
+
+IA:
+    - les enemies rentre dans le mur lein droite (voir check tab -1 ?)
+    - essayer de reduires l'utilisation CPU (faire au mieut ou c pas grave)
+    - Une IA scripter speciale pour les boss ? 4 modeles dispo maintenant
+    - BOSS_A <> BOSS_D (non anime our le moment)
+    - modele ENNEMIEs ENEMY1 <> ENEMY5 (anime1, nom anime volant 2 3 4 5)
+
+SOUND:
+    - revoir debut Sons multi, essayer de stopper la musique du jeux les 10 premieres secondes
