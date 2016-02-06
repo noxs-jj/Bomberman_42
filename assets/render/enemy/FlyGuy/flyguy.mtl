@@ -1,0 +1,19 @@
+# Material file for flyguy.obj
+
+newmtl mat_body
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.972549 0.972549 0.972549
+	Ks 0.0 0.0 0.0
+	Ka 0.501961 0.501961 0.501961
+	map_Kd enemy_flyguy_mat_body.bmp
+
+newmtl mat_propeller
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.972549 0.972549 0.972549
+	Ks 0.0 0.0 0.0
+	Ka 0.501961 0.501961 0.501961
+	map_Kd enemy_flyguy_mat_propeller.bmp

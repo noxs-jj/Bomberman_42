@@ -54,7 +54,6 @@ void globject::reinit_level(int env) {
 void globject::load_bmp() {
 	std::string     name;
 	std::string     path;
-	std::cout << parser._textNum << std::endl;
 	for (size_t i = 0; i < parser._textNum; i++)
 	{
 		name = "texture";
@@ -62,7 +61,6 @@ void globject::load_bmp() {
 		if (globject::space)
 			path = "assets/render/spacestextures/";
 		path += parser._texture[i];
-		std::cout << path.c_str() << std::endl;
 		SDL_Surface *imp = IMG_Load(path.c_str());
 		if (imp == NULL) 		{
 			std::cerr << "FAILFAIL" << std::endl;
@@ -73,7 +71,7 @@ void globject::load_bmp() {
 		if (((_ID >= BOSS_A && _ID <= BOSS_D) \
 			|| (_ID >= PLAYER && _ID <= PLAYER4) \
 			|| (_ID >= BOMB_DEFAULT && _ID <= BOMB_WIND) \
-			|| (_ID >= ENEMY && _ID <= ENEMY4) \
+			|| (_ID >= ENEMY && _ID <= ENEMY5) \
 			|| _ID == MENU \
 			|| (globject::space && _ID == MAX_ENUM))) {
 			# ifdef linux
@@ -181,10 +179,11 @@ void		globject::init(float sizeX, float sizeY) {
 	globject("assets/render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
 	globject("assets/render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
 	globject("assets/render/models/Bomberman/BeautyBomber/BeautyWhopper.obj", PLAYER5, 0.04);
-	globject("assets/render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
-	globject("assets/render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY2, 0.3);
-	globject("assets/render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY3, 0.3);
-	globject("assets/render/models/ENEMY_Bear_Grizzly/ENEMY_Bear_Grizzly1.obj", ENEMY4, 0.3);
+	globject("assets/render/enemy/BearGrizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
+	globject("assets/render/enemy/Andlar/Andlar.obj", ENEMY2, 0.04);
+	globject("assets/render/enemy/Angol/Angol.obj", ENEMY3, 0.04);
+	globject("assets/render/enemy/Boo/boo.obj", ENEMY4, 0.15);
+	globject("assets/render/enemy/FlyGuy/flyguy.obj", ENEMY5, 0.1);
 	globject("assets/render/boss/BossTitan/BOSS_Titan.obj", BOSS_A, 1); //test
 	globject("assets/render/boss/AssaultBomber/AssaultBomber.obj", BOSS_B, 0.06);
 	globject("assets/render/boss/BomberElite/BomberElite.obj", BOSS_C, 0.06);
@@ -512,7 +511,6 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader) {
 	glGetShaderiv(vshaderid, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(vshaderid, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	glGetShaderInfoLog(vshaderid, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-	std::cout << FragmentShaderErrorMessage << std::endl;
 
 	buff = filetobuff(fragshader);
 	// glShaderSource(fshaderid, 1, (const char *const *)(&buff), NULL);
@@ -522,7 +520,6 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader) {
 	glGetShaderiv(fshaderid, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(fshaderid, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	glGetShaderInfoLog(fshaderid, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-	std::cout << FragmentShaderErrorMessage << std::endl;
 
 	progid = glCreateProgram();
 	glAttachShader(progid, vshaderid);

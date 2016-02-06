@@ -89,7 +89,8 @@ Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, floa
       case ENEMY1:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY1) );
       case ENEMY2:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY2) );
       case ENEMY3:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY3) );
-      case ENEMY4:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY4) );
+	  case ENEMY4:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY4) );
+      case ENEMY5:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY5) );
       case BOSS_A:                return static_cast<Entity*>( main_event->create_boss(BOSS, x, y, BOSS_A, BOSS_A) );
       case BOSS_B:                return static_cast<Entity*>( main_event->create_boss(BOSS, x, y, BOSS_B, BOSS_B) );
 	  case BOSS_C:                return static_cast<Entity*>( main_event->create_boss(BOSS, x, y, BOSS_C, BOSS_C) );

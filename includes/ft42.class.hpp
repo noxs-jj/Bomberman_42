@@ -94,6 +94,7 @@ enum STATUS {
 	ENEMY2,
 	ENEMY3,
 	ENEMY4,
+	ENEMY5,
 	//
 	// BONUS
 	//

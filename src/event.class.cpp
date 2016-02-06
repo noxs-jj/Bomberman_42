@@ -515,7 +515,6 @@ void	Event::ia_bomb(int id) {
 
 void	Event::dec_timer( void ) {
 	int x, y = 0;
-	std::cout << "dec_timer 00" << std::endl;
 
 	while (y < globject::mapY_size) {
 		x = 0;
@@ -528,7 +527,6 @@ void	Event::dec_timer( void ) {
 		}
 		y++;
 	}
-	std::cout << "dec_timer 01" << std::endl;
 }
 
 void	Event::fill_border_map(void) {
