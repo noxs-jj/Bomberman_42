@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Menu.class.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/06 13:58:36 by nmohamed         ###   ########.fr       */
+/*   Updated: 2016/02/06 17:37:49 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ void Menu::intro_start() {
 }
 
 void  Menu::menu_selection() {
- if (NULL == this->ecran_menu) {
+ if (NULL != this->ecran_menu) {
     SDL_FreeSurface(this->ecran_menu);
     this->ecran_menu = NULL;
   }
