@@ -18,13 +18,23 @@
 #include <joystick.hpp>
 
 void	Menu::winner_multi() {
-	main_event->soundrender->playMusic("victory_multiplayer");
+	static bool musicIsPlaying = false;
+	if (!musicIsPlaying)
+	{
+		musicIsPlaying = true;
+		main_event->soundrender->playMusic("victory_multiplayer");
+	}
 	// std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
 	print_surface(this->winner[main_event->draw_winner_multi - 1], this->winner[main_event->draw_winner_multi - 1], 400, 400, 0);
 }
 
 void	Menu::winner_campaign() {
-	main_event->soundrender->playMusic("victory");
+	static bool musicIsPlaying = false;
+	if (!musicIsPlaying)
+	{
+		musicIsPlaying = true;
+		main_event->soundrender->playMusic("victory");
+	}
 	// std::cout << "main_event->winner_campaign " << main_event->draw_winner_campaign << std::endl;
 	print_surface(this->winner_campaign_txt, this->winner_campaign_txt, 400, 400, 0);
 }
@@ -35,7 +45,12 @@ void	Menu::lose_campaign() {
 }
 
 void	Menu::end_campaign() {
-	main_event->soundrender->playMusic("victory_final");
+	static bool musicIsPlaying = false;
+	if (!musicIsPlaying)
+	{
+		musicIsPlaying = true;
+		main_event->soundrender->playMusic("victory_final");
+	}
 	// std::cout << "main_event->end_campaign " << main_event->draw_end_campaign << std::endl;
 	print_surface(this->winner_game_txt, this->winner_game_txt, 400, 400, 0);
 }
@@ -112,6 +127,14 @@ void	Menu::print_surface(SDL_Surface * str, SDL_Surface * str_select, int x, int
 }
 
 void  Menu::big_menu() {
+	static int musicPlaying = false;
+
+	if (!musicPlaying)
+	{
+		musicPlaying = true;
+		main_event->soundrender->playMusic("music");
+	}
+
 	if (true == main_event->game_playing) // Si partie en cours
 		print_surface(this->str_resume_game, this->str_resume_game_selected, 400, 300, RESUME_GAME);
 	print_surface(this->str_campaign, this->str_campaign_selected, 400, 400, MENU_CAMPAIGN);
@@ -296,6 +319,7 @@ void  Menu::main_loop() {
 }
 
 void Menu::move_menu_hor() {
+	main_event->soundrender->playSound("switchselect");
 	if (this->menu_selected != CONFIG)
 		return ;
 
@@ -396,7 +420,14 @@ void  Menu::change_menu_back() {
 
 void  Menu::change_menu() {
   std::cout << this->menu_selected << " vs " << RESUME_GAME << std::endl;
-  main_event->soundrender->playSound("menu2");
+  if (!(this->detail_menu_selected == MENU_CAMPAIGN_RETURN
+	|| this->detail_menu_selected == MENU_CONFIG_RETURN
+	|| this->detail_menu_selected == MENU_EXIT_RETURN
+	|| this->detail_menu_selected == MENU_ARENA_RETURN
+	|| this->detail_menu_selected == MENU_MULTI_RETURN))
+  {
+	    main_event->soundrender->playSound("menu2");
+  }
   if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_NEW == this->detail_menu_selected )
     Gamelauncher::campaign_new();
   else if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_COOP == this->detail_menu_selected )
@@ -442,6 +473,7 @@ void  Menu::change_menu() {
     || this->detail_menu_selected == MENU_EXIT_RETURN
     || this->detail_menu_selected == MENU_ARENA_RETURN
     || this->detail_menu_selected == MENU_MULTI_RETURN) {
+		main_event->soundrender->playSound("return");
     this->detail_menu_selected = MENU_CAMPAIGN;
     this->menu_selected = BIG_MENU;
   }

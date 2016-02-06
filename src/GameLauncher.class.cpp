@@ -12,6 +12,7 @@
 
 #include <GameLauncher.class.hpp>
 #include <event.class.hpp>
+#include <soundrender.class.hpp>
 
 void  Gamelauncher::campaign_new() {
   main_event->w_log("MENU_CAMPAIGN_NEW + LAUNCH ");
@@ -51,6 +52,7 @@ void  Gamelauncher::campaign_new_coop() {
 
 void  Gamelauncher::run_multi_2() {
   main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_2P + LAUNCH ");
+  main_event->soundrender->playSound("dogsout");
   main_event->draw_winner_multi = -1;
   main_event->draw_winner_campaign = -1;
   main_event->draw_lose_campaign = -1;

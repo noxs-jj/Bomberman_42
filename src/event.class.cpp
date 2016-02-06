@@ -575,11 +575,12 @@ void	Event::load_sounds(void) {
 				&& this->soundrender->loadSound("ready", "assets/sound/readymegaman.wav")
 				&& this->soundrender->loadSound("menu2", "assets/sound/megamenu2.wav")
 				&& this->soundrender->loadSound("menu1", "assets/sound/menu1.wav")
-				&& this->soundrender->loadSound("timebomb", "assets/sound/timebomb.wav")
 				&& this->soundrender->loadSound("bombmove", "assets/sound/bombmove.wav")
 				&& this->soundrender->loadSound("pause", "assets/sound/pause.wav")
 				&& this->soundrender->loadSound("buldingfire", "assets/sound/3s_the_building_is_on_fire.wav")
 				&& this->soundrender->loadSound("dogsout", "assets/sound/3s_who_let_the_dogs_out.wav")
+				&& this->soundrender->loadSound("switchselect", "assets/sound/SE_02.wav")
+				&& this->soundrender->loadSound("return", "assets/sound/SE_07.wav")
 				// music
 				&& this->soundrender->loadMusic("victory", "assets/sound/victory.wav")
 				&& this->soundrender->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")
