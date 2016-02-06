@@ -3,8 +3,7 @@ sortie de programme:
 - move:: utiliser la speed des entities
 
 BUG:
-		detonate remote quand player die
-		segv quand toute les ia + player meurt via les remote (faute a l'ia ?)
+
 
 LOGIC:
 
