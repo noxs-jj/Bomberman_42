@@ -186,7 +186,8 @@ void Entity::destroy_bomb_list() {
 void	Entity::take_damage( void ) {
 	// dec health
 	// if health <= 0
-	destroy_bomb_list();
+	// destroy_bomb_list();
+	main_event->live_player[this->model - PLAYER1] = false;
 	die();
 }
 

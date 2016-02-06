@@ -55,6 +55,12 @@ void 	Event::free_game( void ) {
 void	Event::make_new_game( int new_level ) {
 	char map_name[64] = {0};
 
+	this->live_player[0] = true;
+	this->live_player[1] = true;
+	this->live_player[2] = true;
+	this->live_player[3] = true;
+	this->live_player[4] = true;
+
 	if (this->game_playing == true) {
 		std::cout << "        this->game_playing == true FREE AOLD MAP DEBUGG" << std::endl;
 		this->free_game();
@@ -425,13 +431,17 @@ void Event::remote_detonate( int model ) {
 			while (it_lst != end_lst) {
 				if (this->map[(int)(*it_lst)->pos_y][(int)(*it_lst)->pos_x]->model == BOMB_REMOTE) {
 					static_cast<Bomb*>(this->map[(int)(*it_lst)->pos_y][(int)(*it_lst)->pos_x])->detonate();
+					if (this->live_player[model - PLAYER1] == false)
+						return ;
 					it_lst = (*it)->remote_lst.begin();
 					end_lst = (*it)->remote_lst.end();
 				}
 				else
 					it_lst++;
-				if ((*it)->remote_lst.empty() || (*it)->remote_lst.size() <= 0)
+				if ((*it)->remote_lst.empty() || (*it)->remote_lst.size() <= 0) {
 					return ;
+
+				}
 			}
 			(*it)->remote_lst.clear();
 			return ;
@@ -505,6 +515,7 @@ void	Event::ia_bomb(int id) {
 
 void	Event::dec_timer( void ) {
 	int x, y = 0;
+	std::cout << "dec_timer 00" << std::endl;
 
 	while (y < globject::mapY_size) {
 		x = 0;
@@ -517,6 +528,7 @@ void	Event::dec_timer( void ) {
 		}
 		y++;
 	}
+	std::cout << "dec_timer 01" << std::endl;
 }
 
 void	Event::fill_border_map(void) {

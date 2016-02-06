@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/05 14:22:29 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/06 17:18:45 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ public:
 	bool					event_running = true;
 	bool					to_die_entity = false;
 	Joystick *				joystick = NULL;
+	bool							live_player[5];
 
 	Event( void );
 	Event( Event const & src );
