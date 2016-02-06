@@ -584,12 +584,12 @@ void	Event::load_sounds(void) {
 				&& this->soundrender->loadMusic("victory_final", "assets/sound/victory_finalfantasy.wav")
 				&& this->soundrender->loadMusic("music", "assets/sound/bgm.wav")
 			)) {
-			w_full("loadsound error");
+			this->w_full("loadsound error");
 			throw std::exception();
 		}
-		w_full("sounds loaded");
+		this->w_full("sounds loaded");
 	} else {
-		w_full("soundrender = NULL");
+		this->w_full("soundrender = NULL");
 		throw std::exception();
 	}
 }
