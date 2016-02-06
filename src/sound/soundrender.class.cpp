@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   soundrender.class.cpp                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/06 14:29:12 by nmohamed         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "soundrender.class.hpp"
 
@@ -77,16 +77,16 @@ bool SoundRender::loadSound(std::string soundName, std::string fileName) {
     return true;
 }
 
-bool SoundRender::playSound(std::string soundName) const {
+bool SoundRender::playSound(std::string soundName) {
 	try {
 	    if (Mix_PlayChannel(-1, mChunks.at(soundName), 0) == -1) {
-	        std::printf("SoundRender::playSound: %s\n", Mix_GetError());
+	        w_full(Mix_GetError());
 	        // may be critical error, or maybe just no channels were free.
 	        // you could allocated another channel in that case...
 	        return false;
 	    }
 	} catch (std::exception const & e) {
-		std::printf("SoundRender::playSound exception: %s\n", e.what());
+		w_full(e.what());
 		return false;
 	}
     return true;
@@ -110,18 +110,18 @@ bool SoundRender::loadMusic(std::string musicName, std::string fileName) {
     return true;
 }
 
-bool SoundRender::playMusic(std::string musicName) const {
+bool SoundRender::playMusic(std::string musicName) {
     try {
         // stop other musics before doing anything
     	Mix_HaltMusic();
     	// play music forever
         if (Mix_PlayMusic(mMusics.at(musicName), -1) == -1) {
-            std::printf("Mix_PlayMusic: %s\n", Mix_GetError());
+			w_full(Mix_GetError());
             // well, there's no music, but most games don't break without music...
             return false;
         }
     } catch (std::exception const & e) {
-		std::printf("SoundRender::playMusic exception: %s\n", e.what());
+		w_full(e.what());
         return false;
     }
     return true;

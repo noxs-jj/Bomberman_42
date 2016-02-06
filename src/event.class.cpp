@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.class.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmohamed <nmohamed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/05 14:13:13 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/06 14:46:54 by nmohamed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -562,21 +562,24 @@ void	Event::load_sounds(void) {
 	if (this->soundrender != NULL) {
 		if (!(
 				   this->soundrender->loadSound("blast", "assets/sound/blast.wav")
-				&& this->soundrender->loadSound("startup", "assets/sound/ps1.wav")
-				&& this->soundrender->loadSound("die", "assets/sound/megamandies.wav")
+				&& this->soundrender->loadSound("startup", "assets/sound/pause.wav")
+				&& this->soundrender->loadSound("die", "assets/sound/PLAYER_OUT.wav")
 				&& this->soundrender->loadSound("ready", "assets/sound/readymegaman.wav")
 				&& this->soundrender->loadSound("menu2", "assets/sound/megamenu2.wav")
 				&& this->soundrender->loadSound("menu1", "assets/sound/menu1.wav")
-				&& this->soundrender->loadSound("finish", "assets/sound/finish.wav")
+				&& this->soundrender->loadSound("timebomb", "assets/sound/timebomb.wav")
+				&& this->soundrender->loadSound("bombmove", "assets/sound/bombmove.wav")
+				&& this->soundrender->loadSound("pause", "assets/sound/pause.wav")
 				// music
-				&& this->soundrender->loadMusic("victory", "assets/sound/victory_finalfantasy.wav")
-				&& this->soundrender->loadMusic("victory_multiplayer", "assets/sound/victory.wav")
+				&& this->soundrender->loadMusic("victory", "assets/sound/victory.wav")
+				&& this->soundrender->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")
+				&& this->soundrender->loadMusic("victory_final", "assets/sound/victory_finalfantasy.wav")
 				&& this->soundrender->loadMusic("music", "assets/sound/bgm.wav")
 			)) {
-			std::cout << "loadsound error" << std::endl;
+			w_full("loadsound error");
 		}
-		std::cout << "sounds loaded" << std::endl;
+		w_full("sounds loaded");
 	} else {
-		std::cout << "soundrender == NULL" << std::endl;
+		w_full("soundrender = NULL");
 	}
 }
