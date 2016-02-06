@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/06 15:17:19 by vjacquie         ###   ########.fr       */
+/*   Updated: 2016/02/06 17:03:01 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void	Bomb::add_bomb_nbr(int id) {
 }
 
 void Bomb::suppr_remote_lst( void ) {
+	std::cout << "bed 04.0" << std::endl;
+
 	std::list<Entity *>::iterator it = main_event->char_list.begin();
 	std::list<Entity *>::iterator end = main_event->char_list.end();
 
@@ -122,26 +124,39 @@ void Bomb::suppr_remote_lst( void ) {
 			std::list<Entity *>::iterator itt = (*it)->remote_lst.begin();
 			std::list<Entity *>::iterator endd = (*it)->remote_lst.end();
 
+			std::cout << "bed 04.1" << std::endl;
+
 			while (itt != endd) {
+				std::cout << "bed 04.10" << std::endl;
+
 				if ((*itt)->id == this->id) {
 					(*it)->remote_lst.erase(itt);
 					return ;
 				}
-				it++;
+				std::cout << "bed 04.11" << std::endl;
+
+				itt++;
 			}
+			std::cout << "bed 04.2" << std::endl;
+
 			return ;
 		}
 		it++;
 	}
+	std::cout << "bed 04.3" << std::endl;
+
 }
 
 void	Bomb::detonate( void ) {
 	int i = 0;
 	int dir[4] = {0};
+	std::cout << "bed 00" << std::endl;
 	add_bomb_nbr(this->creator_id);
 	// delete main_event->map[(int)this->pos_y][(int)this->pos_x];
+	std::cout << "bed 01" << std::endl;
 	main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
 	damage_entity((int)this->pos_x ,(int)this->pos_y);
+	std::cout << "bed 02" << std::endl;
 	// main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_fire(FIRE_2, (int)this->pos_x - 0.5, (int)this->pos_y - 0.5, FIRE_2);
 
 	while (i <= this->blast_radius) {
@@ -159,9 +174,12 @@ void	Bomb::detonate( void ) {
 
 		i++;
 	}
+	std::cout << "bed 03" << std::endl;
 	main_event->soundrender->playSound("blast");
+	std::cout << "bed 04" << std::endl;
 	if (this->model == BOMB_REMOTE)
 		suppr_remote_lst();
+		std::cout << "bed 05" << std::endl;
 }
 
 void	Bomb::push_bomb() {
