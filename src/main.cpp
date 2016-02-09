@@ -52,6 +52,11 @@ int		main( int ac, char **av ) {
 			main_event->w_full("Joystick allocation error");
 			throw std::exception();
 		}
+		main_event->soundrender = new SoundRender();
+		if (NULL == main_event->soundrender) {
+			main_event->w_full("Soundrender allocation error");
+			throw std::exception();
+		}
 		main_event->init(ac, av);
 		ft42::logg = true; // ceci active les debugg ecran et fichier
 		// std::atexit(TTF_Quit);
@@ -83,7 +88,8 @@ int		main( int ac, char **av ) {
 		main_event->menu->introstart = false;
 		main_event->w_log("Event Init");
 		// main_event->print_map(); // DEBUGG
-		main_event->load_sounds();
+		
+		main_event->soundrender->load_files();
 		main_event->soundrender->playSound("startup");
 		main_event->soundrender->playMusic("ps1");
 

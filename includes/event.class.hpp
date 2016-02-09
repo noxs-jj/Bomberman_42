@@ -87,7 +87,6 @@ public:
 	void		remote_detonate( int model );
 	void		remote_put( int model );
 	void		cheat_stats( void );
-	void		load_sounds(void); //loads all sounds
 	void		player_move(int model, int dir);
 	void		player_bomb(int model);
 	void		ia_bomb(int id);

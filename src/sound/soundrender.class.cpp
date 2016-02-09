@@ -22,7 +22,7 @@ SoundRender::~SoundRender() {
     deinit();
 }
 
-bool SoundRender::init() {
+bool    SoundRender::init() {
     this->w_full("soundrender -> constructing");
     // open 44.1KHz, signed 16bit, system byte order,
     // stereo audio, using 1024 byte chunks
@@ -36,7 +36,7 @@ bool SoundRender::init() {
     return true;
 }
 
-bool SoundRender::deinit() {
+bool    SoundRender::deinit() {
     this->w_full("destructing soundrender");
     // free sounds
     for (auto it = mChunks.begin(); it != mChunks.cend();)
@@ -61,7 +61,37 @@ bool SoundRender::deinit() {
     return true;
 }
 
-bool SoundRender::loadSound(std::string soundName, std::string fileName) {
+void    SoundRender::load_files(void) {
+    if (!(
+               this->loadSound("blast", "assets/sound/blast.wav")
+            && this->loadSound("startup", "assets/sound/pause.wav")
+            && this->loadSound("die", "assets/sound/PLAYER_OUT.wav")
+            && this->loadSound("ready", "assets/sound/readymegaman.wav")
+            && this->loadSound("menu2", "assets/sound/megamenu2.wav")
+            && this->loadSound("menu1", "assets/sound/menu1.wav")
+            && this->loadSound("bombmove", "assets/sound/bombmove.wav")
+            && this->loadSound("pause", "assets/sound/pause.wav")
+            && this->loadSound("buldingfire", "assets/sound/3s_the_building_is_on_fire.wav")
+            && this->loadSound("dogsout", "assets/sound/3s_who_let_the_dogs_out.wav")
+            && this->loadSound("switchselect", "assets/sound/SE_02.wav")
+            && this->loadSound("return", "assets/sound/SE_07.wav")
+            && this->loadSound("dogsout_long", "assets/sound/10s_who_let_the_dogs_out.wav")
+            && this->loadSound("lose", "assets/sound/deuxheures.wav")
+            // music
+            && this->loadMusic("victory", "assets/sound/victory.wav")
+            && this->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")
+            && this->loadMusic("victory_final", "assets/sound/victory_finalfantasy.wav")
+            && this->loadMusic("music", "assets/sound/bgm.wav")
+            && this->loadMusic("ps1", "assets/sound/ps1.wav")
+        )) {
+        this->w_full("loadsound error");
+        throw std::exception();
+    }
+    this->w_full("sounds loaded");
+}
+
+
+bool    SoundRender::loadSound(std::string soundName, std::string fileName) {
     this->w_full("loading sound -> " + soundName + " at " + fileName);
     if (mChunks.count(soundName) > 0) {
         this->w_full("sound with given name already exists!");
@@ -77,7 +107,7 @@ bool SoundRender::loadSound(std::string soundName, std::string fileName) {
     return true;
 }
 
-bool SoundRender::playSound(std::string soundName) {
+bool    SoundRender::playSound(std::string soundName) {
 	try {
 	    if (Mix_PlayChannel(-1, mChunks.at(soundName), 0) == -1) {
 	        this->w_full(Mix_GetError());
@@ -92,7 +122,7 @@ bool SoundRender::playSound(std::string soundName) {
     return true;
 }
 
-bool SoundRender::loadMusic(std::string musicName, std::string fileName) {
+bool    SoundRender::loadMusic(std::string musicName, std::string fileName) {
     this->w_full("loading music -> " + musicName + " at " + fileName);
     if (mMusics.count(musicName) > 0) {
         this->w_full("music with given name already exists!");
@@ -110,7 +140,7 @@ bool SoundRender::loadMusic(std::string musicName, std::string fileName) {
     return true;
 }
 
-bool SoundRender::playMusic(std::string musicName) {
+bool    SoundRender::playMusic(std::string musicName) {
     try {
         // stop other musics before doing anything
     	Mix_HaltMusic();

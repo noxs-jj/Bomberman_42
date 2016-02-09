@@ -574,38 +574,3 @@ void	Event::fill_border_map(void) {
 		y++;
 	}
 }
-
-void	Event::load_sounds(void) {
-	this->soundrender = new SoundRender();
-	if (this->soundrender != NULL) {
-		if (!(
-				   this->soundrender->loadSound("blast", "assets/sound/blast.wav")
-				&& this->soundrender->loadSound("startup", "assets/sound/pause.wav")
-				&& this->soundrender->loadSound("die", "assets/sound/PLAYER_OUT.wav")
-				&& this->soundrender->loadSound("ready", "assets/sound/readymegaman.wav")
-				&& this->soundrender->loadSound("menu2", "assets/sound/megamenu2.wav")
-				&& this->soundrender->loadSound("menu1", "assets/sound/menu1.wav")
-				&& this->soundrender->loadSound("bombmove", "assets/sound/bombmove.wav")
-				&& this->soundrender->loadSound("pause", "assets/sound/pause.wav")
-				&& this->soundrender->loadSound("buldingfire", "assets/sound/3s_the_building_is_on_fire.wav")
-				&& this->soundrender->loadSound("dogsout", "assets/sound/3s_who_let_the_dogs_out.wav")
-				&& this->soundrender->loadSound("switchselect", "assets/sound/SE_02.wav")
-				&& this->soundrender->loadSound("return", "assets/sound/SE_07.wav")
-				&& this->soundrender->loadSound("dogsout_long", "assets/sound/10s_who_let_the_dogs_out.wav")
-				&& this->soundrender->loadSound("lose", "assets/sound/deuxheures.wav")
-				// music
-				&& this->soundrender->loadMusic("victory", "assets/sound/victory.wav")
-				&& this->soundrender->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")
-				&& this->soundrender->loadMusic("victory_final", "assets/sound/victory_finalfantasy.wav")
-				&& this->soundrender->loadMusic("music", "assets/sound/bgm.wav")
-				&& this->soundrender->loadMusic("ps1", "assets/sound/ps1.wav")
-			)) {
-			this->w_full("loadsound error");
-			throw std::exception();
-		}
-		this->w_full("sounds loaded");
-	} else {
-		this->w_full("soundrender = NULL");
-		throw std::exception();
-	}
-}

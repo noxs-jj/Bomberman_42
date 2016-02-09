@@ -31,21 +31,22 @@ class SoundRender : ft42 {
         SoundRender & operator=(SoundRender const & rhs) = default;
         virtual ~SoundRender();
 
-		bool init();
-		bool deinit();
+		bool	init();
+		bool	deinit();
+        void	load_files(void); //loads all sounds
 
         // add a sound to sound list
         // play it with 'playSound(soundName);'
         // returns 'false' if something goes wrong
-        bool loadSound(std::string soundName, std::string fileName);
+        bool	loadSound(std::string soundName, std::string fileName);
 
         // play the sound 'soundName'
         // which you added via 'loadSound(soundName, fileName);'
         // returns 'false' if it does not exist
-        bool playSound(std::string soundName);
+        bool	playSound(std::string soundName);
 
-        bool loadMusic(std::string musicName, std::string fileName);
-        bool playMusic(std::string musicName);
+        bool	loadMusic(std::string musicName, std::string fileName);
+        bool	playMusic(std::string musicName);
 
     private:
 
