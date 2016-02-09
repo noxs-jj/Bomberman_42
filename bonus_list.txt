@@ -2,12 +2,13 @@
 - mode arene
 - mode coop
 - plus de 3 levels (9 levels)
-- un boss affiche
+- 4 boss affiche
 - SKYBOX
 - Gestion 5 Joysticks
 - Gestion Bonus Power
 	* Power up (augmentatino du rayon d'explosion)
 	* Plus One (augmentatino du nombre de bomb pose)
 	* Bomb change (changement du model de bombe)
-- Parseur de Map en C++
-- Editeur de map en HTML/Javascript
+	* Kick Bomb
+	* Remote Bomb
+- Parseur de Map personnalise avec Editeur de map en HTML/Javascript

@@ -43,9 +43,7 @@ Event & Event::operator=( Event const & rhs ) {
 	return (*this);
 }
 
-Event::~Event( void ) {
-	// delete this->soundrender;
-}
+Event::~Event( void ) {}
 
 void 	Event::free_game( void ) {
 	int x, y = 0;
@@ -79,7 +77,7 @@ void	Event::make_new_game( int new_level ) {
 	}
 		main_event->game_pause = false;
 		Entity::autoincrement = 0;
-	fill_border_map();
+	// fill_border_map();
 	if (this->joystick->test == 1) {
 		sprintf(map_name, "assets/map/test/test1.ntm");
 		this->map = Mapparser::map_from_file(map_name);
@@ -184,9 +182,9 @@ void	Event::gen_obstacle(int difficulty) {
 		if (check_coord(1, (float)tmpx, (float)tmpy) == true) {
 			delete this->map[tmpy][tmpx];
 			if (rand() % 20 <= 2)
-				this->map[tmpy][tmpx] = create_wall(WALL_INDESTRUCTIBLE, (float)tmpx, (float)tmpy, WALL_INDESTRUCTIBLE);
+				this->map[tmpy][tmpx] = Factory::create_wall(WALL_INDESTRUCTIBLE, (float)tmpx, (float)tmpy, WALL_INDESTRUCTIBLE);
 			else
-				this->map[tmpy][tmpx] = create_wall(rand_range(WALL_HP_1, 1 + difficulty), (float)tmpx, (float)tmpy, WALL_HP_1);
+				this->map[tmpy][tmpx] = Factory::create_wall(rand_range(WALL_HP_1, 1 + difficulty), (float)tmpx, (float)tmpy, WALL_HP_1);
 		}
 		block--;
 	}
@@ -218,7 +216,7 @@ void	Event::gen_level_campaign(int level, int boss, bool coop) {
 	int p_y = 2 + (rand() % (globject::mapY_size - 4));
 	boss = (boss > 0) ? 0 : 1;
 
-	this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1)); // change model
+	this->char_list.push_back(Factory::create_player(0, (float)p_x, (float)p_y, PLAYER1)); // change model
 	std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
 	if (coop == true) {
 		p_x = 2 + (rand() % (globject::mapX_size - 4));
@@ -227,7 +225,7 @@ void	Event::gen_level_campaign(int level, int boss, bool coop) {
 			p_x = 2 + (rand() % (globject::mapX_size - 4));
 			p_y = 2 + (rand() % (globject::mapY_size - 4));
 			}
-			this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER2)); // change model
+			this->char_list.push_back(Factory::create_player(0, (float)p_x, (float)p_y, PLAYER2)); // change model
 			std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
 	}
 
@@ -239,9 +237,9 @@ void	Event::gen_level_campaign(int level, int boss, bool coop) {
 		tmpy = 2 + (rand() % (globject::mapY_size - 4));
 		if (check_coord(0, (float)tmpx, (float)tmpy) == true) {
 			if (boss == 1)
-				this->char_list.push_back(create_boss(0, (float)tmpx, (float)tmpy, BOSS_A, BOSS_A)); // change model
+				this->char_list.push_back(Factory::create_boss(0, (float)tmpx, (float)tmpy, BOSS_A, BOSS_A)); // change model
 			else
-				this->char_list.push_back(create_enemy(0, (float)tmpx, (float)tmpy, ENEMY1)); // change model
+				this->char_list.push_back(Factory::create_enemy(0, (float)tmpx, (float)tmpy, ENEMY1)); // change model
 			i++;
 		}
 	}
@@ -255,7 +253,7 @@ void	Event::gen_level_multi(int level, int coop) {
 		int p_x = 2 + (rand() % (globject::mapX_size - 4));
 		int p_y = 2 + (rand() % (globject::mapY_size - 4));
 		if (check_coord(0, (float)p_x, (float)p_y) == true) {
-			this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1 + i)); // change model
+			this->char_list.push_back(Factory::create_player(0, (float)p_x, (float)p_y, PLAYER1 + i)); // change model
 			i++;
 		}
 	}
@@ -269,7 +267,7 @@ void	Event::gen_level_arena(int level, int coop) {
 		int p_x = 2 + (rand() % (globject::mapX_size - 4));
 		int p_y = 2 + (rand() % (globject::mapY_size - 4));
 		if (check_coord(0, (float)p_x, (float)p_y) == true) {
-			this->char_list.push_back(create_player(0, (float)p_x, (float)p_y, PLAYER1 + i));
+			this->char_list.push_back(Factory::create_player(0, (float)p_x, (float)p_y, PLAYER1 + i));
 			i++;
 		}
 	}
@@ -279,7 +277,7 @@ void	Event::gen_level_arena(int level, int coop) {
 		tmpx = 2 + (rand() % (globject::mapX_size - 4));
 		tmpy = 2 + (rand() % (globject::mapY_size - 4));
 	}
-	this->char_list.push_back(create_boss(0, (float)tmpx, (float)tmpy, BOSS_A, BOSS_A));
+	this->char_list.push_back(Factory::create_boss(0, (float)tmpx, (float)tmpy, BOSS_A, BOSS_A));
 	gen_obstacle((level / 3));
 }
 
@@ -330,87 +328,6 @@ void	Event::lauchGame( void ) {
 	while (this->run == true) {
 
 	}
-}
-
-Wall *	Event::create_wall(int status, float x, float y, int model) {
-	Wall * wall = new Wall(x, y, status, model);
-	if (wall == NULL) {
-		this->w_full("create_wall:: wall Malloc error");
-		throw std::exception();
-	}
-
-	return wall;
-}
-
-Bonus *	Event::create_bonus(int status, float x, float y, int model) {
-	Bonus * bonus = new Bonus(x, y, status, model);
-	if (bonus == NULL) {
-		this->w_full("create_bonus:: bonus Malloc error");
-		throw std::exception();
-	}
-
-	return bonus;
-}
-
-Bomb *	Event::create_bomb(int status, float x, float y, int model, int id) {
-	Bomb * bomb = new Bomb(x, y, status, model, id);
-	if (bomb == NULL) {
-		this->w_full("create_bomb:: bomb Malloc error");
-		throw std::exception();
-	}
-
-	return bomb;
-}
-
-Fire *	Event::create_fire(int status, float x, float y, int model) {
-	Fire * fire = new Fire(x, y, status, model);
-	if (fire == NULL) {
-		this->w_error("create_fire:: fire Malloc error");
-		throw std::exception();
-	}
-
-	return fire;
-}
-
-Player *	Event::create_player(int status, float x, float y, int model) {
-	Player * player = new Player(x, y, status, model);
-	if (player == NULL) {
-		this->w_error("create_player:: player Malloc error");
-		throw std::exception();
-	}
-
-	return player;
-}
-
-Enemy *	Event::create_enemy(int status, float x, float y, int model) {
-	Enemy * enemy = new Enemy(x, y, status, model);
-	if (enemy == NULL) {
-		this->w_error("create_enemy:: enemy Malloc error");
-		throw std::exception();
-	}
-
-	return enemy;
-}
-
-Boss *	Event::create_boss(int status, float x, float y, int name, int model) {
-	Boss * boss = new Boss(x, y, status, name, model);
-	if (boss == NULL) {
-		this->w_error("create_enemy:: enemy Malloc error");
-		throw std::exception();
-	}
-
-	return boss;
-}
-
-Entity * Event::create_empty(int x, int y) {
-	Entity * ent = new Entity(EMPTY, (float)x, (float)y, NO_STATUS);
-	ent->model = -1;
-	if (ent == NULL) {
-		this->w_error("create_empty:: enemy Malloc error");
-		throw std::exception();
-	}
-
-	return ent;
 }
 
 void	Event::player_move(int model, int dir) {
@@ -561,14 +478,14 @@ void	Event::fill_border_map(void) {
 		x = 0;
 		while (x < globject::mapX_size) {
 			if (y == 0 || y == globject::mapY_size - 1 || x == 0 || x == globject::mapX_size - 1) {
-				this->map[y][x] = create_wall(WALL_INDESTRUCTIBLE, (float)x, (float)y, WALL_INDESTRUCTIBLE);
+				this->map[y][x] = Factory::create_wall(WALL_INDESTRUCTIBLE, (float)x, (float)y, WALL_INDESTRUCTIBLE);
 				if (this->map[y][x] == NULL) {
 					this->w_error("fill_border_map:: this->map[y][x] Malloc error");
 					throw std::exception();
 				}
 			}
 			else
-				this->map[y][x] = create_empty((int)x, (int)y);
+				this->map[y][x] = Factory::create_empty((int)x, (int)y);
 			x++;
 		}
 		y++;

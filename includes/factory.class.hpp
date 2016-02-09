@@ -10,23 +10,33 @@
 //                                                                            //
 // ************************************************************************** //
 
-#include <fire.class.hpp>
+#ifndef FACTORY_EVENT_HPP
+# define FACTORY_EVENT_HPP
 
-Fire::~Fire( void ) {}
+# include <ft42.class.hpp>
 
-Fire::Fire( float x, float y, int status, int model ) : Entity( FIRE, x, y, status ) {
-	this->model = model;
-	this->timer = 40;
-}
+class Entity;
+class Wall;
+class Bomb;
+class Bonus;
+class Fire;
+class Player;
+class Enemy;
+class Boss;
 
-void	Fire::fire_timer( void ) {
-	if (this->timer - 1 > 0) {
-		if (this->timer % 2 == 0)
-			this->frame++;
-		this->timer--;
-	}
-	else {
-		delete main_event->map[(int)this->pos_y][(int)this->pos_x];
-		main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
-	}
-}
+class Factory : public ft42 {
+public:
+    Factory();
+    virtual ~Factory();
+
+    static Wall *      create_wall(int status, float x, float y, int model);
+    static Bonus *     create_bonus(int status, float x, float y, int model);
+    static Bomb *      create_bomb(int status, float x, float y, int model, int id);
+    static Fire *      create_fire(int status, float x, float y, int model);
+    static Player *    create_player(int status, float x, float y, int model);
+    static Enemy *     create_enemy(int status, float x, float y, int model);
+    static Boss *      create_boss(int status, float x, float y, int name, int model);
+    static Entity *    create_empty(int x, int y);
+};
+
+#endif

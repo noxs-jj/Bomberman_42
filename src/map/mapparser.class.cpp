@@ -50,7 +50,7 @@ Entity ***      Mapparser::map_from_file( char *map_path ) {
 
       elem = Mapparser::get_entity_from_map( casemap, (float)x, (float)j );
       if (elem->type == PLAYER || elem->type == ENEMY || elem->type == BOSS) {
-        tmp[j][x] = main_event->create_empty((int)x, (int)j);
+        tmp[j][x] = Factory::create_empty((int)x, (int)j);
         main_event->char_list.push_back(elem);
       }
       else
@@ -80,33 +80,33 @@ Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, floa
   }
   else {
     switch (g_mapcase.at(casemap)) {
-      case EMPTY:                 return static_cast<Entity*>( main_event->create_empty(x, y) );
-      case WALL_INDESTRUCTIBLE:   return static_cast<Entity*>( main_event->create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_INDESTRUCTIBLE) );
-      case WALL_HP_1:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_1, x, y, WALL_HP_1) );
-      case WALL_HP_2:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_2, x, y, WALL_HP_2) );
-      case WALL_HP_3:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_3, x, y, WALL_HP_3) );
-      case WALL_HP_4:             return static_cast<Entity*>( main_event->create_wall(WALL_HP_4, x, y, WALL_HP_4) );
-      case ENEMY1:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY1) );
-      case ENEMY2:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY2) );
-      case ENEMY3:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY3) );
-	  case ENEMY4:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY4) );
-      case ENEMY5:                return static_cast<Entity*>( main_event->create_enemy(ENEMY, x, y, ENEMY5) );
-      case BOSS_A:                return static_cast<Entity*>( main_event->create_boss(BOSS, x, y, BOSS_A, BOSS_A) );
-      case BOSS_B:                return static_cast<Entity*>( main_event->create_boss(BOSS, x, y, BOSS_B, BOSS_B) );
-	  case BOSS_C:                return static_cast<Entity*>( main_event->create_boss(BOSS, x, y, BOSS_C, BOSS_C) );
-      case BOSS_D:                return static_cast<Entity*>( main_event->create_boss(BOSS, x, y, BOSS_C, BOSS_D) );
-      case PLAYER1:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER1) );
-      case PLAYER2:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER2) );
-      case PLAYER3:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER3) );
-      case PLAYER4:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER4) );
-	  case PLAYER5:               return static_cast<Entity*>( main_event->create_player( PLAYER, x, y, PLAYER5) );
-	  case BONUS_POWER_UP:        return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_POWER_UP) );
-	  case BONUS_PLUS_ONE:        return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_PLUS_ONE) );
-	  case BONUS_KICK:            return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_KICK) );
-	  case BONUS_CHANGE:          return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_CHANGE) );
-	  case BONUS_REMOTE_BOMB:     return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_REMOTE_BOMB) );
-	  case BONUS_SPEED_UP:        return static_cast<Entity*>( main_event->create_player( BONUS, x, y, BONUS_SPEED_UP) );
-      default:                    return static_cast<Entity*>( main_event->create_empty(x, y) );
+      case EMPTY:                 return static_cast<Entity*>( Factory::create_empty(x, y) );
+      case WALL_INDESTRUCTIBLE:   return static_cast<Entity*>( Factory::create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_INDESTRUCTIBLE) );
+      case WALL_HP_1:             return static_cast<Entity*>( Factory::create_wall(WALL_HP_1, x, y, WALL_HP_1) );
+      case WALL_HP_2:             return static_cast<Entity*>( Factory::create_wall(WALL_HP_2, x, y, WALL_HP_2) );
+      case WALL_HP_3:             return static_cast<Entity*>( Factory::create_wall(WALL_HP_3, x, y, WALL_HP_3) );
+      case WALL_HP_4:             return static_cast<Entity*>( Factory::create_wall(WALL_HP_4, x, y, WALL_HP_4) );
+      case ENEMY1:                return static_cast<Entity*>( Factory::create_enemy(ENEMY, x, y, ENEMY1) );
+      case ENEMY2:                return static_cast<Entity*>( Factory::create_enemy(ENEMY, x, y, ENEMY2) );
+      case ENEMY3:                return static_cast<Entity*>( Factory::create_enemy(ENEMY, x, y, ENEMY3) );
+	  case ENEMY4:                return static_cast<Entity*>( Factory::create_enemy(ENEMY, x, y, ENEMY4) );
+      case ENEMY5:                return static_cast<Entity*>( Factory::create_enemy(ENEMY, x, y, ENEMY5) );
+      case BOSS_A:                return static_cast<Entity*>( Factory::create_boss(BOSS, x, y, BOSS_A, BOSS_A) );
+      case BOSS_B:                return static_cast<Entity*>( Factory::create_boss(BOSS, x, y, BOSS_B, BOSS_B) );
+	  case BOSS_C:                return static_cast<Entity*>( Factory::create_boss(BOSS, x, y, BOSS_C, BOSS_C) );
+      case BOSS_D:                return static_cast<Entity*>( Factory::create_boss(BOSS, x, y, BOSS_C, BOSS_D) );
+      case PLAYER1:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER1) );
+      case PLAYER2:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER2) );
+      case PLAYER3:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER3) );
+      case PLAYER4:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER4) );
+	  case PLAYER5:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER5) );
+	  case BONUS_POWER_UP:        return static_cast<Entity*>( Factory::create_player( BONUS, x, y, BONUS_POWER_UP) );
+	  case BONUS_PLUS_ONE:        return static_cast<Entity*>( Factory::create_player( BONUS, x, y, BONUS_PLUS_ONE) );
+	  case BONUS_KICK:            return static_cast<Entity*>( Factory::create_player( BONUS, x, y, BONUS_KICK) );
+	  case BONUS_CHANGE:          return static_cast<Entity*>( Factory::create_player( BONUS, x, y, BONUS_CHANGE) );
+	  case BONUS_REMOTE_BOMB:     return static_cast<Entity*>( Factory::create_player( BONUS, x, y, BONUS_REMOTE_BOMB) );
+	  case BONUS_SPEED_UP:        return static_cast<Entity*>( Factory::create_player( BONUS, x, y, BONUS_SPEED_UP) );
+      default:                    return static_cast<Entity*>( Factory::create_empty(x, y) );
     }
   }
 

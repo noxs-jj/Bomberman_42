@@ -16,6 +16,7 @@
 # include <ft42.class.hpp>
 # include <entity.class.hpp>
 # include <joystick.hpp>
+# include <factory.class.hpp>
 
 class Entity;
 class Wall;
@@ -62,7 +63,7 @@ public:
 	bool					event_running = true;
 	bool					to_die_entity = false;
 	Joystick *				joystick = NULL;
-	bool							live_player[5];
+	bool					live_player[5];
 
 	Event( void );
 	Event( Event const & src );
@@ -75,14 +76,6 @@ public:
 	bool		check_coord(int mode, float x, float y);
 	void		gen_obstacle(int difficulty);
 	void		gen_level_arena(int level, int coop);
-	Wall *		create_wall(int status, float x, float y, int model);
-	Bonus *		create_bonus(int status, float x, float y, int model);
-	Bomb *		create_bomb(int status, float x, float y, int model, int id);
-	Fire *		create_fire(int status, float x, float y, int model);
-	Player *	create_player(int status, float x, float y, int model);
-	Enemy *		create_enemy(int status, float x, float y, int model);
-	Boss *		create_boss(int status, float x, float y, int name, int model);
-	Entity *	create_empty(int x, int y);
 
 	void		remote_detonate( int model );
 	void		remote_put( int model );

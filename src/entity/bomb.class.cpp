@@ -54,7 +54,7 @@ void Bomb::add_bonus(int x, int y) {
 	else
 		bonus = BONUS_PLUS_ONE;
 
-	main_event->map[y][x] = main_event->create_bonus(BONUS, x, y, bonus);
+	main_event->map[y][x] = Factory::create_bonus(BONUS, x, y, bonus);
 }
 
 int		Bomb::blast_case(int y, int x) {
@@ -70,8 +70,8 @@ int		Bomb::blast_case(int y, int x) {
 			if ((rand() % 20) <= 8)
 				add_bonus(x, y);
 			else
-				main_event->map[y][x] = main_event->create_empty(x, y);
-			// main_event->map[y][x] = main_event->create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
+				main_event->map[y][x] = Factory::create_empty(x, y);
+			// main_event->map[y][x] = Factory::create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
 			// damage_entity(x, y);
 		}
 	}
@@ -79,7 +79,7 @@ int		Bomb::blast_case(int y, int x) {
 		static_cast<Bomb*>(main_event->map[y][x])->detonate();
 	else if (main_event->map[y][x]->type == EMPTY) {
 		delete main_event->map[y][x];
-		main_event->map[y][x] = main_event->create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
+		main_event->map[y][x] = Factory::create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
 		damage_entity(x, y);
 		return (0);
 	}
@@ -90,7 +90,7 @@ int		Bomb::blast_case(int y, int x) {
 	}
 	else if (main_event->map[y][x]->type == BONUS) {
 		delete main_event->map[y][x];
-		main_event->map[y][x] = main_event->create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
+		main_event->map[y][x] = Factory::create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
 		damage_entity(x, y);
 		return (0);
 	}
@@ -154,10 +154,10 @@ void	Bomb::detonate( void ) {
 	add_bomb_nbr(this->creator_id);
 	// delete main_event->map[(int)this->pos_y][(int)this->pos_x];
 	std::cout << "bed 01" << std::endl;
-	main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
+	main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
 	damage_entity((int)this->pos_x ,(int)this->pos_y);
 	std::cout << "bed 02" << std::endl;
-	// main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_fire(FIRE_2, (int)this->pos_x - 0.5, (int)this->pos_y - 0.5, FIRE_2);
+	// main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_fire(FIRE_2, (int)this->pos_x - 0.5, (int)this->pos_y - 0.5, FIRE_2);
 
 	while (i <= this->blast_radius) {
 		if (dir[0] == 0 && check_coord_exist((int)(this->pos_y - i), (int)(this->pos_x)) == true)
@@ -201,11 +201,11 @@ void	Bomb::push_bomb() {
 			delete main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)];
 			main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)] = main_event->map[(int)this->pos_y][(int)this->pos_x];
 			// delete main_event->map[(int)this->pos_y][(int)this->pos_x];
-			main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
+			main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
 			this->pos_x = x + this->pos_x;
 			this->pos_y = y + this->pos_y;
 			// delete main_event->map[(int)this->pos_y][(int)this->pos_x];
-			// main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
+			// main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
 		}
 		else {
 			this->pos_x = x + this->pos_x;

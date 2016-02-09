@@ -147,7 +147,7 @@ bool    Ia::play_boss(Boss *it, int time) {
         static_cast<Entity*>(it)
       ))) {
         if (time % 50 == 1) {
-          main_event->char_list.push_back(main_event->create_enemy (
+          main_event->char_list.push_back(Factory::create_enemy (
             ENEMY,
             (*heros)->pos_x,
             (*heros)->pos_y,

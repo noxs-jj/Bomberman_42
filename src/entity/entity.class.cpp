@@ -165,7 +165,7 @@ void	Entity::move( int dir ) {
 		{
 			static_cast<Bonus*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->affect(this);
 			delete main_event->map[(int)this->pos_y][(int)this->pos_x];
-			main_event->map[(int)this->pos_y][(int)this->pos_x] = main_event->create_empty((int)this->pos_x, (int)this->pos_y);
+			main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
 		}
 		// change frame here
 	}
@@ -296,8 +296,8 @@ void	Entity::die( void ) {
 
 void	Entity::put_bomb(int status, float x, float y, int model, int blast, int id) {
 	delete main_event->map[(int)y][(int)x];
-	// main_event->map[(int)y][(int)x] = main_event->create_empty((int)x, (int)y);
-	main_event->map[(int)y][(int)x] = main_event->create_bomb(status, (int)x + 0.5, (int)y + 0.5, model, id);
+	// main_event->map[(int)y][(int)x] = Factory::create_empty((int)x, (int)y);
+	main_event->map[(int)y][(int)x] = Factory::create_bomb(status, (int)x + 0.5, (int)y + 0.5, model, id);
 	main_event->map[(int)y][(int)x]->blast_radius = blast;
 	if (model != BOMB_REMOTE)
 	{
