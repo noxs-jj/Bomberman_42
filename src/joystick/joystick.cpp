@@ -1,14 +1,14 @@
-// ************************************************************************** //
-//   24 Bomb                                                                  //
-//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
-//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
-//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
-//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
-//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
-//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
-//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
-//                                                                            //
-// ************************************************************************** //
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   joystick.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
+/*   Updated: 2016/02/10 14:59:23 by jmoiroux         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <joystick.hpp>
 #include <event.class.hpp>
@@ -388,18 +388,18 @@ void Joystick::read_key(int mode) {
 		else if (event.type == SDL_JOYAXISMOTION) {
 			if( event.jaxis.axis == 0)
 	        {
-				if (event.jaxis.value > 0)
+				if (event.jaxis.value > 3200)
 					main_event->menu->move_menu_hor();
-				else if (event.jaxis.value < 0)
+				else if (event.jaxis.value < -3200)
 					main_event->menu->move_menu_hor();
 	            /* Left-right movement code goes here */
 	        }
 
 	        if( event.jaxis.axis == 1)
 	        {
-				if (event.jaxis.value > 0)
+				if (event.jaxis.value > 3200)
 					main_event->menu->move_menu_ver(1);
-				else if (event.jaxis.value < 0)
+				else if (event.jaxis.value < -3200)
 					main_event->menu->move_menu_ver(-1);
 	            /* Up-Down movement code goes here */
 	        }
