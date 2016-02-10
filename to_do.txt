@@ -2,8 +2,8 @@ sortie de programme:
     - Penser a free tout les object de main_event, puis main_event
 
 BUG:
-    - SEGFAULT(Linux): arena 5 plays en laissant tourner le jeux sans rien faire
-	segfault lors de la LOSE, il reste des jouers en jeux au moment du segfault
+	- Render::render_all SEGFAULT sur version linux dans arena/multi apres un
+	long moment ou au hasard
 
 LOGIC:
     - fin de partie laisser ecran 1-2 sec pour comprendre la fin ? (pas obligatoire)
