@@ -167,9 +167,13 @@ bool    Ia::play_boss(Boss *it, int time) {
 void     Ia::start(int time) {
   std::list<Entity *>::iterator it = main_event->char_list.begin();
   std::list<Entity *>::iterator end = main_event->char_list.end();
+  size_t 	entity_nbr = main_event->char_list.size();
 
   (void)time;
   while (it != end) {
+	// arena 5 : le jeu plante quand l'ia tue le joueur en haut a gauche
+	if (entity_nbr != main_event->char_list.size()) // segv quand ia meurt
+		return ;
     if ((*it)->type == ENEMY) {
       Ia::play_enemy(static_cast<Enemy*>(*it));
     }
