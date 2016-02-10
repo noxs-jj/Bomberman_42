@@ -62,7 +62,9 @@ int		main( int ac, char **av ) {
 		// std::atexit(TTF_Quit);
 		srand(clock());
 		# ifdef linux
-			if (RESOLUTION_1600 == main_event->option_resolution)
+			if (RESOLUTION_800 == main_event->option_resolution)
+				globject::init(800, 600);
+			else if (RESOLUTION_1600 == main_event->option_resolution)
 				globject::init(1600, 900);
 			else if (RESOLUTION_1920 == main_event->option_resolution)
 				globject::init(1920, 1080);
@@ -88,7 +90,7 @@ int		main( int ac, char **av ) {
 		main_event->menu->introstart = false;
 		main_event->w_log("Event Init");
 		// main_event->print_map(); // DEBUGG
-		
+
 		main_event->soundrender->load_files();
 		main_event->soundrender->playSound("startup");
 		main_event->soundrender->playMusic("ps1");

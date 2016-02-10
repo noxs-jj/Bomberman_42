@@ -158,6 +158,8 @@ void	Event::parse_command(int ac, char **av) {
 			this->option_resolution = RESOLUTION_1920;
 		else if (strcmp(av[i], "-1600") == 0)
 			this->option_resolution = RESOLUTION_1600;
+		else if (strcmp(av[i], "-800") == 0)
+			this->option_resolution = RESOLUTION_800;
 		i++;
 	}
 }

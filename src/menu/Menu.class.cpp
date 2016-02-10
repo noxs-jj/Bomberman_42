@@ -135,8 +135,7 @@ void	Menu::print_surface(SDL_Surface * str, SDL_Surface * str_select, int x, int
 void  Menu::big_menu() {
 	static int musicPlaying = false;
 
-	if (!musicPlaying)
-	{
+	if (!musicPlaying) {
 		musicPlaying = true;
 		main_event->soundrender->playMusic("music");
 	}
@@ -155,27 +154,14 @@ void  Menu::big_menu() {
 }
 
 void Menu::init() {
-	int devices = SDL_NumJoysticks();
+	this->joystick_number = SDL_NumJoysticks();
 
 	this->SansPosterBold = TTF_OpenFont("src/menu/fonts/GoldenAge.ttf", 64);
 	this->white = {255, 255, 255, 1};
 	this->blue = {0, 0, 255, 1};
 	this->red = {255, 0, 0, 1};
 	SDL_JoystickEventState(SDL_ENABLE);
-	if (devices > 0) {
-		this->manette1 = SDL_JoystickOpen(0);
-		if (this->manette1 < 0) {
-			std::cerr << "Could not open joystick 1 " << SDL_GetError() << std::endl;
-			throw std::exception();
-		}
-	}
-	if (devices > 1) {
-		this->manette2 = SDL_JoystickOpen(1);
-		if (this->manette2 < 0) {
-			std::cerr << "Could not open joystick 2 " << SDL_GetError() << std::endl;
-			throw std::exception();
-		}
- 	}
+	main_event->joystick->init_joystick();
 
 
 	this->menu_selected = BIG_MENU;

@@ -43,6 +43,44 @@ Joystick::~Joystick(void) {}
 // Joystick::Joystick( Joystick const & src ) {}
 // Joystick::Joystick & operator=( Joystick const & rhs ) {}
 
+void Joystick::init_joystick() {
+	if (main_event->menu->joystick_number > 0) {
+		this->manette1 = SDL_JoystickOpen(0);
+		if (this->manette1 < 0) {
+			std::cerr << "Could not open joystick 1 " << SDL_GetError() << std::endl;
+			throw std::exception();
+		}
+	}
+	if (main_event->menu->joystick_number > 1) {
+		this->manette2 = SDL_JoystickOpen(1);
+		if (this->manette2 < 0) {
+			std::cerr << "Could not open joystick 2 " << SDL_GetError() << std::endl;
+			throw std::exception();
+		}
+ 	}
+	if (main_event->menu->joystick_number > 2) {
+		this->manette3 = SDL_JoystickOpen(2);
+		if (this->manette3 < 0) {
+			std::cerr << "Could not open joystick 3 " << SDL_GetError() << std::endl;
+			throw std::exception();
+		}
+ 	}
+	if (main_event->menu->joystick_number > 3) {
+		this->manette4 = SDL_JoystickOpen(3);
+		if (this->manette4 < 0) {
+			std::cerr << "Could not open joystick 4 " << SDL_GetError() << std::endl;
+			throw std::exception();
+		}
+ 	}
+	if (main_event->menu->joystick_number > 4) {
+		this->manette5 = SDL_JoystickOpen(4);
+		if (this->manette5 < 0) {
+			std::cerr << "Could not open joystick 5 " << SDL_GetError() << std::endl;
+			throw std::exception();
+		}
+ 	}
+}
+
 void	Joystick::save_config( void ) {
 	FILE *stream;
 	char buf[128] = {0};
@@ -311,7 +349,7 @@ void Joystick::read_key(int mode) {
         // JOYSTICK BUTTON
         else if (event.type == SDL_JOYBUTTONDOWN) {
           switch (event.cbutton.button) {
-            case 0:   if (false == main_event->menu->introstart) {
+            case 3:   if (false == main_event->menu->introstart) {
               main_event->menu->introstart = true;
               main_event->mode_menu = true;
             }
@@ -328,9 +366,9 @@ void Joystick::read_key(int mode) {
               else
                 main_event->menu->change_menu();
               break;
-            case 1:   main_event->menu->change_menu_back(); break;
-            case 2:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-            case 3:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+            case 2:   main_event->menu->change_menu_back(); break;
+            case 0:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+            case 1:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 4:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 5:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
@@ -347,8 +385,28 @@ void Joystick::read_key(int mode) {
             default: break;
           }
         }
+		else if (event.type == SDL_JOYAXISMOTION) {
+			if( event.jaxis.axis == 0)
+	        {
+				if (event.jaxis.value > 0)
+					main_event->menu->move_menu_hor();
+				else if (event.jaxis.value < 0)
+					main_event->menu->move_menu_hor();
+	            /* Left-right movement code goes here */
+	        }
+
+	        if( event.jaxis.axis == 1)
+	        {
+				if (event.jaxis.value > 0)
+					main_event->menu->move_menu_ver(1);
+				else if (event.jaxis.value < 0)
+					main_event->menu->move_menu_ver(-1);
+	            /* Up-Down movement code goes here */
+	        }
+			// std::cout << "hello" << std::endl;
+		}
         // JOYSTICK CROIX DIRECTIONNEL
-        else if (event.type == SDL_JOYHATMOTION) {
+        else if (event.type == SDL_JOYHATMOTION || event.type == 1536) {
           if (0 == event.jhat.hat && 0 != event.jhat.value)
           {
             switch (event.jhat.value) {
@@ -361,6 +419,9 @@ void Joystick::read_key(int mode) {
             }
           }
         }
+		// else if (event.type == 1536) {
+		// 	std::cout << "bla" << std::endl;
+		// }
       }
     }
     else {
@@ -397,11 +458,12 @@ void Joystick::read_key(int mode) {
     				}
             // JOYSTICK BUTTON
             else if (event.type == SDL_JOYBUTTONDOWN) {
+
               switch (event.cbutton.button) {
-                case 0:   main_event->player_bomb(main_event->config[event.jbutton.which]); break;
-                case 1:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                case 3:   main_event->player_bomb(main_event->config[event.jbutton.which]); break;
+                case 0:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 2:   main_event->remote_put(main_event->config[event.jbutton.which]); break;
-                case 3:   main_event->remote_detonate(main_event->config[event.jbutton.which]); break;
+                case 1:   main_event->remote_detonate(main_event->config[event.jbutton.which]); break;
                 case 4:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 5:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
@@ -420,6 +482,7 @@ void Joystick::read_key(int mode) {
             }
             // JOYSTICK CROIX DIRECTIONNEL
             else if (event.type == SDL_JOYHATMOTION) {
+				std::cout << "SDL_JOYHATMOTION" <<std::endl;
                 switch (event.jhat.value) {
                   case SDL_HAT_UP:        change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_UP); break;
                   case SDL_HAT_LEFT:      change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_LEFT); break;
@@ -429,6 +492,34 @@ void Joystick::read_key(int mode) {
                   default:                break;
                 }
             }
+			else if (event.type == SDL_JOYAXISMOTION) {
+				if( event.jaxis.axis == 0)
+		        {
+					if (event.jaxis.value > 3200)
+						change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_RIGHT);
+					else if (event.jaxis.value < -3200)
+						change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_LEFT);
+					else
+						change_dir_joystick(this->arr_key_controller[event.jaxis.which], -1);
+		            /* Left-right movement code goes here */
+		        }
+
+		        if( event.jaxis.axis == 1)
+		        {
+					if (event.jaxis.value > 3200)
+						change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_BOTTOM);
+					else if (event.jaxis.value < -3200)
+						change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_UP);
+					else
+						change_dir_joystick(this->arr_key_controller[event.jaxis.which], -1);
+
+		            /* Up-Down movement code goes here */
+		        }
+				// std::cout << "hello" << std::endl;
+			}
+			else{
+				std::cout << "event.type " << event.type << std::endl;
+			}
             if (event.type == SDL_KEYUP) {
                 switch((event).key.keysym.sym) {
     							case SDLK_KP_5:     this->arr_key_keyboard[1]->key_up = 0; break;
