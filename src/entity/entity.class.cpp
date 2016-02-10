@@ -164,8 +164,10 @@ void	Entity::move( int dir ) {
 		if (ret == BONUS)
 		{
 			static_cast<Bonus*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->affect(this);
-			delete main_event->map[(int)this->pos_y][(int)this->pos_x];
-			main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
+			if (main_event->map[(int)this->pos_y][(int)this->pos_x]->type == BONUS) {
+				delete main_event->map[(int)this->pos_y][(int)this->pos_x];
+				main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
+			}
 		}
 		// change frame here
 	}
