@@ -339,6 +339,8 @@ void	Event::player_move(int model, int dir) {
 	std::list<Entity *>::iterator end = this->char_list.end();
 
 	while (it != end) {
+		if (this->live_player[model - PLAYER1] == false)
+			return ;
 		if ((*it)->model == model)
 			(*it)->move(dir);
 		it++;

@@ -32,7 +32,7 @@ CXX = 			clang++
 NAME =			bomberman
 
 
-CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror -pedantic
+CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror -pedantic -g
 
 INCLUDE =		-I includes/ -I rc_lib/rc_math/
 
