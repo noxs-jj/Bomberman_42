@@ -19,7 +19,7 @@
 
 ## How to Play (Binding)
 Key | Joystick | Keyboard1 | Keyboard2
------------- | ------------- | -------------
+------------ | ------------- | ------------- | -------------
 **UP** | UP | W | 8
 **DOWN** | DOWN | S | 5
 **LEFT** | LEFT | A | 4
