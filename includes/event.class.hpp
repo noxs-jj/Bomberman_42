@@ -41,6 +41,7 @@ public:
 	bool					gen_level;
 	bool					option_arcade;
 	int						option_resolution;
+	bool					option_ia_kamikaze;
 	bool					coop; // false si campaign
 	int 					actual_level;
 	int						multi; // 0 == non activer, 2 player, 3, 4, 5

@@ -28,6 +28,7 @@ Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 	this->gen_level = false;
 	this->option_arcade = false;
 	this->option_resolution = RESOLUTION_NOT_SET;
+	this->option_ia_kamikaze = false;
 	this->game_pause = false;
 	this->draw_winner_multi = -1;
 	this->draw_winner_campaign = -1;
@@ -152,6 +153,8 @@ void	Event::parse_command(int ac, char **av) {
 			this->gen_level = true;
 		else if (strcmp(av[i], "-arcade") == 0)
 			this->option_arcade = true;
+			else if (strcmp(av[i], "-kamikaze") == 0)
+				this->option_ia_kamikaze = true;
 		else if (strcmp(av[i], "-2560") == 0)
 			this->option_resolution = RESOLUTION_2560;
 		else if (strcmp(av[i], "-1920") == 0)

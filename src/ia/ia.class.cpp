@@ -12,11 +12,9 @@
 
 #include <ia.class.hpp>
 
-Ia::Ia( ) : layer(1) {
-}
+Ia::Ia( ) : layer(1) {}
 
-Ia::Ia( int layer ) : layer(layer) {
-}
+Ia::Ia( int layer ) : layer(layer) {}
 
 Ia::Ia( Ia const & src ) {
   (void)src;
@@ -28,9 +26,7 @@ Ia & Ia::operator=( Ia const & rhs ) {
     return (*this);
 }
 
-Ia::~Ia( void ) {
-    // delete this->soundrender;
-}
+Ia::~Ia( void ) {}
 
 int heuristic(std::vector<int> line) {
   int score = 0;
@@ -53,66 +49,50 @@ int heuristic(std::vector<int> line) {
   return (score);
 }
 
-#ifdef KAMIKAZE
 int    Ia::must_move_to( Entity *it ) {
-  int  paths [4][2] = {
-    {heuristic((*it).pretest_moves(DIR_UP)), DIR_UP},
-    {heuristic((*it).pretest_moves(DIR_BOTTOM)), DIR_BOTTOM},
-    {heuristic((*it).pretest_moves(DIR_LEFT)), DIR_LEFT},
-    {heuristic((*it).pretest_moves(DIR_RIGHT)), DIR_RIGHT},
-  };
-  int  max [2] = {paths[0][0], 0};
-  int  min [2] = {paths[0][0], 0};
-  for ( int n=0 ; n<4 ; ++n ) {
-    if (max[0] < paths[n][0]) {
-      max[0] = paths[n][0];
-      max[1] = n;
+    int paths [4][2] = {
+        {heuristic((*it).pretest_moves(DIR_UP)), DIR_UP},
+        {heuristic((*it).pretest_moves(DIR_BOTTOM)), DIR_BOTTOM},
+        {heuristic((*it).pretest_moves(DIR_LEFT)), DIR_LEFT},
+        {heuristic((*it).pretest_moves(DIR_RIGHT)), DIR_RIGHT},
+    };
+    int max [2] = {paths[0][0], 0};
+    int min [2] = {paths[0][0], 0};
+
+    for ( int n=0 ; n<4 ; ++n ) {
+        if (max[0] < paths[n][0]) {
+            max[0] = paths[n][0];
+            max[1] = n;
+        }
+        if (min[0] > paths[n][0]) {
+            min[0] = paths[n][0];
+            min[1] = n;
+        }
     }
-    if (min[0] > paths[n][0]) {
-      min[0] = paths[n][0];
-      min[1] = n;
+    //KAMIKAZE On
+    if (true == main_event->option_ia_kamikaze) {
+        if (min[0] <= 0 || ((*it).pretest_move((*it).dir) != EMPTY)) {
+            return (DIR_UP + max[1]);
+        }
+        else {
+            (*it).put_bomb (
+                BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
+                (*it).bomb_model, (*it).blast_radius,
+                (*it).id
+            );
+            return ((*it).dir);
+        }
     }
-  }
-  if (min[0] <= 0 || ((*it).pretest_move((*it).dir) != EMPTY)) {
-    return (DIR_UP + max[1]);
-  }
-  else {
-    (*it).put_bomb (
-      BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
-      (*it).bomb_model, (*it).blast_radius,
-      (*it).id
-    );
-    return ((*it).dir);
-  }
+    //KAMIKAZE OFF
+    else {
+        if (min[0] <= 0 || ((*it).pretest_move((*it).dir) != EMPTY)) {
+            return (DIR_UP + max[1]);
+        }
+        else {
+            return ((*it).dir);
+        }
+    }
 }
-#else
-int    Ia::must_move_to( Entity *it ) {
-  int  paths [4][2] = {
-    {heuristic((*it).pretest_moves(DIR_UP)), DIR_UP},
-    {heuristic((*it).pretest_moves(DIR_BOTTOM)), DIR_BOTTOM},
-    {heuristic((*it).pretest_moves(DIR_LEFT)), DIR_LEFT},
-    {heuristic((*it).pretest_moves(DIR_RIGHT)), DIR_RIGHT},
-  };
-  int  max [2] = {paths[0][0], 0};
-  int  min [2] = {paths[0][0], 0};
-  for ( int n=0 ; n<4 ; ++n ) {
-    if (max[0] < paths[n][0]) {
-      max[0] = paths[n][0];
-      max[1] = n;
-    }
-    if (min[0] > paths[n][0]) {
-      min[0] = paths[n][0];
-      min[1] = n;
-    }
-  }
-  if (min[0] <= 0 || ((*it).pretest_move((*it).dir) != EMPTY)) {
-    return (DIR_UP + max[1]);
-  }
-  else {
-    return ((*it).dir);
-  }
-}
-#endif
 
 bool    Ia::play_enemy(Enemy *it) {
   if ((*it).dir == ((*it).dir = Ia::must_move_to(static_cast<Entity*>(it)))) {

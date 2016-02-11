@@ -1,14 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   joystick.cpp                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             */
-/*   Updated: 2016/02/10 14:59:23 by jmoiroux         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+// ************************************************************************** //
+//   24 Bomb                                                                  //
+//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
+//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
+//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
+//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
+//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
+//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
+//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
+//                                                                            //
+// ************************************************************************** //
 
 #include <joystick.hpp>
 #include <event.class.hpp>
@@ -247,30 +247,7 @@ void Joystick::set_key_config() {
 void Joystick::read_key(int mode) {
 	SDL_Event			event;
 	int					i = 0;
-  // static float time = 0;
-  // int _time = 0;
-	// static t_key		key = {0, 0, 0, 0};
-	// static t_key		key2 = {0, 0, 0, 0}; // key for p2 (keyboard)
-	// static t_key		key3 = {0, 0, 0, 0};
-	// static t_key		key4 = {0, 0, 0, 0};
 
-
-  // std::list<Entity *>::iterator it = main_event->char_list.begin();
-	// std::list<Entity *>::iterator end = main_event->char_list.end();
-
-  // printf("%d\n", main_event->config[0]);
-  // printf("%d\n", main_event->config[1]);
-	// while (it != end) {
-  //   if ((*it)->type == PLAYER) {
-  //     printf("id %d player %d\n", (*it)->id, (*it)->model);
-	// 	}
-  //   it++;
-  // }
-
-  // if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
-  //   return ;
-  //   _time++;
-  //   _time = _time % 60;
   if (mode == 0){
     while (SDL_PollEvent(&event) && main_event->event_running == true) {
       if (event.type == SDL_KEYDOWN) {
@@ -314,9 +291,6 @@ void Joystick::read_key(int mode) {
 													  main_event->draw_winner_campaign = -1;
 													  main_event->draw_lose_campaign = -1;
 													  main_event->draw_end_campaign = -1;
-														// main_event->config[0] = PLAYER1;
-														// if (main_event->coop > 0)
-													  	// main_event->config[1] = PLAYER2;
 													  main_event->mode_menu = false;
 													  main_event->make_new_game(1);
 													  main_event->game_playing = true;
@@ -327,7 +301,6 @@ void Joystick::read_key(int mode) {
 														main_event->make_new_game(0);
 														main_event->mode_menu = false;
 														main_event->game_playing = true;
-														// main_event->config[0] = PLAYER1;
 
 														this->test = 0;
 													}
@@ -374,9 +347,9 @@ void Joystick::read_key(int mode) {
             case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 7:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 8:   if (true == main_event->mode_menu && main_event->game_playing == true)
-            main_event->mode_menu = false;
-            else if (main_event->game_playing == true)
-            main_event->mode_menu = true;
+						            main_event->mode_menu = false;
+						          else if (main_event->game_playing == true)
+						            main_event->mode_menu = true;
             break;
             case 9:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 10:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
@@ -386,24 +359,19 @@ void Joystick::read_key(int mode) {
           }
         }
 		else if (event.type == SDL_JOYAXISMOTION) {
-			if( event.jaxis.axis == 0)
-	        {
+			if( event.jaxis.axis == 0) {
 				if (event.jaxis.value > 3200)
 					main_event->menu->move_menu_hor();
 				else if (event.jaxis.value < -3200)
 					main_event->menu->move_menu_hor();
-	            /* Left-right movement code goes here */
-	        }
+	    }
 
-	        if( event.jaxis.axis == 1)
-	        {
-				if (event.jaxis.value > 3200)
-					main_event->menu->move_menu_ver(1);
-				else if (event.jaxis.value < -3200)
-					main_event->menu->move_menu_ver(-1);
-	            /* Up-Down movement code goes here */
-	        }
-			// std::cout << "hello" << std::endl;
+	      if( event.jaxis.axis == 1) {
+					if (event.jaxis.value > 3200)
+						main_event->menu->move_menu_ver(1);
+					else if (event.jaxis.value < -3200)
+						main_event->menu->move_menu_ver(-1);
+	      }
 		}
         // JOYSTICK CROIX DIRECTIONNEL
         else if (event.type == SDL_JOYHATMOTION || event.type == 1536) {
@@ -419,9 +387,6 @@ void Joystick::read_key(int mode) {
             }
           }
         }
-		// else if (event.type == 1536) {
-		// 	std::cout << "bla" << std::endl;
-		// }
       }
     }
     else {

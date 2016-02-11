@@ -1,7 +1,13 @@
+BONUS REQUIERED:
+- Diagram Class
+- Documentation developer
+- plus de 3 levels (9 levels)
+EN COURS: Random Map: params -gen
+
+OTHERS:
 - multi joueurs
 - mode arene
 - mode coop
-- plus de 3 levels (9 levels)
 - 4 boss affiche
 - SKYBOX
 - Gestion 5 Joysticks
@@ -12,4 +18,3 @@
 	* Kick Bomb
 	* Remote Bomb
 - Parseur de Map personnalise avec Editeur de map en HTML/Javascript
-- Diagram Class

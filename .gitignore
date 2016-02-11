@@ -18,3 +18,4 @@ src/.DS_Store
 **/*.o
 *.o
 config/config.txt
+bomberman.en.pdf
