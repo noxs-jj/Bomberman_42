@@ -14,7 +14,7 @@
 
 Enemy::~Enemy( void ) {}
 
-Enemy::Enemy( float x, float y, int status, int model ) : Entity( ENEMY, x, y, status ) {
+Enemy::Enemy( float x, float y, int status, int model ) : Entity( ENEMY, x, y, status, model ) {
 	this->memory = 0;
 
 	this->frame = 0;

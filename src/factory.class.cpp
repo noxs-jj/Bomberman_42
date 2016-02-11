@@ -87,7 +87,7 @@ Boss *		Factory::create_boss(int status, float x, float y, int name, int model) 
 }
 
 Entity *	Factory::create_empty(int x, int y) {
-	Entity * ent = new Entity(EMPTY, (float)x, (float)y, NO_STATUS);
+	Entity * ent = new Entity(EMPTY, (float)x, (float)y, NO_STATUS, 0);
 	if (ent == NULL) {
 		main_event->w_error("create_empty:: enemy Malloc error");
 		throw std::exception();

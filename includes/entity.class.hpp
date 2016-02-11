@@ -38,7 +38,7 @@ public:
 	int 	remote_nbr = 0;
 	static int		autoincrement;
 
-	Entity( int type, float x, float y, int status );
+	Entity( int type, float x, float y, int status, int model );
 	Entity( Entity const & src );
 	Entity & operator=( Entity const & rhs );
 	virtual ~Entity( void );

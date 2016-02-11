@@ -19,7 +19,7 @@
 #include <iostream>
 #include <vector>
 
-int		Entity::autoincrement = 0;
+int		Entity::autoincrement = 5;
 
 
 Entity::Entity(void)
@@ -29,10 +29,14 @@ Entity::Entity(void)
 
 Entity::~Entity( void ) {}
 
-Entity::Entity( int type, float x, float y, int status ) : type(type), pos_x(x),
+Entity::Entity( int type, float x, float y, int status, int model ) : type(type), pos_x(x),
 															pos_y(y), status(status), zoom_m(1) {
-	Entity::autoincrement++;
-	this->id = Entity::autoincrement;
+	if (type == PLAYER)
+		this->id = model - PLAYER1;
+	else {
+		Entity::autoincrement++;
+		this->id = Entity::autoincrement;
+	}
 	this->remote_lst.clear();
 }
 

@@ -15,7 +15,7 @@
 
 Bonus::~Bonus( void ) {}
 
-Bonus::Bonus( float x, float y, int status, int model ) : Entity( BONUS, x, y, status ) {
+Bonus::Bonus( float x, float y, int status, int model ) : Entity( BONUS, x, y, status, model ) {
 	this->model = model;
 }
 

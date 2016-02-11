@@ -14,7 +14,7 @@
 
 Boss::~Boss( void ) {}
 
-Boss::Boss( float x, float y, int status, int name, int model ) : Entity( BOSS, x, y, status ) {
+Boss::Boss( float x, float y, int status, int name, int model ) : Entity( BOSS, x, y, status, model ) {
 	this->frame = 0;
 	this->speed = 1;
 	this->dir = DIR_BOTTOM;

@@ -17,7 +17,7 @@
 
 Bomb::~Bomb( void ) {}
 
-Bomb::Bomb( float x, float y, int status, int model, int id ) : Entity( BOMB, x, y, status ) {
+Bomb::Bomb( float x, float y, int status, int model, int id ) : Entity( BOMB, x, y, status, model ) {
 	this->model = model;
 	this->creator_id = id;
 	this->timer = 180;
