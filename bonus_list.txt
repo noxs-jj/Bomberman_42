@@ -12,3 +12,4 @@
 	* Kick Bomb
 	* Remote Bomb
 - Parseur de Map personnalise avec Editeur de map en HTML/Javascript
+- Diagram Class
