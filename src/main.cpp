@@ -61,28 +61,8 @@ int		main( int ac, char **av ) {
 		ft42::logg = true; // ceci active les debugg ecran et fichier
 		// std::atexit(TTF_Quit);
 		srand(clock());
-		# ifdef linux
-			if (RESOLUTION_800 == main_event->option_resolution)
-				globject::init(800, 600);
-			else if (RESOLUTION_1600 == main_event->option_resolution)
-				globject::init(1600, 900);
-			else if (RESOLUTION_1920 == main_event->option_resolution)
-				globject::init(1920, 1080);
-			else if (RESOLUTION_2560 == main_event->option_resolution)
-				globject::init(2560, 1440);
-			else
-				globject::init(1600, 900);
-		#endif
-		# ifdef __APPLE__
-			if (RESOLUTION_1600 == main_event->option_resolution)
-				globject::init(1600, 900);
-			else if (RESOLUTION_1920 == main_event->option_resolution)
-				globject::init(1920, 1080);
-			else if (RESOLUTION_2560 == main_event->option_resolution)
-				globject::init(2560, 1400);
-			else
-				globject::init(2560, 1440);
-		#endif
+        globject::init(800, 600);
+
 		main_event->joystick->load_config();
 		// main_event->render->init();
 		main_event->mode_menu = true;

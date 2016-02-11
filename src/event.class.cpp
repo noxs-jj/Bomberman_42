@@ -153,14 +153,16 @@ void	Event::parse_command(int ac, char **av) {
 			this->gen_level = true;
 		else if (strcmp(av[i], "-arcade") == 0)
 			this->option_arcade = true;
-			else if (strcmp(av[i], "-kamikaze") == 0)
-				this->option_ia_kamikaze = true;
+		else if (strcmp(av[i], "-kamikaze") == 0)
+			this->option_ia_kamikaze = true;
 		else if (strcmp(av[i], "-2560") == 0)
 			this->option_resolution = RESOLUTION_2560;
 		else if (strcmp(av[i], "-1920") == 0)
 			this->option_resolution = RESOLUTION_1920;
 		else if (strcmp(av[i], "-1600") == 0)
 			this->option_resolution = RESOLUTION_1600;
+        else if (strcmp(av[i], "-1280") == 0)
+            this->option_resolution = RESOLUTION_1280;
 		else if (strcmp(av[i], "-800") == 0)
 			this->option_resolution = RESOLUTION_800;
 		i++;

@@ -65,6 +65,7 @@ public:
 	bool					to_die_entity = false;
 	Joystick *				joystick = NULL;
 	bool					live_player[5];
+    SDL_DisplayMode         sdl_display_mode_info;
 
 	Event( void );
 	Event( Event const & src );

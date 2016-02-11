@@ -98,12 +98,62 @@ void globject::load_bmp() {
 	}
 }
 
-void globject::resize(int x, int y) {
+void        globject::resize(int x, int y) {
 	SDL_SetWindowSize(globject::_displayWindow, x, y);
 	glViewport(0, 0, x, y);
 }
 
-void		globject::init(float sizeX, float sizeY) {
+void        globject::get_sdl_information() {
+    if (SDL_GetCurrentDisplayMode(0, &main_event->sdl_display_mode_info) < 0) {
+        main_event->w_full("globject::get_sdl_information() SDL_GetCurrentDisplayMode() failed");
+        throw std::exception();
+    }
+    std::cout << "nativWidth = " << main_event->sdl_display_mode_info.w;
+    std::cout << " nativHeight = " << main_event->sdl_display_mode_info.h;
+    std::cout << " nativRefreshRate = " << main_event->sdl_display_mode_info.refresh_rate << std::endl;
+}
+
+void        globject::set_float_width_height(float *width, float *height) {
+    if (RESOLUTION_800 == main_event->option_resolution
+            &&main_event->sdl_display_mode_info.w >= 800
+            && main_event->sdl_display_mode_info.w >= 600) {
+        *width = 800;
+        *height = 600;
+    }
+    else if (RESOLUTION_1280 == main_event->option_resolution \
+            && main_event->sdl_display_mode_info.w >= 1280 \
+            && main_event->sdl_display_mode_info.w >= 720) {
+        *width = 1280;
+        *height = 720;
+    }
+    else if (RESOLUTION_1600 == main_event->option_resolution \
+            && main_event->sdl_display_mode_info.w >= 1600 \
+            && main_event->sdl_display_mode_info.w >= 900) {
+        *width = 1600;
+        *height = 900;
+    }
+    else if (RESOLUTION_1920 == main_event->option_resolution \
+            && main_event->sdl_display_mode_info.w >= 1920 \
+            && main_event->sdl_display_mode_info.w >= 1080) {
+        *width = 1920;
+        *height = 1080;
+    }
+    else if (RESOLUTION_2560 == main_event->option_resolution \
+            && main_event->sdl_display_mode_info.w >= 2560 \
+            && main_event->sdl_display_mode_info.w >= 1440) {
+        *width = 2560;
+        *height = 1440;
+    }
+    else {
+        *width = main_event->sdl_display_mode_info.w;
+        *height = main_event->sdl_display_mode_info.h;
+    }
+}
+
+void        globject::init(float sizeX, float sizeY) {
+    float   size_x = sizeX;
+    float   size_y = sizeY;
+
 	/* Init SDL */
 	if (SDL_Init(SDL_INIT_VIDEO
 			| SDL_INIT_AUDIO
@@ -113,6 +163,10 @@ void		globject::init(float sizeX, float sizeY) {
 		throw std::exception();
 	}
 
+    // Added Jean-Jacques get params for Start screen size
+    globject::get_sdl_information(); // main_event->sdl_display_mode_info store the information SDL_DisplayMode;
+    globject::set_float_width_height(&size_x, &size_y); // modify Width & Height with paramaters or NOT
+
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -120,7 +174,7 @@ void		globject::init(float sizeX, float sizeY) {
 	# ifdef linux
 		globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
 			0, 0, \
-			sizeX, sizeY, \
+			size_x, size_y, \
 			SDL_WINDOW_OPENGL
 			| SDL_WINDOW_BORDERLESS
 			| SDL_WINDOW_RESIZABLE
@@ -130,7 +184,7 @@ void		globject::init(float sizeX, float sizeY) {
 	# ifdef __APPLE__
 		globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
 			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
-			sizeX, sizeY, \
+			size_x, size_y, \
 			SDL_WINDOW_OPENGL
 			| SDL_WINDOW_RESIZABLE
 			// | SDL_WINDOW_BORDERLESS
@@ -201,7 +255,7 @@ void		globject::init(float sizeX, float sizeY) {
 
 	glProgramUniformMatrix4fv(_progid, \
 		glGetUniformLocation(_progid, "P"), 1, GL_FALSE, \
-		(GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, sizeX / sizeY)._matrix));
+		(GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, size_x / size_y)._matrix));
 	globject::_viewMatID = glGetUniformLocation(_progid, "V");
 	globject::_modelMatID = glGetUniformLocation(_progid, "M");
 	globject::_keyFrameID = glGetUniformLocation(_progid, "keyframe");
@@ -262,7 +316,7 @@ void		globject::display_menu(SDL_Surface *imp) {
 			0, globject::_object[MENU].parser._finalVertexSize / 3);
 }
 
-void		globject::render(int status) {
+void        globject::render(int status) {
 	status = status * 42;
 	for (size_t i = 0; i < _textNumber; i++) {
 		glActiveTexture(GL_TEXTURE0 + i);
@@ -275,13 +329,13 @@ void		globject::render(int status) {
 	glDrawArrays(GL_TRIANGLES, 0, parser._finalVertexSize / 3);
 }
 
-void		globject::update_key() {
+void        globject::update_key() {
 	SDL_Event event;
 
 	SDL_PollEvent(&event);
 }
 
-GLfloat globject::get_leg_pos(int model) {
+GLfloat     globject::get_leg_pos(int model) {
 	if (model >= PLAYER && model <= PLAYER4)
 		return (10);
 	if (model == ENEMY1)
@@ -289,7 +343,7 @@ GLfloat globject::get_leg_pos(int model) {
 	return (-100);
 }
 
-void globject::skybox(t_point viewDir) {
+void        globject::skybox(t_point viewDir) {
 	t_point			modelPos;
 	t_point			modelDir;
 	Matrix			Model;
