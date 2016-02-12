@@ -20,16 +20,17 @@ document.body.onload = function () {
         { string_value: "3#b", color: "#ff9", description: "BOSS_B" },
         { string_value: "3#c", color: "#ff9", description: "BOSS_C" },
         { string_value: "3#c", color: "#ff9", description: "BOSS_C" },
-        { string_value: "4#1", color: "#069", description: "PLAYER1" },
-        { string_value: "4#2", color: "#039", description: "PLAYER2" },
-        { string_value: "4#3", color: "#096", description: "PLAYER3" },
-        { string_value: "4#4", color: "#0fa", description: "PLAYER4" },
-        { string_value: "5#1", color: "#faa", description: "BONUS_POWER_UP" },
-        { string_value: "5#2", color: "#fbb", description: "BONUS_PLUS_ONE" },
-        { string_value: "5#3", color: "#fcc", description: "BONUS_KICK" },
-        { string_value: "5#4", color: "#fdd", description: "BONUS_CHANGE" },
-        { string_value: "5#5", color: "#fcb", description: "BONUS_REMOTE_BOMB" },
-        { string_value: "5#6", color: "#fbc", description: "BONUS_SPEED_UP" }
+        { string_value: "4#1", color: "#0ea", description: "PLAYER1" },
+        { string_value: "4#4", color: "#0db", description: "PLAYER2" },
+        { string_value: "4#2", color: "#0cc", description: "PLAYER3" },
+        { string_value: "4#4", color: "#0bd", description: "PLAYER4" },
+        { string_value: "4#3", color: "#0ae", description: "PLAYER5" },
+        { string_value: "5#1", color: "#88f", description: "BONUS_POWER_UP"},
+        { string_value: "5#2", color: "#77f", description: "BONUS_PLUS_ONE"},
+        { string_value: "5#3", color: "#66f", description: "BONUS_KICK"},
+        { string_value: "5#4", color: "#55f", description: "BONUS_CHANGE"},
+        { string_value: "5#5", color: "#44f", description: "BONUS_REMOTE_BOMB"},
+        { string_value: "5#6", color: "#33f", description: "BONUS_SPEED_UP"}
     ];
 
     var create2dArray = function (sizeX, sizeY) {
@@ -43,7 +44,7 @@ document.body.onload = function () {
     var mapSize = 20;
     var tileMap = create2dArray(mapSize, mapSize);
     var currentChoice = 1;
-    var tileSize = 30;
+    var tileSize = 24;
 
     context.canvas.width = 1280;
     context.canvas.height = 800;
