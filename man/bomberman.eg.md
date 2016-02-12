@@ -25,4 +25,4 @@ generate the map
 
 run game with level:
 
-    bomberman [<options>, ...] <file>
+    bomberman [<options>, ...]
