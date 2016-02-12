@@ -12,6 +12,7 @@
 
 #include <bonus.class.hpp>
 #include <entity.class.hpp>
+#include <soundrender.class.hpp>
 
 Bonus::~Bonus( void ) {}
 
@@ -33,16 +34,25 @@ void Bonus::change_bomb(Entity *ent) {
 }
 
 void	Bonus::affect(Entity *ent) {
-	if (this->model == BONUS_POWER_UP)
+	if (this->model == BONUS_POWER_UP) {
 		ent->blast_radius++;
-	else if (this->model == BONUS_PLUS_ONE)
+		main_event->soundrender->playSound("powerup");
+	}
+	else if (this->model == BONUS_PLUS_ONE) {
 		ent->bomb_nbr++;
-	else if (this->model == BONUS_KICK)
+		main_event->soundrender->playSound("danger");
+	}
+	else if (this->model == BONUS_KICK) {
 		ent->kick_bomb = true;
-	else if (this->model == BONUS_CHANGE)
+		main_event->soundrender->playSound("powerup");
+	}
+	else if (this->model == BONUS_CHANGE) {
 		change_bomb(ent);
+		main_event->soundrender->playSound("powerup");
+	}
 	else if (this->model == BONUS_REMOTE_BOMB) {
 		ent->remote = true;
 		ent->remote_nbr++;
+		main_event->soundrender->playSound("powerup");
 	}
 }

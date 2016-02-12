@@ -69,7 +69,7 @@ void    SoundRender::load_files(void) {
             && this->loadSound("ready", "assets/sound/readymegaman.wav")
             && this->loadSound("menu2", "assets/sound/megamenu2.wav")
             && this->loadSound("menu1", "assets/sound/menu1.wav")
-            && this->loadSound("bombmove", "assets/sound/bombmove.wav")
+            && this->loadSound("bombmove", "assets/sound/BOM_SET.wav")
             && this->loadSound("pause", "assets/sound/pause.wav")
             && this->loadSound("buldingfire", "assets/sound/3s_the_building_is_on_fire.wav")
             && this->loadSound("dogsout", "assets/sound/3s_who_let_the_dogs_out.wav")
@@ -77,6 +77,9 @@ void    SoundRender::load_files(void) {
             && this->loadSound("return", "assets/sound/SE_07.wav")
             && this->loadSound("dogsout_long", "assets/sound/10s_who_let_the_dogs_out.wav")
             && this->loadSound("lose", "assets/sound/deuxheures.wav")
+            && this->loadSound("kick", "assets/sound/BOM_KICK.wav")
+            && this->loadSound("powerup", "assets/sound/ITEM_GET.wav")
+            && this->loadSound("danger", "assets/sound/B_A040.wav")
             // music
             && this->loadMusic("victory", "assets/sound/victory.wav")
             && this->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")
@@ -111,8 +114,6 @@ bool    SoundRender::playSound(std::string soundName) {
 	try {
 	    if (Mix_PlayChannel(-1, mChunks.at(soundName), 0) == -1) {
 	        this->w_full(Mix_GetError());
-	        // may be critical error, or maybe just no channels were free.
-	        // you could allocated another channel in that case...
 	        return false;
 	    }
 	} catch (std::exception const & e) {
@@ -155,4 +156,12 @@ bool    SoundRender::playMusic(std::string musicName) {
         return false;
     }
     return true;
+}
+
+void	SoundRender::stopMusic(void) {
+	Mix_HaltMusic();
+}
+
+void	SoundRender::stopSounds(void) {
+	Mix_HaltChannel(-1);
 }

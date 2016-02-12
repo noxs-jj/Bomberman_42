@@ -190,6 +190,7 @@ void	Entity::move( int dir ) {
 		// std::cout << "bomb detected kick =" << this->kick_bomb << " id= " << this->id << " bomb_id= " << static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->creator_id << std::endl;
 		if (this->kick_bomb == true && static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->creator_id == this->id){
 			static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->pushed = true;
+			main_event->soundrender->playSound("kick");
 			static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->pushed_dir = dir;
 		}
 	}

@@ -47,6 +47,8 @@ class SoundRender : ft42 {
 
         bool	loadMusic(std::string musicName, std::string fileName);
         bool	playMusic(std::string musicName);
+        void    stopMusic(void);
+        void    stopSounds(void);
 
     private:
 

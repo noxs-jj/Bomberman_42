@@ -69,7 +69,7 @@ public:
 
   TTF_Font *            SansPosterBold;
   int 					joystick_number = 0;
- 
+
 
   SDL_Color             white;
   SDL_Color             blue;
@@ -127,6 +127,8 @@ public:
 	SDL_Surface *   winner_game_txt;
   SDL_Surface **  winner;
 
+  bool musicIsPlaying = false; 	// pour fixer le probleme de la musique
+  								// dans le menu qui redemarre chaque millisecondes
 
 
   Menu(Event * event);
@@ -153,6 +155,7 @@ public:
   void            lose_campaign();
   void            end_campaign();
 	void 						move_menu_hor();
+
 
 private:
   Menu( void );

@@ -18,10 +18,9 @@
 #include <joystick.hpp>
 
 void	Menu::winner_multi() {
-	static bool musicIsPlaying = false;
-	if (!musicIsPlaying)
+	if (!this->musicIsPlaying)
 	{
-		musicIsPlaying = true;
+		this->musicIsPlaying = true;
 		main_event->soundrender->playMusic("victory_multiplayer");
 	}
 	// std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
@@ -29,10 +28,9 @@ void	Menu::winner_multi() {
 }
 
 void	Menu::winner_campaign() {
-	static bool musicIsPlaying = false;
-	if (!musicIsPlaying)
+	if (!this->musicIsPlaying)
 	{
-		musicIsPlaying = true;
+		this->musicIsPlaying = true;
 		main_event->soundrender->playMusic("victory");
 	}
 	// std::cout << "main_event->winner_campaign " << main_event->draw_winner_campaign << std::endl;
@@ -40,10 +38,11 @@ void	Menu::winner_campaign() {
 }
 
 void	Menu::lose_campaign() {
-	static bool musicIsPlaying = false;
-	if (!musicIsPlaying)
+	if (!this->musicIsPlaying)
 	{
-		musicIsPlaying = true;
+		this->musicIsPlaying = true;
+		main_event->soundrender->stopMusic();
+		main_event->soundrender->stopSounds();
 		main_event->soundrender->playSound("lose");
 	}
 	// std::cout << "main_event->lose_campaign " << main_event->draw_lose_campaign << std::endl;
@@ -51,10 +50,9 @@ void	Menu::lose_campaign() {
 }
 
 void	Menu::end_campaign() {
-	static bool musicIsPlaying = false;
-	if (!musicIsPlaying)
+	if (!this->musicIsPlaying)
 	{
-		musicIsPlaying = true;
+		this->musicIsPlaying = true;
 		main_event->soundrender->playMusic("victory_final");
 	}
 	// std::cout << "main_event->end_campaign " << main_event->draw_end_campaign << std::endl;
