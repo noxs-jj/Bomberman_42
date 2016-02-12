@@ -80,6 +80,7 @@ void    SoundRender::load_files(void) {
             && this->loadSound("kick", "assets/sound/BOM_KICK.wav")
             && this->loadSound("powerup", "assets/sound/ITEM_GET.wav")
             && this->loadSound("danger", "assets/sound/B_A040.wav")
+            && this->loadSound("special", "assets/sound/B_SPECIAL.wav")
             // music
             && this->loadMusic("victory", "assets/sound/victory.wav")
             && this->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")

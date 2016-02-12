@@ -53,6 +53,6 @@ void	Bonus::affect(Entity *ent) {
 	else if (this->model == BONUS_REMOTE_BOMB) {
 		ent->remote = true;
 		ent->remote_nbr++;
-		main_event->soundrender->playSound("powerup");
+		main_event->soundrender->playSound("special");
 	}
 }

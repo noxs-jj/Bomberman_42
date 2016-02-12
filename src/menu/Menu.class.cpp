@@ -21,6 +21,8 @@ void	Menu::winner_multi() {
 	if (!this->musicIsPlaying)
 	{
 		this->musicIsPlaying = true;
+		main_event->soundrender->stopSounds();
+		main_event->soundrender->stopMusic();
 		main_event->soundrender->playMusic("victory_multiplayer");
 	}
 	// std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
@@ -31,6 +33,8 @@ void	Menu::winner_campaign() {
 	if (!this->musicIsPlaying)
 	{
 		this->musicIsPlaying = true;
+		main_event->soundrender->stopSounds();
+		main_event->soundrender->stopMusic();
 		main_event->soundrender->playMusic("victory");
 	}
 	// std::cout << "main_event->winner_campaign " << main_event->draw_winner_campaign << std::endl;
@@ -41,8 +45,8 @@ void	Menu::lose_campaign() {
 	if (!this->musicIsPlaying)
 	{
 		this->musicIsPlaying = true;
-		main_event->soundrender->stopMusic();
 		main_event->soundrender->stopSounds();
+		main_event->soundrender->stopMusic();
 		main_event->soundrender->playSound("lose");
 	}
 	// std::cout << "main_event->lose_campaign " << main_event->draw_lose_campaign << std::endl;
@@ -53,6 +57,8 @@ void	Menu::end_campaign() {
 	if (!this->musicIsPlaying)
 	{
 		this->musicIsPlaying = true;
+		main_event->soundrender->stopSounds();
+		main_event->soundrender->stopMusic();
 		main_event->soundrender->playMusic("victory_final");
 	}
 	// std::cout << "main_event->end_campaign " << main_event->draw_end_campaign << std::endl;
@@ -131,10 +137,10 @@ void	Menu::print_surface(SDL_Surface * str, SDL_Surface * str_select, int x, int
 }
 
 void  Menu::big_menu() {
-	static int musicPlaying = false;
-
-	if (!musicPlaying) {
-		musicPlaying = true;
+	if (!musicIsPlaying) {
+		musicIsPlaying = true;
+		main_event->soundrender->stopSounds();
+		main_event->soundrender->stopMusic();
 		main_event->soundrender->playMusic("music");
 	}
 
@@ -299,6 +305,7 @@ void  Menu::menu_selection() {
 }
 
 void  Menu::main_loop() {
+musicIsPlaying = false;
   while (true == main_event->mode_menu) {
     if (false == this->introstart)
 		this->intro_start();
