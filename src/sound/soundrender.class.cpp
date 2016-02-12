@@ -33,6 +33,7 @@ bool    SoundRender::init() {
     // allocate 16 mixing channels
 	this->w_full("soundrender -> allocating channels");
     Mix_AllocateChannels(mMaxAllocatedChannels);
+    this->setGlobalVolume(VOLUME_DEFAULT);
     return true;
 }
 
@@ -165,4 +166,17 @@ void	SoundRender::stopMusic(void) {
 
 void	SoundRender::stopSounds(void) {
 	Mix_HaltChannel(-1);
+}
+
+void    SoundRender::setSFXVolume(int volume) {
+    Mix_Volume(-1, volume);
+}
+
+void    SoundRender::setMusicVolume(int volume) {
+    Mix_VolumeMusic(volume);
+}
+
+void    SoundRender::setGlobalVolume(int volume) {
+    setSFXVolume(volume);
+    setMusicVolume(volume);
 }

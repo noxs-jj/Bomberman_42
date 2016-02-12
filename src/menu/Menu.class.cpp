@@ -305,7 +305,9 @@ void  Menu::menu_selection() {
 }
 
 void  Menu::main_loop() {
-musicIsPlaying = false;
+	musicIsPlaying = false;
+	main_event->soundrender->stopMusic();
+	main_event->soundrender->stopSounds();
   while (true == main_event->mode_menu) {
     if (false == this->introstart)
 		this->intro_start();

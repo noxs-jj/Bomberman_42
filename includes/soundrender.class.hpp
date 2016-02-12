@@ -22,6 +22,12 @@
 # define STEREO 2
 # define MONO 1
 
+# define VOLUME_HIGH (MIX_MAX_VOLUME / 1)
+# define VOLUME_MEDIUM (MIX_MAX_VOLUME / 2)
+# define VOLUME_LOW (MIX_MAX_VOLUME / 3)
+# define VOLUME_OFF (0)
+# define VOLUME_DEFAULT VOLUME_MEDIUM
+
 class SoundRender : ft42 {
 
     public:
@@ -49,6 +55,11 @@ class SoundRender : ft42 {
         bool	playMusic(std::string musicName);
         void    stopMusic(void);
         void    stopSounds(void);
+
+        // Volume
+        void    setSFXVolume(int volume);
+        void    setMusicVolume(int volume);
+        void    setGlobalVolume(int volume);
 
     private:
 
