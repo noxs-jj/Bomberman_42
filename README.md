@@ -15,6 +15,13 @@
     libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-mixer-dev \
     libsdl2-ttf-dev freeglut3-dev libsdl1.2-dev
 
+### Documentation -man-
+How to add man game manuel to manpath.
+```
+git clone https://github.com/noxsnono/Bomberman_42.git bomberman
+export MANPATH=$(manpath):bomberman/man
+```
+
 ### Windows (Not Supported)
 
 ## How to Play (Binding)

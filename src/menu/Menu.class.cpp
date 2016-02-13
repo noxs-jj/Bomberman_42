@@ -160,7 +160,7 @@ void  Menu::big_menu() {
 void Menu::init() {
 	this->joystick_number = SDL_NumJoysticks();
 
-	this->SansPosterBold = TTF_OpenFont("src/menu/fonts/GoldenAge.ttf", 64);
+	this->SansPosterBold = TTF_OpenFont("assets/fonts/GoldenAge.ttf", 64);
 	this->white = {255, 255, 255, 1};
 	this->blue = {0, 0, 255, 1};
 	this->red = {255, 0, 0, 1};
@@ -242,7 +242,7 @@ void Menu::intro_start() {
     if (NULL == this->ecran_menu)
       SDL_FreeSurface(this->current);
     this->current = NULL;
-	this->current = IMG_Load("src/menu/assets/intro_start-2.bmp");
+	this->current = IMG_Load("assets/images/intro_start-2.bmp");
     // this->current = IMG_Load("src/menu/assets/bomberman-intro-3.bmp");
     if (NULL == this->current) {
       std::cerr << "Menu::intro_start load image error " << SDL_GetError() << std::endl;
