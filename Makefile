@@ -107,6 +107,9 @@ fclean: clean
 
 re: fclean all
 
+man:
+	MANPATH=./man/ man bomberman
+
 soundtest:
 	$(CXX) src/ft42.class.cpp src/soundrender.class.cpp $(CFLAGS) \
 		$(INCLUDE) \
@@ -120,3 +123,5 @@ loggertest:
 sdltest:
 	$(CXX) $(CFLAGS) -stdlib=libc++ -o testsdl2 test/test_sdl2.cpp \
 	-framework opengl `sdl2-config --libs` `sdl2-config --cflags`
+
+.PHONY: man
