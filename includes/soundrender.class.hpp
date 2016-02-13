@@ -61,6 +61,10 @@ class SoundRender : ft42 {
         void    setMusicVolume(int volume);
         void    setGlobalVolume(int volume);
 
+        void    getSFXVolume(void);
+        void    getMusicVolume(void);
+
+
     private:
 
         int const                         mMaxAllocatedChannels = 8;
