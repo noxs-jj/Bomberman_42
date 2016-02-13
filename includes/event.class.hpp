@@ -66,6 +66,8 @@ public:
 	Joystick *				joystick = NULL;
 	bool					live_player[5];
     SDL_DisplayMode         sdl_display_mode_info;
+    bool                    full_screen = false;
+    int                     actual_resolution = RESOLUTION_NOT_SET;
 
 	Event( void );
 	Event( Event const & src );

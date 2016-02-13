@@ -48,6 +48,7 @@ enum MENU_SELECTED {
     MENU_CONFIG_SOUND_GLOBAL_SOUND,
     MENU_CONFIG_SOUND_SOUND_VOLUME,
     MENU_CONFIG_SOUND_RETURN,
+    MENU_CONFIG_VIDEO_MODE,
     MENU_CONFIG_VIDEO_RESOLUTION,
     MENU_CONFIG_VIDEO_RETURN,
     MENU_EXIT_CONFIRM,
@@ -153,6 +154,8 @@ public:
     SDL_Surface *   str_config_video_selected;
     SDL_Surface *   str_config_video_fullscreen;
     SDL_Surface *   str_config_video_fullscreen_selected;
+    SDL_Surface *   str_config_video_window;
+    SDL_Surface *   str_config_video_window_selected;
     SDL_Surface *   str_config_video_800_600;
     SDL_Surface *   str_config_video_800_600_selected;
     SDL_Surface *   str_config_video_1280_720;
@@ -163,6 +166,9 @@ public:
     SDL_Surface *   str_config_video_1920_1080_selected;
     SDL_Surface *   str_config_video_2560_1440;
     SDL_Surface *   str_config_video_2560_1440_selected;
+    SDL_Surface *   str_config_video_not_set;
+    SDL_Surface *   str_config_video_not_set_selected;
+    SDL_Surface *   str_config_video_not_set_disable;
 
 
     SDL_Surface *   lose_campaign_txt;

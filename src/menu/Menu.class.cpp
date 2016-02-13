@@ -110,9 +110,36 @@ void    Menu::config_sound() {
 }
 
 void    Menu::config_video() {
-    print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_CONFIG_VIDEO_RESOLUTION);
-    print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_CONFIG_VIDEO_RESOLUTION);
-    print_surface(this->str_return, this->str_return_selected, 400, 800, MENU_CONFIG_VIDEO_RETURN);
+    if (true == main_event->full_screen)
+        print_surface(this->str_config_video_fullscreen, this->str_config_video_fullscreen_selected, 400, 500, MENU_CONFIG_VIDEO_MODE);
+    else
+        print_surface(this->str_config_video_window, this->str_config_video_window_selected, 400, 500, MENU_CONFIG_VIDEO_MODE);
+
+    if (false == main_event->full_screen) {
+        if (RESOLUTION_800 == main_event->actual_resolution)
+            print_surface(this->str_config_video_800_600, this->str_config_video_800_600_selected, 400, 600, MENU_CONFIG_VIDEO_RESOLUTION);
+        else if (RESOLUTION_1280 == main_event->actual_resolution)
+            print_surface(this->str_config_video_1280_720, this->str_config_video_1280_720_selected, 400, 600, MENU_CONFIG_VIDEO_RESOLUTION);
+        else if (RESOLUTION_1600 == main_event->actual_resolution)
+            print_surface(this->str_config_video_1600_900, this->str_config_video_1600_900_selected, 400, 600, MENU_CONFIG_VIDEO_RESOLUTION);
+        else if (RESOLUTION_1920 == main_event->actual_resolution)
+            print_surface(this->str_config_video_1920_1080, this->str_config_video_1920_1080_selected, 400, 600, MENU_CONFIG_VIDEO_RESOLUTION);
+        else if (RESOLUTION_2560 == main_event->actual_resolution)
+            print_surface(this->str_config_video_2560_1440, this->str_config_video_2560_1440_selected, 400, 600, MENU_CONFIG_VIDEO_RESOLUTION);
+        else
+            print_surface(this->str_config_video_not_set, this->str_config_video_not_set_selected, 400, 600, MENU_CONFIG_VIDEO_RESOLUTION);
+    }
+    else {
+        print_surface(this->str_config_video_not_set, this->str_config_video_not_set_disable, 400, 600, MENU_CONFIG_VIDEO_RESOLUTION);
+    }
+
+
+
+
+    // print_surface(this->str_config_video_2560_1440, this->str_config_video_2560_1440_selected, 400, 600, MENU_CONFIG_VIDEO_RESOLUTION);
+    print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_CONFIG_VIDEO_RETURN);
+
+    //https://wiki.libsdl.org/SDL_SetWindowFullscreen
 
 }
 
@@ -302,6 +329,49 @@ void Menu::move_menu_hor() {
 	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER5)
 		main_event->joystick->config[4] = (main_event->joystick->config[4] == 0) ? 1 : 0;
 
+    else if (this->detail_menu_selected == MENU_CONFIG_VIDEO_MODE) {
+        SDL_DestroyWindow(globject::_displayWindow);
+        main_event->full_screen = (main_event->full_screen == true) ? false : true;
+        globject::init(main_event->sdl_display_mode_info.w, main_event->sdl_display_mode_info.h);
+
+        if (true == main_event->full_screen)
+            main_event->actual_resolution = RESOLUTION_NOT_SET;
+    }
+
+    else if (this->detail_menu_selected == MENU_CONFIG_VIDEO_RESOLUTION) {
+        if (false == main_event->full_screen) {
+            if (RESOLUTION_NOT_SET == main_event->actual_resolution && main_event->sdl_display_mode_info.w >= 800) {
+                main_event->actual_resolution = RESOLUTION_800;
+                globject::resize(800, 600);
+            }
+            else if (RESOLUTION_800 == main_event->actual_resolution && main_event->sdl_display_mode_info.w >= 1280) {
+                main_event->actual_resolution = RESOLUTION_1280;
+                globject::resize(1280, 720);
+            }
+            else if (RESOLUTION_1280 == main_event->actual_resolution && main_event->sdl_display_mode_info.w >= 1600) {
+                main_event->actual_resolution = RESOLUTION_1600;
+                globject::resize(1600, 900);
+            }
+            else if (RESOLUTION_1600 == main_event->actual_resolution && main_event->sdl_display_mode_info.w >= 1920) {
+                main_event->actual_resolution = RESOLUTION_1920;
+                globject::resize(1920, 1080);
+            }
+            else if (RESOLUTION_1920 == main_event->actual_resolution && main_event->sdl_display_mode_info.w >= 2560) {
+                main_event->actual_resolution = RESOLUTION_2560;
+                globject::resize(2560, 1440);
+            }
+            else if (RESOLUTION_2560 == main_event->actual_resolution && main_event->sdl_display_mode_info.w >= 800) {
+                main_event->actual_resolution = RESOLUTION_800;
+                globject::resize(800, 600);
+            }
+            else {
+                main_event->actual_resolution = RESOLUTION_800;
+                globject::resize(800, 600);
+            }
+        }
+    }
+
+
     else if (this->detail_menu_selected == MENU_CONFIG_SOUND_SOUND_VOLUME) {
         if (VOLUME_OFF == main_event->soundrender->getMusicVolume())
             main_event->soundrender->setGlobalVolume(VOLUME_LOW);
@@ -387,10 +457,10 @@ void  Menu::move_menu_ver(int dir) {
     }
 
     else if (this->menu_selected == CONFIG_VIDEO) {
-        if (dir == -1 && this->detail_menu_selected == MENU_CONFIG_VIDEO_RESOLUTION)
+        if (dir == -1 && this->detail_menu_selected == MENU_CONFIG_VIDEO_MODE)
             this->detail_menu_selected = MENU_CONFIG_VIDEO_RETURN;
         else if (dir == 1 && this->detail_menu_selected == MENU_CONFIG_VIDEO_RETURN)
-            this->detail_menu_selected = MENU_CONFIG_VIDEO_RESOLUTION;
+            this->detail_menu_selected = MENU_CONFIG_VIDEO_MODE;
         else
             this->detail_menu_selected += dir;
     }
@@ -449,7 +519,7 @@ void  Menu::change_menu() {
         this->menu_selected = CONFIG_SOUND;
     }
     else if (this->detail_menu_selected == MENU_CONFIG_VIDEO) {
-        this->detail_menu_selected = MENU_CONFIG_VIDEO_RESOLUTION;
+        this->detail_menu_selected = MENU_CONFIG_VIDEO_MODE;
         this->menu_selected = CONFIG_VIDEO;
     }
     else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_5P )
@@ -587,17 +657,22 @@ void Menu::init() {
     this->str_config_video = TTF_RenderText_Blended(this->SansPosterBold, "Video Config", this->white);
     this->str_config_video_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Video Config <<", this->red);
     this->str_config_video_fullscreen = TTF_RenderText_Blended(this->SansPosterBold, "Full Screen", this->white);
-    this->str_config_video_fullscreen_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Full Screen <<", this->red);
+    this->str_config_video_fullscreen_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Full Screen", this->red);
+    this->str_config_video_window = TTF_RenderText_Blended(this->SansPosterBold, "Windowed", this->white);
+    this->str_config_video_window_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Windowed", this->red);
     this->str_config_video_800_600 = TTF_RenderText_Blended(this->SansPosterBold, "800 x 600", this->white);
-    this->str_config_video_800_600_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 800 x 600 <<", this->red);
+    this->str_config_video_800_600_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 800 x 600", this->red);
     this->str_config_video_1280_720 = TTF_RenderText_Blended(this->SansPosterBold, "1280 x 720", this->white);
-    this->str_config_video_1280_720_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 1280 x 720 <<", this->red);
+    this->str_config_video_1280_720_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 1280 x 720", this->red);
     this->str_config_video_1600_900 = TTF_RenderText_Blended(this->SansPosterBold, "1600 x 900", this->white);
-    this->str_config_video_1600_900_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 1600 x 900 <<", this->red);
+    this->str_config_video_1600_900_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 1600 x 900", this->red);
     this->str_config_video_1920_1080 = TTF_RenderText_Blended(this->SansPosterBold, "1920 x 1080", this->white);
-    this->str_config_video_1920_1080_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 1920 x 1080 <<", this->red);
+    this->str_config_video_1920_1080_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 1920 x 1080", this->red);
     this->str_config_video_2560_1440 = TTF_RenderText_Blended(this->SansPosterBold, "2560 x 1440", this->white);
-    this->str_config_video_2560_1440_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 2560 x 1440 <<", this->red);
+    this->str_config_video_2560_1440_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 2560 x 1440", this->red);
+    this->str_config_video_not_set = TTF_RenderText_Blended(this->SansPosterBold, "VIDEO NOT SET", this->white);
+    this->str_config_video_not_set_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> VIDEO NOT SET", this->red);
+    this->str_config_video_not_set_disable = TTF_RenderText_Blended(this->SansPosterBold, "! DISABLED ON FULLSCREEN!", this->red);
 
 	this->winner = (SDL_Surface **)std::malloc(sizeof(SDL_Surface *) * 5);
 	if (NULL == this->winner) {
@@ -666,6 +741,8 @@ Menu::~Menu() {
     SDL_FreeSurface(this->str_config_video_selected);
     SDL_FreeSurface(this->str_config_video_fullscreen);
     SDL_FreeSurface(this->str_config_video_fullscreen_selected);
+    SDL_FreeSurface(this->str_config_video_window);
+    SDL_FreeSurface(this->str_config_video_window_selected);
     SDL_FreeSurface(this->str_config_video_800_600);
     SDL_FreeSurface(this->str_config_video_800_600_selected);
     SDL_FreeSurface(this->str_config_video_1280_720);
@@ -676,6 +753,9 @@ Menu::~Menu() {
     SDL_FreeSurface(this->str_config_video_1920_1080_selected);
     SDL_FreeSurface(this->str_config_video_2560_1440);
     SDL_FreeSurface(this->str_config_video_2560_1440_selected);
+    SDL_FreeSurface(this->str_config_video_not_set);
+    SDL_FreeSurface(this->str_config_video_not_set_selected);
+    SDL_FreeSurface(this->str_config_video_not_set_disable);
 
     SDL_FreeSurface(this->winner[0]);
     SDL_FreeSurface(this->winner[1]);

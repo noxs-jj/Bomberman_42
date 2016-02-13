@@ -182,13 +182,29 @@ void        globject::init(float sizeX, float sizeY) {
 		);
 	# endif
 	# ifdef __APPLE__
-		globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
-			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
-			size_x, size_y, \
-			SDL_WINDOW_OPENGL
-			| SDL_WINDOW_RESIZABLE
-			// | SDL_WINDOW_BORDERLESS
-		);
+        if (main_event->full_screen == true) {
+            globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
+    			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
+    			size_x, size_y, \
+    			SDL_WINDOW_OPENGL
+    			| SDL_WINDOW_RESIZABLE
+                | SDL_WINDOW_FULLSCREEN
+    			| SDL_WINDOW_BORDERLESS
+                | SDL_WINDOW_OPENGL
+    		);
+        }
+        else {
+            globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
+    			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
+    			size_x, size_y, \
+    			SDL_WINDOW_OPENGL
+    			| SDL_WINDOW_RESIZABLE
+                // | SDL_WINDOW_FULLSCREEN
+    			| SDL_WINDOW_BORDERLESS
+                | SDL_WINDOW_OPENGL
+    		);
+        }
+
 	# endif
 
 	/* Init OpenGL */
@@ -206,7 +222,8 @@ void        globject::init(float sizeX, float sizeY) {
 			throw std::exception();
 		}
 	# endif
-    glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
+    // glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
+    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
     glEnable(GL_DEPTH_TEST);
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	SDL_GL_SwapWindow(globject::_displayWindow);
