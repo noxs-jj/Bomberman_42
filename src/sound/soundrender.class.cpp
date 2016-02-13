@@ -189,10 +189,10 @@ void    SoundRender::setGlobalVolume(int volume) {
     setMusicVolume(volume);
 }
 
-void    SoundRender::getSFXVolume(void) {
+int     SoundRender::getSFXVolume(void) {
     Mix_Volume(1, Mix_Volume(-1,-1));
 }
 
-void    SoundRender::getMusicVolume(void) {
+int     SoundRender::getMusicVolume(void) {
     Mix_Volume(1, Mix_VolumeMusic(-1));
 }
