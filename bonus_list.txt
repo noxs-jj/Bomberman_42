@@ -5,16 +5,16 @@ BONUS REQUIERED:
 EN COURS: Random Map: params -gen
 
 OTHERS:
-- multi joueurs
-- mode arene
-- mode coop
 - 4 boss affiche
 - SKYBOX
 - Gestion 5 Joysticks
 - Gestion Bonus Power
-	* Power up (augmentatino du rayon d'explosion)
-	* Plus One (augmentatino du nombre de bomb pose)
+	* Power up (augmentation du rayon d'explosion)
+	* Plus One (augmentation du nombre de bomb pose)
 	* Bomb change (changement du model de bombe)
 	* Kick Bomb
 	* Remote Bomb
 - Parseur de Map personnalise avec Editeur de map en HTML/Javascript
+- multi joueurs
+- mode arene
+- mode coop
