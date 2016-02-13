@@ -11,6 +11,7 @@
 // ************************************************************************** //
 
 #include "soundrender.class.hpp"
+#define FUNC std::string(__PRETTY_FUNCTION__) + " -> "
 
 SoundRender::SoundRender() {
 	if (!init()) {
@@ -23,7 +24,7 @@ SoundRender::~SoundRender() {
 }
 
 bool    SoundRender::init() {
-    this->w_full("soundrender -> constructing");
+    this->w_full(FUNC + "soundrender -> constructing");
     // open 44.1KHz, signed 16bit, system byte order,
     // stereo audio, using 1024 byte chunks
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, STEREO, 1024) == -1) {
@@ -31,33 +32,33 @@ bool    SoundRender::init() {
         return false;
     }
     // allocate 16 mixing channels
-	this->w_full("soundrender -> allocating channels");
+	this->w_full(FUNC + "soundrender -> allocating channels");
     Mix_AllocateChannels(mMaxAllocatedChannels);
     this->setGlobalVolume(VOLUME_DEFAULT);
     return true;
 }
 
 bool    SoundRender::deinit() {
-    this->w_full("destructing soundrender");
+    this->w_full(FUNC + "destructing soundrender");
     // free sounds
     for (auto it = mChunks.begin(); it != mChunks.cend();)
     {
-        this->w_full("freeing " + it->first);
+        this->w_full(FUNC + "freeing " + it->first);
         Mix_FreeChunk(it->second);
         mChunks.erase(it++);
     }
     // free music
     for (auto it = mMusics.begin(); it != mMusics.cend();)
     {
-        this->w_full("freeing " + it->first);
+        this->w_full(FUNC + "freeing " + it->first);
         Mix_FreeMusic(it->second);
         mMusics.erase(it++);
     }
-    this->w_full("soundrender -> deiniting (Mix_Init(0))");
+    this->w_full(FUNC + "soundrender -> deiniting (Mix_Init(0))");
     while (Mix_Init(0)) {
         Mix_Quit();
     }
-    this->w_full("soundrender -> close audio");
+    this->w_full(FUNC + "soundrender -> close audio");
     Mix_CloseAudio();
     return true;
 }
@@ -89,23 +90,23 @@ void    SoundRender::load_files(void) {
             && this->loadMusic("music", "assets/sound/bgm.wav")
             && this->loadMusic("ps1", "assets/sound/ps1.wav")
         )) {
-        this->w_full("loadsound error");
+        this->w_full(FUNC + "loadsound error");
         throw std::exception();
     }
-    this->w_full("sounds loaded");
+    this->w_full(FUNC + "sounds loaded");
 }
 
 
 bool    SoundRender::loadSound(std::string soundName, std::string fileName) {
-    this->w_full("loading sound -> " + soundName + " at " + fileName);
+    this->w_full(FUNC + "loading sound -> " + soundName + " at " + fileName);
     if (mChunks.count(soundName) > 0) {
         this->w_full("sound with given name already exists!");
         return false;
     }
     Mix_Chunk *chunk = Mix_LoadWAV(fileName.c_str());
     if (chunk == NULL) {
-        this->w_full("sound loading [fail]");
-        this->w_full(Mix_GetError());
+        this->w_full(FUNC + "sound loading [fail]");
+        this->w_full(FUNC + Mix_GetError());
         return false;
     }
     mChunks[soundName] = chunk;
@@ -113,29 +114,30 @@ bool    SoundRender::loadSound(std::string soundName, std::string fileName) {
 }
 
 bool    SoundRender::playSound(std::string soundName) {
+	w_full(FUNC + "Trying to play sound " + soundName);
 	try {
 	    if (Mix_PlayChannel(-1, mChunks.at(soundName), 0) == -1) {
-	        this->w_full(Mix_GetError());
+	        this->w_full(FUNC + Mix_GetError());
 	        return false;
 	    }
 	} catch (std::exception const & e) {
-		this->w_full(e.what());
+		this->w_full(FUNC + e.what());
 		return false;
 	}
     return true;
 }
 
 bool    SoundRender::loadMusic(std::string musicName, std::string fileName) {
-    this->w_full("loading music -> " + musicName + " at " + fileName);
+    this->w_full(FUNC + "loading music -> " + musicName + " at " + fileName);
     if (mMusics.count(musicName) > 0) {
-        this->w_full("music with given name already exists!");
+        this->w_full(FUNC + "music with given name already exists!");
         return false;
     }
     // load the WAV file "fileName" to play as music
     Mix_Music * music;
     music = Mix_LoadMUS(fileName.c_str());
     if (!music) {
-        this->w_full(Mix_GetError());
+        this->w_full(FUNC + Mix_GetError());
         // this might be a critical error...
         return false;
     }
@@ -144,39 +146,45 @@ bool    SoundRender::loadMusic(std::string musicName, std::string fileName) {
 }
 
 bool    SoundRender::playMusic(std::string musicName) {
+    this->w_full(FUNC + "Trying to play music " + musicName);
     try {
         // stop other musics before doing anything
-    	Mix_HaltMusic();
+    	this->stopMusic();
     	// play music forever
         if (Mix_PlayMusic(mMusics.at(musicName), -1) == -1) {
-			this->w_full(Mix_GetError());
+			this->w_full(FUNC + Mix_GetError());
             // well, there's no music, but most games don't break without music...
             return false;
         }
     } catch (std::exception const & e) {
-		this->w_full(e.what());
+		this->w_full(FUNC + e.what());
         return false;
     }
     return true;
 }
 
 void	SoundRender::stopMusic(void) {
+    this->w_full(FUNC);
 	Mix_HaltMusic();
 }
 
 void	SoundRender::stopSounds(void) {
+    this->w_full(FUNC);
 	Mix_HaltChannel(-1);
 }
 
 void    SoundRender::setSFXVolume(int volume) {
+    this->w_full(FUNC + std::to_string(volume));
     Mix_Volume(-1, volume);
 }
 
 void    SoundRender::setMusicVolume(int volume) {
+    this->w_full(FUNC + std::to_string(volume));
     Mix_VolumeMusic(volume);
 }
 
 void    SoundRender::setGlobalVolume(int volume) {
+    this->w_full(FUNC + std::to_string(volume));
     setSFXVolume(volume);
     setMusicVolume(volume);
 }
