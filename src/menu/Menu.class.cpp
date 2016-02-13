@@ -89,12 +89,30 @@ void	Menu::multiplayer() {
 }
 
 void    Menu::config_sound() {
-    print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_MULTI_2P);
 
+    if (VOLUME_OFF != main_event->soundrender->getMusicVolume()) {
+        print_surface(this->str_config_sound_global_activated, this->str_config_sound_global_activated_selected, 400, 500, MENU_CONFIG_SOUND_GLOBAL_SOUND);
+    }
+    else {
+        print_surface(this->str_config_sound_global_desactivated, this->str_config_sound_global_desactivated_selected, 400, 500, MENU_CONFIG_SOUND_GLOBAL_SOUND);
+    }
+
+    if (VOLUME_OFF == main_event->soundrender->getMusicVolume())
+        print_surface(this->str_config_sound_volume_off, this->str_config_sound_volume_off_selected, 400, 600, MENU_CONFIG_SOUND_SOUND_VOLUME);
+    else if (VOLUME_LOW == main_event->soundrender->getMusicVolume())
+        print_surface(this->str_config_sound_colume_low, this->str_config_sound_colume_low_selected, 400, 600, MENU_CONFIG_SOUND_SOUND_VOLUME);
+    else if (VOLUME_MEDIUM == main_event->soundrender->getMusicVolume())
+        print_surface(this->str_config_sound_colume_medium, this->str_config_sound_colume_medium_selected, 400, 600, MENU_CONFIG_SOUND_SOUND_VOLUME);
+    else if (VOLUME_HIGH == main_event->soundrender->getMusicVolume())
+        print_surface(this->str_config_sound_colume_hight, this->str_config_sound_colume_hight_selected, 400, 600, MENU_CONFIG_SOUND_SOUND_VOLUME);
+
+    print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_CONFIG_SOUND_RETURN);
 }
 
 void    Menu::config_video() {
-    print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_MULTI_2P);
+    print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_CONFIG_VIDEO_RESOLUTION);
+    print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_CONFIG_VIDEO_RESOLUTION);
+    print_surface(this->str_return, this->str_return_selected, 400, 800, MENU_CONFIG_VIDEO_RETURN);
 
 }
 
@@ -161,16 +179,325 @@ void  Menu::big_menu() {
     print_surface(this->str_arena, this->str_arena_selected, 400, 480, MENU_ARENA);
     print_surface(this->str_multiplayer, this->str_multiplayer_selected, 400, 570, MENU_MULTIPLAYER);
     print_surface(this->str_config, str_config_selected, 400, 660, MENU_CONFIG);
-
     print_surface(this->str_config_sound, str_config_sound_selected, 400, 750, MENU_CONFIG_SOUND);
-
     print_surface(this->str_config_video, str_config_video_selected, 400, 840, MENU_CONFIG_VIDEO);
-
     if (true == main_event->option_arcade)
         print_surface(this->str_arcade, this->str_arcade_selected, 400, 930, MENU_EXIT);
     else
         print_surface(this->str_exit, this->str_exit_selected, 400, 930, MENU_EXIT);
 }
+
+
+void Menu::intro_start() {
+  if (false == this->introstart) {
+    glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
+    glClearColor(0,0,0,0);
+    if (NULL == this->ecran_menu)
+      SDL_FreeSurface(this->current);
+    this->current = NULL;
+	this->current = IMG_Load("assets/images/intro_start-2.bmp");
+    // this->current = IMG_Load("src/menu/assets/bomberman-intro-3.bmp");
+    if (NULL == this->current) {
+      std::cerr << "Menu::intro_start load image error " << SDL_GetError() << std::endl;
+      throw std::exception();
+    }
+    globject::display_menu(this->current);
+    SDL_GL_SwapWindow(globject::_displayWindow);
+  }
+}
+
+void  Menu::menu_selection() {
+    if (NULL != this->ecran_menu) {
+        SDL_FreeSurface(this->ecran_menu);
+        this->ecran_menu = NULL;
+    }
+    this->ecran_menu = SDL_CreateRGBSurface(0, 1300, 1300, 32, 0, 0, 0, 0);
+    if (NULL == this->ecran_menu) {
+        this->w_full("Menu::big_menu ecran_menu allocation error");
+        throw std::exception();
+    }
+
+    glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
+    SDL_FillRect(this->ecran_menu, NULL, SDL_MapRGB(this->ecran_menu->format, 0, 0, 0) );
+
+	// std::cout << "winer multi is " << main_event->draw_winner_multi << std::endl;
+    if (main_event->draw_winner_multi >= 0) { // Affichage du victorieu
+        this->winner_multi();
+    }
+    else if (main_event->draw_winner_campaign >= 0) { // Affichage du victorieu
+        this->winner_campaign();
+
+    if (main_event->draw_winner_campaign == 1) {
+        main_event->make_new_game(1);
+        main_event->draw_winner_campaign = 2;
+    }
+
+    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
+    }
+    else if (main_event->draw_lose_campaign >= 0) { // Affichage du victorieu
+        this->lose_campaign();
+        // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
+    }
+    else if (main_event->draw_end_campaign >= 0) { // Affichage du victorieu
+        this->end_campaign();
+    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
+    }
+    else {
+        switch(this->menu_selected) {
+            case BIG_MENU:        this->big_menu(); break;
+            case CAMPAIGN:        this->campaign(); break;
+            case ARENA:           this->arena(); break;
+            case MULTIPLAYER:     this->multiplayer(); break;
+            case CONFIG:          this->config(); break;
+            case CONFIG_SOUND:    this->config_sound(); break;
+            case CONFIG_VIDEO:    this->config_video(); break;
+            case EXIT:            this->exit_game(); break;
+        }
+    }
+
+    globject::display_menu(this->ecran_menu);
+    SDL_GL_SwapWindow(globject::_displayWindow);
+}
+
+void  Menu::main_loop() {
+	musicIsPlaying = false;
+	main_event->soundrender->stopMusic();
+	main_event->soundrender->stopSounds();
+    while (true == main_event->mode_menu) {
+        if (false == this->introstart)
+		this->intro_start();
+        else
+            this->menu_selection();
+        main_event->joystick->read_key(0);
+        usleep(50000);
+    }
+}
+
+void Menu::move_menu_hor() {
+	main_event->soundrender->playSound("switchselect");
+	if (this->menu_selected != CONFIG
+        && this->menu_selected != CONFIG_SOUND
+        && this->menu_selected != CONFIG_VIDEO
+    )
+		return ;
+
+	int i = 0, tmp = 0;
+
+	while (i < 5) {
+		if (main_event->joystick->config[i] == 1)
+			tmp++;
+		i++;
+	}
+	if (tmp >= 2 && main_event->joystick->config[this->detail_menu_selected - MENU_CONFIG_PLAYER1] == 0)
+		return ;
+
+	if (this->detail_menu_selected == MENU_CONFIG_PLAYER1)
+		main_event->joystick->config[0] = (main_event->joystick->config[0] == 0) ? 1 : 0;
+	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER2)
+		main_event->joystick->config[1] = (main_event->joystick->config[1] == 0) ? 1 : 0;
+	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER3)
+		main_event->joystick->config[2] = (main_event->joystick->config[2] == 0) ? 1 : 0;
+	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER4)
+		main_event->joystick->config[3] = (main_event->joystick->config[3] == 0) ? 1 : 0;
+	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER5)
+		main_event->joystick->config[4] = (main_event->joystick->config[4] == 0) ? 1 : 0;
+
+    else if (this->detail_menu_selected == MENU_CONFIG_SOUND_SOUND_VOLUME) {
+        if (VOLUME_OFF == main_event->soundrender->getMusicVolume())
+            main_event->soundrender->setGlobalVolume(VOLUME_LOW);
+        else if (VOLUME_LOW == main_event->soundrender->getMusicVolume())
+            main_event->soundrender->setGlobalVolume(VOLUME_MEDIUM);
+        else if (VOLUME_MEDIUM == main_event->soundrender->getMusicVolume())
+            main_event->soundrender->setGlobalVolume(VOLUME_HIGH);
+        else if (VOLUME_HIGH == main_event->soundrender->getMusicVolume())
+            main_event->soundrender->setGlobalVolume(VOLUME_OFF);
+
+    }
+
+    else if (this->detail_menu_selected == MENU_CONFIG_SOUND_GLOBAL_SOUND) {
+        if (VOLUME_OFF != main_event->soundrender->getMusicVolume())
+            main_event->soundrender->setGlobalVolume(VOLUME_OFF);
+        else
+            main_event->soundrender->setGlobalVolume(VOLUME_MEDIUM);
+    }
+
+	main_event->joystick->save_config();
+}
+
+void  Menu::move_menu_ver(int dir) {
+    main_event->soundrender->playSound("menu1");
+    if (this->menu_selected == BIG_MENU) {
+        if (dir == -1 && main_event->game_playing == true && this->detail_menu_selected == MENU_CAMPAIGN)
+            this->detail_menu_selected = RESUME_GAME;
+        else if (dir == -1 && main_event->game_playing == false && this->detail_menu_selected == MENU_CAMPAIGN)
+            this->detail_menu_selected = MENU_EXIT;
+        else if (dir == -1 && this->detail_menu_selected == RESUME_GAME)
+            this->detail_menu_selected = MENU_EXIT;
+        else if (dir == 1 && main_event->game_playing == true && this->detail_menu_selected == MENU_EXIT)
+            this->detail_menu_selected = RESUME_GAME;
+        else if (dir == 1 && main_event->game_playing == false && this->detail_menu_selected == MENU_EXIT)
+            this->detail_menu_selected = MENU_CAMPAIGN;
+        else
+            this->detail_menu_selected += dir;
+    }
+
+    else if (this->menu_selected == CAMPAIGN) {
+        if (dir == -1 && this->detail_menu_selected == MENU_CAMPAIGN_NEW)
+            this->detail_menu_selected = MENU_CAMPAIGN_RETURN;
+        else if (dir == 1 && this->detail_menu_selected == MENU_CAMPAIGN_RETURN)
+            this->detail_menu_selected = MENU_CAMPAIGN_NEW;
+        else
+            this->detail_menu_selected += dir;
+    }
+
+    else if (this->menu_selected == ARENA) {
+        if (dir == -1 && this->detail_menu_selected == MENU_ARENA_2P)
+            this->detail_menu_selected = MENU_ARENA_RETURN;
+        else if (dir == 1 && this->detail_menu_selected == MENU_ARENA_RETURN)
+            this->detail_menu_selected = MENU_ARENA_2P;
+        else
+            this->detail_menu_selected += dir;
+    }
+
+    else if (this->menu_selected == MULTIPLAYER) {
+        if (dir == -1 && this->detail_menu_selected == MENU_MULTI_2P)
+            this->detail_menu_selected = MENU_MULTI_RETURN;
+        else if (dir == 1 && this->detail_menu_selected == MENU_MULTI_RETURN)
+            this->detail_menu_selected = MENU_MULTI_2P;
+        else
+            this->detail_menu_selected += dir;
+    }
+
+    else if (this->menu_selected == CONFIG) {
+        if (dir == -1 && this->detail_menu_selected == MENU_CONFIG_PLAYER1)
+            this->detail_menu_selected = MENU_CONFIG_RETURN;
+        else if (dir == 1 && this->detail_menu_selected == MENU_CONFIG_RETURN)
+            this->detail_menu_selected = MENU_CONFIG_PLAYER1;
+        else
+            this->detail_menu_selected += dir;
+    }
+
+    else if (this->menu_selected == CONFIG_SOUND) {
+        if (dir == -1 && this->detail_menu_selected == MENU_CONFIG_SOUND_GLOBAL_SOUND)
+            this->detail_menu_selected = MENU_CONFIG_SOUND_RETURN;
+        else if (dir == 1 && this->detail_menu_selected == MENU_CONFIG_SOUND_RETURN)
+            this->detail_menu_selected = MENU_CONFIG_SOUND_GLOBAL_SOUND;
+        else
+            this->detail_menu_selected += dir;
+    }
+
+    else if (this->menu_selected == CONFIG_VIDEO) {
+        if (dir == -1 && this->detail_menu_selected == MENU_CONFIG_VIDEO_RESOLUTION)
+            this->detail_menu_selected = MENU_CONFIG_VIDEO_RETURN;
+        else if (dir == 1 && this->detail_menu_selected == MENU_CONFIG_VIDEO_RETURN)
+            this->detail_menu_selected = MENU_CONFIG_VIDEO_RESOLUTION;
+        else
+            this->detail_menu_selected += dir;
+    }
+
+    else if (this->menu_selected == EXIT) {
+        if (this->detail_menu_selected == MENU_EXIT_CONFIRM)
+            this->detail_menu_selected = MENU_EXIT_RETURN;
+        else if (this->detail_menu_selected == MENU_EXIT_RETURN)
+            this->detail_menu_selected = MENU_EXIT_CONFIRM;
+    }
+}
+
+void  Menu::change_menu_back() {
+    if (this->menu_selected == CAMPAIGN || this->menu_selected == ARENA
+        || this->menu_selected == MULTIPLAYER || this->menu_selected == CONFIG
+        || this->menu_selected == CONFIG_SOUND || this->menu_selected == CONFIG_VIDEO
+        ) {
+        this->menu_selected = BIG_MENU;
+        if (main_event->game_playing == true)
+            this->detail_menu_selected = RESUME_GAME;
+        else
+        this->detail_menu_selected = MENU_CAMPAIGN;
+    }
+}
+
+void  Menu::change_menu() {
+    std::cout << this->menu_selected << " vs " << RESUME_GAME << std::endl;
+    if (!(this->detail_menu_selected == MENU_CAMPAIGN_RETURN
+        || this->detail_menu_selected == MENU_CONFIG_RETURN
+        || this->detail_menu_selected == MENU_CONFIG_SOUND_RETURN
+        || this->detail_menu_selected == MENU_CONFIG_VIDEO_RETURN
+        || this->detail_menu_selected == MENU_EXIT_RETURN
+        || this->detail_menu_selected == MENU_ARENA_RETURN
+        || this->detail_menu_selected == MENU_MULTI_RETURN))
+        {
+	           main_event->soundrender->playSound("menu2");
+    }
+    if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_NEW == this->detail_menu_selected )
+        Gamelauncher::campaign_new();
+    else if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_COOP == this->detail_menu_selected )
+        Gamelauncher::campaign_new_coop();
+    else if (this->detail_menu_selected == MENU_CAMPAIGN) {
+        this->detail_menu_selected = MENU_CAMPAIGN_NEW;
+        this->menu_selected = CAMPAIGN;
+    }
+    else if (main_event->game_playing == true && this->detail_menu_selected == RESUME_GAME) {
+        // main_event->game_playing = false;
+        main_event->mode_menu = false;
+    }
+    else if (this->detail_menu_selected == MENU_CONFIG) {
+        this->detail_menu_selected = MENU_CONFIG_PLAYER1;
+        this->menu_selected = CONFIG;
+    }
+    else if (this->detail_menu_selected == MENU_CONFIG_SOUND) {
+        this->detail_menu_selected = MENU_CONFIG_SOUND_GLOBAL_SOUND;
+        this->menu_selected = CONFIG_SOUND;
+    }
+    else if (this->detail_menu_selected == MENU_CONFIG_VIDEO) {
+        this->detail_menu_selected = MENU_CONFIG_VIDEO_RESOLUTION;
+        this->menu_selected = CONFIG_VIDEO;
+    }
+    else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_5P )
+        Gamelauncher::run_multi_5(); // Multiplayer 4 Players Launcher game
+    else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_4P )
+        Gamelauncher::run_multi_4(); // Multiplayer 4 Players Launcher game
+    else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_3P )
+        Gamelauncher::run_multi_3(); // Multiplayer 3 Players Launcher game
+    else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_2P )
+        Gamelauncher::run_multi_2(); // Multiplayer 2 Players Launcher game
+    else if (this->detail_menu_selected == MENU_MULTIPLAYER) {
+        this->detail_menu_selected = MENU_MULTI_2P;
+        this->menu_selected = MULTIPLAYER;
+    }
+    else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_5P )
+        Gamelauncher::run_arena_5();
+    else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_4P )
+        Gamelauncher::run_arena_4();
+    else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_3P )
+        Gamelauncher::run_arena_3();
+    else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_2P )
+        Gamelauncher::run_arena_2();
+    else if (this->detail_menu_selected == MENU_ARENA) {
+        this->detail_menu_selected = MENU_ARENA_2P;
+        this->menu_selected = ARENA;
+    }
+    else if (this->detail_menu_selected == MENU_CAMPAIGN_RETURN
+        || this->detail_menu_selected == MENU_CONFIG_RETURN
+        || this->detail_menu_selected == MENU_EXIT_RETURN
+        || this->detail_menu_selected == MENU_ARENA_RETURN
+        || this->detail_menu_selected == MENU_CONFIG_SOUND_RETURN
+        || this->detail_menu_selected == MENU_CONFIG_VIDEO_RETURN
+        || this->detail_menu_selected == MENU_MULTI_RETURN) {
+		main_event->soundrender->playSound("return");
+        this->detail_menu_selected = MENU_CAMPAIGN;
+        this->menu_selected = BIG_MENU;
+    }
+    else if (this->detail_menu_selected == MENU_EXIT) {
+        if (false == main_event->option_arcade) {
+            this->detail_menu_selected = MENU_EXIT_CONFIRM;
+            this->menu_selected = EXIT;
+        }
+    }
+    else if (this->detail_menu_selected == MENU_EXIT_CONFIRM)
+        main_event->exit_free();
+}
+
+Menu::Menu(Event * event) : event(event), current(NULL) {}
 
 void Menu::init() {
     this->joystick_number = SDL_NumJoysticks();
@@ -241,10 +568,10 @@ void Menu::init() {
     // Sound Config
     this->str_config_sound = TTF_RenderText_Blended(this->SansPosterBold, "Sound Config", this->white);
     this->str_config_sound_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Sound Config <<", this->red);
-    this->str_config_sound_global_activated = TTF_RenderText_Blended(this->SansPosterBold, "Global Sound desativated", this->white);
-    this->str_config_sound_global_activated_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Global Sound desativated", this->red);
-    this->str_config_sound_global_desactivated = TTF_RenderText_Blended(this->SansPosterBold, "Global Sound desativated", this->white);
-    this->str_config_sound_global_desactivated_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Global Sound desativated", this->red);
+    this->str_config_sound_global_activated = TTF_RenderText_Blended(this->SansPosterBold, "Sound ativated", this->white);
+    this->str_config_sound_global_activated_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Sound ativated", this->red);
+    this->str_config_sound_global_desactivated = TTF_RenderText_Blended(this->SansPosterBold, "Sound desativated", this->white);
+    this->str_config_sound_global_desactivated_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Sound desativated", this->red);
     this->str_config_sound_volume_off = TTF_RenderText_Blended(this->SansPosterBold, "Volume OFF", this->white);
     this->str_config_sound_volume_off_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Volume OFF", this->red);
     this->str_config_sound_colume_low = TTF_RenderText_Blended(this->SansPosterBold, "Volume LOW", this->white);
@@ -283,266 +610,6 @@ void Menu::init() {
 	this->winner[3] = TTF_RenderText_Blended(this->SansPosterBold, "Player 4 Victory", this->blue);
 	this->winner[4] = TTF_RenderText_Blended(this->SansPosterBold, "Player 5 Victory", this->blue);
 }
-
-void Menu::intro_start() {
-  if (false == this->introstart) {
-    glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
-    glClearColor(0,0,0,0);
-    if (NULL == this->ecran_menu)
-      SDL_FreeSurface(this->current);
-    this->current = NULL;
-	this->current = IMG_Load("assets/images/intro_start-2.bmp");
-    // this->current = IMG_Load("src/menu/assets/bomberman-intro-3.bmp");
-    if (NULL == this->current) {
-      std::cerr << "Menu::intro_start load image error " << SDL_GetError() << std::endl;
-      throw std::exception();
-    }
-    globject::display_menu(this->current);
-    SDL_GL_SwapWindow(globject::_displayWindow);
-  }
-}
-
-void  Menu::menu_selection() {
-    if (NULL != this->ecran_menu) {
-        SDL_FreeSurface(this->ecran_menu);
-        this->ecran_menu = NULL;
-    }
-    this->ecran_menu = SDL_CreateRGBSurface(0, 1300, 1300, 32, 0, 0, 0, 0);
-    if (NULL == this->ecran_menu) {
-        this->w_full("Menu::big_menu ecran_menu allocation error");
-        throw std::exception();
-    }
-
-    glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
-    SDL_FillRect(this->ecran_menu, NULL, SDL_MapRGB(this->ecran_menu->format, 0, 0, 0) );
-
-	// std::cout << "winer multi is " << main_event->draw_winner_multi << std::endl;
-    if (main_event->draw_winner_multi >= 0) { // Affichage du victorieu
-        this->winner_multi();
-    }
-    else if (main_event->draw_winner_campaign >= 0) { // Affichage du victorieu
-        this->winner_campaign();
-
-    if (main_event->draw_winner_campaign == 1) {
-        main_event->make_new_game(1);
-        main_event->draw_winner_campaign = 2;
-    }
-
-    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
-    }
-    else if (main_event->draw_lose_campaign >= 0) { // Affichage du victorieu
-        this->lose_campaign();
-        // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
-    }
-    else if (main_event->draw_end_campaign >= 0) { // Affichage du victorieu
-        this->end_campaign();
-    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
-    }
-    else {
-        switch(this->menu_selected) {
-            case BIG_MENU:        this->big_menu(); break;
-            case CAMPAIGN:        this->campaign(); break;
-            case ARENA:           this->arena(); break;
-            case MULTIPLAYER:     this->multiplayer(); break;
-            case CONFIG:          this->config(); break;
-            case CONFIG_SOUND:    break;
-            case CONFIG_VIDEO:    break;
-            case EXIT:            this->exit_game();
-        }
-    }
-
-    globject::display_menu(this->ecran_menu);
-    SDL_GL_SwapWindow(globject::_displayWindow);
-}
-
-void  Menu::main_loop() {
-	musicIsPlaying = false;
-	main_event->soundrender->stopMusic();
-	main_event->soundrender->stopSounds();
-    while (true == main_event->mode_menu) {
-        if (false == this->introstart)
-		this->intro_start();
-        else
-            this->menu_selection();
-        main_event->joystick->read_key(0);
-        usleep(50000);
-    }
-}
-
-void Menu::move_menu_hor() {
-	main_event->soundrender->playSound("switchselect");
-	if (this->menu_selected != CONFIG)
-		return ;
-
-	int i = 0, tmp = 0;
-
-	while (i < 5) {
-		if (main_event->joystick->config[i] == 1)
-			tmp++;
-		i++;
-	}
-	if (tmp >= 2 && main_event->joystick->config[this->detail_menu_selected - MENU_CONFIG_PLAYER1] == 0)
-		return ;
-
-	if (this->detail_menu_selected == MENU_CONFIG_PLAYER1)
-		main_event->joystick->config[0] = (main_event->joystick->config[0] == 0) ? 1 : 0;
-	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER2)
-		main_event->joystick->config[1] = (main_event->joystick->config[1] == 0) ? 1 : 0;
-	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER3)
-		main_event->joystick->config[2] = (main_event->joystick->config[2] == 0) ? 1 : 0;
-	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER4)
-		main_event->joystick->config[3] = (main_event->joystick->config[3] == 0) ? 1 : 0;
-	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER5)
-		main_event->joystick->config[4] = (main_event->joystick->config[4] == 0) ? 1 : 0;
-	main_event->joystick->save_config();
-}
-
-void  Menu::move_menu_ver(int dir) {
-    main_event->soundrender->playSound("menu1");
-    if (this->menu_selected == BIG_MENU) {
-        if (dir == -1 && main_event->game_playing == true && this->detail_menu_selected == MENU_CAMPAIGN)
-            this->detail_menu_selected = RESUME_GAME;
-        else if (dir == -1 && main_event->game_playing == false && this->detail_menu_selected == MENU_CAMPAIGN)
-            this->detail_menu_selected = MENU_EXIT;
-        else if (dir == -1 && this->detail_menu_selected == RESUME_GAME)
-            this->detail_menu_selected = MENU_EXIT;
-        else if (dir == 1 && main_event->game_playing == true && this->detail_menu_selected == MENU_EXIT)
-            this->detail_menu_selected = RESUME_GAME;
-        else if (dir == 1 && main_event->game_playing == false && this->detail_menu_selected == MENU_EXIT)
-            this->detail_menu_selected = MENU_CAMPAIGN;
-        else
-            this->detail_menu_selected += dir;
-    }
-
-    else if (this->menu_selected == CAMPAIGN) {
-        if (dir == -1 && this->detail_menu_selected == MENU_CAMPAIGN_NEW)
-            this->detail_menu_selected = MENU_CAMPAIGN_RETURN;
-        else if (dir == 1 && this->detail_menu_selected == MENU_CAMPAIGN_RETURN)
-            this->detail_menu_selected = MENU_CAMPAIGN_NEW;
-        else
-            this->detail_menu_selected += dir;
-    }
-
-    else if (this->menu_selected == ARENA) {
-        if (dir == -1 && this->detail_menu_selected == MENU_ARENA_2P)
-            this->detail_menu_selected = MENU_ARENA_RETURN;
-        else if (dir == 1 && this->detail_menu_selected == MENU_ARENA_RETURN)
-            this->detail_menu_selected = MENU_ARENA_2P;
-        else
-            this->detail_menu_selected += dir;
-    }
-
-    else if (this->menu_selected == MULTIPLAYER) {
-        if (dir == -1 && this->detail_menu_selected == MENU_MULTI_2P)
-            this->detail_menu_selected = MENU_MULTI_RETURN;
-        else if (dir == 1 && this->detail_menu_selected == MENU_MULTI_RETURN)
-            this->detail_menu_selected = MENU_MULTI_2P;
-        else
-            this->detail_menu_selected += dir;
-    }
-
-    else if (this->menu_selected == CONFIG) {
-        if (dir == -1 && this->detail_menu_selected == MENU_CONFIG_PLAYER1)
-            this->detail_menu_selected = MENU_CONFIG_RETURN;
-        else if (dir == 1 && this->detail_menu_selected == MENU_CONFIG_RETURN)
-            this->detail_menu_selected = MENU_CONFIG_PLAYER1;
-        else
-            this->detail_menu_selected += dir;
-    }
-
-    else if (this->menu_selected == CONFIG_SOUND) {
-        this->detail_menu_selected += dir;
-    }
-
-    else if (this->menu_selected == EXIT) {
-        if (this->detail_menu_selected == MENU_EXIT_CONFIRM)
-            this->detail_menu_selected = MENU_EXIT_RETURN;
-        else if (this->detail_menu_selected == MENU_EXIT_RETURN)
-            this->detail_menu_selected = MENU_EXIT_CONFIRM;
-    }
-}
-
-void  Menu::change_menu_back() {
-    if (this->menu_selected == CAMPAIGN || this->menu_selected == ARENA
-        || this->menu_selected == MULTIPLAYER || this->menu_selected == CONFIG) {
-        this->menu_selected = BIG_MENU;
-        if (main_event->game_playing == true)
-            this->detail_menu_selected = RESUME_GAME;
-        else
-        this->detail_menu_selected = MENU_CAMPAIGN;
-    }
-}
-
-void  Menu::change_menu() {
-    std::cout << this->menu_selected << " vs " << RESUME_GAME << std::endl;
-    if (!(this->detail_menu_selected == MENU_CAMPAIGN_RETURN
-        || this->detail_menu_selected == MENU_CONFIG_RETURN
-        || this->detail_menu_selected == MENU_EXIT_RETURN
-        || this->detail_menu_selected == MENU_ARENA_RETURN
-        || this->detail_menu_selected == MENU_MULTI_RETURN))
-        {
-	           main_event->soundrender->playSound("menu2");
-    }
-    if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_NEW == this->detail_menu_selected )
-        Gamelauncher::campaign_new();
-    else if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_COOP == this->detail_menu_selected )
-        Gamelauncher::campaign_new_coop();
-    else if (this->detail_menu_selected == MENU_CAMPAIGN) {
-        this->detail_menu_selected = MENU_CAMPAIGN_NEW;
-        this->menu_selected = CAMPAIGN;
-    }
-    else if (main_event->game_playing == true && this->detail_menu_selected == RESUME_GAME) {
-        // main_event->game_playing = false;
-        main_event->mode_menu = false;
-    }
-    else if (this->detail_menu_selected == MENU_CONFIG) {
-        this->detail_menu_selected = MENU_CONFIG_PLAYER1;
-        this->menu_selected = CONFIG;
-    }
-    else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_5P )
-        Gamelauncher::run_multi_5(); // Multiplayer 4 Players Launcher game
-    else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_4P )
-        Gamelauncher::run_multi_4(); // Multiplayer 4 Players Launcher game
-    else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_3P )
-        Gamelauncher::run_multi_3(); // Multiplayer 3 Players Launcher game
-    else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_2P )
-        Gamelauncher::run_multi_2(); // Multiplayer 2 Players Launcher game
-    else if (this->detail_menu_selected == MENU_MULTIPLAYER) {
-        this->detail_menu_selected = MENU_MULTI_2P;
-        this->menu_selected = MULTIPLAYER;
-    }
-    else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_5P )
-        Gamelauncher::run_arena_5();
-    else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_4P )
-        Gamelauncher::run_arena_4();
-    else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_3P )
-        Gamelauncher::run_arena_3();
-    else if ( this->menu_selected == ARENA && this->detail_menu_selected == MENU_ARENA_2P )
-        Gamelauncher::run_arena_2();
-    else if (this->detail_menu_selected == MENU_ARENA) {
-        this->detail_menu_selected = MENU_ARENA_2P;
-        this->menu_selected = ARENA;
-    }
-    else if (this->detail_menu_selected == MENU_CAMPAIGN_RETURN
-        || this->detail_menu_selected == MENU_CONFIG_RETURN
-        || this->detail_menu_selected == MENU_EXIT_RETURN
-        || this->detail_menu_selected == MENU_ARENA_RETURN
-        || this->detail_menu_selected == MENU_MULTI_RETURN) {
-		main_event->soundrender->playSound("return");
-        this->detail_menu_selected = MENU_CAMPAIGN;
-        this->menu_selected = BIG_MENU;
-    }
-    else if (this->detail_menu_selected == MENU_EXIT) {
-        if (false == main_event->option_arcade) {
-            this->detail_menu_selected = MENU_EXIT_CONFIRM;
-            this->menu_selected = EXIT;
-        }
-    }
-    else if (this->detail_menu_selected == MENU_EXIT_CONFIRM)
-        main_event->exit_free();
-}
-
-Menu::Menu(Event * event) : event(event), current(NULL) {}
 
 Menu::~Menu() {
     SDL_FreeSurface(this->str_resume_game);
