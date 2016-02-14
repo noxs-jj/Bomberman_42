@@ -27,10 +27,13 @@ ifeq "$(PLATFORM)" "Linux"
 	COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
 endif
 
-CXX = 			clang++
+CXX =			clang++
 
 NAME =			bomberman
 
+ASSETS_PATH =	assets
+ASSETS_TAR =	bomberman_assets.tar
+ASSETS_URL =	http://www.noxs.net/up/bomberman_assets.tar
 
 CFLAGS =		-std=gnu++11 -Wall -Wextra -Werror -pedantic -g
 
@@ -93,11 +96,17 @@ default: all
 %.cpp.o: %.cpp $(HEAD)
 	@$(CXX) $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) -c $< -o $@
 
-all: $(NAME)
-	@echo "./bomberman"
-
 $(NAME): $(OBJ)
 	$(COMMAND)
+
+$(ASSETS_PATH): $(ASSETS_TAR)
+	tar -xf $(ASSETS_TAR)
+
+$(ASSETS_TAR):
+	wget $(ASSETS_URL)
+
+all: $(ASSETS_PATH) $(NAME)
+	@echo "./bomberman"
 
 clean:
 	@rm -rf $(OBJ)

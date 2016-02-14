@@ -24,6 +24,6 @@ IA:
 
 SOUND:
     - REQUIRED: 3 musiques differents pour 3 levels differents,
-    [1 4 7] = musique1 [2 5 8] = musique2 [3 6 9] = musique3
-    une musique par multiple de 3 sa evitera d'avoir trop de musique.
+    [1 4 7] = musique1, [2 5 8] = musique2, [3 6 9] = musique3.
+    Une musique par multiple de 3 sa evitera d'avoir trop de musique.
     Une grosse musique pour les niveau de boss 3 6 9.

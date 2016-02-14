@@ -44,8 +44,8 @@ Key | Joystick | Keyboard1 | Keyboard2
 ## Credits
 Whois @42born2code | Jobs
 ------------ | -------------
-rcargou  | 3D OpenGL engineer
+rcargou  | 3D OpenGL engineer, assets 3D, textures
 vjacquie | Game Logic, Game Design, input engineer
-adjivas | IA engineer
+adjivas | IA engineer, Documentation wirter 'man'
 nmohamed naki.md@gmail.com twitter@naki_md | Sound Design, input engineer
-jmoiroux jjmoiroux@gmail.com twitter@jjmoiroux | Project Manager, Os Platform compatibility, Level Design, Game Design
+jmoiroux jjmoiroux@gmail.com twitter@jjmoiroux | Project Manager, Os Platform compatibility, Level Design, Game Design, textures

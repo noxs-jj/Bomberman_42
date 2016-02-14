@@ -19,3 +19,4 @@ src/.DS_Store
 *.o
 config/config.txt
 bomberman.en.pdf
+bomberman_assets.tar
