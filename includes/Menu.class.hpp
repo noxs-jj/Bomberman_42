@@ -71,20 +71,18 @@ class Event;
 class Menu : public ft42 {
 public:
 
-    Event *               event;
-    SDL_Surface *         current;
-    SDL_Surface *         ecran_menu;
-    bool                  introstart;
-    bool                  launch_action;
+    Event *         event;
+    SDL_Surface *   current;
+    SDL_Surface *   ecran_menu;
+    bool            introstart;
+    bool            launch_action;
+    TTF_Font *      SansPosterBold;
+    int             joystick_number = 0;
 
-    TTF_Font *            SansPosterBold;
-    int 					joystick_number = 0;
-
-
-    SDL_Color             white;
-    SDL_Color             blue;
-    SDL_Color             red;
-    SDL_Rect              position;
+    SDL_Color       white;
+    SDL_Color       blue;
+    SDL_Color       red;
+    SDL_Rect        position;
 
     int             menu_selected;
     int             detail_menu_selected;
@@ -132,7 +130,6 @@ public:
     SDL_Surface *   str_config_3_selected;
     SDL_Surface *   str_config_4_selected;
     SDL_Surface *   str_config_5_selected;
-
     SDL_Surface *   str_config_sound;
     SDL_Surface *   str_config_sound_selected;
     SDL_Surface *   str_config_sound_global_activated;
@@ -149,7 +146,6 @@ public:
     SDL_Surface *   str_config_sound_colume_hight_selected;
     SDL_Surface *   str_config_sound_colume_default;
     SDL_Surface *   str_config_sound_colume_default_selected;
-
     SDL_Surface *   str_config_video;
     SDL_Surface *   str_config_video_selected;
     SDL_Surface *   str_config_video_fullscreen;
@@ -169,15 +165,15 @@ public:
     SDL_Surface *   str_config_video_not_set;
     SDL_Surface *   str_config_video_not_set_selected;
     SDL_Surface *   str_config_video_not_set_disable;
-
-
+    SDL_Surface *   str_option_disable;
+    SDL_Surface *   str_option_disable_selected;
     SDL_Surface *   lose_campaign_txt;
     SDL_Surface *   winner_campaign_txt;
     SDL_Surface *   winner_game_txt;
     SDL_Surface **  winner;
 
-    bool musicIsPlaying = false; 	// pour fixer le probleme de la musique
-    								// dans le menu qui redemarre chaque millisecondes
+    bool musicIsPlaying = false;    // pour fixer le probleme de la musique
+                                    // dans le menu qui redemarre chaque millisecondes
 
 
     Menu(Event * event);
@@ -205,10 +201,10 @@ public:
     void            winner_campaign();
     void            lose_campaign();
     void            end_campaign();
-    void 						move_menu_hor();
+    void            move_menu_hor();
 
 private:
-  Menu( void );
+    Menu( void );
 };
 
 #endif

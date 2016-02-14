@@ -18,78 +18,69 @@
 #include <joystick.hpp>
 
 void	Menu::winner_multi() {
-	if (!this->musicIsPlaying)
-	{
+	if (!this->musicIsPlaying) {
 		this->musicIsPlaying = true;
 		main_event->soundrender->stopSounds();
 		main_event->soundrender->stopMusic();
 		main_event->soundrender->playMusic("victory_multiplayer");
 	}
-	// std::cout << "main_event->winner_multi " << main_event->draw_winner_multi << std::endl;
 	print_surface(this->winner[main_event->draw_winner_multi - 1], this->winner[main_event->draw_winner_multi - 1], 400, 400, 0);
 }
 
 void	Menu::winner_campaign() {
-	if (!this->musicIsPlaying)
-	{
+	if (!this->musicIsPlaying) {
 		this->musicIsPlaying = true;
 		main_event->soundrender->stopSounds();
 		main_event->soundrender->stopMusic();
 		main_event->soundrender->playMusic("victory");
 	}
-	// std::cout << "main_event->winner_campaign " << main_event->draw_winner_campaign << std::endl;
 	print_surface(this->winner_campaign_txt, this->winner_campaign_txt, 400, 400, 0);
 }
 
 void	Menu::lose_campaign() {
-	if (!this->musicIsPlaying)
-	{
+	if (!this->musicIsPlaying) {
 		this->musicIsPlaying = true;
 		main_event->soundrender->stopSounds();
 		main_event->soundrender->stopMusic();
 		main_event->soundrender->playSound("lose");
 	}
-	// std::cout << "main_event->lose_campaign " << main_event->draw_lose_campaign << std::endl;
 	print_surface(this->lose_campaign_txt, this->lose_campaign_txt, 400, 400, 0);
 }
 
 void	Menu::end_campaign() {
-	if (!this->musicIsPlaying)
-	{
+	if (!this->musicIsPlaying) {
 		this->musicIsPlaying = true;
 		main_event->soundrender->stopSounds();
 		main_event->soundrender->stopMusic();
 		main_event->soundrender->playMusic("victory_final");
 	}
-	// std::cout << "main_event->end_campaign " << main_event->draw_end_campaign << std::endl;
 	print_surface(this->winner_game_txt, this->winner_game_txt, 400, 400, 0);
 }
 
 void	Menu::campaign() {
-	print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 400, MENU_CAMPAIGN_NEW);
-	print_surface(this->str_campaign_continue, this->str_campaign_continue_selected, 400, 500, MENU_CAMPAIGN_CONTINUE);
-	print_surface(this->str_campaign_coop, this->str_campaign_coop_selected, 400, 600, MENU_CAMPAIGN_COOP);
-	print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_CAMPAIGN_RETURN);
+    print_surface(this->str_campaign_new, this->str_campaign_new_selected, 400, 400, MENU_CAMPAIGN_NEW);
+    print_surface(this->str_campaign_continue, this->str_campaign_continue_selected, 400, 500, MENU_CAMPAIGN_CONTINUE);
+    print_surface(this->str_campaign_coop, this->str_campaign_coop_selected, 400, 600, MENU_CAMPAIGN_COOP);
+    print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_CAMPAIGN_RETURN);
 }
 
 void	Menu::arena() {
-	print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_ARENA_2P);
-	print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_ARENA_3P);
+    print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_ARENA_2P);
+    print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_ARENA_3P);
     print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_ARENA_4P);
-	print_surface(this->str_5players, this->str_5players_selected, 400, 700, MENU_ARENA_5P);
-	print_surface(this->str_return, this->str_return_selected, 400, 800, MENU_ARENA_RETURN);
+    print_surface(this->str_5players, this->str_5players_selected, 400, 700, MENU_ARENA_5P);
+    print_surface(this->str_return, this->str_return_selected, 400, 800, MENU_ARENA_RETURN);
 }
 
 void	Menu::multiplayer() {
-	print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_MULTI_2P);
-	print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_MULTI_3P);
+    print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_MULTI_2P);
+    print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_MULTI_3P);
     print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_MULTI_4P);
-	print_surface(this->str_5players, this->str_5players_selected, 400, 700, MENU_MULTI_5P);
-	print_surface(this->str_return, this->str_return_selected, 400, 800, MENU_MULTI_RETURN);
+    print_surface(this->str_5players, this->str_5players_selected, 400, 700, MENU_MULTI_5P);
+    print_surface(this->str_return, this->str_return_selected, 400, 800, MENU_MULTI_RETURN);
 }
 
 void    Menu::config_sound() {
-
     if (VOLUME_OFF != main_event->soundrender->getMusicVolume()) {
         print_surface(this->str_config_sound_global_activated, this->str_config_sound_global_activated_selected, 400, 500, MENU_CONFIG_SOUND_GLOBAL_SOUND);
     }
@@ -110,10 +101,16 @@ void    Menu::config_sound() {
 }
 
 void    Menu::config_video() {
+    # ifdef linux
+        print_surface(this->str_option_disable, this->str_option_disable_selected, 400, 500, MENU_CONFIG_VIDEO_MODE);
+    # endif
+    # ifdef __APPLE__
     if (true == main_event->full_screen)
         print_surface(this->str_config_video_fullscreen, this->str_config_video_fullscreen_selected, 400, 500, MENU_CONFIG_VIDEO_MODE);
     else
         print_surface(this->str_config_video_window, this->str_config_video_window_selected, 400, 500, MENU_CONFIG_VIDEO_MODE);
+    # endif
+
 
     if (false == main_event->full_screen) {
         if (RESOLUTION_800 == main_event->actual_resolution)
@@ -132,15 +129,7 @@ void    Menu::config_video() {
     else {
         print_surface(this->str_config_video_not_set, this->str_config_video_not_set_disable, 400, 600, MENU_CONFIG_VIDEO_RESOLUTION);
     }
-
-
-
-
-    // print_surface(this->str_config_video_2560_1440, this->str_config_video_2560_1440_selected, 400, 600, MENU_CONFIG_VIDEO_RESOLUTION);
     print_surface(this->str_return, this->str_return_selected, 400, 700, MENU_CONFIG_VIDEO_RETURN);
-
-    //https://wiki.libsdl.org/SDL_SetWindowFullscreen
-
 }
 
 void	Menu::config() {
@@ -220,13 +209,12 @@ void Menu::intro_start() {
     glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
     glClearColor(0,0,0,0);
     if (NULL == this->ecran_menu)
-      SDL_FreeSurface(this->current);
+        SDL_FreeSurface(this->current);
     this->current = NULL;
 	this->current = IMG_Load("assets/images/intro_start-2.bmp");
-    // this->current = IMG_Load("src/menu/assets/bomberman-intro-3.bmp");
     if (NULL == this->current) {
-      std::cerr << "Menu::intro_start load image error " << SDL_GetError() << std::endl;
-      throw std::exception();
+        std::cerr << "Menu::intro_start load image error " << SDL_GetError() << std::endl;
+        throw std::exception();
     }
     globject::display_menu(this->current);
     SDL_GL_SwapWindow(globject::_displayWindow);
@@ -253,12 +241,10 @@ void  Menu::menu_selection() {
     }
     else if (main_event->draw_winner_campaign >= 0) { // Affichage du victorieu
         this->winner_campaign();
-
-    if (main_event->draw_winner_campaign == 1) {
-        main_event->make_new_game(1);
-        main_event->draw_winner_campaign = 2;
-    }
-
+        if (main_event->draw_winner_campaign == 1) {
+            main_event->make_new_game(1);
+            main_event->draw_winner_campaign = 2;
+        }
     // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
     }
     else if (main_event->draw_lose_campaign >= 0) { // Affichage du victorieu
@@ -301,14 +287,14 @@ void  Menu::main_loop() {
 }
 
 void Menu::move_menu_hor() {
+    int i = 0, tmp = 0;
+
 	main_event->soundrender->playSound("switchselect");
 	if (this->menu_selected != CONFIG
         && this->menu_selected != CONFIG_SOUND
-        && this->menu_selected != CONFIG_VIDEO
-    )
+        && this->menu_selected != CONFIG_VIDEO) {
 		return ;
-
-	int i = 0, tmp = 0;
+    }
 
 	while (i < 5) {
 		if (main_event->joystick->config[i] == 1)
@@ -330,15 +316,17 @@ void Menu::move_menu_hor() {
 		main_event->joystick->config[4] = (main_event->joystick->config[4] == 0) ? 1 : 0;
 
     else if (this->detail_menu_selected == MENU_CONFIG_VIDEO_MODE) {
+        std::cout << "MENU_CONFIG_VIDEO_MODE fullscren= " << main_event->full_screen << std::endl;
         SDL_DestroyWindow(globject::_displayWindow);
         main_event->full_screen = (main_event->full_screen == true) ? false : true;
         globject::init(main_event->sdl_display_mode_info.w, main_event->sdl_display_mode_info.h);
-
+        std::cout << "MENU_CONFIG_VIDEO_MODE fullscren= " << main_event->full_screen << std::endl;
         if (true == main_event->full_screen)
             main_event->actual_resolution = RESOLUTION_NOT_SET;
     }
 
     else if (this->detail_menu_selected == MENU_CONFIG_VIDEO_RESOLUTION) {
+        std::cout << "MENU_CONFIG_VIDEO_RESOLUTION fullscren= " << main_event->full_screen << std::endl;
         if (false == main_event->full_screen) {
             if (RESOLUTION_NOT_SET == main_event->actual_resolution && main_event->sdl_display_mode_info.w >= 800) {
                 main_event->actual_resolution = RESOLUTION_800;
@@ -371,7 +359,6 @@ void Menu::move_menu_hor() {
         }
     }
 
-
     else if (this->detail_menu_selected == MENU_CONFIG_SOUND_SOUND_VOLUME) {
         if (VOLUME_OFF == main_event->soundrender->getMusicVolume())
             main_event->soundrender->setGlobalVolume(VOLUME_LOW);
@@ -381,7 +368,6 @@ void Menu::move_menu_hor() {
             main_event->soundrender->setGlobalVolume(VOLUME_HIGH);
         else if (VOLUME_HIGH == main_event->soundrender->getMusicVolume())
             main_event->soundrender->setGlobalVolume(VOLUME_OFF);
-
     }
 
     else if (this->detail_menu_selected == MENU_CONFIG_SOUND_GLOBAL_SOUND) {
@@ -391,7 +377,7 @@ void Menu::move_menu_hor() {
             main_event->soundrender->setGlobalVolume(VOLUME_MEDIUM);
     }
 
-	main_event->joystick->save_config();
+    main_event->joystick->save_config();
 }
 
 void  Menu::move_menu_ver(int dir) {
@@ -494,9 +480,8 @@ void  Menu::change_menu() {
         || this->detail_menu_selected == MENU_CONFIG_VIDEO_RETURN
         || this->detail_menu_selected == MENU_EXIT_RETURN
         || this->detail_menu_selected == MENU_ARENA_RETURN
-        || this->detail_menu_selected == MENU_MULTI_RETURN))
-        {
-	           main_event->soundrender->playSound("menu2");
+        || this->detail_menu_selected == MENU_MULTI_RETURN)) {
+	        main_event->soundrender->playSound("menu2");
     }
     if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_NEW == this->detail_menu_selected )
         Gamelauncher::campaign_new();
@@ -672,7 +657,9 @@ void Menu::init() {
     this->str_config_video_2560_1440_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 2560 x 1440", this->red);
     this->str_config_video_not_set = TTF_RenderText_Blended(this->SansPosterBold, "VIDEO NOT SET", this->white);
     this->str_config_video_not_set_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> VIDEO NOT SET", this->red);
-    this->str_config_video_not_set_disable = TTF_RenderText_Blended(this->SansPosterBold, "! DISABLED ON FULLSCREEN!", this->red);
+    this->str_config_video_not_set_disable = TTF_RenderText_Blended(this->SansPosterBold, "! DISABLED ON FULLSCREEN !", this->red);
+    this->str_option_disable = TTF_RenderText_Blended(this->SansPosterBold, "OPTION DISABLED", this->white);
+    this->str_option_disable_selected = TTF_RenderText_Blended(this->SansPosterBold, "! OPTION DISABLED !", this->red);
 
 	this->winner = (SDL_Surface **)std::malloc(sizeof(SDL_Surface *) * 5);
 	if (NULL == this->winner) {
@@ -756,6 +743,8 @@ Menu::~Menu() {
     SDL_FreeSurface(this->str_config_video_not_set);
     SDL_FreeSurface(this->str_config_video_not_set_selected);
     SDL_FreeSurface(this->str_config_video_not_set_disable);
+    SDL_FreeSurface(this->str_option_disable);
+    SDL_FreeSurface(this->str_option_disable_selected);
 
     SDL_FreeSurface(this->winner[0]);
     SDL_FreeSurface(this->winner[1]);

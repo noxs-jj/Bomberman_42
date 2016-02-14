@@ -1,10 +1,13 @@
 BONUS REQUIERED:
 - Diagram Class
-- Documentation developer
+- Documentation developer, man + README.md
 - plus de 3 levels (9 levels)
-EN COURS: Random Map: params -gen
+A FIX: Random Map: params -gen
+A FAIRE: map intro au lancement du jeux avec desennmies qui bougent dedans
+A FAIRE: standalone install MacosX
 
 OTHERS:
+- param -log enregistrement d'evenement du jeux dans un fichier de log
 - 4 boss affiche
 - SKYBOX
 - Gestion 5 Joysticks

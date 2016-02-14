@@ -7,23 +7,23 @@ BUG:
 
 LOGIC:
     - fin de partie laisser ecran 1-2 sec pour comprendre la fin ? (pas obligatoire)
-    - pouvoir save / load game
+    - REQUIRED: pouvoir save / load game
     - ecran de victoire en fin de campaign
 
 CONFIG:
-  changer le resolution du jeu
-  changer Windowed or full screen mode
-  activer ou non les sons / musiques
 
 RENDER::
     - animation BOSS (pas obligatoire)
 
 IA:
-    - les enemies rentre dans le mur lein droite (voir check tab -1 ?)
+    - les enemies rentre dans le mur plein droite (voir check tab -1 ?)
     - essayer de reduires l'utilisation CPU (faire au mieut ou c pas grave)
     - Une IA scripter speciale pour les boss ? 4 modeles dispo maintenant
     - BOSS_A <> BOSS_D (non anime our le moment)
     - modele ENNEMIEs ENEMY1 <> ENEMY5 (anime1, nom anime volant 2 3 4 5)
 
 SOUND:
-    - revoir debut Sons multi, essayer de stopper la musique du jeux les 10 premieres secondes
+    - REQUIRED: 3 musiques differents pour 3 levels differents,
+    [1 4 7] = musique1 [2 5 8] = musique2 [3 6 9] = musique3
+    une musique par multiple de 3 sa evitera d'avoir trop de musique.
+    Une grosse musique pour les niveau de boss 3 6 9.

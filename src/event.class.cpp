@@ -24,17 +24,18 @@
 #include <globject.class.hpp> // pour la variable mapX_size
 
 Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
-	this->map = NULL;
-	this->gen_level = false;
-	this->option_arcade = false;
-	this->option_resolution = RESOLUTION_NOT_SET;
-	this->option_ia_kamikaze = false;
-	this->game_pause = false;
-	this->draw_winner_multi = -1;
-	this->draw_winner_campaign = -1;
-	this->draw_lose_campaign = -1;
-	this->draw_end_campaign = -1;
-	srand(time(NULL));
+    this->map = NULL;
+    this->gen_level = false;
+    this->option_arcade = false;
+    this->option_resolution = RESOLUTION_NOT_SET;
+    this->full_screen = false;
+    this->option_ia_kamikaze = false;
+    this->game_pause = false;
+    this->draw_winner_multi = -1;
+    this->draw_winner_campaign = -1;
+    this->draw_lose_campaign = -1;
+    this->draw_end_campaign = -1;
+    srand(time(NULL));
 }
 
 Event::Event( Event const & src ) { *this = src; }
@@ -73,7 +74,7 @@ void	Event::make_new_game( int new_level ) {
 	this->live_player[4] = true;
 
 	if (this->game_playing == true) {
-		std::cout << "        this->game_playing == true FREE AOLD MAP DEBUGG" << std::endl;
+		// std::cout << "        this->game_playing == true FREE AOLD MAP DEBUGG" << std::endl;
 		this->free_game();
 	}
 		main_event->game_pause = false;
@@ -123,23 +124,23 @@ void	Event::make_new_game( int new_level ) {
 			gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
 		}
 	}
-		// main_event->print_map(); // DEBUGG
+	// main_event->print_map(); // DEBUGG
 }
 
 void Event::cheat_stats( void ) {
-	std::list<Entity *>::iterator it = main_event->char_list.begin();
-	std::list<Entity *>::iterator end = main_event->char_list.end();
+    std::list<Entity *>::iterator it = main_event->char_list.begin();
+    std::list<Entity *>::iterator end = main_event->char_list.end();
 
-	while (it != end) {
-		if ((*it)->type == PLAYER) {
-				(*it)->bomb_nbr = 99;
-				(*it)->blast_radius = 100;
-				(*it)->remote = true;
-				(*it)->remote_nbr = 99;
-				(*it)->kick_bomb = true;
-			}
-		it++;
-	}
+    while (it != end) {
+        if ((*it)->type == PLAYER) {
+            (*it)->bomb_nbr = 99;
+            (*it)->blast_radius = 100;
+            (*it)->remote = true;
+            (*it)->remote_nbr = 99;
+            (*it)->kick_bomb = true;
+        }
+        it++;
+    }
 }
 
 
@@ -306,7 +307,6 @@ void	Event::print_map( void ) {
 void	Event::init( int ac, char **av ) {
 	this->ac = ac;
 	this->av = av;
-
 	parse_command(ac, av);
 }
 
@@ -314,11 +314,11 @@ void	Event::exit_free( void ) {	// free here
 	this->event_running = false;
 	// FREE menu
 	if (NULL != this->menu) {
-		this->w_full("Delete menu");
+		this->w_log("Delete menu");
 		delete this->menu;
 	}
 	if (NULL != this->soundrender) {
-		this->w_full("Delete soundrender");
+		this->w_log("Delete soundrender");
 		delete this->soundrender;
 	}
 

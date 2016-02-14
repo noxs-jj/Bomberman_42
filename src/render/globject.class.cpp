@@ -14,21 +14,21 @@
 #include <bomb.class.hpp>
 #include <fire.class.hpp>
 
-globject			globject::_object[100];
-SDL_Window			*globject::_displayWindow;
-SDL_Renderer		*globject::_displayRenderer;
-SDL_RendererInfo	globject::_displayRendererInfo;
-GLuint				globject::_progid;
-GLuint				globject::_modelMatID;
-GLuint				globject::_viewMatID;
-GLuint				globject::_keyFrameID;
-GLuint				globject::_legPos;
-GLfloat				globject::spinx;
-GLfloat				globject::spinz;
-int					globject::doIspin;
-int					globject::space = 0; //Change the graphical envirronnement.
-int					globject::mapX_size = 20;
-int					globject::mapY_size = 20;
+globject            globject::_object[100];
+SDL_Window          *globject::_displayWindow;
+SDL_Renderer        *globject::_displayRenderer;
+SDL_RendererInfo    globject::_displayRendererInfo;
+GLuint              globject::_progid;
+GLuint              globject::_modelMatID;
+GLuint              globject::_viewMatID;
+GLuint              globject::_keyFrameID;
+GLuint              globject::_legPos;
+GLfloat             globject::spinx;
+GLfloat             globject::spinz;
+int                 globject::doIspin;
+int                 globject::space = 0; //Change the graphical envirronnement.
+int                 globject::mapX_size = 20;
+int                 globject::mapY_size = 20;
 
 globject::globject(void) {}
 
@@ -52,50 +52,50 @@ void globject::reinit_level(int env) {
 }
 
 void globject::load_bmp() {
-	std::string     name;
-	std::string     path;
-	for (size_t i = 0; i < parser._textNum; i++)
-	{
-		name = "texture";
-		path ="assets/render/textures/";
-		if (globject::space)
-			path = "assets/render/spacestextures/";
-		path += parser._texture[i];
-		SDL_Surface *imp = IMG_Load(path.c_str());
-		if (imp == NULL) 		{
-			std::cerr << "FAILFAIL" << std::endl;
-			throw std::exception() ;
-		}
-		glGenTextures(1, &(_textID[i]));
-		glBindTexture(GL_TEXTURE_2D, (_textID[i]));
-		if (((_ID >= BOSS_A && _ID <= BOSS_D) \
-			|| (_ID >= PLAYER && _ID <= PLAYER4) \
-			|| (_ID >= BOMB_DEFAULT && _ID <= BOMB_WIND) \
-			|| (_ID >= ENEMY && _ID <= ENEMY5) \
-			|| _ID == MENU \
-			|| (globject::space && _ID == MAX_ENUM))) {
-			# ifdef linux
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
-					0, GL_BGRA,  GL_UNSIGNED_BYTE, imp->pixels);
-			# endif
-			# ifdef __APPLE__
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
-					0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
-			# endif
-			}
-			else if (_ID == PLAYER5) {
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
-					0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
-			}
-		else {
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
-				0, GL_BGR, GL_UNSIGNED_BYTE, imp->pixels);
-		}
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		name += std::to_string(i);
-		_textLoc[i] = glGetUniformLocation(globject::_progid, name.c_str());
-	}
+    std::string     name;
+    std::string     path;
+    for (size_t i = 0; i < parser._textNum; i++)
+    {
+        name = "texture";
+        path ="assets/render/textures/";
+        if (globject::space)
+            path = "assets/render/spacestextures/";
+        path += parser._texture[i];
+        SDL_Surface *imp = IMG_Load(path.c_str());
+        if (imp == NULL) 		{
+            std::cerr << "FAILFAIL" << std::endl;
+            throw std::exception() ;
+        }
+        glGenTextures(1, &(_textID[i]));
+        glBindTexture(GL_TEXTURE_2D, (_textID[i]));
+        if (((_ID >= BOSS_A && _ID <= BOSS_D) \
+            || (_ID >= PLAYER && _ID <= PLAYER4) \
+            || (_ID >= BOMB_DEFAULT && _ID <= BOMB_WIND) \
+            || (_ID >= ENEMY && _ID <= ENEMY5) \
+            || _ID == MENU \
+            || (globject::space && _ID == MAX_ENUM))) {
+            # ifdef linux
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
+                    0, GL_BGRA,  GL_UNSIGNED_BYTE, imp->pixels);
+            # endif
+            # ifdef __APPLE__
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
+                    0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
+            # endif
+            }
+            else if (_ID == PLAYER5) {
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
+                    0, GL_BGRA, GL_UNSIGNED_BYTE, imp->pixels);
+            }
+        else {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imp->w, imp->h, \
+                0, GL_BGR, GL_UNSIGNED_BYTE, imp->pixels);
+        }
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        name += std::to_string(i);
+        _textLoc[i] = glGetUniformLocation(globject::_progid, name.c_str());
+    }
 }
 
 void        globject::resize(int x, int y) {
@@ -155,9 +155,9 @@ void        globject::init(float sizeX, float sizeY) {
     float   size_y = sizeY;
 
 	/* Init SDL */
-	if (SDL_Init(SDL_INIT_VIDEO
-			| SDL_INIT_AUDIO
-			| SDL_INIT_JOYSTICK
+	if (SDL_Init(SDL_INIT_VIDEO \
+			| SDL_INIT_AUDIO \
+			| SDL_INIT_JOYSTICK \
 		) < 0) {
 		std::cerr << "globject::init SDL_Init() error = " << SDL_GetError() << std::endl;
 		throw std::exception();
@@ -171,41 +171,32 @@ void        globject::init(float sizeX, float sizeY) {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	# ifdef linux
-		globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
-			0, 0, \
-			size_x, size_y, \
-			SDL_WINDOW_OPENGL
-			| SDL_WINDOW_BORDERLESS
-			| SDL_WINDOW_RESIZABLE
-			//| SDL_WINDOW_FULLSCREEN
-		);
+    # ifdef linux
+        globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
+            0, 0, \
+            size_x, size_y, \
+            SDL_WINDOW_OPENGL \
+            | SDL_WINDOW_FULLSCREEN
+        );
 	# endif
 	# ifdef __APPLE__
         if (main_event->full_screen == true) {
             globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
-    			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
-    			size_x, size_y, \
-    			SDL_WINDOW_OPENGL
-    			| SDL_WINDOW_RESIZABLE
+                SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
+                size_x, size_y, \
+                SDL_WINDOW_OPENGL \
                 | SDL_WINDOW_FULLSCREEN
-    			| SDL_WINDOW_BORDERLESS
-                | SDL_WINDOW_OPENGL
-    		);
+            );
         }
         else {
             globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
-    			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
-    			size_x, size_y, \
-    			SDL_WINDOW_OPENGL
-    			| SDL_WINDOW_RESIZABLE
-                // | SDL_WINDOW_FULLSCREEN
-    			| SDL_WINDOW_BORDERLESS
-                | SDL_WINDOW_OPENGL
-    		);
+            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
+                size_x, size_y, \
+                SDL_WINDOW_OPENGL \
+                | SDL_WINDOW_BORDERLESS
+            );
         }
-
-	# endif
+    # endif
 
 	/* Init OpenGL */
 	SDL_GLContext glcontext = SDL_GL_CreateContext(globject::_displayWindow);
