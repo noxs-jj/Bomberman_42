@@ -16,94 +16,71 @@
 #include <ia.class.hpp>
 #include <joystick.hpp>
 
-Event *	main_event = new Event(); // GLOBAL
+Event *	main_event = Factory::create_event(); // GLOBAL
 
 int		main( int ac, char **av ) {
-	int				_time = 0;
-	Ia *			ia_play = NULL;
-	static float	time = 0;
+	int            _time = 0;
+	Ia *           ia_play = NULL;
+	static float   time = 0;
 
 	std::srand(std::time(0));
-	(void)(av);
-	(void)(ac);
 	ft42::logg = true;
 
 	try {
-		if (main_event == NULL) {
-			std::cerr << "Event Global allocation error" << std::endl;
-			throw std::exception();
-		}
-		ia_play = new Ia();
-		if (ia_play == NULL) {
-			main_event->w_full("ia_play allocation error");
-			throw std::exception();
-		}
-		main_event->menu = new Menu(main_event);
-		if (main_event->menu == NULL) {
-			main_event->w_full("Menu allocation error");
-			throw std::exception();
-		}
-		if (TTF_Init() != 0){
-			main_event->w_full("TTF_init initialization error ");
-			throw std::exception();
-		}
-		main_event->joystick = new Joystick();
-		if (main_event->joystick == NULL) {
-			main_event->w_full("Joystick allocation error");
-			throw std::exception();
-		}
-		main_event->soundrender = new SoundRender();
-		if (NULL == main_event->soundrender) {
-			main_event->w_full("Soundrender allocation error");
-			throw std::exception();
-		}
-		main_event->init(ac, av);
-		ft42::logg = true; // ceci active les debugg ecran et fichier
-		// std::atexit(TTF_Quit);
-		srand(clock());
+        ia_play = Factory::create_ia();
+        main_event->menu = Factory::create_menu(main_event);
+        main_event->joystick = Factory::create_joystick();
+        main_event->soundrender = Factory::create_sound_render();
+        if (TTF_Init() != 0){
+            main_event->w_full("TTF_init initialization error ");
+            throw std::exception();
+        }
+
+        main_event->init(ac, av);
+        // std::atexit(TTF_Quit);
+        srand(clock());
         globject::init(800, 600);
 
-		main_event->joystick->load_config();
-		// main_event->render->init();
-		main_event->mode_menu = true;
-		main_event->menu->init();
-		main_event->menu->introstart = false;
-		main_event->w_log("Event Init");
-		// main_event->print_map(); // DEBUGG
+        main_event->joystick->load_config();
 
-		main_event->soundrender->load_files();
-		main_event->soundrender->playSound("startup");
-		main_event->soundrender->playMusic("ps1");
+        main_event->mode_menu = true;
+        main_event->menu->init();
+        main_event->menu->introstart = false;
+        main_event->w_log("Event Init");
 
-		main_event->menu->main_loop();
+        main_event->soundrender->load_files();
+        main_event->soundrender->playSound("startup");
+        main_event->soundrender->playMusic("ps1");
 
-		while (true == main_event->event_running) {
-			if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
-				continue ;
-				_time++;
-				_time = _time % 60;
-			main_event->joystick->read_key(1);
-			ia_play->start(time);
-			if (main_event->event_running == false)
-				break;
-			main_event->dec_timer();
-			time = clock();
-				//const Uint8 *state = SDL_GetKeyboardState(NULL);
+        main_event->menu->main_loop();
 
-			if (false == main_event->mode_menu)
-				main_event->render->render_all(main_event->map, main_event->char_list, NULL);
-			else
-				main_event->menu->main_loop();
-		}
+        while (true == main_event->event_running) {
+            if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60) {
+                continue ;
+            }
+            _time++;
+            _time = _time % 60;
+            main_event->joystick->read_key(1);
+            ia_play->start(time);
+            if (main_event->event_running == false)
+                break;
+            main_event->dec_timer();
+            time = clock();
 
-		main_event->w_log("Delete Main Event then EXIT");
-		if (NULL != main_event)
-			delete main_event;
+            if (false == main_event->mode_menu)
+                main_event->render->render_all(main_event->map, main_event->char_list, NULL);
+            else
+                main_event->menu->main_loop();
+        }
+
+        main_event->w_log("Delete Main Event then EXIT");
+        if (NULL != main_event)
+            delete main_event;
 	}
 	catch (std::exception & e){
-		std::cerr << "EXIT_FAILURE " << e.what() << std::endl;
-		return (EXIT_FAILURE);
+        std::cerr << "EXIT_FAILURE " << e.what() << std::endl;
+        return (EXIT_FAILURE);
 	}
-	std::cout << "EXIT_SUCCESS" << std::endl;
-	return (EXIT_SUCCESS);
+    std::cout << "EXIT_SUCCESS" << std::endl;
+    return (EXIT_SUCCESS);
 }

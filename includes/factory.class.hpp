@@ -24,19 +24,31 @@ class Player;
 class Enemy;
 class Boss;
 
+class Event;
+class Menu;
+class Joystick;
+class SoundRender;
+class Ia;
+
 class Factory : public ft42 {
 public:
     Factory();
     virtual ~Factory();
 
-    static Wall *      create_wall(int status, float x, float y, int model);
-    static Bonus *     create_bonus(int status, float x, float y, int model);
-    static Bomb *      create_bomb(int status, float x, float y, int model, int id);
-    static Fire *      create_fire(int status, float x, float y, int model);
-    static Player *    create_player(int status, float x, float y, int model);
-    static Enemy *     create_enemy(int status, float x, float y, int model);
-    static Boss *      create_boss(int status, float x, float y, int name, int model);
-    static Entity *    create_empty(int x, int y);
+    static Wall *           create_wall(int status, float x, float y, int model);
+    static Bonus *          create_bonus(int status, float x, float y, int model);
+    static Bomb *           create_bomb(int status, float x, float y, int model, int id);
+    static Fire *           create_fire(int status, float x, float y, int model);
+    static Player *         create_player(int status, float x, float y, int model);
+    static Enemy *          create_enemy(int status, float x, float y, int model);
+    static Boss *           create_boss(int status, float x, float y, int name, int model);
+    static Entity *         create_empty(int x, int y);
+
+    static Menu *           create_menu(Event * event);
+    static Joystick *       create_joystick();
+    static SoundRender *    create_sound_render();
+    static Ia *             create_ia();
+    static Event *          create_event();
 };
 
 #endif

@@ -6,9 +6,9 @@ BUG:
 	long moment ou au hasard
 
 LOGIC:
-    - fin de partie laisser ecran 1-2 sec pour comprendre la fin ? (pas obligatoire)
+    - (pas obligatoire) Fin de partie laisser ecran 1-2 sec pour comprendre la fin ?
     - REQUIRED: pouvoir save / load game
-    - ecran de victoire en fin de campaign
+    - Ecran de victoire en fin de campaign
 
 CONFIG:
 

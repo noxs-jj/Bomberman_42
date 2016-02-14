@@ -18,80 +18,128 @@
 #include <player.class.hpp>
 #include <enemy.class.hpp>
 #include <boss.class.hpp>
+#include <Menu.class.hpp>
+#include <soundrender.class.hpp>
+#include <ia.class.hpp>
 
 Factory::Factory() {}
 
 Factory::~Factory() {}
 
-Wall *		Factory::create_wall(int status, float x, float y, int model) {
+Wall *          Factory::create_wall(int status, float x, float y, int model) {
 	Wall * wall = new Wall(x, y, status, model);
-	if (wall == NULL) {
+	if (NULL == wall) {
 		main_event->w_full("Factory::create_wall:: wall Malloc error");
 		throw std::exception();
 	}
 	return wall;
 }
 
-Bonus *		Factory::create_bonus(int status, float x, float y, int model) {
+Bonus *         Factory::create_bonus(int status, float x, float y, int model) {
 	Bonus * bonus = new Bonus(x, y, status, model);
-	if (bonus == NULL) {
+	if (NULL == bonus) {
 		main_event->w_full("create_bonus:: bonus Malloc error");
 		throw std::exception();
 	}
 	return bonus;
 }
 
-Bomb *		Factory::create_bomb(int status, float x, float y, int model, int id) {
+Bomb *          Factory::create_bomb(int status, float x, float y, int model, int id) {
 	Bomb * bomb = new Bomb(x, y, status, model, id);
-	if (bomb == NULL) {
+	if (NULL == bomb) {
 		main_event->w_full("create_bomb:: bomb Malloc error");
 		throw std::exception();
 	}
 	return bomb;
 }
 
-Fire *		Factory::create_fire(int status, float x, float y, int model) {
+Fire *          Factory::create_fire(int status, float x, float y, int model) {
 	Fire * fire = new Fire(x, y, status, model);
-	if (fire == NULL) {
+	if (NULL == fire) {
 		main_event->w_error("create_fire:: fire Malloc error");
 		throw std::exception();
 	}
 	return fire;
 }
 
-Player *	Factory::create_player(int status, float x, float y, int model) {
+Player *        Factory::create_player(int status, float x, float y, int model) {
 	Player * player = new Player(x, y, status, model);
-	if (player == NULL) {
+	if (NULL == player) {
 		main_event->w_error("create_player:: player Malloc error");
 		throw std::exception();
 	}
 	return player;
 }
 
-Enemy *		Factory::create_enemy(int status, float x, float y, int model) {
+Enemy *         Factory::create_enemy(int status, float x, float y, int model) {
 	Enemy * enemy = new Enemy(x, y, status, model);
-	if (enemy == NULL) {
+	if (NULL == enemy) {
 		main_event->w_error("create_enemy:: enemy Malloc error");
 		throw std::exception();
 	}
 	return enemy;
 }
 
-Boss *		Factory::create_boss(int status, float x, float y, int name, int model) {
+Boss *         Factory::create_boss(int status, float x, float y, int name, int model) {
 	Boss * boss = new Boss(x, y, status, name, model);
-	if (boss == NULL) {
+	if (NULL == boss) {
 		main_event->w_error("create_enemy:: enemy Malloc error");
 		throw std::exception();
 	}
 	return boss;
 }
 
-Entity *	Factory::create_empty(int x, int y) {
+Entity *	   Factory::create_empty(int x, int y) {
 	Entity * ent = new Entity(EMPTY, (float)x, (float)y, NO_STATUS, 0);
-	if (ent == NULL) {
+	if (NULL == ent) {
 		main_event->w_error("create_empty:: enemy Malloc error");
 		throw std::exception();
 	}
 	ent->model = -1;
 	return ent;
+}
+
+Menu *          Factory::create_menu(Event * event) {
+    Menu * new_menu = new Menu(event);
+    if (NULL == new_menu) {
+        main_event->w_error("Menu allocation error");
+        throw std::exception();
+    }
+    return new_menu;
+}
+
+Joystick *      Factory::create_joystick() {
+    Joystick *  new_joystick = new Joystick();
+    if (NULL == new_joystick) {
+        main_event->w_error("Joystick allocation error");
+        throw std::exception();
+    }
+    return new_joystick;
+}
+
+SoundRender *   Factory::create_sound_render() {
+    SoundRender *   new_sound = new SoundRender();
+    if (NULL == new_sound) {
+        main_event->w_error("Soundrender allocation error");
+        throw std::exception();
+    }
+    return new_sound;
+}
+
+Ia *            Factory::create_ia() {
+    Ia *    new_ia = new Ia();
+    if (NULL == new_ia) {
+        main_event->w_error("ia_play allocation error");
+        throw std::exception();
+    }
+    return new_ia;
+}
+
+Event *          Factory::create_event() {
+    Event *     new_event = new Event();
+    if (NULL == new_event) {
+        std::cerr << "Event Global allocation error" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    return new_event;
 }

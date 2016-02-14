@@ -88,9 +88,7 @@ void	Event::make_new_game( int new_level ) {
 	this->actual_level += new_level;
 	if (this->actual_level > 9)
 		this->actual_level = 1;
-	std::cout << "new wall level " << this->actual_level << std::endl;
 	if (this->multi > 0) {
-		std::cout << "this->multi > 0" << std::endl;
 		// gen_level_multi(this->actual_level, this->multi);
 		if (this->gen_level == false) {
 			sprintf(map_name, "assets/map/multiplayer/multi_%d.ntm", main_event->multi);
@@ -100,7 +98,6 @@ void	Event::make_new_game( int new_level ) {
 			gen_level_multi(this->actual_level, this->multi);
 	}
 	else if (this->arena > 0) {
-		std::cout << "this->arena > 0" << std::endl;
 		// gen_level_multi(this->actual_level, this->multi);
 		if (this->gen_level == false) {
 			sprintf(map_name, "assets/map/arena/arena_%d.ntm", main_event->arena);
@@ -110,7 +107,6 @@ void	Event::make_new_game( int new_level ) {
 			gen_level_arena(this->actual_level, this->multi);
 	}
 	else {
-		std::cout << "this->multi > 0 else " << this->ac << std::endl;
 		// gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
 		if (this->gen_level == false && main_event->coop > 0) {
 			sprintf(map_name, "assets/map/story/story_coop_%d.ntm", main_event->actual_level);
