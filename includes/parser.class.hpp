@@ -46,6 +46,8 @@ private :
 	void	add_indice(std::string str, float neg);
 	void	add_vertex(std::string str);
 	void	add_text(std::string str);
+
+    Parser( Parser const & src ) = delete;
 };
 
 #endif

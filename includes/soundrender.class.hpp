@@ -33,8 +33,6 @@ class SoundRender : ft42 {
     public:
 
         SoundRender();
-        SoundRender(SoundRender const & rhs) = default;
-        SoundRender & operator=(SoundRender const & rhs) = default;
         virtual ~SoundRender();
 
 		bool	init();
@@ -66,10 +64,11 @@ class SoundRender : ft42 {
 
 
     private:
-
         int const                         mMaxAllocatedChannels = 8;
         std::map<std::string, Mix_Chunk*> mChunks;
         std::map<std::string, Mix_Music*> mMusics;
+        SoundRender( SoundRender const & src ) = delete;
+        SoundRender & operator=( SoundRender const & rhs ) = delete;
 };
 
 #endif // SOUNDRENDER_CLASS_HPP

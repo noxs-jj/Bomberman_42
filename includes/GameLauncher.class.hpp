@@ -34,6 +34,10 @@ public:
     static void run_arena_4();
     static void run_arena_5();
 
+private:
+    Gamelauncher( Gamelauncher const & src ) = delete;
+    Gamelauncher & operator=( Gamelauncher const & rhs ) = delete;
+
 };
 
 #endif

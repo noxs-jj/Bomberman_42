@@ -182,10 +182,10 @@ private:
 	static std::string		logFileName;
 	static std::ofstream	lodFD;
 
-	std::string				result;
-	time_t					timer;
-	struct tm *				timeinfo;
-	char					buffer[80];
+	std::string				ft_42_result;
+	time_t					ft_42_timer;
+	struct tm *				ft_42_timeinfo;
+	char					ft_42_buffer[80];
 };
 
 #endif

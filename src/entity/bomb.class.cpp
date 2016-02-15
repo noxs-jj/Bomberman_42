@@ -23,6 +23,39 @@ Bomb::Bomb( float x, float y, int status, int model, int id ) : Entity( BOMB, x,
 	this->timer = 180;
 }
 
+Bomb::Bomb( Bomb const & src ) {
+    *this = src;
+}
+
+Bomb & Bomb::operator=( Bomb const & rhs ) {
+    if (this != &rhs) {
+        this->remote_lst = rhs.remote_lst;
+        this->type = rhs.type;
+        this->id = rhs.id;
+        this->model = rhs.model;
+        this->pos_x = rhs.pos_x;
+        this->pos_y = rhs.pos_y;
+        this->dir = rhs.dir;
+        this->status = rhs.status;
+        this->frame = rhs.frame;
+        this->speed = rhs.speed;
+        this->blast_radius = rhs.blast_radius;
+        this->zoom_m = rhs.zoom_m;
+        this->bomb_nbr = rhs.bomb_nbr;
+        this->kick_bomb = rhs.kick_bomb;
+        this->bomb_model = rhs.bomb_model;
+        this->remote = rhs.remote;
+        this->remote_nbr = rhs.remote_nbr;
+        this->autoincrement = rhs.autoincrement;
+
+        this->timer = rhs.timer;
+        this->creator_id = rhs.creator_id;
+        this->pushed = rhs.pushed;
+        this->pushed_dir = rhs.pushed_dir;
+    }
+    return *this;
+}
+
 void	Bomb::damage_entity(int x, int y ) {
 	std::list<Entity *>::iterator it = main_event->char_list.begin();
 	std::list<Entity *>::iterator end = main_event->char_list.end();
@@ -53,7 +86,6 @@ void Bomb::add_bonus(int x, int y) {
 		bonus = BONUS_POWER_UP;
 	else
 		bonus = BONUS_PLUS_ONE;
-
 	main_event->map[y][x] = Factory::create_bonus(BONUS, x, y, bonus);
 }
 
@@ -68,11 +100,9 @@ int		Bomb::blast_case(int y, int x) {
 		else if (main_event->map[y][x]->status == WALL_HP_1) {
 			delete main_event->map[y][x];
 			if ((rand() % 20) <= 8)
-				add_bonus(x, y);
+				this->add_bonus(x, y);
 			else
 				main_event->map[y][x] = Factory::create_empty(x, y);
-			// main_event->map[y][x] = Factory::create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
-			// damage_entity(x, y);
 		}
 	}
 	else if (main_event->map[y][x]->type == BOMB)
@@ -80,18 +110,18 @@ int		Bomb::blast_case(int y, int x) {
 	else if (main_event->map[y][x]->type == EMPTY) {
 		delete main_event->map[y][x];
 		main_event->map[y][x] = Factory::create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
-		damage_entity(x, y);
+		this->damage_entity(x, y);
 		return (0);
 	}
 	else if (main_event->map[y][x]->type == FIRE) {
 		main_event->map[y][x]->status = FIRE_2;
-		damage_entity(x, y);
+		this->damage_entity(x, y);
 		return (0);
 	}
 	else if (main_event->map[y][x]->type == BONUS) {
 		delete main_event->map[y][x];
 		main_event->map[y][x] = Factory::create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
-		damage_entity(x, y);
+		this->damage_entity(x, y);
 		return (0);
 	}
 	return (1);
@@ -114,7 +144,6 @@ void	Bomb::add_bomb_nbr(int id) {
 }
 
 void Bomb::suppr_remote_lst( void ) {
-	std::cout << "bed 04.0" << std::endl;
 
 	std::list<Entity *>::iterator it = main_event->char_list.begin();
 	std::list<Entity *>::iterator end = main_event->char_list.end();
@@ -123,42 +152,27 @@ void Bomb::suppr_remote_lst( void ) {
 		if ((*it)->id == this->creator_id) {
 			std::list<Entity *>::iterator itt = (*it)->remote_lst.begin();
 			std::list<Entity *>::iterator endd = (*it)->remote_lst.end();
-
-			std::cout << "bed 04.1" << std::endl;
-
 			while (itt != endd) {
-				std::cout << "bed 04.10" << std::endl;
-
 				if ((*itt)->id == this->id) {
 					(*it)->remote_lst.erase(itt);
 					return ;
 				}
-				std::cout << "bed 04.11" << std::endl;
-
 				itt++;
 			}
-			std::cout << "bed 04.2" << std::endl;
-
 			return ;
 		}
 		it++;
 	}
-	std::cout << "bed 04.3" << std::endl;
 
 }
 
 void	Bomb::detonate( void ) {
 	int i = 0;
 	int dir[4] = {0};
-	std::cout << "bed 00" << std::endl;
-	add_bomb_nbr(this->creator_id);
-	// delete main_event->map[(int)this->pos_y][(int)this->pos_x];
-	std::cout << "bed 01" << std::endl;
-	main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
-	damage_entity((int)this->pos_x ,(int)this->pos_y);
-	std::cout << "bed 02" << std::endl;
-	// main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_fire(FIRE_2, (int)this->pos_x - 0.5, (int)this->pos_y - 0.5, FIRE_2);
 
+	this->add_bomb_nbr(this->creator_id);
+	main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
+	this->damage_entity((int)this->pos_x ,(int)this->pos_y);
 	while (i <= this->blast_radius) {
 		if (dir[0] == 0 && check_coord_exist((int)(this->pos_y - i), (int)(this->pos_x)) == true)
 			dir[0] = blast_case((int)(this->pos_y - i), (int)this->pos_x);
@@ -174,12 +188,9 @@ void	Bomb::detonate( void ) {
 
 		i++;
 	}
-	std::cout << "bed 03" << std::endl;
 	main_event->soundrender->playSound("blast");
-	std::cout << "bed 04" << std::endl;
 	if (this->model == BOMB_REMOTE)
-		suppr_remote_lst();
-		std::cout << "bed 05" << std::endl;
+		this->suppr_remote_lst();
 }
 
 void	Bomb::push_bomb() {
@@ -200,12 +211,9 @@ void	Bomb::push_bomb() {
 		if ((int)this->pos_x != (int)(x + this->pos_x) || (int)this->pos_y != (int)(y + this->pos_y)) {
 			delete main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)];
 			main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)] = main_event->map[(int)this->pos_y][(int)this->pos_x];
-			// delete main_event->map[(int)this->pos_y][(int)this->pos_x];
 			main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
 			this->pos_x = x + this->pos_x;
 			this->pos_y = y + this->pos_y;
-			// delete main_event->map[(int)this->pos_y][(int)this->pos_x];
-			// main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
 		}
 		else {
 			this->pos_x = x + this->pos_x;
@@ -227,5 +235,5 @@ void	Bomb::bomb_timer( void ) {
 		this->timer--;
 	}
 	else
-		detonate();
+		this->detonate();
 }

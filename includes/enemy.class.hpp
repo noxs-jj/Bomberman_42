@@ -18,12 +18,12 @@
 class Entity;
 class Enemy : public Entity {
 public:
-  int memory;
+    int memory;
 
-	Enemy( float x, float y, int status, int model );
-	Enemy( Enemy const & src );
-	Enemy & operator=( Enemy const & rhs );
-	virtual ~Enemy( void );
+    Enemy( float x, float y, int status, int model );
+    Enemy( Enemy const & src );
+    Enemy & operator=( Enemy const & rhs );
+    virtual ~Enemy( void );
 
 private:
 	Enemy( void );

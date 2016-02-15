@@ -19,6 +19,35 @@ Fire::Fire( float x, float y, int status, int model ) : Entity( FIRE, x, y, stat
 	this->timer = 40;
 }
 
+Fire::Fire( Fire const & src ) {
+    *this = src;
+}
+Fire & Fire::operator=( Fire const & rhs ) {
+    if (this != &rhs) {
+        this->remote_lst = rhs.remote_lst;
+        this->type = rhs.type;
+        this->id = rhs.id;
+        this->model = rhs.model;
+        this->pos_x = rhs.pos_x;
+        this->pos_y = rhs.pos_y;
+        this->dir = rhs.dir;
+        this->status = rhs.status;
+        this->frame = rhs.frame;
+        this->speed = rhs.speed;
+        this->blast_radius = rhs.blast_radius;
+        this->zoom_m = rhs.zoom_m;
+        this->bomb_nbr = rhs.bomb_nbr;
+        this->kick_bomb = rhs.kick_bomb;
+        this->bomb_model = rhs.bomb_model;
+        this->remote = rhs.remote;
+        this->remote_nbr = rhs.remote_nbr;
+        this->autoincrement = rhs.autoincrement;
+
+        this->timer = rhs.timer;
+    }
+    return *this;
+}
+
 void	Fire::fire_timer( void ) {
 	if (this->timer - 1 > 0) {
 		if (this->timer % 2 == 0)

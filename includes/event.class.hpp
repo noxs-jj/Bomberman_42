@@ -70,8 +70,6 @@ public:
     int                     actual_resolution = RESOLUTION_NOT_SET;
 
 	Event( void );
-	Event( Event const & src );
-	Event & operator=( Event const & rhs );
 	virtual ~Event( void );
 
 	void		fill_border_map(void);
@@ -95,6 +93,10 @@ public:
 	void		print_map( void ); // DEBUGG
 	void 		make_new_game( int new_level );
 	void 		free_game( void );
+
+private:
+    Event( Event const & src ) = delete;
+    Event & operator=( Event const & rhs ) = delete;
 };
 
 extern Event	*main_event;

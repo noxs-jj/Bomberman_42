@@ -19,15 +19,44 @@ class Entity;
 class Boss : public Entity {
 public:
 
-	int name;
+    int    name;
 
-	Boss( float x, float y, int status, int name, int model );
-	Boss( Boss const & src );
-	Boss & operator=( Boss const & rhs );
-	virtual ~Boss( void );
+    Boss( float x, float y, int status, int name, int model );
+    Boss( Boss const & src );
+    Boss & operator=( Boss const & rhs );
+    virtual ~Boss( void );
 
 private:
-	Boss( void );
+    Boss( void );
 };
 
 #endif
+
+// Bureaucrat::Bureaucrat(Bureaucrat const & rSource) {
+// 	*this = rSource;
+// }
+//
+// Bureaucrat & 		Bureaucrat::operator=(Bureaucrat const & rSource) {
+// 	if ( this != &rSource ) {
+// 		(std::string)this->_name = rSource.getName();
+// 		this->_grade = rSource.getGrade();
+// 	}
+// 	return *this;
+// }
+//
+// Bomb( Bomb const & src );
+// Bomb & Bomb::operator=( Bomb const & rhs );
+//
+// Bomb::Bomb( Bomb const & src ) {
+//     *this = src;
+// }
+//
+// Bomb & operator=( Bomb const & rhs ) {
+//     if (this != &rhs) {
+//         this->timer = rhs.timer;
+//         this->creator_id = rhs.creator_id;
+//         this->pushed = rhs.pushed;
+//         this->pushed_dir = rhs.pushed_dir;
+//     }
+//     return *this;
+// }

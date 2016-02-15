@@ -205,6 +205,8 @@ public:
 
 private:
     Menu( void );
+    Menu( Menu const & src ) = delete;
+    Menu & operator=( Menu const & rhs ) = delete;
 };
 
 #endif

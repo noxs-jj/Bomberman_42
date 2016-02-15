@@ -16,6 +16,7 @@
 # include <entity.class.hpp>
 
 class Entity;
+
 class Player : public Entity {
 public:
 	Player( float x, float y, int status, int model );

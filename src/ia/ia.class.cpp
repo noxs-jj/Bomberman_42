@@ -17,12 +17,14 @@ Ia::Ia( ) : layer(1) {}
 Ia::Ia( int layer ) : layer(layer) {}
 
 Ia::Ia( Ia const & src ) {
-  (void)src;
-  //(*this).layer = (*src).layer - 1;
+  *this = src;
 }
 
 Ia & Ia::operator=( Ia const & rhs ) {
-    if (this != &rhs) {}
+    if (this != &rhs) {
+        this->layer = rhs.layer;
+        this->direction = rhs.direction;
+    }
     return (*this);
 }
 

@@ -58,13 +58,13 @@ void			ft42::w_log( std::string const newEntry ) {
 std::string		ft42::logTime( std::string const & sentence ) {
 	std::stringstream	ss;
 
-	memset(&this->buffer, 0, 80);
-	time(&this->timer);
-	this->timeinfo = localtime (&this->timer);
-	strftime (this->buffer, 80, "%Y/%m/%d %H:%M:%S ", this->timeinfo);
-	ss << this->buffer;
-	this->result = ss.str() + sentence;
-	return (this->result);
+	memset(&this->ft_42_buffer, 0, 80);
+	time(&this->ft_42_timer);
+	this->ft_42_timeinfo = localtime (&this->ft_42_timer);
+	strftime (this->ft_42_buffer, 80, "%Y/%m/%d %H:%M:%S ", this->ft_42_timeinfo);
+	ss << this->ft_42_buffer;
+	this->ft_42_result = ss.str() + sentence;
+	return (this->ft_42_result);
 }
 
 bool		ft42::check_coord_exist( int x, int y ) {

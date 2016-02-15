@@ -49,6 +49,11 @@ public:
     static SoundRender *    create_sound_render();
     static Ia *             create_ia();
     static Event *          create_event();
+
+private:
+    Factory( Factory const & src ) = delete;
+    Factory & operator=( Factory const & rhs ) = delete;
+
 };
 
 #endif

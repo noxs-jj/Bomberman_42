@@ -19,32 +19,32 @@
 
 class Joystick : public ft42 {
 public:
-	int				timer;
-	int				test = 0;
-	SDL_Joystick *        manette1;
-	SDL_Joystick *        manette2;
-	SDL_Joystick *        manette3;
-	SDL_Joystick *        manette4;
-	SDL_Joystick *        manette5;
-	int 			config[5]; // 0: controller, 1: keyboard
-	t_key *				arr_key_keyboard[5];
-	t_key *				arr_key_controller[5];
+    int                timer;
+    int                test = 0;
+    SDL_Joystick *     manette1;
+    SDL_Joystick *     manette2;
+    SDL_Joystick *     manette3;
+    SDL_Joystick *     manette4;
+    SDL_Joystick *     manette5;
+    int                config[5]; // 0: controller, 1: keyboard
+    t_key *            arr_key_keyboard[5];
+    t_key *            arr_key_controller[5];
 
-	Joystick(void);
-	// Joystick( Joystick const & src );
-	// Joystick & operator=( Joystick const & rhs );
-	virtual ~Joystick( void );
-	void read_key(int mode);
-	void change_dir_joystick(t_key *key, int dir);
-	void load_config( void );
-	void	save_config( void );
-	void	save_default_config( void );
-	void set_key_config();
-	void set_key();
-	void 	init_joystick();
+    Joystick(void);
+    virtual ~Joystick( void );
+
+    void    read_key(int mode);
+    void    change_dir_joystick(t_key *key, int dir);
+    void    load_config( void );
+    void    save_config( void );
+    void    save_default_config( void );
+    void    set_key_config();
+    void    set_key();
+    void    init_joystick();
 
 private:
-
+    Joystick( Joystick const & src );
+    Joystick & operator=( Joystick const & rhs );
 };
 
 #endif

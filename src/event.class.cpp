@@ -38,13 +38,6 @@ Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
     srand(time(NULL));
 }
 
-Event::Event( Event const & src ) { *this = src; }
-
-Event & Event::operator=( Event const & rhs ) {
-	if (this != &rhs) {}
-	return (*this);
-}
-
 Event::~Event( void ) {}
 
 void 	Event::free_game( void ) {

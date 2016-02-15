@@ -193,3 +193,14 @@ std::string * Mapparser::error = NULL;
 Mapparser::Mapparser() {}
 
 Mapparser::~Mapparser() {}
+
+Mapparser::Mapparser( Mapparser const & src ) {
+    *this = src;
+}
+
+Mapparser & Mapparser::operator=( Mapparser const & rhs ) {
+    if (this != &rhs) {
+        this->error = rhs.error;
+    }
+    return *this;
+}

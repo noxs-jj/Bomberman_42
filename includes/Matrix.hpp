@@ -22,7 +22,6 @@ class Matrix {
 public :
 
     Matrix(void);
-
 	~Matrix(void);
 
 	void			rot_matrix(float x, float y, float z);

@@ -24,6 +24,7 @@ public:
 	Bonus( Bonus const & src );
 	Bonus & operator=( Bonus const & rhs );
 	virtual ~Bonus( void );
+
 	void	affect(Entity *ent);
 	void change_bomb(Entity *ent);
 private:

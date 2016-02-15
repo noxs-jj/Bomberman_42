@@ -40,8 +40,26 @@ Joystick::Joystick(void) {
 }
 
 Joystick::~Joystick(void) {}
-// Joystick::Joystick( Joystick const & src ) {}
-// Joystick::Joystick & operator=( Joystick const & rhs ) {}
+
+Joystick::Joystick( Joystick const & src ) {
+    *this = src;
+}
+
+Joystick & Joystick::operator=( Joystick const & rhs ) {
+    if (this != &rhs) {
+        this->timer = rhs.timer;
+        this->test = rhs.test;
+        this->manette1 = rhs.manette1;
+        this->manette2 = rhs.manette2;
+        this->manette3 = rhs.manette3;
+        this->manette4 = rhs.manette4;
+        this->manette5 = rhs.manette5;
+        std::memcpy(this->config, rhs.config, sizeof(this->config));
+        std::memcpy(this->arr_key_keyboard, rhs.arr_key_keyboard, sizeof(this->arr_key_keyboard));
+        std::memcpy(this->arr_key_controller, rhs.arr_key_controller, sizeof(this->arr_key_controller));
+    }
+    return (*this);
+}
 
 void Joystick::init_joystick() {
 	if (main_event->menu->joystick_number > 0) {
