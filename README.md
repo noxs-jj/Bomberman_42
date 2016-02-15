@@ -4,16 +4,18 @@
 ![Screen Shot](https://raw.githubusercontent.com/noxsnono/Bomberman_42/ia/screenshot.gif)
 
 ## Requierements, Install
-### MacOsX (Supported & tested):
-    - brew update && brew install sdl sdl2 sdl2_image sdl2_mixer sdl2_ttf
+
 ### Linux (Supported & tested)
     - You must install Drivers for use OpenGL 4.0 (open source libMesa
-	only surpport OpenGL 3.2 at this moment), try to install owner's drivers,
-	then install packages followings
+	    only surpport OpenGL 3.2 at this moment), try to install owner's drivers,
+	    then install packages followings
 
-    sudo apt-get update && sudo apt-get install glee-dev libglew-dev \
-    libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-mixer-dev \
-    libsdl2-ttf-dev freeglut3-dev libsdl1.2-dev
+    sudo apt-get update && sudo apt-get install wget clang++ glee-dev \
+        libglew-dev libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev \
+        libsdl2-mixer-dev libsdl2-ttf-dev freeglut3-dev libsdl1.2-dev
+
+### MacOsX (Supported & tested):
+    - brew update && brew install wget sdl2 sdl2_image sdl2_mixer sdl2_ttf
 
 ### Documentation -man-
 How to add man game manuel to manpath.
@@ -44,8 +46,8 @@ Key | Joystick | Keyboard1 | Keyboard2
 ## Credits
 Whois @42born2code | Jobs
 ------------ | -------------
-rcargou  | 3D OpenGL engineer, assets 3D, textures
-vjacquie | Game Logic, Game Design, input engineer
-adjivas | IA engineer, Documentation wirter 'man'
-nmohamed naki.md@gmail.com twitter@naki_md | Sound Design, input engineer
-jmoiroux jjmoiroux@gmail.com twitter@jjmoiroux | Project Manager, Os Platform compatibility, Level Design, Game Design, textures
+rcargou  | 3D OpenGL Engineer, 3D Assets, Textures
+vjacquie | Game Logic, Game Design, Input Engineer
+adjivas | IA Engineer, Docs writer 'man'
+nmohamed naki.md@gmail.com twitter@naki_md | Sound Design, Input Engineer
+jmoiroux jjmoiroux@gmail.com twitter@jjmoiroux | Project Manager, OS Compatibility, Level Design, Game Design, Textures
