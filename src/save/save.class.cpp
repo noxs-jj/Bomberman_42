@@ -32,6 +32,10 @@ void Save::save_level(int level) {
 		buf[i] = num[rand() % len];
 		i++;
 	}
+	if (main_event->coop == false)
+		buf[0] = '1';
+	else
+		buf[0] = '0';
 	buf[2] = '0' + level;
 
 	if ((stream = fopen(LEVEL_FILE, "w")) == NULL)
@@ -56,6 +60,10 @@ void Save::load_level( void ) {
 	}
 	if (strlen(buff) < 30)
 		return ;
+	if (buff[0] - '0' == 1)
+		main_event->save_level_mode = false;
+	else
+		main_event->save_level_mode = true;
 	main_event->save_level = buff[2] - '0';
 }
 

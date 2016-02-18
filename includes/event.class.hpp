@@ -46,6 +46,7 @@ public:
 	bool					coop; // false si campaign
 	int 					actual_level;
 	int 					save_level = 0;
+	bool 					save_level_mode = false;
 	int						multi; // 0 == non activer, 2 player, 3, 4, 5
 	int						arena; // 0 == non activer, 2 player, 3, 4, 5
 	bool					intro_map = false;

@@ -49,6 +49,29 @@ void    Gamelauncher::campaign_new() {
     main_event->game_playing = true; // activate active partie
 }
 
+void Gamelauncher::campaign_continue() {
+	main_event->w_log("MENU_CAMPAIGN_CONTINUE + LAUNCH ");
+	main_event->draw_winner_multi = -1;
+	main_event->draw_winner_campaign = -1;
+	main_event->draw_lose_campaign = -1;
+	main_event->draw_end_campaign = -1;
+	main_event->actual_level = main_event->save_level;
+	if (main_event->save_level_mode == false)
+		main_event->coop = 0;
+	else
+			main_event->coop = 2;
+	main_event->multi = 0;
+	main_event->arena = 0;
+	main_event->intro_map = false;
+	// main_event->config[0] = PLAYER1; // player 1 get config number x
+	main_event->mode_menu = false; // desactive menu render
+	// if (main_event->game_playing == true) {
+	main_event->make_new_game(0);
+	// }
+	main_event->game_playing = true; // activate active partie
+
+}
+
 void    Gamelauncher::campaign_new_coop() {
     main_event->w_log("MENU_CAMPAIGN_NEW_COOP + LAUNCH ");
     main_event->draw_winner_multi = -1;

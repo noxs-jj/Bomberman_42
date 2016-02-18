@@ -489,6 +489,8 @@ void  Menu::change_menu() {
         Gamelauncher::campaign_new();
     else if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_COOP == this->detail_menu_selected )
         Gamelauncher::campaign_new_coop();
+		else if ( CAMPAIGN == this->menu_selected && MENU_CAMPAIGN_CONTINUE == this->detail_menu_selected )
+        Gamelauncher::campaign_continue();
     else if (this->detail_menu_selected == MENU_CAMPAIGN) {
         this->detail_menu_selected = MENU_CAMPAIGN_NEW;
         this->menu_selected = CAMPAIGN;

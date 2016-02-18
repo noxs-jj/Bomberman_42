@@ -22,6 +22,7 @@ public:
 
     static void intro_lauch_game();
     static void campaign_new();
+		static void campaign_continue();
     static void campaign_new_coop();
 
     static void run_multi_2();
