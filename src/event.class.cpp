@@ -97,7 +97,7 @@ void	Event::make_new_game( int new_level ) {
 			this->map = Mapparser::map_from_file(map_name);
 		}
 		else
-			gen_level_arena(this->actual_level, this->multi);
+			gen_level_arena(this->actual_level, main_event->arena);
 	}
 	else {
 		// gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
@@ -212,7 +212,7 @@ void	Event::gen_level_campaign(int level, int boss, bool coop) {
 	int p_x = 2 + (rand() % (globject::mapX_size - 4));
 	int p_y = 2 + (rand() % (globject::mapY_size - 4));
 	boss = (boss > 0) ? 0 : 1;
-
+	fill_border_map();
 	this->char_list.push_back(Factory::create_player(0, (float)p_x, (float)p_y, PLAYER1)); // change model
 	std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
 	if (coop == true) {
@@ -227,12 +227,12 @@ void	Event::gen_level_campaign(int level, int boss, bool coop) {
 	}
 
 	// delete this->map[p_y][p_x];
-
 	int i = 0;
 	while (i < (level % 3) + boss) {
 		tmpx = 2 + (rand() % (globject::mapX_size - 4));
 		tmpy = 2 + (rand() % (globject::mapY_size - 4));
 		if (check_coord(0, (float)tmpx, (float)tmpy) == true) {
+			printf("yes\n");
 			if (boss == 1)
 				this->char_list.push_back(Factory::create_boss(0, (float)tmpx, (float)tmpy, BOSS_A, BOSS_A)); // change model
 			else
@@ -246,6 +246,7 @@ void	Event::gen_level_campaign(int level, int boss, bool coop) {
 void	Event::gen_level_multi(int level, int coop) {
 	int i = 0;
 
+	fill_border_map();
 	while (i < coop) {
 		int p_x = 2 + (rand() % (globject::mapX_size - 4));
 		int p_y = 2 + (rand() % (globject::mapY_size - 4));
@@ -260,6 +261,7 @@ void	Event::gen_level_multi(int level, int coop) {
 void	Event::gen_level_arena(int level, int coop) {
 	int i = 0, tmpx = 0, tmpy = 0;
 
+	fill_border_map();
 	while (i < coop) {
 		int p_x = 2 + (rand() % (globject::mapX_size - 4));
 		int p_y = 2 + (rand() % (globject::mapY_size - 4));
