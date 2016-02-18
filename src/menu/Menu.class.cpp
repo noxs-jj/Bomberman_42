@@ -16,6 +16,7 @@
 #include <GameLauncher.class.hpp>
 #include <soundrender.class.hpp>
 #include <joystick.hpp>
+#include <save.class.hpp>
 
 void	Menu::winner_multi() {
 	if (!this->musicIsPlaying) {
@@ -379,6 +380,7 @@ void Menu::move_menu_hor() {
             main_event->soundrender->setGlobalVolume(VOLUME_MEDIUM);
     }
 
+    main_event->save_config->save_global_config_to_file();
     main_event->joystick->save_config();
 }
 

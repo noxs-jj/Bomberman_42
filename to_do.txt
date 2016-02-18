@@ -7,8 +7,6 @@ BUG:
 
 LOGIC:
     - (pas obligatoire) Fin de partie laisser ecran 1-2 sec pour comprendre la fin ?
-    - REQUIRED: pouvoir save / load game
-    - Ecran de victoire en fin de campaign
 
 CONFIG:
 

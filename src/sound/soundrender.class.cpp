@@ -10,7 +10,9 @@
 //                                                                            //
 // ************************************************************************** //
 
-#include "soundrender.class.hpp"
+#include <soundrender.class.hpp>
+#include <main.hpp>
+#include <save.class.hpp>
 #define FUNC std::string(__PRETTY_FUNCTION__) + " -> "
 
 SoundRender::SoundRender() {
@@ -35,6 +37,7 @@ bool    SoundRender::init() {
 	this->w_full(FUNC + "soundrender -> allocating channels");
     Mix_AllocateChannels(mMaxAllocatedChannels);
     this->setGlobalVolume(VOLUME_DEFAULT);
+    this->setGlobalVolume(main_event->save_config->global_config.sound_volume); // load from save config_file
     return true;
 }
 

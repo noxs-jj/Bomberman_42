@@ -332,6 +332,7 @@ void Joystick::read_key(int mode) {
             case SDLK_k:                main_event->save_config->fill_info_config();
                                         main_event->save_config->print_config_debugg();
                                         break;
+            case SDLK_u:                main_event->save_config->save_global_config_to_file();
             while ( i < SDL_NumJoysticks() ){
               printf("    %s\n", SDL_GameControllerNameForIndex(i) );
               i++;

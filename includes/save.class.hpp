@@ -14,7 +14,7 @@
 # define SAVE_CLASS_HPP
 
 # include <ft42.class.hpp>
-# define GLOBAL_CONFIG_FILE "config/.save"
+# define GLOBAL_CONFIG_FILE "config/.save_config"
 
 class Save : public ft42 {
 public:
@@ -23,11 +23,14 @@ public:
     Save();
     virtual ~Save();
 
-    void    fill_info_config();
-    void    print_config_debugg();
-    void    fill_actual_resolution();
-		void 		save_level(int level);
-		void 		load_level( void );
+    void    fill_info_config( void );
+    void    print_config_debugg( void );
+    void    fill_actual_resolution( void );
+    void    save_level(int level);
+    void    load_level( void );
+    void    save_global_config_to_file( void );
+    void    load_global_config_file( void );
+
 };
 
 #endif

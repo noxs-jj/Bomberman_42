@@ -176,6 +176,11 @@ void	Event::parse_command(int ac, char **av) {
         }
 		i++;
 	}
+    if (this->option_resolution == RESOLUTION_NOT_SET) {
+        this->option_resolution = main_event->save_config->global_config.windowed_width;
+        this->actual_resolution = this->option_resolution;
+    }
+    main_event->full_screen = main_event->save_config->global_config.video_fullscreen;
 }
 
 int rand_range(int min, int max) {

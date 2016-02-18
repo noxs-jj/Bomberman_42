@@ -35,6 +35,7 @@ int		main( int ac, char **av ) {
     }
 
 	try {
+        main_event->save_config->load_global_config_file();
         ia_play = Factory::create_ia();
         main_event->menu = Factory::create_menu(main_event);
         main_event->joystick = Factory::create_joystick();
@@ -61,7 +62,7 @@ int		main( int ac, char **av ) {
         main_event->soundrender->playMusic("ps1");
 
         main_event->menu->main_loop();
-				main_event->save_config->load_level();
+        main_event->save_config->load_level();
         while (true == main_event->event_running) {
             if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60) {
                 continue ;

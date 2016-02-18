@@ -190,7 +190,7 @@ void        globject::init(float sizeX, float sizeY) {
         }
         else {
             globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
-            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
+            0, 0, \
                 size_x, size_y, \
                 SDL_WINDOW_OPENGL \
                 | SDL_WINDOW_BORDERLESS

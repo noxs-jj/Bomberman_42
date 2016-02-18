@@ -96,103 +96,132 @@ void    Save::print_config_debugg() {
 void    Save::fill_actual_resolution() {
     if (RESOLUTION_NOT_SET == main_event->actual_resolution) {
         main_event->actual_resolution = RESOLUTION_800;
-        this->global_config.windowed_width = 800;
-        this->global_config.windowed_height = 600;
+        this->global_config.windowed_width = RESOLUTION_800;
     }
     else if (RESOLUTION_800 == main_event->actual_resolution) {
-        this->global_config.windowed_width = 800;
-        this->global_config.windowed_height = 600;
+        this->global_config.windowed_width = RESOLUTION_800;
     }
     else if (RESOLUTION_1280 == main_event->actual_resolution) {
-        this->global_config.windowed_width = 1280;
-        this->global_config.windowed_height = 720;
+        this->global_config.windowed_width = RESOLUTION_1280;
     }
     else if (RESOLUTION_1600 == main_event->actual_resolution) {
-        this->global_config.windowed_width = 1600;
-        this->global_config.windowed_height = 900;
+        this->global_config.windowed_width = RESOLUTION_1600;
     }
     else if (RESOLUTION_1920 == main_event->actual_resolution) {
-        this->global_config.windowed_width = 1920;
-        this->global_config.windowed_height = 1080;
+        this->global_config.windowed_width = RESOLUTION_1920;
     }
     else if (RESOLUTION_2560 == main_event->actual_resolution) {
-        this->global_config.windowed_width = 2560;
-        this->global_config.windowed_height = 1440;
+        this->global_config.windowed_width = RESOLUTION_2560;
     }
     else {
-        this->global_config.windowed_width = 800;
-        this->global_config.windowed_height = 600;
+        this->global_config.windowed_width = RESOLUTION_800;
     }
 }
 
-// void	Save::save_config( void ) {
-// 	FILE *stream;
-// 	char buf[128] = {0};
-//
-// 	if ((stream = fopen(GLOBAL_CONFIG_FILE, "w")) == NULL)
-// 		return ;
-// 	sprintf(buf, "%d,%d,%d,%d,%d", this->config[0], this->config[1], this->config[2], this->config[3], this->config[4]);
-// 	fputs(buf, stream);
-// 	fclose(stream);
-// 	set_key_config();
-// }
-//
-// void	Save::save_default_config( void ) {
-// 	FILE *stream;
-//
-// 	if ((stream = fopen(GLOBAL_CONFIG_FILE, "w")) == NULL)
-// 		return ;
-//
-// 	fputs("1,1,0,0,0", stream);
-// 	fclose(stream);
-// 	this->config[0] = 1;
-// 	this->config[1] = 1;
-// 	this->config[2] = 0;
-// 	this->config[3] = 0;
-// 	this->config[4] = 0;
-// }
-//
-// void Joystick::load_config( void ) {
-// 	FILE *stream;
-// 	char buff[128] = {0};
-//
-// 	if ((stream = fopen(GLOBAL_CONFIG_FILE, "r")) == NULL) {
-// 		save_default_config();
-// 		return ;
-// 	}
-// 	if ( fgets (buff , 128 , stream) == NULL ) {
-// 		fclose(stream);
-// 		save_default_config();
-// 		return ;
-// 	}
-//
-// 	if (strlen(buff) < 9)
-// 		return ;
-// 	if ((buff[0] - '0' != 1 && buff[0] - '0' != 0)
-// 		|| (buff[2] - '0' != 1 && buff[2] - '0' != 0)
-// 		|| (buff[4] - '0' != 1 && buff[4] - '0' != 0)
-// 		|| (buff[6] - '0' != 1 && buff[6] - '0' != 0)
-// 		|| (buff[8] - '0' != 1 && buff[8] - '0' != 0))
-// 			return ;
-//
-// 	this->config[0] = buff[0] - '0';
-// 	this->config[1] = buff[2] - '0';
-// 	this->config[2] = buff[4] - '0';
-// 	this->config[3] = buff[6] - '0';
-// 	this->config[4] = buff[8] - '0';
-// 	fclose(stream);
-//
-// 	int i = 0, tmp = 0;
-//
-// 	while (i < 5) {
-// 		if (this->config[i] == 1)
-// 			tmp++;
-// 		if (tmp > 2) {
-// 			save_default_config();
-// 			return ;
-// 		}
-// 		i++;
-// 	}
-//
-// 	set_key();
-// }
+
+void    Save::save_global_config_to_file() {
+    static const char   num[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+    FILE                *stream;
+    char                buf[128] = {0};
+    int                 i = 0;
+    int                 len = sizeof(num) - 1;
+
+    this->fill_info_config();
+    while(i < 32) {
+        buf[i] = num[rand() % len];
+        i++;
+    }
+
+    if ((stream = fopen(GLOBAL_CONFIG_FILE, "w")) == NULL)
+    	return ;
+
+    if (this->global_config.sound_activated == true)
+        buf[0] = '1';
+    else
+        buf[0] = '0';
+
+    if (this->global_config.sound_volume == VOLUME_OFF)
+        buf[1] = '0';
+    else if (this->global_config.sound_volume == VOLUME_LOW)
+        buf[1] = '1';
+    else if (this->global_config.sound_volume == VOLUME_MEDIUM)
+        buf[1] = '2';
+    else if (this->global_config.sound_volume == VOLUME_HIGH)
+        buf[1] = '3';
+
+    if (this->global_config.video_fullscreen == false)
+        buf[2] = '0';
+    else
+        buf[2] = '1';
+
+    if (this->global_config.windowed_width == RESOLUTION_NOT_SET)
+        buf[3] = '0';
+    else if (this->global_config.windowed_width == RESOLUTION_800)
+        buf[3] = '1';
+    else if (this->global_config.windowed_width == RESOLUTION_1280)
+        buf[3] = '2';
+    else if (this->global_config.windowed_width == RESOLUTION_1600)
+        buf[3] = '3';
+    else if (this->global_config.windowed_width == RESOLUTION_1920)
+        buf[3] = '4';
+    else if (this->global_config.windowed_width == RESOLUTION_2560)
+        buf[3] = '5';
+    else
+        buf[3] = '0';
+
+    fputs(buf, stream);
+    fclose(stream);
+}
+
+void    Save::load_global_config_file() {
+    FILE    *stream;
+    char    buff[128] = {0};
+
+    if ((stream = fopen(GLOBAL_CONFIG_FILE, "r")) == NULL) {
+        return ;
+    }
+    if ( fgets (buff , 128 , stream) == NULL ) {
+        fclose(stream);
+        return ;
+    }
+    if (strlen(buff) < 30)
+        return ;
+
+    if (buff[0] == '1')
+        this->global_config.sound_activated = true;
+    else
+        this->global_config.sound_activated = false;
+
+    if (buff[1] == '0')
+        this->global_config.sound_volume = VOLUME_OFF;
+    else if (buff[1] == '1')
+        this->global_config.sound_volume = VOLUME_LOW;
+    else if (buff[1] == '2')
+        this->global_config.sound_volume = VOLUME_MEDIUM;
+    else if (buff[1] == '3')
+        this->global_config.sound_volume = VOLUME_HIGH;
+    else
+        this->global_config.sound_volume = VOLUME_MEDIUM;
+
+    if (buff[2] == '1')
+        this->global_config.video_fullscreen = true;
+    else
+        this->global_config.video_fullscreen = false;
+
+    if (buff[3] == '0')
+        this->global_config.windowed_width = RESOLUTION_NOT_SET;
+    else if (buff[3] == '1')
+        this->global_config.windowed_width = RESOLUTION_800;
+    else if (buff[3] == '2')
+        this->global_config.windowed_width = RESOLUTION_1280;
+    else if (buff[3] == '3')
+        this->global_config.windowed_width = RESOLUTION_1600;
+    else if (buff[3] == '4')
+        this->global_config.windowed_width = RESOLUTION_1920;
+    else if (buff[3] == '5')
+        this->global_config.windowed_width = RESOLUTION_2560;
+    else
+        this->global_config.windowed_width = RESOLUTION_NOT_SET;
+
+
+}

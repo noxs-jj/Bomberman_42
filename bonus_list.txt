@@ -9,6 +9,7 @@ A FAIRE: standalone install MacosX
 OTHERS:
 - param -log enregistrement d'evenement du jeux dans un fichier de log
 - 4 boss affiche
+- sauvegarde des params d'affichage et de reglage de son
 - SKYBOX
 - Gestion 5 Joysticks
 - Gestion Bonus Power
