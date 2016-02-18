@@ -344,7 +344,7 @@ void        globject::update_key() {
 }
 
 GLfloat     globject::get_leg_pos(int model) {
-	if (model >= PLAYER && model <= PLAYER4)
+	if (model >= PLAYER && model <= PLAYER5)
 		return (10);
 	if (model == ENEMY1)
 		return (1);
