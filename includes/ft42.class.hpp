@@ -34,6 +34,8 @@
 # include <vector>
 
 # define MAX_LEVEL 9
+# define CONFIG_FILE "config/config.txt"
+# define LEVEL_FILE "config/.level"
 
 # ifdef linux
 #   include <GL/glew.h>

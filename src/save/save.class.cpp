@@ -15,7 +15,6 @@
 #include <globject.class.hpp>
 #include <soundrender.class.hpp>
 
-
 Save::Save() {
     std::cout << sizeof(this->global_config) << std::endl;;
     main_event->save_config = this;
@@ -23,6 +22,42 @@ Save::Save() {
 
 Save::~Save() {}
 
+void Save::save_level(int level) {
+	static const char num[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+	FILE *stream;
+	char buf[128] = {0};
+	int i = 0;
+	int len = sizeof(num) - 1;
+	while(i < 32) {
+		buf[i] = num[rand() % len];
+		i++;
+	}
+	buf[2] = '0' + level;
+
+	if ((stream = fopen(LEVEL_FILE, "w")) == NULL)
+		return ;
+
+	fputs(buf, stream);
+	fclose(stream);
+}
+
+void Save::load_level( void ) {
+	FILE *stream;
+	char buff[128] = {0};
+
+	if ((stream = fopen(LEVEL_FILE, "r")) == NULL) {
+		save_level(0);
+		return ;
+	}
+	if ( fgets (buff , 128 , stream) == NULL ) {
+		fclose(stream);
+		save_level(0);
+		return ;
+	}
+	if (strlen(buff) < 30)
+		return ;
+	main_event->save_level = buff[2] - '0';
+}
 
 void    Save::fill_info_config() {
     int i = 0;

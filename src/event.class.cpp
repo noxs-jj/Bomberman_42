@@ -84,9 +84,7 @@ void	Event::make_new_game( int new_level ) {
 		this->map = Mapparser::map_from_file(map_name);
 		return ;
 	}
-	this->actual_level += new_level;
-	if (this->actual_level > 9)
-		this->actual_level = 1;
+
 	if (this->multi > 0) {
 		// gen_level_multi(this->actual_level, this->multi);
 		if (this->gen_level == false) {
@@ -106,6 +104,10 @@ void	Event::make_new_game( int new_level ) {
 			gen_level_arena(this->actual_level, main_event->arena);
 	}
 	else {
+		this->actual_level += new_level;
+		if (this->actual_level > 9)
+			this->actual_level = 1;
+			main_event->save->save_level(this->actual_level);
 		// gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
 		if (this->gen_level == false && main_event->coop > 0) {
 			sprintf(map_name, "assets/map/story/story_coop_%d.ntm", main_event->actual_level);

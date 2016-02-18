@@ -15,8 +15,6 @@
 
 # include <ft42.class.hpp>
 
-# define CONFIG_FILE "config/config.txt"
-
 class Joystick : public ft42 {
 public:
     int                timer;

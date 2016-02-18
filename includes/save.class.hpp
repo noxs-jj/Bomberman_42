@@ -26,6 +26,8 @@ public:
     void    fill_info_config();
     void    print_config_debugg();
     void    fill_actual_resolution();
+		void 		save_level(int level);
+		void 		load_level( void );
 };
 
 #endif

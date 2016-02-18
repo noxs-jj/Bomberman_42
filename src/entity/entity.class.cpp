@@ -317,6 +317,7 @@ void	Entity::die( void ) {
 			if (main_event->actual_level == MAX_LEVEL) {
 				main_event->actual_level = 1;
 				main_event->draw_end_campaign = 1;
+				main_event->save->save_level(0);
 			}
 			else
 				main_event->draw_winner_campaign = 1;
