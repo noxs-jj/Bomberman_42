@@ -15,6 +15,7 @@
 #include <bomb.class.hpp>
 #include <bonus.class.hpp>
 #include <globject.class.hpp>
+#include <save.class.hpp>
 
 #include <iostream>
 #include <vector>
@@ -317,7 +318,7 @@ void	Entity::die( void ) {
 			if (main_event->actual_level == MAX_LEVEL) {
 				main_event->actual_level = 1;
 				main_event->draw_end_campaign = 1;
-				main_event->save->save_level(0);
+				main_event->save_config->save_level(0);
 			}
 			else
 				main_event->draw_winner_campaign = 1;
