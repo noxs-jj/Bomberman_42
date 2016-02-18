@@ -321,6 +321,16 @@ void	Entity::die( void ) {
 			else
 				main_event->draw_winner_campaign = 1;
 		}
+		else if (main_event->arena != 0 && count_entity(ENEMY) == 0 && count_entity(BOSS) == 0) {
+			main_event->game_pause = true;
+			main_event->mode_menu = true; // desactive menu render
+			main_event->draw_end_campaign = 1;
+		}
+		else if (main_event->arena != 0 && count_entity(PLAYER) == 0) {
+			main_event->game_pause = true;
+			main_event->mode_menu = true; // desactive menu render
+			main_event->draw_lose_campaign = 1;
+		}
 		std::cout << "Someone died end " << std::endl;
 }
 

@@ -206,18 +206,20 @@ void  Menu::big_menu() {
 
 void Menu::intro_start() {
   if (false == this->introstart) {
-    glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
-    glClearColor(0,0,0,0);
-    if (NULL == this->ecran_menu)
-        SDL_FreeSurface(this->current);
-    this->current = NULL;
-	this->current = IMG_Load("assets/images/intro_start-2.bmp");
-    if (NULL == this->current) {
-        std::cerr << "Menu::intro_start load image error " << SDL_GetError() << std::endl;
-        throw std::exception();
-    }
-    globject::display_menu(this->current);
-    SDL_GL_SwapWindow(globject::_displayWindow);
+		if (main_event->game_playing == false)
+			Gamelauncher::intro_lauch_game();
+  //   glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
+  //   glClearColor(0,0,0,0);
+  //   if (NULL == this->ecran_menu)
+  //       SDL_FreeSurface(this->current);
+  //   this->current = NULL;
+	// this->current = IMG_Load("assets/images/intro_start-2.bmp");
+  //   if (NULL == this->current) {
+  //       std::cerr << "Menu::intro_start load image error " << SDL_GetError() << std::endl;
+  //       throw std::exception();
+  //   }
+  //   globject::display_menu(this->current);
+  //   SDL_GL_SwapWindow(globject::_displayWindow);
   }
 }
 
@@ -278,7 +280,7 @@ void  Menu::main_loop() {
 	main_event->soundrender->stopSounds();
     while (true == main_event->mode_menu) {
         if (false == this->introstart)
-		this->intro_start();
+					this->intro_start();
         else
             this->menu_selection();
         main_event->joystick->read_key(0);

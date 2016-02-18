@@ -32,20 +32,13 @@ void    Save::fill_info_config() {
         this->global_config.sound_activated = false;
     else
         this->global_config.sound_activated = true;
-
     this->global_config.video_fullscreen = false;
-
-// SDL_GetWindowSurface(m_window)->w
-    // this->global_config.windowed_width = SDL_GetWindowSurface(globject::_displayWindow)->w;
-    // this->global_config.windowed_height = SDL_GetWindowSurface(globject::_displayWindow)->h;
     this->fill_actual_resolution();
 
     while (i < 9) {
         this->global_config.keyboard[i] = 49 + i;
         i++;
     }
-
-    // this->print_config_debugg();
 }
 
 void    Save::print_config_debugg() {

@@ -368,12 +368,12 @@ void Joystick::read_key(int mode) {
             case 5:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 7:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-            case 8:   if (true == main_event->mode_menu && main_event->game_playing == true)
+            case 9:   if (true == main_event->mode_menu && main_event->game_playing == true)
 						            main_event->mode_menu = false;
 						          else if (main_event->game_playing == true)
 						            main_event->mode_menu = true;
             break;
-            case 9:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+            case 8:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 10:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 11:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
             case 12:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
@@ -437,6 +437,16 @@ void Joystick::read_key(int mode) {
                                                                 main_event->save_config->print_config_debugg();
                                                                 break;
 
+									case SDLK_RETURN:   if (false == main_event->menu->introstart) {
+				            main_event->menu->introstart = true;
+				            main_event->mode_menu = true;
+										if (main_event->game_playing == true) {
+											main_event->game_playing = false;
+											main_event->free_game();
+										}
+				          }
+									break;
+
     							case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
     																		main_event->mode_menu = false;
     																	else if (main_event->game_playing == true)
@@ -458,7 +468,7 @@ void Joystick::read_key(int mode) {
                 case 5:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 7:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 8:   if ((main_event->multi > 0 || main_event->arena > 0) \
+                case 9:   if ((main_event->multi > 0 || main_event->arena > 0) \
 					 		&& main_event->live_player[main_event->config[event.jbutton.which] - PLAYER1] == true) {
 								if (true == main_event->mode_menu && main_event->game_playing == true)
 				                	main_event->mode_menu = false;
@@ -472,7 +482,15 @@ void Joystick::read_key(int mode) {
 	                	main_event->mode_menu = true;
 				}
                 break;
-                case 9:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                case 8:   if (false == main_event->menu->introstart) {
+									main_event->menu->introstart = true;
+									main_event->mode_menu = true;
+									if (main_event->game_playing == true) {
+										main_event->game_playing = false;
+										main_event->free_game();
+									}
+								}
+								break;
                 case 10:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 11:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 12:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;

@@ -47,6 +47,7 @@ public:
 	int 					actual_level;
 	int						multi; // 0 == non activer, 2 player, 3, 4, 5
 	int						arena; // 0 == non activer, 2 player, 3, 4, 5
+	bool					intro_map = false;
 	bool					new_game; // false == continue (load fichier sauvegarde)
 	int 					config[5]; // config[1](3)  == (joueur 2, config 3) (controller)
 	int 					config_keyboard[5]; // config[1](3)  == (joueur 2, config 3)

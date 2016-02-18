@@ -2,8 +2,8 @@ BONUS REQUIERED:
 - Diagram Class
 - Documentation developer, man + README.md
 - plus de 3 levels (9 levels)
-A FIX: Random Map: params -gen
-A FAIRE: map intro au lancement du jeux avec desennmies qui bougent dedans
+- Random Map: params -gen
+- map intro au lancement du jeux avec desennmies qui bougent dedans
 A FAIRE: standalone install MacosX
 
 OTHERS:

@@ -61,7 +61,6 @@ int		main( int ac, char **av ) {
         main_event->soundrender->playMusic("ps1");
 
         main_event->menu->main_loop();
-
         while (true == main_event->event_running) {
             if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60) {
                 continue ;
@@ -74,7 +73,6 @@ int		main( int ac, char **av ) {
                 break;
             main_event->dec_timer();
             time = clock();
-
             if (false == main_event->mode_menu)
                 main_event->render->render_all(main_event->map, main_event->char_list, NULL);
             else
