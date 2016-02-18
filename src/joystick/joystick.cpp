@@ -294,7 +294,13 @@ void Joystick::read_key(int mode) {
               main_event->draw_winner_campaign = -1;
               main_event->draw_lose_campaign = -1;
               main_event->draw_end_campaign = -1;
-              main_event->mode_menu = false;
+              main_event->mode_menu = true;
+							if (main_event->game_playing == true) {
+								main_event->game_playing = false;
+								main_event->free_game();
+								main_event->menu->menu_selected = BIG_MENU;
+								main_event->menu->detail_menu_selected = MENU_CAMPAIGN;
+							}
             }
             else
               main_event->menu->change_menu();
@@ -356,7 +362,13 @@ void Joystick::read_key(int mode) {
                 main_event->draw_winner_campaign = -1;
                 main_event->draw_lose_campaign = -1;
                 main_event->draw_end_campaign = -1;
-                main_event->mode_menu = false;
+								main_event->mode_menu = true;
+								if (main_event->game_playing == true) {
+									main_event->game_playing = false;
+									main_event->free_game();
+									main_event->menu->menu_selected = BIG_MENU;
+									main_event->menu->detail_menu_selected = MENU_CAMPAIGN;
+								}
               }
               else
                 main_event->menu->change_menu();

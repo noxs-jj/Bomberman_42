@@ -24,6 +24,8 @@ Save::~Save() {}
 
 void Save::save_level(int level) {
 	static const char num[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+	if (level < 1)
+	level = 1;
 	FILE *stream;
 	char buf[128] = {0};
 	int i = 0;
@@ -50,12 +52,12 @@ void Save::load_level( void ) {
 	char buff[128] = {0};
 
 	if ((stream = fopen(LEVEL_FILE, "r")) == NULL) {
-		save_level(0);
+		save_level(1);
 		return ;
 	}
 	if ( fgets (buff , 128 , stream) == NULL ) {
 		fclose(stream);
-		save_level(0);
+		save_level(1);
 		return ;
 	}
 	if (strlen(buff) < 30)
