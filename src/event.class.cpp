@@ -78,6 +78,11 @@ void	Event::make_new_game( int new_level ) {
 		this->map = Mapparser::map_from_file(map_name);
 		return ;
 	}
+	if (this->intro_map == true) {
+		sprintf(map_name, "assets/map/intro/intro_launch.ntm");
+		this->map = Mapparser::map_from_file(map_name);
+		return ;
+	}
 	this->actual_level += new_level;
 	if (this->actual_level > 9)
 		this->actual_level = 1;

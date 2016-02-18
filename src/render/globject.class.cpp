@@ -415,14 +415,14 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	modelDir.x = 1;
 	modelDir.z = 0;
 	modelDir.y = 0;
-	std::cout << "deb 01" << std::endl;
+	// std::cout << "deb 01" << std::endl;
 	//test
 	//display_menu(NULL);
 	//SDL_GL_SwapWindow(globject::_displayWindow);
 	//return ;
 	//test
 	display_menu(menu);
-	std::cout << "deb 02" << std::endl;
+	// std::cout << "deb 02" << std::endl;
 
 	viewDir.x = 1.1;
 	viewDir.y = 1.57;
@@ -447,7 +447,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	}
 	else
 		prog = 0;
-		std::cout << "deb 03" << std::endl;
+		// std::cout << "deb 03" << std::endl;
 	view = Matrix::view_matrix(viewPos, viewDir, zoom);
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
 	for (int y = 0; y < 1; y++) {
@@ -469,7 +469,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 			}
 		}
 	}
-	std::cout << "deb 04" << std::endl;
+	// std::cout << "deb 04" << std::endl;
 
 	for (int i = -mapY_size / 2; i <  mapY_size / 2; i++) {
 		for (int j = -mapX_size / 2; j < mapX_size / 2; j++) {
@@ -510,7 +510,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 			globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model].render(0);
 		}
 	}
-	std::cout << "deb 05" << std::endl;
+	// std::cout << "deb 05" << std::endl;
 
 	it = players.begin();
 	ite = players.end();
@@ -532,7 +532,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 		globject::_object[(*it)->model].render(0);
 		it++;
 	}
-	std::cout << "deb 06" << std::endl;
+	// std::cout << "deb 06" << std::endl;
 
 	SDL_GL_SwapWindow(globject::_displayWindow);
 }
