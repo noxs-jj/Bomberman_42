@@ -38,12 +38,12 @@
 # ifdef linux
 #   include <GL/glew.h>
 #   include <SDL2/SDL.h>
-#	include <SDL2/SDL_image.h>
-#	include <SDL2/SDL_mixer.h>
-#	include <SDL2/SDL_ttf.h>
+#   include <SDL2/SDL_image.h>
+#   include <SDL2/SDL_mixer.h>
+#   include <SDL2/SDL_ttf.h>
 # endif
 # ifdef __APPLE__
-# 	include <OpenGL/gl3.h>
+#   include <OpenGL/gl3.h>
 #   include <SDL.h>
 #   include <SDL_image.h>
 #   include <SDL_ttf.h>
@@ -57,18 +57,27 @@
 # define BLAST_SIZE 3 // default = 0 (blast = 2 + BLAST_SIZE)
 // #define KAMIKAZE // ia became not nice
 
-typedef struct	s_point {
-	float x;
-	float y;
-	float z;
-}				t_point;
+typedef struct  s_point {
+    float       x;
+    float       y;
+    float       z;
+}               t_point;
 
 typedef struct  s_key {
-	int key_right;
-	int key_left;
-	int key_up;
-	int key_down;
-}	t_key;
+    int         key_right;
+    int         key_left;
+    int         key_up;
+    int         key_down;
+}               t_key;
+
+typedef struct  s_global_config {
+    bool        sound_activated;
+    int         sound_volume;
+    bool        video_fullscreen;
+    int         windowed_width;
+    int         windowed_height;
+    char        keyboard[9];
+}               t_global_config;
 
 enum STATUS {
 	////

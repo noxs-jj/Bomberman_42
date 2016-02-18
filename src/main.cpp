@@ -15,16 +15,24 @@
 #include <Menu.class.hpp>
 #include <ia.class.hpp>
 #include <joystick.hpp>
+#include <save.class.hpp>
 
 Event *	main_event = Factory::create_event(); // GLOBAL
 
 int		main( int ac, char **av ) {
 	int            _time = 0;
 	Ia *           ia_play = NULL;
+    Save *         save = NULL;
 	static float   time = 0;
 
 	std::srand(std::time(0));
 	ft42::logg = true;
+
+    save = new Save();
+    if (NULL == save) {
+        std::cout << "Save() allocation error" << std::endl;
+        return (-1);
+    }
 
 	try {
         ia_play = Factory::create_ia();

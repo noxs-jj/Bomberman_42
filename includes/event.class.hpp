@@ -30,6 +30,7 @@ class SoundRender;
 class Menu;
 class globject;
 class Joystick;
+class Save;
 
 class Event : public ft42 {
 public:
@@ -64,6 +65,7 @@ public:
 	bool					event_running = true;
 	bool					to_die_entity = false;
 	Joystick *				joystick = NULL;
+    Save *                  save_config = NULL;
 	bool					live_player[5];
     SDL_DisplayMode         sdl_display_mode_info;
     bool                    full_screen = false;

@@ -11,6 +11,7 @@
 // ************************************************************************** //
 
 #include <joystick.hpp>
+#include <save.class.hpp>
 #include <event.class.hpp>
 #include <Menu.class.hpp>
 
@@ -328,6 +329,9 @@ void Joystick::read_key(int mode) {
 													}
 													break;
             case SDLK_c:        std::cout << "SDL_NumJoysticks(void) " << SDL_NumJoysticks() << std::endl;
+            case SDLK_k:                main_event->save_config->fill_info_config();
+                                        main_event->save_config->print_config_debugg();
+                                        break;
             while ( i < SDL_NumJoysticks() ){
               printf("    %s\n", SDL_GameControllerNameForIndex(i) );
               i++;
@@ -429,6 +433,9 @@ void Joystick::read_key(int mode) {
 									case SDLK_c: 				main_event->player_bomb(main_event->config_keyboard[0]); break;
 									case SDLK_v: 				main_event->remote_put(main_event->config_keyboard[0]); break;
 									case SDLK_b: 				main_event->remote_detonate(main_event->config_keyboard[0]); break;
+                                    case SDLK_k:                main_event->save_config->fill_info_config();
+                                                                main_event->save_config->print_config_debugg();
+                                                                break;
 
     							case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
     																		main_event->mode_menu = false;

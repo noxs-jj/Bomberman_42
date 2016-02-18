@@ -28,6 +28,7 @@ Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
     this->gen_level = false;
     this->option_arcade = false;
     this->option_resolution = RESOLUTION_NOT_SET;
+    this->actual_resolution = RESOLUTION_NOT_SET;
     this->full_screen = false;
     this->option_ia_kamikaze = false;
     this->game_pause = false;
@@ -145,16 +146,26 @@ void	Event::parse_command(int ac, char **av) {
 			this->option_arcade = true;
 		else if (strcmp(av[i], "-kamikaze") == 0)
 			this->option_ia_kamikaze = true;
-		else if (strcmp(av[i], "-2560") == 0)
+		else if (strcmp(av[i], "-2560") == 0) {
 			this->option_resolution = RESOLUTION_2560;
-		else if (strcmp(av[i], "-1920") == 0)
+            this->actual_resolution = RESOLUTION_2560;
+        }
+		else if (strcmp(av[i], "-1920") == 0) {
 			this->option_resolution = RESOLUTION_1920;
-		else if (strcmp(av[i], "-1600") == 0)
+            this->actual_resolution = RESOLUTION_1920;
+        }
+		else if (strcmp(av[i], "-1600") == 0) {
 			this->option_resolution = RESOLUTION_1600;
-        else if (strcmp(av[i], "-1280") == 0)
+            this->actual_resolution = RESOLUTION_1600;
+        }
+        else if (strcmp(av[i], "-1280") == 0) {
             this->option_resolution = RESOLUTION_1280;
-		else if (strcmp(av[i], "-800") == 0)
+            this->actual_resolution = RESOLUTION_1280;
+        }
+		else if (strcmp(av[i], "-800") == 0) {
 			this->option_resolution = RESOLUTION_800;
+            this->actual_resolution = RESOLUTION_800;
+        }
 		i++;
 	}
 }
