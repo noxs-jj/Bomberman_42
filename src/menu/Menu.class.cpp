@@ -540,6 +540,9 @@ void  Menu::change_menu() {
             this->detail_menu_selected = MENU_EXIT_CONFIRM;
             this->menu_selected = EXIT;
         }
+        else {
+            Gamelauncher::intro_lauch_game();
+        }
     }
     else if (this->detail_menu_selected == MENU_EXIT_CONFIRM)
         main_event->exit_free();

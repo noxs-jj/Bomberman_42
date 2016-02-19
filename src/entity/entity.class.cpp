@@ -216,7 +216,8 @@ void	Entity::move( int dir ) {
 		// std::cout << "bomb detected kick =" << this->kick_bomb << " id= " << this->id << " bomb_id= " << static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->creator_id << std::endl;
 		if (this->kick_bomb == true && static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->creator_id == this->id){
 			static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->pushed = true;
-			main_event->soundrender->playSound("kick");
+            if (true == this->kick_bomb)
+			    main_event->soundrender->playSound("kick");
 			static_cast<Bomb*>(main_event->map[(int)tmp_y][(int)tmp_x])->pushed_dir = dir;
 		}
 	}
@@ -343,8 +344,7 @@ void	Entity::put_bomb(int status, float x, float y, int model, int blast, int id
 	// main_event->map[(int)y][(int)x] = Factory::create_empty((int)x, (int)y);
 	main_event->map[(int)y][(int)x] = Factory::create_bomb(status, (int)x + 0.5, (int)y + 0.5, model, id);
 	main_event->map[(int)y][(int)x]->blast_radius = blast;
-	if (model != BOMB_REMOTE)
-	{
+	if (model != BOMB_REMOTE && PLAYER == this->type) {
 		main_event->soundrender->playSound("bombmove");
 	}
 }
