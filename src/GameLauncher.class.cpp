@@ -16,12 +16,13 @@
 
 void  Gamelauncher::intro_lauch_game() {
     main_event->w_log("INTRO LAUNCH BINAIRE");
+    main_event->soundrender->playSound("ps1");
     main_event->draw_winner_multi = -1;
     main_event->draw_winner_campaign = -1;
     main_event->draw_lose_campaign = -1;
     main_event->draw_end_campaign = -1;
     main_event->actual_level = 0;
-		main_event->intro_map = true;
+    main_event->intro_map = true;
     main_event->coop = 0;
     main_event->multi = 0;
     main_event->arena = 0;
@@ -40,12 +41,9 @@ void    Gamelauncher::campaign_new() {
     main_event->coop = 0;
     main_event->multi = 0;
     main_event->arena = 0;
-		main_event->intro_map = false;
-		// main_event->config[0] = PLAYER1; // player 1 get config number x
+    main_event->intro_map = false;
     main_event->mode_menu = false; // desactive menu render
-    // if (main_event->game_playing == true) {
     main_event->make_new_game(0);
-    // }
     main_event->game_playing = true; // activate active partie
 }
 
@@ -63,11 +61,8 @@ void Gamelauncher::campaign_continue() {
 	main_event->multi = 0;
 	main_event->arena = 0;
 	main_event->intro_map = false;
-	// main_event->config[0] = PLAYER1; // player 1 get config number x
 	main_event->mode_menu = false; // desactive menu render
-	// if (main_event->game_playing == true) {
 	main_event->make_new_game(0);
-	// }
 	main_event->game_playing = true; // activate active partie
 
 }
@@ -82,11 +77,8 @@ void    Gamelauncher::campaign_new_coop() {
     main_event->coop = 2;
     main_event->multi = 0;
     main_event->arena = 0;
-		main_event->intro_map = false;
-		// main_event->config[0] = PLAYER1; // player 1 get config number x
-    // main_event->config[1] = PLAYER2; // player 1 get config number x
+    main_event->intro_map = false;
     main_event->mode_menu = false; // desactive menu render
-    // if (main_event->game_playing == true)
     main_event->make_new_game(0);
     main_event->game_playing = true; // activate active partie
 }
@@ -101,11 +93,8 @@ void    Gamelauncher::run_multi_2() {
     main_event->coop = 0;
     main_event->multi = 2; // 2 players in game
     main_event->arena = 0;
-		main_event->intro_map = false;
-		// main_event->config[0] = PLAYER1; // player 1 get config number x
-    // main_event->config[1] = PLAYER2; // player 2 get config number x
+    main_event->intro_map = false;
     main_event->mode_menu = false; // desactive menu render
-    // if (main_event->game_playing == true)
     main_event->make_new_game(0);
     main_event->game_playing = true; // activate active partie
 }
@@ -121,12 +110,8 @@ void    Gamelauncher::run_multi_3() {
     main_event->coop = 0;
     main_event->multi = 3; // 3 players in game
     main_event->arena = 0;
-		main_event->intro_map = false;
-		// main_event->config[0] = PLAYER1; // player 1 get config number x
-    // main_event->config[1] = PLAYER2; // player 2 get config number x
-    // main_event->config[2] = PLAYER3; // player 3 get config number x
+    main_event->intro_map = false;
     main_event->mode_menu = false; // desactive menu render
-    // if (main_event->game_playing == true)
     main_event->make_new_game(0);
     main_event->game_playing = true; // activate active partie
 }
@@ -142,13 +127,8 @@ void    Gamelauncher::run_multi_4() {
     main_event->coop = 0;
     main_event->multi = 4; // 4 players in game
     main_event->arena = 0;
-		main_event->intro_map = false;
-		// main_event->config[0] = PLAYER1; // player 1 get config number x
-    // main_event->config[1] = PLAYER2; // player 2 get config number x
-    // main_event->config[2] = PLAYER3; // player 3 get config number x
-    // main_event->config[3] = PLAYER4; // player 4 get config number x
+    main_event->intro_map = false;
     main_event->mode_menu = false; // desactive menu render
-    // if (main_event->game_playing == true)
     main_event->make_new_game(0);
     main_event->game_playing = true; // activate active partie
 }
@@ -164,14 +144,8 @@ void    Gamelauncher::run_multi_5() {
     main_event->coop = 0;
     main_event->multi = 5; // 4 players in game
     main_event->arena = 0;
-		main_event->intro_map = false;
-		// main_event->config[0] = PLAYER1; // player 1 get config number x
-    // main_event->config[1] = PLAYER2; // player 2 get config number x
-    // main_event->config[2] = PLAYER3; // player 3 get config number x
-    // main_event->config[3] = PLAYER4; // player 4 get config number x
-    // main_event->config[4] = PLAYER5; // player 4 get config number x
+    main_event->intro_map = false;
     main_event->mode_menu = false; // desactive menu render
-    // if (main_event->game_playing == true)
     main_event->make_new_game(0);
     main_event->game_playing = true; // activate active partie
 }
@@ -187,11 +161,8 @@ void    Gamelauncher::run_arena_2() {
     main_event->coop = 0;
     main_event->multi = 0;
     main_event->arena = 2;  // 2 players in game
-		main_event->intro_map = false;
-		// main_event->config[0] = PLAYER1; // player 1 get config number x
-    // main_event->config[1] = PLAYER2; // player 2 get config number x
+    main_event->intro_map = false;
     main_event->mode_menu = false; // desactive menu render
-    // if (main_event->game_playing == true)
     main_event->make_new_game(0);
     main_event->game_playing = true; // activate active partie
 }
@@ -207,12 +178,7 @@ void    Gamelauncher::run_arena_3() {
     main_event->coop = 0;
     main_event->multi = 0;
     main_event->arena = 3;  // 3 players in game
-		main_event->intro_map = false;
-		// main_event->config[0] = PLAYER1; // player 1 get config number x
-    // main_event->config[1] = PLAYER2; // player 2 get config number x
-    // main_event->config[2] = PLAYER3; // player 3 get config number x
-    main_event->mode_menu = false; // desactive menu render
-    // if (main_event->game_playing == true)
+    main_event->intro_map = false;
     main_event->make_new_game(0);
     main_event->game_playing = true; // activate active partie
 }
@@ -228,13 +194,8 @@ void    Gamelauncher::run_arena_4() {
     main_event->coop = 0;
     main_event->multi = 0;
     main_event->arena = 4;  // 4 players in game
-		main_event->intro_map = false;
-		// main_event->config[0] = PLAYER1; // player 1 get config number x
-    // main_event->config[1] = PLAYER2; // player 2 get config number x
-    // main_event->config[2] = PLAYER3; // player 3 get config number x
-    // main_event->config[3] = PLAYER4; // player 4 get config number x
+    main_event->intro_map = false;
     main_event->mode_menu = false; // desactive menu render
-    // if (main_event->game_playing == true)
     main_event->make_new_game(0);
     main_event->game_playing = true; // activate active partie
 }
@@ -250,14 +211,8 @@ void    Gamelauncher::run_arena_5() {
     main_event->coop = 0;
     main_event->multi = 0;
     main_event->arena = 5;  // 4 players in game
-		main_event->intro_map = false;
-		// main_event->config[0] = PLAYER1; // player 1 get config number x
-    // main_event->config[1] = PLAYER2; // player 2 get config number x
-    // main_event->config[2] = PLAYER3; // player 3 get config number x
-    // main_event->config[3] = PLAYER4; // player 4 get config number x
-    // main_event->config[4] = PLAYER5; // player 4 get config number x
+    main_event->intro_map = false;
     main_event->mode_menu = false; // desactive menu render
-    // if (main_event->game_playing == true)
     main_event->make_new_game(0);
     main_event->game_playing = true; // activate active partie
 }
