@@ -322,9 +322,24 @@ void	Event::print_map( void ) {
 }
 
 void	Event::init( int ac, char **av ) {
+    main_event->w_log("Event Init");
 	this->ac = ac;
 	this->av = av;
 	parse_command(ac, av);
+    srand(clock());
+    globject::init(800, 600);
+    if (TTF_Init() != 0){
+        main_event->w_error("TTF_init initialization error ");
+        throw std::exception();
+    }
+    main_event->joystick->load_config();
+    main_event->mode_menu = true;
+    main_event->menu->init();
+    main_event->menu->introstart = false;
+    main_event->soundrender->load_files();
+    main_event->soundrender->playSound("startup");
+    main_event->menu->main_loop();
+    main_event->save_config->load_level();
 }
 
 void	Event::exit_free( void ) {	// free here

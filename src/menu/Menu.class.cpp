@@ -312,8 +312,6 @@ void Menu::move_menu_hor() {
         main_event->full_screen = (main_event->full_screen == true) ? false : true;
         globject::init(main_event->sdl_display_mode_info.w, main_event->sdl_display_mode_info.h);
         std::cout << "MENU_CONFIG_VIDEO_MODE fullscren= " << main_event->full_screen << std::endl;
-        if (true == main_event->full_screen)
-            main_event->actual_resolution = RESOLUTION_NOT_SET;
     }
 
     else if (this->detail_menu_selected == MENU_CONFIG_VIDEO_RESOLUTION) {
@@ -347,6 +345,7 @@ void Menu::move_menu_hor() {
                 main_event->actual_resolution = RESOLUTION_800;
                 globject::resize(800, 600);
             }
+            main_event->option_resolution = RESOLUTION_NOT_SET;
         }
     }
 

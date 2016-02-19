@@ -4,7 +4,6 @@ BONUS REQUIERED:
 - plus de 3 levels (9 levels)
 - Random Map: params -gen
 - map intro au lancement du jeux avec desennmies qui bougent dedans
-A FAIRE: standalone install MacosX
 
 OTHERS:
 - param -log enregistrement d'evenement du jeux dans un fichier de log

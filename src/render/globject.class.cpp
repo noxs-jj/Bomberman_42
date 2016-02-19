@@ -13,6 +13,7 @@
 #include <globject.class.hpp>
 #include <bomb.class.hpp>
 #include <fire.class.hpp>
+#include <save.class.hpp>
 
 globject            globject::_object[100];
 SDL_Window          *globject::_displayWindow;
@@ -108,12 +109,18 @@ void        globject::get_sdl_information() {
         main_event->w_error("globject::get_sdl_information() SDL_GetCurrentDisplayMode() failed");
         throw std::exception();
     }
-    std::cout << "nativWidth = " << main_event->sdl_display_mode_info.w;
-    std::cout << " nativHeight = " << main_event->sdl_display_mode_info.h;
-    std::cout << " nativRefreshRate = " << main_event->sdl_display_mode_info.refresh_rate << std::endl;
+    // std::cout << "nativWidth = " << main_event->sdl_display_mode_info.w;
+    // std::cout << " nativHeight = " << main_event->sdl_display_mode_info.h;
+    // std::cout << " nativRefreshRate = " << main_event->sdl_display_mode_info.refresh_rate << std::endl;
 }
 
 void        globject::set_float_width_height(float *width, float *height) {
+    if (true == main_event->full_screen) {
+        *width = main_event->sdl_display_mode_info.w;
+        *height = main_event->sdl_display_mode_info.h;
+        return ;
+    }
+    // PARAMS ARGS
     if (RESOLUTION_800 == main_event->option_resolution
             &&main_event->sdl_display_mode_info.w >= 800
             && main_event->sdl_display_mode_info.w >= 600) {
@@ -138,7 +145,38 @@ void        globject::set_float_width_height(float *width, float *height) {
         *width = 1920;
         *height = 1080;
     }
-    else if (RESOLUTION_2560 == main_event->option_resolution \
+    else if (false == main_event->full_screen && RESOLUTION_2560 == main_event->option_resolution \
+            && main_event->sdl_display_mode_info.w >= 2560 \
+            && main_event->sdl_display_mode_info.w >= 1440) {
+        *width = 2560;
+        *height = 1440;
+    }
+    // FILE LOAD
+    else if (false == main_event->full_screen && RESOLUTION_800 == main_event->actual_resolution
+            &&main_event->sdl_display_mode_info.w >= 800
+            && main_event->sdl_display_mode_info.w >= 600) {
+        *width = 800;
+        *height = 600;
+    }
+    else if (false == main_event->full_screen && RESOLUTION_1280 == main_event->actual_resolution \
+            && main_event->sdl_display_mode_info.w >= 1280 \
+            && main_event->sdl_display_mode_info.w >= 720) {
+        *width = 1280;
+        *height = 720;
+    }
+    else if (false == main_event->full_screen && RESOLUTION_1600 == main_event->actual_resolution \
+            && main_event->sdl_display_mode_info.w >= 1600 \
+            && main_event->sdl_display_mode_info.w >= 900) {
+        *width = 1600;
+        *height = 900;
+    }
+    else if (false == main_event->full_screen && RESOLUTION_1920 == main_event->actual_resolution \
+            && main_event->sdl_display_mode_info.w >= 1920 \
+            && main_event->sdl_display_mode_info.w >= 1080) {
+        *width = 1920;
+        *height = 1080;
+    }
+    else if (false == main_event->full_screen && RESOLUTION_2560 == main_event->actual_resolution \
             && main_event->sdl_display_mode_info.w >= 2560 \
             && main_event->sdl_display_mode_info.w >= 1440) {
         *width = 2560;

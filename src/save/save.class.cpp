@@ -16,8 +16,9 @@
 #include <soundrender.class.hpp>
 
 Save::Save() {
-    std::cout << sizeof(this->global_config) << std::endl;;
     main_event->save_config = this;
+    main_event->save_config->load_global_config_file();
+    main_event->full_screen = main_event->save_config->global_config.video_fullscreen;
 }
 
 Save::~Save() {}
@@ -77,7 +78,7 @@ void    Save::fill_info_config() {
         this->global_config.sound_activated = false;
     else
         this->global_config.sound_activated = true;
-    this->global_config.video_fullscreen = false;
+    this->global_config.video_fullscreen = main_event->full_screen;
     this->fill_actual_resolution();
 
     while (i < 9) {
@@ -224,6 +225,4 @@ void    Save::load_global_config_file() {
         this->global_config.windowed_width = RESOLUTION_2560;
     else
         this->global_config.windowed_width = RESOLUTION_NOT_SET;
-
-
 }

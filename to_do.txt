@@ -26,4 +26,3 @@ SOUND:
     [1 4 7] = musique1, [2 5 8] = musique2, [3 6 9] = musique3.
     Une musique par multiple de 3 sa evitera d'avoir trop de musique.
     Une grosse musique pour les niveau de boss 3 6 9.
-    - supprimer la musique de fond du multijouer/Arena

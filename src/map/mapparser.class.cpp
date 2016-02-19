@@ -67,7 +67,7 @@ Entity ***      Mapparser::map_from_file( char *map_path ) {
     j--;
   }
 
-  std::cout << "Mapparser::map_from_file LOADED" << std::endl;
+  main_event->w_log("Mapparser::map_from_file LOADED");
   return tmp;
 }
 
