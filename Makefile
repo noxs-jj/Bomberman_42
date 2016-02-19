@@ -32,8 +32,8 @@ CXX =           clang++
 NAME =          bomberman
 
 ASSETS_PATH =   assets
-ASSETS_TAR =    bomberman_assets.tar
-ASSETS_URL =    http://www.noxs.net/up/bomberman_assets.tar
+ASSETS_TAR =    bomberman_assets.tar.bz2
+ASSETS_URL =    files.noxs.net/24bomb/bomberman_assets.tar.bz2
 
 CFLAGS =        -std=gnu++11 -Wall -Wextra -Werror -pedantic -g
 
@@ -85,7 +85,7 @@ SRC = src/entity/bomb.class.cpp \
                 src/render/parser.class.cpp \
                 src/sound/soundrender.class.cpp \
                 src/entity/bonus.class.cpp \
-				src/factory.class.cpp \
+                src/factory.class.cpp \
                 src/save/save.class.cpp
 
 OBJ := $(SRC:.cpp=.cpp.o)
@@ -99,10 +99,10 @@ $(NAME): $(OBJ)
 	$(COMMAND)
 
 $(ASSETS_PATH):
-	tar -xf $(ASSETS_TAR)
+	tar -jxf $(ASSETS_TAR)
 
 $(ASSETS_TAR):
-	wget $(ASSETS_URL)
+	curl $(ASSETS_URL) > $(ASSETS_TAR)
 
 all: $(ASSETS_TAR) $(ASSETS_PATH) $(NAME)
 	@echo "./bomberman"

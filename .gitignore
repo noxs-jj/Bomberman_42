@@ -20,6 +20,7 @@ src/.DS_Store
 config/config.txt
 bomberman.en.pdf
 bomberman_assets.tar
+bomberman_assets.tar.bz2
 config/config.txt
 config/.save_config
 config/.level
