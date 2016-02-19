@@ -22,19 +22,13 @@ Event *	main_event = Factory::create_event(); // GLOBAL
 int		main( int ac, char **av ) {
 	int            _time = 0;
 	Ia *           ia_play = NULL;
-    Save *         save = NULL;
 	static float   time = 0;
 
 	std::srand(std::time(0));
 	ft42::logg = true;
 
-    save = new Save();
-    if (NULL == save) {
-        std::cout << "Save() allocation error" << std::endl;
-        return (-1);
-    }
-
 	try {
+        main_event->save_config = Factory::create_save();
         main_event->save_config->load_global_config_file();
         ia_play = Factory::create_ia();
         main_event->menu = Factory::create_menu(main_event);
@@ -59,7 +53,6 @@ int		main( int ac, char **av ) {
 
         main_event->soundrender->load_files();
         main_event->soundrender->playSound("startup");
-        main_event->soundrender->playMusic("ps1");
 
         main_event->menu->main_loop();
         main_event->save_config->load_level();

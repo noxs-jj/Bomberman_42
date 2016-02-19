@@ -21,6 +21,7 @@
 #include <Menu.class.hpp>
 #include <soundrender.class.hpp>
 #include <ia.class.hpp>
+#include <save.class.hpp>
 
 Factory::Factory() {}
 
@@ -142,4 +143,13 @@ Event *          Factory::create_event() {
         exit(EXIT_FAILURE);
     }
     return new_event;
+}
+
+Save *           Factory::create_save() {
+    Save *      new_save = new Save();
+    if (NULL == new_save) {
+        main_event->w_error("Save() allocation error");
+        throw std::exception();
+    }
+    return new_save;
 }

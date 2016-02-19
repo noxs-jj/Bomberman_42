@@ -16,7 +16,7 @@
 
 void  Gamelauncher::intro_lauch_game() {
     main_event->w_log("INTRO LAUNCH BINAIRE");
-    main_event->soundrender->playSound("ps1");
+    main_event->soundrender->playMusic("ps1");
     main_event->draw_winner_multi = -1;
     main_event->draw_winner_campaign = -1;
     main_event->draw_lose_campaign = -1;
@@ -48,22 +48,22 @@ void    Gamelauncher::campaign_new() {
 }
 
 void Gamelauncher::campaign_continue() {
-	main_event->w_log("MENU_CAMPAIGN_CONTINUE + LAUNCH ");
-	main_event->draw_winner_multi = -1;
-	main_event->draw_winner_campaign = -1;
-	main_event->draw_lose_campaign = -1;
-	main_event->draw_end_campaign = -1;
-	main_event->actual_level = main_event->save_level;
-	if (main_event->save_level_mode == false)
-		main_event->coop = 0;
-	else
-			main_event->coop = 2;
-	main_event->multi = 0;
-	main_event->arena = 0;
-	main_event->intro_map = false;
-	main_event->mode_menu = false; // desactive menu render
-	main_event->make_new_game(0);
-	main_event->game_playing = true; // activate active partie
+    main_event->w_log("MENU_CAMPAIGN_CONTINUE + LAUNCH ");
+    main_event->draw_winner_multi = -1;
+    main_event->draw_winner_campaign = -1;
+    main_event->draw_lose_campaign = -1;
+    main_event->draw_end_campaign = -1;
+    main_event->actual_level = main_event->save_level;
+    if (main_event->save_level_mode == false)
+        main_event->coop = 0;
+    else
+        main_event->coop = 2;
+    main_event->multi = 0;
+    main_event->arena = 0;
+    main_event->intro_map = false;
+    main_event->mode_menu = false; // desactive menu render
+    main_event->make_new_game(0);
+    main_event->game_playing = true; // activate active partie
 
 }
 

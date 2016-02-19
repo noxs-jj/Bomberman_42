@@ -29,6 +29,7 @@ class Menu;
 class Joystick;
 class SoundRender;
 class Ia;
+class Save;
 
 class Factory : public ft42 {
 public:
@@ -49,11 +50,11 @@ public:
     static SoundRender *    create_sound_render();
     static Ia *             create_ia();
     static Event *          create_event();
+    static Save *           create_save();
 
 private:
     Factory( Factory const & src ) = delete;
     Factory & operator=( Factory const & rhs ) = delete;
-
 };
 
 #endif
