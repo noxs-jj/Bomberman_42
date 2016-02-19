@@ -19,11 +19,11 @@ class Joystick : public ft42 {
 public:
     int                timer;
     int                test = 0;
-    SDL_Joystick *     manette1;
-    SDL_Joystick *     manette2;
-    SDL_Joystick *     manette3;
-    SDL_Joystick *     manette4;
-    SDL_Joystick *     manette5;
+    SDL_Joystick *     manette1 = NULL;
+    SDL_Joystick *     manette2 = NULL;
+    SDL_Joystick *     manette3 = NULL;
+    SDL_Joystick *     manette4 = NULL;
+    SDL_Joystick *     manette5 = NULL;
     int                config[5]; // 0: controller, 1: keyboard
     t_key *            arr_key_keyboard[5];
     t_key *            arr_key_controller[5];
@@ -40,6 +40,8 @@ public:
     void    set_key();
     void    init_joystick();
 		void 		reset_key_pressed();
+		void 		refresh_all_dir_joystick();
+		void 		refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move);
 
 private:
     Joystick( Joystick const & src );

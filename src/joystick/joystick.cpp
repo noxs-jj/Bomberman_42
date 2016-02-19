@@ -563,9 +563,9 @@ void Joystick::read_key(int mode) {
 		        }
 				// std::cout << "hello" << std::endl;
 			}
-			else{
-				std::cout << "event.type " << event.type << std::endl;
-			}
+			// else{
+			// 	std::cout << "event.type " << event.type << std::endl;
+			// }
             if (event.type == SDL_KEYUP) {
                 switch((event).key.keysym.sym) {
     							case SDLK_KP_5:     this->arr_key_keyboard[1]->key_up = 0; break;
@@ -584,6 +584,7 @@ void Joystick::read_key(int mode) {
             }
         }
 			}
+			this->refresh_all_dir_joystick();
 			if (this->arr_key_keyboard[0]->key_right)
 				main_event->player_move(main_event->config_keyboard[0], DIR_RIGHT);
 			if (this->arr_key_keyboard[0]->key_left)
@@ -650,6 +651,51 @@ void Joystick::read_key(int mode) {
 			if (this->arr_key_controller[4]->key_down)
 				main_event->player_move(main_event->config[4], DIR_BOTTOM);
   }
+
+void Joystick::refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move) {
+	key->key_up = 0;
+	key->key_down = 0;
+	key->key_left = 0;
+	key->key_right = 0;
+	if (x_move > 3200)
+		key->key_right = 1;
+	else if (x_move < -3200)
+		key->key_left = 1;
+	if (y_move > 3200)
+		key->key_up = 1;
+	else if (y_move < -3200)
+		key->key_down = 1;
+}
+
+void Joystick::refresh_all_dir_joystick() {
+	Sint16 x_move, y_move;
+
+	  if (this->manette1 != NULL) {
+			x_move = SDL_JoystickGetAxis(this->manette1, 0);
+			y_move = SDL_JoystickGetAxis(this->manette1, 1);
+			refresh_dir_joystick(this->arr_key_controller[0], x_move, y_move);
+		}
+		if (this->manette2 != NULL) {
+			x_move = SDL_JoystickGetAxis(this->manette2, 0);
+			y_move = SDL_JoystickGetAxis(this->manette2, 1);
+			refresh_dir_joystick(this->arr_key_controller[1], x_move, y_move);
+		}
+		if (this->manette3 != NULL) {
+			x_move = SDL_JoystickGetAxis(this->manette3, 0);
+			y_move = SDL_JoystickGetAxis(this->manette3, 1);
+			refresh_dir_joystick(this->arr_key_controller[2], x_move, y_move);
+		}
+		if (this->manette4 != NULL) {
+			x_move = SDL_JoystickGetAxis(this->manette4, 0);
+			y_move = SDL_JoystickGetAxis(this->manette4, 1);
+			refresh_dir_joystick(this->arr_key_controller[3], x_move, y_move);
+		}
+		if (this->manette5 != NULL) {
+			x_move = SDL_JoystickGetAxis(this->manette5, 0);
+			y_move = SDL_JoystickGetAxis(this->manette5, 1);
+			refresh_dir_joystick(this->arr_key_controller[4], x_move, y_move);
+		}
+}
 
 void Joystick::change_dir_joystick(t_key *key, int dir) {
   key->key_up = 0;
