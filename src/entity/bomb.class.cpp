@@ -115,6 +115,7 @@ int		Bomb::blast_case(int y, int x) {
 	}
 	else if (main_event->map[y][x]->type == FIRE) {
 		main_event->map[y][x]->status = FIRE_2;
+		static_cast<Fire*>(main_event->map[y][x])->timer = 40;
 		this->damage_entity(x, y);
 		return (0);
 	}

@@ -34,7 +34,7 @@ Entity::Entity( int type, float x, float y, int status, int model ) : type(type)
 		Entity::autoincrement++;
 		this->id = Entity::autoincrement;
 	}
-	this->remote_lst.clear();
+	// this->remote_lst.clear();
 }
 
 Entity::Entity( Entity const & src ) {
