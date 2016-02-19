@@ -21,23 +21,23 @@ Joystick::Joystick(void) {
 	this->config[2] = 0;
 	this->config[3] = 0;
 	this->config[4] = 0;
-	int	devices = SDL_NumJoysticks();
-
-	SDL_JoystickEventState(SDL_ENABLE);
-	if (devices > 0) {
-		this->manette1 = SDL_JoystickOpen(0);
-		if (this->manette1 < 0) {
-			std::cerr << "Could not open joystick 1 " << SDL_GetError() << std::endl;
-			throw std::exception();
-		}
-	}
-	if (devices > 1) {
-		this->manette2 = SDL_JoystickOpen(1);
-		if (this->manette2 < 0) {
-			std::cerr << "Could not open joystick 2 " << SDL_GetError() << std::endl;
-			throw std::exception();
-		}
-	}
+	// int	devices = SDL_NumJoysticks();
+	//
+	// SDL_JoystickEventState(SDL_ENABLE);
+	// if (devices > 0) {
+	// 	this->manette1 = SDL_JoystickOpen(0);
+	// 	if (this->manette1 < 0) {
+	// 		std::cerr << "Could not open joystick 1 " << SDL_GetError() << std::endl;
+	// 		throw std::exception();
+	// 	}
+	// }
+	// if (devices > 1) {
+	// 	this->manette2 = SDL_JoystickOpen(1);
+	// 	if (this->manette2 < 0) {
+	// 		std::cerr << "Could not open joystick 2 " << SDL_GetError() << std::endl;
+	// 		throw std::exception();
+	// 	}
+	// }
 }
 
 Joystick::~Joystick(void) {}
