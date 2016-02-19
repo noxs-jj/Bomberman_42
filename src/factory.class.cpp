@@ -30,7 +30,7 @@ Factory::~Factory() {}
 Wall *          Factory::create_wall(int status, float x, float y, int model) {
 	Wall * wall = new Wall(x, y, status, model);
 	if (NULL == wall) {
-		main_event->w_full("Factory::create_wall:: wall Malloc error");
+		main_event->w_error("Factory::create_wall:: wall Malloc error");
 		throw std::exception();
 	}
 	return wall;
@@ -39,7 +39,7 @@ Wall *          Factory::create_wall(int status, float x, float y, int model) {
 Bonus *         Factory::create_bonus(int status, float x, float y, int model) {
 	Bonus * bonus = new Bonus(x, y, status, model);
 	if (NULL == bonus) {
-		main_event->w_full("create_bonus:: bonus Malloc error");
+		main_event->w_error("create_bonus:: bonus Malloc error");
 		throw std::exception();
 	}
 	return bonus;
@@ -48,7 +48,7 @@ Bonus *         Factory::create_bonus(int status, float x, float y, int model) {
 Bomb *          Factory::create_bomb(int status, float x, float y, int model, int id) {
 	Bomb * bomb = new Bomb(x, y, status, model, id);
 	if (NULL == bomb) {
-		main_event->w_full("create_bomb:: bomb Malloc error");
+		main_event->w_error("create_bomb:: bomb Malloc error");
 		throw std::exception();
 	}
 	return bomb;

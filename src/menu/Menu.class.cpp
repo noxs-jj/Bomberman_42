@@ -186,7 +186,7 @@ void  Menu::big_menu() {
         musicIsPlaying = true;
         main_event->soundrender->stopSounds();
         main_event->soundrender->stopMusic();
-        main_event->soundrender->playMusic("music");
+        // main_event->soundrender->playMusic("music");
     }
 
     if (true == main_event->game_playing) {// Si partie en cours
@@ -219,7 +219,7 @@ void  Menu::menu_selection() {
     }
     this->ecran_menu = SDL_CreateRGBSurface(0, 1300, 1300, 32, 0, 0, 0, 0);
     if (NULL == this->ecran_menu) {
-        this->w_full("Menu::big_menu ecran_menu allocation error");
+        this->w_error("Menu::big_menu ecran_menu allocation error");
         throw std::exception();
     }
 

@@ -35,7 +35,7 @@ int		main( int ac, char **av ) {
         main_event->joystick = Factory::create_joystick();
         main_event->soundrender = Factory::create_sound_render();
         if (TTF_Init() != 0){
-            main_event->w_full("TTF_init initialization error ");
+            main_event->w_error("TTF_init initialization error ");
             throw std::exception();
         }
 

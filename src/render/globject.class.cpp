@@ -105,7 +105,7 @@ void        globject::resize(int x, int y) {
 
 void        globject::get_sdl_information() {
     if (SDL_GetCurrentDisplayMode(0, &main_event->sdl_display_mode_info) < 0) {
-        main_event->w_full("globject::get_sdl_information() SDL_GetCurrentDisplayMode() failed");
+        main_event->w_error("globject::get_sdl_information() SDL_GetCurrentDisplayMode() failed");
         throw std::exception();
     }
     std::cout << "nativWidth = " << main_event->sdl_display_mode_info.w;

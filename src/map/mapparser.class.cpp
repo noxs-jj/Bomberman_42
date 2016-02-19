@@ -75,7 +75,7 @@ Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, floa
   Entity *  tmp = NULL;
 
   if ( g_mapcase.count(casemap) == 0) {
-    main_event->w_full("Map file Case Syntax error/doesn't exist");
+    main_event->w_error("Map file Case Syntax error/doesn't exist");
     throw std::exception();
   }
   else {
@@ -122,12 +122,12 @@ int         Mapparser::valid_map( char const *map_path ) {
                 j = 0;
 
   if( access( map_path, F_OK ) < 0 ) {
-    main_event->w_full("Mapparser::valid_map file access error");
+    main_event->w_error("Mapparser::valid_map file access error");
     throw std::exception();
   }
   file.open(map_path , std::fstream::in);
   if (!file.is_open()) {
-    main_event->w_full("Mapparser::valid_map file open error");
+    main_event->w_error("Mapparser::valid_map file open error");
     throw std::exception();
   }
   std::getline(file, line); // y: 20
