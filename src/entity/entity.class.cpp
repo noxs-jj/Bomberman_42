@@ -164,7 +164,7 @@ int	Entity::pretest_move( int dir ) {
 		x += -0.08f;
 	else if (dir == DIR_RIGHT)
 		x += 0.08f;
-	return (check_move(x * 3 + this->pos_x, y + this->pos_y));
+	return (check_move(x * 3 + this->pos_x, y * 3 + this->pos_y));
 }
 
 void	Entity::move( int dir ) {
@@ -184,7 +184,9 @@ void	Entity::move( int dir ) {
 		x += 0.08f;
 	else
 		frame = 0;
-	ret = check_move(x * 3 + this->pos_x, y + this->pos_y);
+	if (check_coord_exist(x * 3 + (int)this->pos_x, y * 3 + (int)this->pos_y) == false)
+		return ;
+	ret = check_move(x * 3 + this->pos_x, y * 3 + this->pos_y);
 	if (ret == EMPTY || ret == BONUS) {
 		this->dir = dir;
 		this->pos_x = x + this->pos_x;
