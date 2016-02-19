@@ -62,6 +62,8 @@ void 	Event::free_game( void ) {
 void	Event::make_new_game( int new_level ) {
 	char map_name[64] = {0};
 
+
+	this->joystick->reset_key_pressed();
 	this->live_player[0] = true;
 	this->live_player[1] = true;
 	this->live_player[2] = true;

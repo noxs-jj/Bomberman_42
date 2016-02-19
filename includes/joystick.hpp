@@ -39,6 +39,7 @@ public:
     void    set_key_config();
     void    set_key();
     void    init_joystick();
+		void 		reset_key_pressed();
 
 private:
     Joystick( Joystick const & src );

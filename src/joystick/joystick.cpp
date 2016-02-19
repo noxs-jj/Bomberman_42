@@ -100,6 +100,22 @@ void Joystick::init_joystick() {
  	}
 }
 
+void Joystick::reset_key_pressed() {
+	int	i = 0;
+
+	while (i < 5) {
+		this->arr_key_keyboard[i]->key_up = 0;
+	  this->arr_key_keyboard[i]->key_down = 0;
+	  this->arr_key_keyboard[i]->key_left = 0;
+	  this->arr_key_keyboard[i]->key_right = 0;
+		this->arr_key_controller[i]->key_up = 0;
+	  this->arr_key_controller[i]->key_down = 0;
+	  this->arr_key_controller[i]->key_left = 0;
+	  this->arr_key_controller[i]->key_right = 0;
+		i++;
+	}
+}
+
 void	Joystick::save_config( void ) {
 	FILE *stream;
 	char buf[128] = {0};

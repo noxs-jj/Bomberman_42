@@ -207,7 +207,12 @@ void	Bomb::push_bomb() {
 	else if (this->pushed_dir == DIR_RIGHT)
 		x += 0.08f;
 	ret = check_move(x * 3 + this->pos_x, y + this->pos_y);
-	if (ret == EMPTY) {
+	if (position_is_player(x + this->pos_x, y + this->pos_y) == true) {
+		this->pos_x = this->pos_x;
+		this->pos_y = this->pos_y;
+		this->pushed = false;
+	}
+	else if (ret == EMPTY) {
 		if ((int)this->pos_x != (int)(x + this->pos_x) || (int)this->pos_y != (int)(y + this->pos_y)) {
 			delete main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)];
 			main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)] = main_event->map[(int)this->pos_y][(int)this->pos_x];
@@ -219,6 +224,10 @@ void	Bomb::push_bomb() {
 			this->pos_x = x + this->pos_x;
 			this->pos_y = y + this->pos_y;
 		}
+	}
+	else if (ret == FIRE) { // check if player
+		this->timer = 0;
+		this->pushed = false;
 	}
 	else
 		this->pushed = false;
