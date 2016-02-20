@@ -36,6 +36,7 @@ int		main( int ac, char **av ) {
         main_event->init(ac, av); // tout est la pour les autres initializations
 
         while (true == main_event->event_running) {
+            // usleep(10000);
             _time++;
             _time = _time % 60;
             if (main_event->game_ended >= 0) {
