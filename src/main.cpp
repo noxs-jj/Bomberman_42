@@ -49,6 +49,7 @@ int		main( int ac, char **av ) {
 							if (main_event->game_ended < 0) {
 								main_event->game_pause = true;
 								main_event->mode_menu = true; // desactive menu render
+
 							}
 							continue;
 						}
