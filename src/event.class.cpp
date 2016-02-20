@@ -204,6 +204,7 @@ void	Event::gen_obstacle(int difficulty) {
 		tmpy = 1 + (rand() % (globject::mapY_size - 2));
 		if (check_coord(1, (float)tmpx, (float)tmpy) == true) {
 			delete this->map[tmpy][tmpx];
+            this->map[tmpy][tmpx] = NULL;
 			if (rand() % 20 <= 2)
 				this->map[tmpy][tmpx] = Factory::create_wall(WALL_INDESTRUCTIBLE, (float)tmpx, (float)tmpy, WALL_INDESTRUCTIBLE);
 			else
@@ -348,10 +349,12 @@ void	Event::exit_free( void ) {	// free here
 	if (NULL != this->menu) {
 		this->w_log("Delete menu");
 		delete this->menu;
+        this->menu = NULL;
 	}
 	if (NULL != this->soundrender) {
 		this->w_log("Delete soundrender");
 		delete this->soundrender;
+        this->soundrender = NULL;
 	}
 
 	this->w_log("Event::exit_free ==> End of free Bomberman");
@@ -489,11 +492,17 @@ void	Event::dec_timer( void ) {
 	while (y < globject::mapY_size) {
 		x = 0;
 		while (x < globject::mapX_size) {
-			if (this->map[y][x]->type == BOMB)
-				static_cast<Bomb*>(main_event->map[y][x])->bomb_timer();
-			if (this->map[y][x]->type == FIRE)
-				static_cast<Fire*>(main_event->map[y][x])->fire_timer();
-			x++;
+            if (this->map[y][x] == NULL) {
+                x++;
+                continue;
+            }
+            else {
+    			if (this->map[y][x]->type == BOMB)
+    				static_cast<Bomb*>(main_event->map[y][x])->bomb_timer();
+    			if (this->map[y][x]->type == FIRE)
+    				static_cast<Fire*>(main_event->map[y][x])->fire_timer();
+    			x++;
+            }
 		}
 		y++;
 	}

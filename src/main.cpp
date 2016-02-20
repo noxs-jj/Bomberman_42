@@ -66,8 +66,10 @@ int		main( int ac, char **av ) {
         }
 
         main_event->w_log("Delete Main Event then EXIT");
-        if (NULL != main_event)
+        if (NULL != main_event) {
             delete main_event;
+            main_event = NULL;
+        }
 	}
 	catch (std::exception & e){
         std::cerr << "EXIT_FAILURE " << e.what() << std::endl;

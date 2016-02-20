@@ -165,14 +165,14 @@ Entity ***  Mapparser::map_alloc() { // return map 2d without entity
   int         y = 0;
   Entity ***  new_map = NULL;
 
-  new_map = (Entity ***)std::malloc(sizeof(Entity **) * globject::mapY_size);
+  new_map = (Entity ***)std::malloc(sizeof(Entity **) * globject::mapY_size * 100);
   if (new_map == NULL) {
     main_event->w_error("Mapparser::map_alloc() new_map Allocation error");
     throw std::exception();
   }
   while (y < globject::mapY_size) {
     new_map[y] = NULL;
-    new_map[y] = (Entity **)std::malloc(sizeof(Entity *) * globject::mapX_size);
+    new_map[y] = (Entity **)std::malloc(sizeof(Entity *) * globject::mapX_size * 100);
     if (new_map[y] == NULL) {
       main_event->w_error("Mapparser::map_alloc() new_map[y] Allocation error");
       throw std::exception();

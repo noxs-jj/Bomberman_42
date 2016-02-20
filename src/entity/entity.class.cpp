@@ -65,6 +65,8 @@ Entity & Entity::operator=( Entity const & rhs ) {
 }
 
 int		Entity::check_move( float x, float y ) {
+    if (main_event->map[(int)y][(int)x] == NULL)
+        return EMPTY;
 	if (main_event->map[(int)y][(int)x]->type == WALL)
 		return WALL;
 	else if (main_event->map[(int)y][(int)x]->type == BOMB
@@ -196,6 +198,7 @@ void	Entity::move( int dir ) {
 			static_cast<Bonus*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->affect(this);
 			if (main_event->map[(int)this->pos_y][(int)this->pos_x]->type == BONUS) {
 				delete main_event->map[(int)this->pos_y][(int)this->pos_x];
+                main_event->map[(int)this->pos_y][(int)this->pos_x] = NULL;
 				main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
 			}
 		}
@@ -350,7 +353,8 @@ void	Entity::die( void ) {
 
 void	Entity::put_bomb(int status, float x, float y, int model, int blast, int id) {
 	delete main_event->map[(int)y][(int)x];
-	// main_event->map[(int)y][(int)x] = Factory::create_empty((int)x, (int)y);
+    main_event->map[(int)y][(int)x] = NULL;
+	main_event->map[(int)y][(int)x] = Factory::create_empty((int)x, (int)y);
 	main_event->map[(int)y][(int)x] = Factory::create_bomb(status, (int)x + 0.5, (int)y + 0.5, model, id);
 	main_event->map[(int)y][(int)x]->blast_radius = blast;
 	if (model != BOMB_REMOTE && PLAYER == this->type) {
