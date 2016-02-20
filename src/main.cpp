@@ -42,6 +42,16 @@ int		main( int ac, char **av ) {
             }
             _time++;
             _time = _time % 60;
+						if (main_event->game_ended >= 0) {
+
+							main_event->game_ended--;
+							main_event->render->render_all(main_event->map, main_event->char_list, NULL);
+							if (main_event->game_ended < 0) {
+								main_event->game_pause = true;
+								main_event->mode_menu = true; // desactive menu render
+							}
+							continue;
+						}
             main_event->joystick->read_key(1);
             ia_play->start(time);
             if (main_event->event_running == false)

@@ -7,7 +7,6 @@ BUG:
 	long moment ou au hasard
 
 LOGIC:
-    - (pas obligatoire) Fin de partie laisser ecran 1-2 sec pour comprendre la fin ?
 
 CONFIG:
 
