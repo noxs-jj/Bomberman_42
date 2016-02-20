@@ -207,13 +207,13 @@ void	Bomb::push_bomb() {
 	int		ret = EMPTY;
 
 	if (this->pushed_dir == DIR_UP)
-		y += -0.2f;
+		y += -0.08f;
 	else if (this->pushed_dir == DIR_BOTTOM)
-		y += 0.2f;
+		y += 0.08f;
 	else if (this->pushed_dir == DIR_LEFT)
-		x += -0.2f;
+		x += -0.08f;
 	else if (this->pushed_dir == DIR_RIGHT)
-		x += 0.2f;
+		x += 0.08f;
 	ret = check_move(x * 3 + this->pos_x, y + this->pos_y);
 	if (position_is_player(x + this->pos_x, y + this->pos_y) == true) {
 		this->pos_x = this->pos_x;
