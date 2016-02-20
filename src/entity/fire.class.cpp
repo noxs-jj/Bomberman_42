@@ -49,13 +49,16 @@ Fire & Fire::operator=( Fire const & rhs ) {
 }
 
 void	Fire::fire_timer( void ) {
+    Entity *tmp = NULL;
 	if (this->timer - 1 > 0) {
 		if (this->timer % 2 == 0)
 			this->frame++;
 		this->timer--;
 	}
 	else {
-		delete main_event->map[(int)this->pos_y][(int)this->pos_x];
+		tmp = main_event->map[(int)this->pos_y][(int)this->pos_x];
+        main_event->map[(int)this->pos_y][(int)this->pos_x] = NULL;
 		main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
+        delete tmp;
 	}
 }

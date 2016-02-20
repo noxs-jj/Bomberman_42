@@ -87,10 +87,12 @@ void Bomb::add_bonus(int x, int y) {
 	else
 		bonus = BONUS_PLUS_ONE;
 	main_event->map[y][x] = Factory::create_bonus(BONUS, x, y, bonus);
+    if (NULL == main_event->map[y][x])
+        Factory::create_empty(x, y);
 }
 
 int		Bomb::blast_case(int y, int x) {
-	if (main_event->map[y][x]->type == WALL) {
+	if (main_event->map[y][x]->type == WALL && WALL_INDESTRUCTIBLE != main_event->map[y][x]->status) {
 		if (main_event->map[y][x]->status == WALL_HP_4)
 			main_event->map[y][x]->status = WALL_HP_3;
 		else if (main_event->map[y][x]->status == WALL_HP_3)
@@ -99,8 +101,11 @@ int		Bomb::blast_case(int y, int x) {
 			main_event->map[y][x]->status = WALL_HP_1;
 		else if (main_event->map[y][x]->status == WALL_HP_1) {
 			delete main_event->map[y][x];
-			if ((rand() % 20) <= 8)
+            main_event->map[y][x] = NULL;
+			if ((rand() % 20) <= 8){
+            // ;
 				this->add_bonus(x, y);
+            }
 			else
 				main_event->map[y][x] = Factory::create_empty(x, y);
 		}
@@ -109,6 +114,7 @@ int		Bomb::blast_case(int y, int x) {
 		static_cast<Bomb*>(main_event->map[y][x])->detonate();
 	else if (main_event->map[y][x]->type == EMPTY) {
 		delete main_event->map[y][x];
+        main_event->map[y][x] = NULL;
 		main_event->map[y][x] = Factory::create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
 		this->damage_entity(x, y);
 		return (0);
@@ -121,6 +127,7 @@ int		Bomb::blast_case(int y, int x) {
 	}
 	else if (main_event->map[y][x]->type == BONUS) {
 		delete main_event->map[y][x];
+        main_event->map[y][x] = NULL;
 		main_event->map[y][x] = Factory::create_fire(FIRE_2, (float)x + 0.5, (float)y + 0.5, FIRE_2);
 		this->damage_entity(x, y);
 		return (0);
@@ -216,6 +223,7 @@ void	Bomb::push_bomb() {
 	else if (ret == EMPTY) {
 		if ((int)this->pos_x != (int)(x + this->pos_x) || (int)this->pos_y != (int)(y + this->pos_y)) {
 			delete main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)];
+            main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)] = NULL;
 			main_event->map[(int)(this->pos_y + y)][(int)(this->pos_x + x)] = main_event->map[(int)this->pos_y][(int)this->pos_x];
 			main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
 			this->pos_x = x + this->pos_x;

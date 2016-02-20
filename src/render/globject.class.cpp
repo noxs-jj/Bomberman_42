@@ -213,8 +213,8 @@ void        globject::init(float sizeX, float sizeY) {
         globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
             0, 0, \
             size_x, size_y, \
-            SDL_WINDOW_OPENGL \
-            | SDL_WINDOW_FULLSCREEN
+            SDL_WINDOW_OPENGL
+            // | SDL_WINDOW_FULLSCREEN
         );
 	# endif
 	# ifdef __APPLE__
@@ -512,6 +512,10 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 
 	for (int i = -mapY_size / 2; i <  mapY_size / 2; i++) {
 		for (int j = -mapX_size / 2; j < mapX_size / 2; j++) {
+            std::cout << "deb 04.10" << std::endl;
+            if (map[i + mapY_size / 2][j + mapX_size / 2] == NULL)
+                continue ;
+
 			zoomMul = 1;
 			modelDir.x = 1;
 			modelDir.z = 0;
@@ -519,14 +523,14 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 			modelPos.y = 0;
 			modelPos.x = i;
 			modelPos.z = j;
+            std::cout << "deb 04.11" << std::endl;
 			modelPos.x = map[i + mapY_size / 2][j + mapX_size / 2]->pos_y - 10;
 			modelPos.z = map[i + mapY_size / 2][j + mapX_size / 2]->pos_x - 10;
-            // std::cout << "deb 04.11" << std::endl; // AFFICHER EN CONSOLE
-			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == -1) { // <<<<<<< Cette ligne SEGFAULT
-                // std::cout << "deb 04.12" << std::endl; // PAS AFFICHER LORS DU SEGFAULT
-				continue ;
-                // std::cout << "deb 04.13" << std::endl;
 
+            // fprintf(stdout, "deb 04.11 [i + mapY_size / 2]=%d      [j + mapX_size / 2]=%d\n", (i + mapY_size / 2), (j + mapX_size / 2));
+			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == -1) { // <<<<<<< Cette ligne SEGFAULT
+                std::cout << "deb 04.13" << std::endl; // PAS AFFICHER LORS DU SEGFAULT
+				continue ;
             }
 
 			if (map[i + mapY_size / 2][j + mapX_size / 2]->model >= WALL_HP_1 \
