@@ -25,7 +25,6 @@ int		main( int ac, char **av ) {
 	static float   time = 0;
 
 	std::srand(std::time(0));
-	ft42::logg = true;
 
 	try {
         main_event->save_config = Factory::create_save();
@@ -37,23 +36,19 @@ int		main( int ac, char **av ) {
         main_event->init(ac, av); // tout est la pour les autres initializations
 
         while (true == main_event->event_running) {
-            if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60) {
-                continue ;
-            }
             _time++;
             _time = _time % 60;
-						if (main_event->game_ended >= 0) {
+            if (main_event->game_ended >= 0) {
 
-							main_event->game_ended--;
-							main_event->render->render_all(main_event->map, main_event->char_list, NULL);
-							if (main_event->game_ended < 0) {
-								main_event->game_pause = true;
-								main_event->mode_menu = true; // desactive menu render
-								globject::reinit_level(0);
-
-							}
-							continue;
-						}
+                main_event->game_ended--;
+                main_event->render->render_all(main_event->map, main_event->char_list, NULL);
+                if (main_event->game_ended < 0) {
+    	            main_event->game_pause = true;
+    	            main_event->mode_menu = true; // desactive menu render
+    	            globject::reinit_level(0);
+                }
+                continue;
+            }
             main_event->joystick->read_key(1);
             ia_play->start(time);
             if (main_event->event_running == false)
@@ -65,17 +60,16 @@ int		main( int ac, char **av ) {
             else
                 main_event->menu->main_loop();
         }
-
         main_event->w_log("Delete Main Event then EXIT");
         if (NULL != main_event) {
             delete main_event;
             main_event = NULL;
         }
-	}
-	catch (std::exception & e){
+    }
+    catch (std::exception & e){
         std::cerr << "EXIT_FAILURE " << e.what() << std::endl;
         return (EXIT_FAILURE);
-	}
+    }
     std::cout << "EXIT_SUCCESS" << std::endl;
     return (EXIT_SUCCESS);
 }

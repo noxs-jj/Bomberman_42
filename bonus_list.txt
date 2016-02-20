@@ -17,6 +17,8 @@ OTHERS:
 	* Bomb change (changement du model de bombe)
 	* Kick Bomb
 	* Remote Bomb
+- low utilisation du CPU, augmentation des frames
+- c'est fluide
 - Parseur de Map personnalise avec Editeur de map en HTML/Javascript
 - multi joueurs
 - mode arene
