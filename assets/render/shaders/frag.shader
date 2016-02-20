@@ -34,7 +34,7 @@ void wich_one()
 		FragColor = (vec4(texture(texture4, t).r, texture(texture4, t).g, texture(texture4, t).b,
 			texture(texture4, t).a));
 	else if (toxt == 5)
-		FragColor = (vec4(texture(texture5, t).r, texture(texture5, t).g, texture(texture5, t).b, 
+		FragColor = (vec4(texture(texture5, t).r, texture(texture5, t).g, texture(texture5, t).b,
 			texture(texture5, t).a));
 }
 

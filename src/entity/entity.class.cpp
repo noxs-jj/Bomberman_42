@@ -297,7 +297,7 @@ void	Entity::die( void ) {
 			else
 				it++;
 		}
-		globject::reinit_level(0);
+		// globject::reinit_level(0);
 		main_event->draw_lose_campaign = 1;
 		// main_event->game_pause = true;
 		// main_event->mode_menu = true; // desactive menu render

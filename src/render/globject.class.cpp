@@ -301,7 +301,7 @@ void        globject::init(float sizeX, float sizeY) {
 
 	glProgramUniformMatrix4fv(_progid, \
 		glGetUniformLocation(_progid, "P"), 1, GL_FALSE, \
-		(GLfloat *)(Matrix::projection_matrix(60, 0.1, 100, size_x / size_y)._matrix));
+		(GLfloat *)(Matrix::projection_matrix(60, 1, 100, size_x / size_y)._matrix));
 	globject::_viewMatID = glGetUniformLocation(_progid, "V");
 	globject::_modelMatID = glGetUniformLocation(_progid, "M");
 	globject::_keyFrameID = glGetUniformLocation(_progid, "keyframe");
@@ -449,6 +449,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
 	// time = clock();
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
+
 	modelPos.z = 0;
 	glUniform1f(globject::_keyFrameID, 0);
 	modelDir.x = 1;
