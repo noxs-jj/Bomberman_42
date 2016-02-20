@@ -172,8 +172,8 @@ public:
     SDL_Surface *   winner_game_txt;
     SDL_Surface **  winner;
 
-    bool musicIsPlaying = false;    // pour fixer le probleme de la musique
-                                    // dans le menu qui redemarre chaque millisecondes
+    bool            musicIsPlaying = false;     // pour fixer le probleme de la musique
+                                                // dans le menu qui redemarre chaque millisecondes
 
 
     Menu(Event * event);

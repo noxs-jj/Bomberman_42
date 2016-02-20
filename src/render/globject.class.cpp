@@ -360,6 +360,7 @@ void		globject::display_menu(SDL_Surface *imp) {
 	glBindVertexArray(globject::_object[MENU]._vaoID);
 	glDrawArrays(GL_TRIANGLES, \
 			0, globject::_object[MENU].parser._finalVertexSize / 3);
+    glDeleteTextures(1, &_textID); 
 }
 
 void        globject::render(int status) {
@@ -512,7 +513,6 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 
 	for (int i = -mapY_size / 2; i <  mapY_size / 2; i++) {
 		for (int j = -mapX_size / 2; j < mapX_size / 2; j++) {
-            std::cout << "deb 04.10" << std::endl;
             if (map[i + mapY_size / 2][j + mapX_size / 2] == NULL)
                 continue ;
 
@@ -523,46 +523,36 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 			modelPos.y = 0;
 			modelPos.x = i;
 			modelPos.z = j;
-            std::cout << "deb 04.11" << std::endl;
 			modelPos.x = map[i + mapY_size / 2][j + mapX_size / 2]->pos_y - 10;
 			modelPos.z = map[i + mapY_size / 2][j + mapX_size / 2]->pos_x - 10;
 
-            // fprintf(stdout, "deb 04.11 [i + mapY_size / 2]=%d      [j + mapX_size / 2]=%d\n", (i + mapY_size / 2), (j + mapX_size / 2));
 			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == -1) { // <<<<<<< Cette ligne SEGFAULT
-                std::cout << "deb 04.13" << std::endl; // PAS AFFICHER LORS DU SEGFAULT
 				continue ;
             }
 
 			if (map[i + mapY_size / 2][j + mapX_size / 2]->model >= WALL_HP_1 \
 					&& map[i + mapY_size / 2][j + mapX_size / 2]->model <= WALL_HP_4) {
-                        // std::cout << "deb 04.2" << std::endl;
 				map[i + mapY_size / 2][j + mapX_size / 2]->model = \
 				            map[i + mapY_size / 2][j + mapX_size / 2]->status;
             }
 
 			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == BOMB) {
 				if (!(a % (1 + (dynamic_cast<Bomb*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer) / 2))) {
-                    // std::cout << "deb 04.2" << std::endl;
 					zoomMul *= 1 + 3.0f / (static_cast<float> \
 						((dynamic_cast<Bomb*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer)));
 				}
 			}
 
 			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == FIRE_2) {
-                // std::cout << "deb 04.1" << std::endl;
 				zoomMul *= 1.0f - (1.0f / (static_cast<float> \
 					((dynamic_cast<Fire*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer))));
 			}
-			// SEGV multi / arena random
-			//  globject::render_all (map=0xeb0e830, players=std::list = {...}, menu=0x0)
-			// globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model]._zoom * zoomMul);
 			Model = Matrix::model_matrix(modelPos, modelDir, \
 				globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model]._zoom * zoomMul);
 			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
 			globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model].render(0);
 		}
 	}
-	// std::cout << "deb 05" << std::endl;
 
 	it = players.begin();
 	ite = players.end();
@@ -584,7 +574,6 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 		globject::_object[(*it)->model].render(0);
 		it++;
 	}
-	// std::cout << "deb 06" << std::endl;
 
 	SDL_GL_SwapWindow(globject::_displayWindow);
 }

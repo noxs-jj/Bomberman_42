@@ -19,7 +19,7 @@
 #include <save.class.hpp>
 
 void	Menu::winner_multi() {
-	if (!this->musicIsPlaying) {
+	if (false == this->musicIsPlaying) {
 		this->musicIsPlaying = true;
 		main_event->soundrender->stopSounds();
 		main_event->soundrender->stopMusic();
@@ -29,7 +29,7 @@ void	Menu::winner_multi() {
 }
 
 void	Menu::winner_campaign() {
-	if (!this->musicIsPlaying) {
+	if (false == this->musicIsPlaying) {
 		this->musicIsPlaying = true;
 		main_event->soundrender->stopSounds();
 		main_event->soundrender->stopMusic();
@@ -39,7 +39,7 @@ void	Menu::winner_campaign() {
 }
 
 void	Menu::lose_campaign() {
-	if (!this->musicIsPlaying) {
+	if (false == this->musicIsPlaying) {
 		this->musicIsPlaying = true;
 		main_event->soundrender->stopSounds();
 		main_event->soundrender->stopMusic();
@@ -49,7 +49,7 @@ void	Menu::lose_campaign() {
 }
 
 void	Menu::end_campaign() {
-	if (!this->musicIsPlaying) {
+	if (false == this->musicIsPlaying) {
 		this->musicIsPlaying = true;
 		main_event->soundrender->stopSounds();
 		main_event->soundrender->stopMusic();
@@ -175,10 +175,12 @@ void	Menu::exit_game() {
 void	Menu::print_surface(SDL_Surface * str, SDL_Surface * str_select, int x, int y, int type) {
 	this->position.x = x;
 	this->position.y = y;
-	if (type == this->detail_menu_selected)
+	if (type == this->detail_menu_selected) {
 		SDL_BlitSurface(str_select, NULL, this->ecran_menu, &this->position);
-	else
+    }
+	else {
 		SDL_BlitSurface(str, NULL, this->ecran_menu, &this->position);
+    }
 }
 
 void  Menu::big_menu() {
@@ -259,17 +261,21 @@ void  Menu::menu_selection() {
         }
     }
 
-    globject::display_menu(this->ecran_menu);
+     globject::display_menu(this->ecran_menu);
     SDL_GL_SwapWindow(globject::_displayWindow);
+    if (NULL != this->ecran_menu) {
+        SDL_FreeSurface(this->ecran_menu);
+        this->ecran_menu = NULL;
+    }
 }
 
 void  Menu::main_loop() {
-	musicIsPlaying = false;
+	this->musicIsPlaying = false;
 	main_event->soundrender->stopMusic();
 	main_event->soundrender->stopSounds();
     while (true == main_event->mode_menu) {
         if (false == this->introstart)
-					this->intro_start();
+            this->intro_start();
         else
             this->menu_selection();
         main_event->joystick->read_key(0);

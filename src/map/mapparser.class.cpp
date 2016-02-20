@@ -40,30 +40,28 @@ Entity ***      Mapparser::map_from_file( char *map_path ) {
     i = ((globject::mapX_size - 1) * 4 );
     x = globject::mapX_size - 1;
     std::getline(file, line);
-    // std::cout << line << std::endl;
 
     while (i >= 0) {
-      casemap += line[i];
-      casemap += line[i + 1];
-      casemap += line[i + 2];
-      std::cout << casemap;
+        casemap += line[i];
+        casemap += line[i + 1];
+        casemap += line[i + 2];
+        std::cout << casemap;
 
-      elem = Mapparser::get_entity_from_map( casemap, (float)x, (float)j );
-      if (elem->type == PLAYER || elem->type == ENEMY || elem->type == BOSS) {
-        tmp[j][x] = Factory::create_empty((int)x, (int)j);
-        main_event->char_list.push_back(elem);
-      }
-      else
-        tmp[j][x] = elem;
+        elem = Mapparser::get_entity_from_map( casemap, (float)x, (float)j );
+        if (elem->type == PLAYER || elem->type == ENEMY || elem->type == BOSS) {
+          tmp[j][x] = Factory::create_empty((int)x, (int)j);
+          main_event->char_list.push_back(elem);
+        }
+        else
+          tmp[j][x] = elem;
 
-      casemap.clear();
-      i -= 4;
-      x--;
+        casemap.clear();
+        i -= 4;
+        x--;
 
-      if ( i < 0 )
-        break;
+        if ( i < 0 )
+          break;
     }
-    std::cout << std::endl;
     j--;
   }
 
@@ -144,7 +142,6 @@ int         Mapparser::valid_map( char const *map_path ) {
 
   j = 0;
   while ( std::getline(file, line) ) {
-    // std::cout << line << std::endl;
     if ((int)line.length() != (4 * x - 1) ) {
       std::cout << "Mapline " << j + 4 << " error" << std::endl;
       std::cout << line << std::endl;
