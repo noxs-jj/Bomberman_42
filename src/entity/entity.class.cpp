@@ -281,7 +281,8 @@ void	Entity::die( void ) {
 	}
 	else if (this->type == PLAYER && count_entity(PLAYER) == 1) { // loose
 		std::cout << "Someone died 02 " << std::endl;
-		globject::spin(this->pos_x, this->pos_y);
+		if (main_event->coop == true || (main_event->multi <= 0 && main_event->arena <= 0))
+			globject::spin(this->pos_x, this->pos_y);
 		// main_event->mode_menu = true; // desactive menu render
 		// main_event->game_pause = true;
 		main_event->game_ended = 150;
