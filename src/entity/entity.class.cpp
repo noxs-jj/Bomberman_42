@@ -275,14 +275,17 @@ void	Entity::die( void ) {
 			else
 				it++;
 		}
-		main_event->game_pause = true;
-		main_event->mode_menu = true; // desactive menu render
+		// main_event->game_pause = true;
+		// main_event->mode_menu = true; // desactive menu render
+		main_event->game_ended = 150;
 	}
 	else if (this->type == PLAYER && count_entity(PLAYER) == 1) { // loose
 		std::cout << "Someone died 02 " << std::endl;
 		globject::spin(this->pos_x, this->pos_y);
-		main_event->mode_menu = true; // desactive menu render
-		main_event->game_pause = true;
+		// main_event->mode_menu = true; // desactive menu render
+		// main_event->game_pause = true;
+		main_event->game_ended = 150;
+
 		std::list<Entity *>::iterator it = main_event->char_list.begin();
 		std::list<Entity *>::iterator end = main_event->char_list.end();
 		while (it != end) {
@@ -296,8 +299,10 @@ void	Entity::die( void ) {
 		}
 		globject::reinit_level(0);
 		main_event->draw_lose_campaign = 1;
-		main_event->game_pause = true;
-		main_event->mode_menu = true; // desactive menu render
+		// main_event->game_pause = true;
+		// main_event->mode_menu = true; // desactive menu render
+		main_event->game_ended = 150;
+
 
 	}
 	else {
@@ -319,24 +324,28 @@ void	Entity::die( void ) {
 	if (main_event->multi == 0 && main_event->arena == 0
 		&& count_entity(ENEMY) == 0 && count_entity(BOSS) == 0) { // campaign win
 			std::cout << "Someone died 10.1 " << std::endl;
-			main_event->game_pause = true;
-			main_event->mode_menu = true; // desactive menu render
+			// main_event->game_pause = true;
+			// main_event->mode_menu = true; // desactive menu render
+			main_event->game_ended = 150;
+
 			if (main_event->actual_level == MAX_LEVEL) {
-				main_event->actual_level = 1;
+				// main_event->actual_level = 1;
 				main_event->draw_end_campaign = 1;
-				main_event->save_config->save_level(0);
+				// main_event->save_config->save_level(1);
 			}
 			else
 				main_event->draw_winner_campaign = 1;
 		}
 		else if (main_event->arena != 0 && count_entity(ENEMY) == 0 && count_entity(BOSS) == 0) {
-			main_event->game_pause = true;
-			main_event->mode_menu = true; // desactive menu render
+			// main_event->game_pause = true;
+			// main_event->mode_menu = true; // desactive menu render
+			main_event->game_ended = 150;
 			main_event->draw_end_campaign = 1;
 		}
 		else if (main_event->arena != 0 && count_entity(PLAYER) == 0) {
-			main_event->game_pause = true;
-			main_event->mode_menu = true; // desactive menu render
+			// main_event->game_pause = true;
+			// main_event->mode_menu = true; // desactive menu render
+			main_event->game_ended = 150;
 			main_event->draw_lose_campaign = 1;
 		}
 		std::cout << "Someone died end " << std::endl;

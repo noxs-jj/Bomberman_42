@@ -73,6 +73,7 @@ public:
     SDL_DisplayMode         sdl_display_mode_info;
     bool                    full_screen = false;
     int                     actual_resolution = RESOLUTION_NOT_SET;
+		int 										game_ended = -1;
 
 	Event( void );
 	virtual ~Event( void );
