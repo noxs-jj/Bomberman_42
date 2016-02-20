@@ -29,7 +29,7 @@ bool    SoundRender::init() {
     this->w_log(FUNC + "soundrender -> constructing");
     // open 44.1KHz, signed 16bit, system byte order,
     // stereo audio, using 1024 byte chunks
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, STEREO, 1024) == -1) {
+    if (Mix_OpenAudio(44100/2, MIX_DEFAULT_FORMAT, STEREO, 1024) == -1) {
 		w_error(Mix_GetError());
         return false;
     }
