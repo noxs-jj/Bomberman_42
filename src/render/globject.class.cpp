@@ -109,9 +109,6 @@ void        globject::get_sdl_information() {
         main_event->w_error("globject::get_sdl_information() SDL_GetCurrentDisplayMode() failed");
         throw std::exception();
     }
-    // std::cout << "nativWidth = " << main_event->sdl_display_mode_info.w;
-    // std::cout << " nativHeight = " << main_event->sdl_display_mode_info.h;
-    // std::cout << " nativRefreshRate = " << main_event->sdl_display_mode_info.refresh_rate << std::endl;
 }
 
 void        globject::set_float_width_height(float *width, float *height) {
@@ -209,32 +206,22 @@ void        globject::init(float sizeX, float sizeY) {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-    # ifdef linux
+    if (main_event->full_screen == true) {
         globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
-            0, 0, \
+            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
             size_x, size_y, \
-            SDL_WINDOW_OPENGL
-            // | SDL_WINDOW_FULLSCREEN
+            SDL_WINDOW_OPENGL \
+            | SDL_WINDOW_FULLSCREEN
         );
-	# endif
-	# ifdef __APPLE__
-        if (main_event->full_screen == true) {
-            globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
-                SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, \
-                size_x, size_y, \
-                SDL_WINDOW_OPENGL \
-                | SDL_WINDOW_FULLSCREEN
-            );
-        }
-        else {
-            globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
-            0, 0, \
-                size_x, size_y, \
-                SDL_WINDOW_OPENGL \
-                | SDL_WINDOW_BORDERLESS
-            );
-        }
-    # endif
+    }
+    else {
+        globject::_displayWindow = SDL_CreateWindow( "Bomberman", \
+        0, 0, \
+            size_x, size_y, \
+            SDL_WINDOW_OPENGL \
+            | SDL_WINDOW_BORDERLESS
+        );
+    }
 
 	/* Init OpenGL */
 	SDL_GLContext glcontext = SDL_GL_CreateContext(globject::_displayWindow);
@@ -251,61 +238,60 @@ void        globject::init(float sizeX, float sizeY) {
 			throw std::exception();
 		}
 	# endif
-    // glClearColor( 0.0f, 0.0f, 0.3f, 0.0f );
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
     glEnable(GL_DEPTH_TEST);
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	SDL_GL_SwapWindow(globject::_displayWindow);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	/* load shaders */
-	globject::load_shaders();
 
-	/* load Models */
-	globject("assets/render/models/cube.obj", WALL_HP_1, 1);
-	globject("assets/render/models/cube1.obj", WALL_HP_2, 1);
-	globject("assets/render/models/cube2.obj", WALL_HP_3, 1);
-	globject("assets/render/models/cube_floor.obj", FLOOR, 1);
-	globject("assets/render/bonus_item/bomb_fire_up.obj", BONUS_POWER_UP, 1); // BONUS_POWER_UP
-	globject("assets/render/bonus_item/bomb_plus_one.obj", BONUS_PLUS_ONE, 1); // BONUS_PLUS_ONE
-	globject("assets/render/bonus_item/bomb_kick.obj", BONUS_KICK, 1); // BONUS_KICK
-	globject("assets/render/bonus_item/bomb_change.obj", BONUS_CHANGE, 1); // BONUS_CHANGE
-	globject("assets/render/bonus_item/bomb_remote.obj", BONUS_REMOTE_BOMB, 1); // BONUS_REMOTE_BOMB
-	globject("assets/render/bonus_item/move_speed_up.obj", BONUS_SPEED_UP, 1); // BONUS_SPEED_UP
-	globject("assets/render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
-    // globject("assets/render/models/Bomberman/Bomberman1.obj", PLAYER, 0.03);
-	globject("assets/render/models/Bomberman/Bomberman1.obj", PLAYER1, 0.03);
-	globject("assets/render/models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
-	globject("assets/render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
-	globject("assets/render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
-	globject("assets/render/models/Bomberman/Bomberman5.obj", PLAYER5, 0.03);
-	globject("assets/render/enemy/BearGrizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
-	globject("assets/render/enemy/Andlar/Andlar.obj", ENEMY2, 0.04);
-	globject("assets/render/enemy/Angol/Angol.obj", ENEMY3, 0.04);
-	globject("assets/render/enemy/Boo/boo.obj", ENEMY4, 0.15);
-	globject("assets/render/enemy/FlyGuy/flyguy.obj", ENEMY5, 0.1);
-	globject("assets/render/boss/BossTitan/BOSS_Titan.obj", BOSS_A, 1); //test
-	globject("assets/render/boss/AssaultBomber/AssaultBomber.obj", BOSS_B, 0.06);
-	globject("assets/render/boss/BomberElite/BomberElite.obj", BOSS_C, 0.06);
-	globject("assets/render/boss/EagleBomber/EagleBomber.obj", BOSS_D, 0.06);
-	globject("assets/render/bombs/MegaBomb/MegaBomb.obj", BOMB_DEFAULT, 0.1);
-	globject("assets/render/bombs/AquaBomb/AquaBomb.obj", BOMB_WATER, 0.1);
-	globject("assets/render/bombs/LightBomb/LightBomb.obj", BOMB_LIGHT, 0.1);
-	globject("assets/render/bombs/WindBomb/WindBomb.obj", BOMB_WIND, 0.1);
-	globject("assets/render/bombs/RemoteBomb/RemoteBomb.obj", BOMB_REMOTE, 0.1);
-	globject("assets/render/models/icosphere.obj", MAX_ENUM, 1);
-	globject("assets/render/models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
-	globject("assets/render/models/menu.obj", MENU, 1);
-	//std::cout << "teoswag"  << std::endl;
-	/* Load Uniform Variable */
+    /* load shaders */
+    globject::load_shaders();
 
-	glProgramUniformMatrix4fv(_progid, \
-		glGetUniformLocation(_progid, "P"), 1, GL_FALSE, \
-		(GLfloat *)(Matrix::projection_matrix(60, 1, 100, size_x / size_y)._matrix));
-	globject::_viewMatID = glGetUniformLocation(_progid, "V");
-	globject::_modelMatID = glGetUniformLocation(_progid, "M");
-	globject::_keyFrameID = glGetUniformLocation(_progid, "keyframe");
-	globject::_legPos = glGetUniformLocation(_progid, "leg_pos");
+    /* load Models */
+    globject("assets/render/models/cube.obj", WALL_HP_1, 1);
+    globject("assets/render/models/cube1.obj", WALL_HP_2, 1);
+    globject("assets/render/models/cube2.obj", WALL_HP_3, 1);
+    globject("assets/render/models/cube_floor.obj", FLOOR, 1);
+    globject("assets/render/bonus_item/bomb_fire_up.obj", BONUS_POWER_UP, 1); // BONUS_POWER_UP
+    globject("assets/render/bonus_item/bomb_plus_one.obj", BONUS_PLUS_ONE, 1); // BONUS_PLUS_ONE
+    globject("assets/render/bonus_item/bomb_kick.obj", BONUS_KICK, 1); // BONUS_KICK
+    globject("assets/render/bonus_item/bomb_change.obj", BONUS_CHANGE, 1); // BONUS_CHANGE
+    globject("assets/render/bonus_item/bomb_remote.obj", BONUS_REMOTE_BOMB, 1); // BONUS_REMOTE_BOMB
+    globject("assets/render/bonus_item/move_speed_up.obj", BONUS_SPEED_UP, 1); // BONUS_SPEED_UP
+    globject("assets/render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
+    globject("assets/render/models/Bomberman/Bomberman1.obj", PLAYER1, 0.03);
+    globject("assets/render/models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
+    globject("assets/render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
+    globject("assets/render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
+    globject("assets/render/models/Bomberman/Bomberman5.obj", PLAYER5, 0.03);
+    globject("assets/render/enemy/BearGrizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
+    globject("assets/render/enemy/Andlar/Andlar.obj", ENEMY2, 0.04);
+    globject("assets/render/enemy/Angol/Angol.obj", ENEMY3, 0.04);
+    globject("assets/render/enemy/Boo/boo.obj", ENEMY4, 0.15);
+    globject("assets/render/enemy/FlyGuy/flyguy.obj", ENEMY5, 0.1);
+    globject("assets/render/boss/BossTitan/BOSS_Titan.obj", BOSS_A, 1); //test
+    globject("assets/render/boss/AssaultBomber/AssaultBomber.obj", BOSS_B, 0.06);
+    globject("assets/render/boss/BomberElite/BomberElite.obj", BOSS_C, 0.06);
+    globject("assets/render/boss/EagleBomber/EagleBomber.obj", BOSS_D, 0.06);
+    globject("assets/render/bombs/MegaBomb/MegaBomb.obj", BOMB_DEFAULT, 0.1);
+    globject("assets/render/bombs/AquaBomb/AquaBomb.obj", BOMB_WATER, 0.1);
+    globject("assets/render/bombs/LightBomb/LightBomb.obj", BOMB_LIGHT, 0.1);
+    globject("assets/render/bombs/WindBomb/WindBomb.obj", BOMB_WIND, 0.1);
+    globject("assets/render/bombs/RemoteBomb/RemoteBomb.obj", BOMB_REMOTE, 0.1);
+    globject("assets/render/models/icosphere.obj", MAX_ENUM, 1);
+    globject("assets/render/models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
+    globject("assets/render/models/menu.obj", MENU, 1);
+
+    /* Load Uniform Variable */
+    glProgramUniformMatrix4fv(_progid, \
+        glGetUniformLocation(_progid, "P"), 1, GL_FALSE, \
+        (GLfloat *)(Matrix::projection_matrix(60, 1, 100, size_x / size_y)._matrix));
+    globject::_viewMatID = glGetUniformLocation(_progid, "V");
+    globject::_modelMatID = glGetUniformLocation(_progid, "M");
+    globject::_keyFrameID = glGetUniformLocation(_progid, "keyframe");
+    globject::_legPos = glGetUniformLocation(_progid, "leg_pos");
+
 }
 
 t_point		set_dir(int d) {
@@ -360,7 +346,7 @@ void		globject::display_menu(SDL_Surface *imp) {
 	glBindVertexArray(globject::_object[MENU]._vaoID);
 	glDrawArrays(GL_TRIANGLES, \
 			0, globject::_object[MENU].parser._finalVertexSize / 3);
-    glDeleteTextures(1, &_textID); 
+    glDeleteTextures(1, &_textID);
 }
 
 void        globject::render(int status) {
@@ -408,7 +394,6 @@ void        globject::skybox(t_point viewDir) {
 	viewDir.y += 2 + degueu;
 	viewDir.x = 1 + degueu;
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
-	//glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 	modelPos.z = 0;
 	modelPos.y = 0;
 	modelPos.x = 0;
@@ -440,14 +425,11 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	std::list<Entity*>::iterator	ite;
 
 	zoom = 1;
-	//if ((1 / (clock() - time)) * CLOCKS_PER_SEC > 60)
-	//return ;
 	o += 0.003;
 	zoomMul = 1;
 	a++;
 	a = a % 10;
 	view = Matrix::view_matrix(viewPos, viewDir, 1);
-	// time = clock();
 	glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
 
 	modelPos.z = 0;
@@ -455,15 +437,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	modelDir.x = 1;
 	modelDir.z = 0;
 	modelDir.y = 0;
-	// std::cout << "deb 01" << std::endl;
-	//test
-	//display_menu(NULL);
-	//SDL_GL_SwapWindow(globject::_displayWindow);
-	//return ;
-	//test
-	// display_menu(menu);
     (void)menu;
-	// std::cout << "deb 02" << std::endl;
 
 	viewDir.x = 1.1;
 	viewDir.y = 1.57;
@@ -488,7 +462,6 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	}
 	else
 		prog = 0;
-		// std::cout << "deb 03" << std::endl;
 	view = Matrix::view_matrix(viewPos, viewDir, zoom);
 	glUniformMatrix4fv(globject::_viewMatID, 1, GL_FALSE, view._matrix);
 	for (int y = 0; y < 1; y++) {
@@ -510,7 +483,6 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 			}
 		}
 	}
-	// std::cout << "deb 04" << std::endl;
 
 	for (int i = -mapY_size / 2; i <  mapY_size / 2; i++) {
 		for (int j = -mapX_size / 2; j < mapX_size / 2; j++) {
@@ -616,7 +588,6 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader) {
 	vshaderid = glCreateShader(GL_VERTEX_SHADER);
 	fshaderid = glCreateShader(GL_FRAGMENT_SHADER);
 	buff = filetobuff(vertexshader);
-	// glShaderSource(vshaderid, 1, (const char *const *)(&buff), NULL);
 	glShaderSource(vshaderid, 1, (const char **)(&buff), NULL);
 	glCompileShader(vshaderid);
 
@@ -625,7 +596,6 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader) {
 	glGetShaderInfoLog(vshaderid, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
 
 	buff = filetobuff(fragshader);
-	// glShaderSource(fshaderid, 1, (const char *const *)(&buff), NULL);
 	glShaderSource(fshaderid, 1, (const char **)(&buff), NULL);
 	glCompileShader(fshaderid);
 
@@ -675,4 +645,25 @@ void		globject::fill_vao(void) {
 			parser._textID, GL_STATIC_DRAW);
 	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(2);
+}
+
+void        globject::resize_from_actual_resolution() {
+    if (RESOLUTION_800 == main_event->actual_resolution) {
+        globject::resize(800, 600);
+    }
+    else if (RESOLUTION_1280 == main_event->actual_resolution) {
+        globject::resize(1280, 720);
+    }
+    else if (RESOLUTION_1600 == main_event->actual_resolution) {
+        globject::resize(1600, 900);
+    }
+    else if (RESOLUTION_1920 == main_event->actual_resolution) {
+        globject::resize(1920, 1080);
+    }
+    else if (RESOLUTION_2560 == main_event->actual_resolution) {
+        globject::resize(2560, 1440);
+    }
+    else {
+        globject::resize(main_event->sdl_display_mode_info.w, main_event->sdl_display_mode_info.h);
+    }
 }

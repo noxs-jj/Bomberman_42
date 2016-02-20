@@ -72,6 +72,7 @@ class globject {
 		static void               display_menu(SDL_Surface *menu);
         static void               get_sdl_information();
         static void               set_float_width_height(float *width, float *height);
+        static void               resize_from_actual_resolution();
 
 	private :
 		static GLfloat            get_leg_pos(int model);

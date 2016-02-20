@@ -21,23 +21,6 @@ Joystick::Joystick(void) {
 	this->config[2] = 0;
 	this->config[3] = 0;
 	this->config[4] = 0;
-	// int	devices = SDL_NumJoysticks();
-	//
-	// SDL_JoystickEventState(SDL_ENABLE);
-	// if (devices > 0) {
-	// 	this->manette1 = SDL_JoystickOpen(0);
-	// 	if (this->manette1 < 0) {
-	// 		std::cerr << "Could not open joystick 1 " << SDL_GetError() << std::endl;
-	// 		throw std::exception();
-	// 	}
-	// }
-	// if (devices > 1) {
-	// 	this->manette2 = SDL_JoystickOpen(1);
-	// 	if (this->manette2 < 0) {
-	// 		std::cerr << "Could not open joystick 2 " << SDL_GetError() << std::endl;
-	// 		throw std::exception();
-	// 	}
-	// }
 }
 
 Joystick::~Joystick(void) {}
@@ -66,35 +49,40 @@ void Joystick::init_joystick() {
 	if (main_event->menu->joystick_number > 0) {
 		this->manette1 = SDL_JoystickOpen(0);
 		if (this->manette1 < 0) {
-			std::cerr << "Could not open joystick 1 " << SDL_GetError() << std::endl;
+			this->w_error("Could not open joystick 1 ");
+            this->w_error(SDL_GetError());
 			throw std::exception();
 		}
 	}
 	if (main_event->menu->joystick_number > 1) {
 		this->manette2 = SDL_JoystickOpen(1);
 		if (this->manette2 < 0) {
-			std::cerr << "Could not open joystick 2 " << SDL_GetError() << std::endl;
+			this->w_error("Could not open joystick 2 ");
+            this->w_error(SDL_GetError());
 			throw std::exception();
 		}
  	}
 	if (main_event->menu->joystick_number > 2) {
 		this->manette3 = SDL_JoystickOpen(2);
 		if (this->manette3 < 0) {
-			std::cerr << "Could not open joystick 3 " << SDL_GetError() << std::endl;
+			this->w_error("Could not open joystick 3 ");
+            this->w_error(SDL_GetError());
 			throw std::exception();
 		}
  	}
 	if (main_event->menu->joystick_number > 3) {
 		this->manette4 = SDL_JoystickOpen(3);
 		if (this->manette4 < 0) {
-			std::cerr << "Could not open joystick 4 " << SDL_GetError() << std::endl;
+			this->w_error("Could not open joystick 4 ");
+            this->w_error(SDL_GetError());
 			throw std::exception();
 		}
  	}
 	if (main_event->menu->joystick_number > 4) {
 		this->manette5 = SDL_JoystickOpen(4);
 		if (this->manette5 < 0) {
-			std::cerr << "Could not open joystick 5 " << SDL_GetError() << std::endl;
+			this->w_error("Could not open joystick 5 ");
+            this->w_error(SDL_GetError());
 			throw std::exception();
 		}
  	}
@@ -104,15 +92,15 @@ void Joystick::reset_key_pressed() {
 	int	i = 0;
 
 	while (i < 5) {
-		this->arr_key_keyboard[i]->key_up = 0;
-	  this->arr_key_keyboard[i]->key_down = 0;
-	  this->arr_key_keyboard[i]->key_left = 0;
-	  this->arr_key_keyboard[i]->key_right = 0;
-		this->arr_key_controller[i]->key_up = 0;
-	  this->arr_key_controller[i]->key_down = 0;
-	  this->arr_key_controller[i]->key_left = 0;
-	  this->arr_key_controller[i]->key_right = 0;
-		i++;
+        this->arr_key_keyboard[i]->key_up = 0;
+        this->arr_key_keyboard[i]->key_down = 0;
+        this->arr_key_keyboard[i]->key_left = 0;
+        this->arr_key_keyboard[i]->key_right = 0;
+        this->arr_key_controller[i]->key_up = 0;
+        this->arr_key_controller[i]->key_down = 0;
+        this->arr_key_controller[i]->key_left = 0;
+        this->arr_key_controller[i]->key_right = 0;
+        i++;
 	}
 }
 

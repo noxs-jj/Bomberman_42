@@ -62,7 +62,6 @@ void	Parser::parse(std::string path, int neg) {
 				add_indice(line, neg);
 			else if (!line.compare(0, 6, "usemtl"))
 				add_texture(line);
-			//		std::cout << line << '\n';
 		}
 		myfile.close();
 	}
@@ -91,8 +90,8 @@ int		Parser::foundTexture(std::string s) {
 	for (size_t i = 0; i < _textNum; i++) 	{
 		if (!strcmp(str.c_str(), _texture[i].c_str()))
 			return (i);
-		else
-			std::cout << str << "" << _texture[i] << "e" << std::endl;
+		// else
+		// 	std::cout << str << "" << _texture[i] << "e" << std::endl;
 	}
 	return (-1);
 }

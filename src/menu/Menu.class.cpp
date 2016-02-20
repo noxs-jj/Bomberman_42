@@ -102,16 +102,10 @@ void    Menu::config_sound() {
 }
 
 void    Menu::config_video() {
-    # ifdef linux
-        print_surface(this->str_option_disable, this->str_option_disable_selected, 400, 500, MENU_CONFIG_VIDEO_MODE);
-    # endif
-    # ifdef __APPLE__
     if (true == main_event->full_screen)
         print_surface(this->str_config_video_fullscreen, this->str_config_video_fullscreen_selected, 400, 500, MENU_CONFIG_VIDEO_MODE);
     else
         print_surface(this->str_config_video_window, this->str_config_video_window_selected, 400, 500, MENU_CONFIG_VIDEO_MODE);
-    # endif
-
 
     if (false == main_event->full_screen) {
         if (RESOLUTION_800 == main_event->actual_resolution)
@@ -184,11 +178,10 @@ void	Menu::print_surface(SDL_Surface * str, SDL_Surface * str_select, int x, int
 }
 
 void  Menu::big_menu() {
-    if (!musicIsPlaying) {
-        musicIsPlaying = true;
+    if (false == this->musicIsPlaying) {
+        this->musicIsPlaying = true;
         main_event->soundrender->stopSounds();
         main_event->soundrender->stopMusic();
-        // main_event->soundrender->playMusic("music");
     }
 
     if (true == main_event->game_playing) {// Si partie en cours
@@ -228,25 +221,21 @@ void  Menu::menu_selection() {
     glClear((GL_COLOR_BUFFER_BIT)| GL_DEPTH_BUFFER_BIT);
     SDL_FillRect(this->ecran_menu, NULL, SDL_MapRGB(this->ecran_menu->format, 0, 0, 0) );
 
-	// std::cout << "winer multi is " << main_event->draw_winner_multi << std::endl;
-    if (main_event->draw_winner_multi >= 0) { // Affichage du victorieu
+    if (main_event->draw_winner_multi >= 0) {
         this->winner_multi();
     }
-    else if (main_event->draw_winner_campaign >= 0) { // Affichage du victorieu
+    else if (main_event->draw_winner_campaign >= 0) {
         this->winner_campaign();
         if (main_event->draw_winner_campaign == 1) {
             main_event->make_new_game(1);
             main_event->draw_winner_campaign = 2;
         }
-    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
     }
-    else if (main_event->draw_lose_campaign >= 0) { // Affichage du victorieu
+    else if (main_event->draw_lose_campaign >= 0) {
         this->lose_campaign();
-        // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
     }
-    else if (main_event->draw_end_campaign >= 0) { // Affichage du victorieu
+    else if (main_event->draw_end_campaign >= 0) {
         this->end_campaign();
-    // main_event->game_playing = false; // IL faut FREE l'ancienne map et relancer une game au besoin
     }
     else {
         switch(this->menu_selected) {
@@ -261,12 +250,8 @@ void  Menu::menu_selection() {
         }
     }
 
-     globject::display_menu(this->ecran_menu);
+    globject::display_menu(this->ecran_menu);
     SDL_GL_SwapWindow(globject::_displayWindow);
-    if (NULL != this->ecran_menu) {
-        SDL_FreeSurface(this->ecran_menu);
-        this->ecran_menu = NULL;
-    }
 }
 
 void  Menu::main_loop() {
@@ -286,42 +271,47 @@ void  Menu::main_loop() {
 void Menu::move_menu_hor() {
     int i = 0, tmp = 0;
 
-	main_event->soundrender->playSound("switchselect");
-	if (this->menu_selected != CONFIG
+    if (this->menu_selected != CONFIG
         && this->menu_selected != CONFIG_SOUND
         && this->menu_selected != CONFIG_VIDEO) {
-		return ;
+        return ;
     }
 
-	while (i < 5) {
-		if (main_event->joystick->config[i] == 1)
-			tmp++;
-		i++;
-	}
-	if (tmp >= 2 && main_event->joystick->config[this->detail_menu_selected - MENU_CONFIG_PLAYER1] == 0)
-		return ;
+    main_event->soundrender->playSound("switchselect");
+    if (this->detail_menu_selected >= MENU_CONFIG_PLAYER1 && this->detail_menu_selected <= MENU_CONFIG_PLAYER5) {
+        while (i < 5) {
+            if (main_event->joystick->config[i] == 1)
+                tmp++;
+            i++;
+        }
+        if (tmp >= 2 && main_event->joystick->config[this->detail_menu_selected - MENU_CONFIG_PLAYER1] == 0)
+            return ;
 
-	if (this->detail_menu_selected == MENU_CONFIG_PLAYER1)
-		main_event->joystick->config[0] = (main_event->joystick->config[0] == 0) ? 1 : 0;
-	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER2)
-		main_event->joystick->config[1] = (main_event->joystick->config[1] == 0) ? 1 : 0;
-	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER3)
-		main_event->joystick->config[2] = (main_event->joystick->config[2] == 0) ? 1 : 0;
-	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER4)
-		main_event->joystick->config[3] = (main_event->joystick->config[3] == 0) ? 1 : 0;
-	else if (this->detail_menu_selected == MENU_CONFIG_PLAYER5)
-		main_event->joystick->config[4] = (main_event->joystick->config[4] == 0) ? 1 : 0;
+        if (this->detail_menu_selected == MENU_CONFIG_PLAYER1)
+            main_event->joystick->config[0] = (main_event->joystick->config[0] == 0) ? 1 : 0;
+        else if (this->detail_menu_selected == MENU_CONFIG_PLAYER2)
+            main_event->joystick->config[1] = (main_event->joystick->config[1] == 0) ? 1 : 0;
+        else if (this->detail_menu_selected == MENU_CONFIG_PLAYER3)
+            main_event->joystick->config[2] = (main_event->joystick->config[2] == 0) ? 1 : 0;
+        else if (this->detail_menu_selected == MENU_CONFIG_PLAYER4)
+            main_event->joystick->config[3] = (main_event->joystick->config[3] == 0) ? 1 : 0;
+        else if (this->detail_menu_selected == MENU_CONFIG_PLAYER5)
+            main_event->joystick->config[4] = (main_event->joystick->config[4] == 0) ? 1 : 0;
+    }
 
     else if (this->detail_menu_selected == MENU_CONFIG_VIDEO_MODE) {
-        std::cout << "MENU_CONFIG_VIDEO_MODE fullscren= " << main_event->full_screen << std::endl;
-        SDL_DestroyWindow(globject::_displayWindow);
         main_event->full_screen = (main_event->full_screen == true) ? false : true;
-        globject::init(main_event->sdl_display_mode_info.w, main_event->sdl_display_mode_info.h);
-        std::cout << "MENU_CONFIG_VIDEO_MODE fullscren= " << main_event->full_screen << std::endl;
+        if (main_event->full_screen == true) {
+            SDL_SetWindowFullscreen(globject::_displayWindow, SDL_WINDOW_FULLSCREEN);
+            globject::resize(main_event->sdl_display_mode_info.w, main_event->sdl_display_mode_info.h);
+        }
+        else {
+            SDL_SetWindowFullscreen(globject::_displayWindow, 0);
+            globject::resize_from_actual_resolution();
+        }
     }
 
     else if (this->detail_menu_selected == MENU_CONFIG_VIDEO_RESOLUTION) {
-        std::cout << "MENU_CONFIG_VIDEO_RESOLUTION fullscren= " << main_event->full_screen << std::endl;
         if (false == main_event->full_screen) {
             if (RESOLUTION_NOT_SET == main_event->actual_resolution && main_event->sdl_display_mode_info.w >= 800) {
                 main_event->actual_resolution = RESOLUTION_800;
@@ -351,7 +341,7 @@ void Menu::move_menu_hor() {
                 main_event->actual_resolution = RESOLUTION_800;
                 globject::resize(800, 600);
             }
-            main_event->option_resolution = RESOLUTION_NOT_SET;
+            // main_event->option_resolution = RESOLUTION_NOT_SET;
         }
     }
 
@@ -470,7 +460,6 @@ void  Menu::change_menu_back() {
 }
 
 void  Menu::change_menu() {
-    std::cout << this->menu_selected << " vs " << RESUME_GAME << std::endl;
     if (!(this->detail_menu_selected == MENU_CAMPAIGN_RETURN
         || this->detail_menu_selected == MENU_CONFIG_RETURN
         || this->detail_menu_selected == MENU_CONFIG_SOUND_RETURN
@@ -491,7 +480,6 @@ void  Menu::change_menu() {
         this->menu_selected = CAMPAIGN;
     }
     else if (main_event->game_playing == true && this->detail_menu_selected == RESUME_GAME) {
-        // main_event->game_playing = false;
         main_event->mode_menu = false;
     }
     else if (this->detail_menu_selected == MENU_CONFIG) {
@@ -564,7 +552,6 @@ void Menu::init() {
     this->blue = {0, 0, 255, 1};
     this->red = {255, 0, 0, 1};
     SDL_JoystickEventState(SDL_ENABLE);
-    std::cout << "nombre: " << this->joystick_number << std::endl;
     main_event->joystick->init_joystick();
 
 

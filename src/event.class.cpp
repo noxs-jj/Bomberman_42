@@ -71,7 +71,6 @@ void	Event::make_new_game( int new_level ) {
 	this->live_player[4] = true;
 
 	if (this->game_playing == true) {
-		// std::cout << "        this->game_playing == true FREE AOLD MAP DEBUGG" << std::endl;
 		this->free_game();
 	}
 		main_event->game_pause = false;
@@ -89,7 +88,6 @@ void	Event::make_new_game( int new_level ) {
 	}
 
 	if (this->multi > 0) {
-		// gen_level_multi(this->actual_level, this->multi);
 		if (this->gen_level == false) {
 			sprintf(map_name, "assets/map/multiplayer/multi_%d.ntm", main_event->multi);
 			this->map = Mapparser::map_from_file(map_name);
@@ -98,7 +96,6 @@ void	Event::make_new_game( int new_level ) {
 			gen_level_multi(this->actual_level, this->multi);
 	}
 	else if (this->arena > 0) {
-		// gen_level_multi(this->actual_level, this->multi);
 		if (this->gen_level == false) {
 			sprintf(map_name, "assets/map/arena/arena_%d.ntm", main_event->arena);
 			this->map = Mapparser::map_from_file(map_name);
@@ -111,7 +108,6 @@ void	Event::make_new_game( int new_level ) {
 		if (this->actual_level > 9)
 			this->actual_level = 1;
 			main_event->save_config->save_level(this->actual_level);
-		// gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
 		if (this->gen_level == false && main_event->coop > 0) {
 			sprintf(map_name, "assets/map/story/story_coop_%d.ntm", main_event->actual_level);
 			this->map = Mapparser::map_from_file(map_name);
@@ -195,7 +191,6 @@ int rand_range(int min, int max) {
 }
 
 void	Event::gen_obstacle(int difficulty) {
-	std::cout << difficulty << std::endl;
 	int block = ((globject::mapX_size - 2) * (globject::mapY_size - 2));
 	int tmpx = 0, tmpy = 0;
 
@@ -234,14 +229,12 @@ bool	Event::check_coord(int mode, float x, float y) {
 }
 
 void	Event::gen_level_campaign(int level, int boss, bool coop) {
-	std::cout << "gen_level_campaign " << std::endl;
 	int tmpx = 0, tmpy = 0;
 	int p_x = 2 + (rand() % (globject::mapX_size - 4));
 	int p_y = 2 + (rand() % (globject::mapY_size - 4));
 	boss = (boss > 0) ? 0 : 1;
 	fill_border_map();
 	this->char_list.push_back(Factory::create_player(0, (float)p_x, (float)p_y, PLAYER1)); // change model
-	std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
 	if (coop == true) {
 		p_x = 2 + (rand() % (globject::mapX_size - 4));
 		p_y = 2 + (rand() % (globject::mapY_size - 4));
@@ -250,10 +243,8 @@ void	Event::gen_level_campaign(int level, int boss, bool coop) {
 			p_y = 2 + (rand() % (globject::mapY_size - 4));
 			}
 			this->char_list.push_back(Factory::create_player(0, (float)p_x, (float)p_y, PLAYER2)); // change model
-			std::cout << "new bomberman in " << p_x << ":" << p_y << std::endl;
 	}
 
-	// delete this->map[p_y][p_x];
 	int i = 0;
 	while (i < (level % 3) + boss) {
 		tmpx = 2 + (rand() % (globject::mapX_size - 4));
@@ -438,7 +429,6 @@ void Event::remote_put( int model ) {
 				(*it)->remote_nbr--;
 				(*it)->put_bomb(BOMB_SEC_3, (*it)->pos_x, (*it)->pos_y, BOMB_REMOTE, (*it)->blast_radius, (*it)->id);
 				(*it)->remote_lst.push_back(this->map[(int)(*it)->pos_y][(int)(*it)->pos_x]);
-				// (*it)->remote_lst.push_back(create_bomb(BOMB_SEC_3, (int)(*it)->pos_x + 0.5, (int)(*it)->pos_y + 0.5, BOMB_REMOTE, (*it)->id));
 			}
 			return ;
 		}
