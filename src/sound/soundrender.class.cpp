@@ -29,7 +29,7 @@ bool    SoundRender::init() {
     this->w_log(FUNC + "soundrender -> constructing");
     // open 44.1KHz, signed 16bit, system byte order,
     // stereo audio, using 1024 byte chunks
-    if (Mix_OpenAudio(44100/2, MIX_DEFAULT_FORMAT, STEREO, 1024) == -1) {
+    if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, STEREO, 1024) == -1) {
 		w_error(Mix_GetError());
         return false;
     }
@@ -68,30 +68,30 @@ bool    SoundRender::deinit() {
 
 void    SoundRender::load_files(void) {
     if (!(
-               this->loadSound("blast", "assets/sound/blast.ogg")
-            && this->loadSound("startup", "assets/sound/pause.ogg")
-            && this->loadSound("die", "assets/sound/PLAYER_OUT.ogg")
-            && this->loadSound("ready", "assets/sound/readymegaman.ogg")
-            && this->loadSound("menu2", "assets/sound/megamenu2.ogg")
-            && this->loadSound("menu1", "assets/sound/menu1.ogg")
-            && this->loadSound("bombmove", "assets/sound/BOM_SET.ogg")
-            && this->loadSound("pause", "assets/sound/pause.ogg")
-            && this->loadSound("buldingfire", "assets/sound/3s_the_building_is_on_fire.ogg")
-            && this->loadSound("dogsout", "assets/sound/3s_who_let_the_dogs_out.ogg")
-            && this->loadSound("switchselect", "assets/sound/SE_02.ogg")
-            && this->loadSound("return", "assets/sound/SE_07.ogg")
-            && this->loadSound("dogsout_long", "assets/sound/10s_who_let_the_dogs_out.ogg")
-            && this->loadSound("lose", "assets/sound/deuxheures.ogg")
-            && this->loadSound("kick", "assets/sound/BOM_KICK.ogg")
-            && this->loadSound("powerup", "assets/sound/ITEM_GET.ogg")
-            && this->loadSound("danger", "assets/sound/B_A040.ogg")
-            && this->loadSound("special", "assets/sound/B_SPECIAL.ogg")
+               this->loadSound("blast", "assets/sound_wav/blast.wav")
+            && this->loadSound("startup", "assets/sound_wav/pause.wav")
+            && this->loadSound("die", "assets/sound_wav/PLAYER_OUT.wav")
+            && this->loadSound("ready", "assets/sound_wav/readymegaman.wav")
+            && this->loadSound("menu2", "assets/sound_wav/megamenu2.wav")
+            && this->loadSound("menu1", "assets/sound_wav/menu1.wav")
+            && this->loadSound("bombmove", "assets/sound_wav/BOM_SET.wav")
+            && this->loadSound("pause", "assets/sound_wav/pause.wav")
+            && this->loadSound("buldingfire", "assets/sound_wav/3s_the_building_is_on_fire.wav")
+            && this->loadSound("dogsout", "assets/sound_wav/3s_who_let_the_dogs_out.wav")
+            && this->loadSound("switchselect", "assets/sound_wav/SE_02.wav")
+            && this->loadSound("return", "assets/sound_wav/SE_07.wav")
+            && this->loadSound("dogsout_long", "assets/sound_wav/10s_who_let_the_dogs_out.wav")
+            && this->loadSound("lose", "assets/sound_wav/deuxheures.wav")
+            && this->loadSound("kick", "assets/sound_wav/BOM_KICK.wav")
+            && this->loadSound("powerup", "assets/sound_wav/ITEM_GET.wav")
+            && this->loadSound("danger", "assets/sound_wav/B_A040.wav")
+            && this->loadSound("special", "assets/sound_wav/B_SPECIAL.wav")
             // music
-            && this->loadMusic("victory", "assets/sound/victory.ogg")
-            && this->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.ogg")
-            && this->loadMusic("victory_final", "assets/sound/victory_finalfantasy.ogg")
-            && this->loadMusic("music", "assets/sound/bgm.ogg")
-            && this->loadMusic("ps1", "assets/sound/ps1.ogg")
+            && this->loadMusic("victory", "assets/sound_wav/victory.wav")
+            && this->loadMusic("victory_multiplayer", "assets/sound_wav/victory_multiplayer.wav")
+            && this->loadMusic("victory_final", "assets/sound_wav/victory_finalfantasy.wav")
+            && this->loadMusic("music", "assets/sound_wav/bgm.wav")
+            && this->loadMusic("ps1", "assets/sound_wav/ps1.wav")
         )) {
         this->w_error(FUNC + "loadsound error");
         throw std::exception();
