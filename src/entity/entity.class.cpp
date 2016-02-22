@@ -65,18 +65,24 @@ Entity & Entity::operator=( Entity const & rhs ) {
 }
 
 int		Entity::check_move( float x, float y ) {
-    if (main_event->map[(int)y][(int)x] == NULL)
-        return EMPTY;
-	if (main_event->map[(int)y][(int)x]->type == WALL)
-		return WALL;
+	// if (this->type == ENEMY)
+		// std::cout << " x: " << (int)x << " float x " << x << " y: " << (int)y << " float y " << y << std::endl;
+
+  if (main_event->map[(int)y][(int)x] == NULL)
+      return EMPTY;
+	if (main_event->map[(int)y][(int)x]->type == EMPTY)
+		return EMPTY;
 	else if (main_event->map[(int)y][(int)x]->type == BOMB
 			&& !((int)this->pos_y == (int)y && (int)this->pos_x == (int)x))
 		return BOMB;
+	else if (main_event->map[(int)y][(int)x]->type == BOMB
+			&& ((int)this->pos_y == (int)y && (int)this->pos_x == (int)x))
+		return EMPTY;
 	else if (main_event->map[(int)y][(int)x]->type == FIRE)
 		return FIRE;
 	else if (main_event->map[(int)y][(int)x]->type == BONUS)
 		return BONUS;
-	return EMPTY;
+	return WALL;
 }
 
 bool Entity::friend_zone( float x, float y ) {
@@ -166,7 +172,7 @@ int	Entity::pretest_move( int dir ) {
 		x += -0.08f;
 	else if (dir == DIR_RIGHT)
 		x += 0.08f;
-	return (check_move(x * 3 + this->pos_x, y * 3 + this->pos_y));
+	return (check_move(x * 4 + this->pos_x, y * 4 + this->pos_y));
 }
 
 void	Entity::move( int dir ) {
@@ -186,9 +192,13 @@ void	Entity::move( int dir ) {
 		x += 0.08f;
 	else
 		frame = 0;
-	if (check_coord_exist(x * 3 + (int)this->pos_x, y * 3 + (int)this->pos_y) == false)
+	// if (this->type == ENEMY)
+		// std::cout << "empty= " << EMPTY << " ret: " << ret << " x: " << x + this->pos_x << " y: " << y + this->pos_y << std::endl;
+	if (check_coord_exist(x * 4 + this->pos_x, y * 4 + this->pos_y) == false)
 		return ;
-	ret = check_move(x * 3 + this->pos_x, y * 3 + this->pos_y);
+	ret = check_move(x * 4 + this->pos_x, y * 4 + this->pos_y);
+	if (ret == WALL || check_move(x + this->pos_x, y + this->pos_y) == WALL)
+		return;
 	if (ret == EMPTY || ret == BONUS) {
 		this->dir = dir;
 		this->pos_x = x + this->pos_x;

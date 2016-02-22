@@ -265,7 +265,7 @@ void        globject::init(float sizeX, float sizeY) {
     globject("assets/render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
     globject("assets/render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
     globject("assets/render/models/Bomberman/Bomberman5.obj", PLAYER5, 0.03);
-    globject("assets/render/enemy/BearGrizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.3);
+    globject("assets/render/enemy/BearGrizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.19);
     globject("assets/render/enemy/Andlar/Andlar.obj", ENEMY2, 0.04);
     globject("assets/render/enemy/Angol/Angol.obj", ENEMY3, 0.04);
     globject("assets/render/enemy/Boo/boo.obj", ENEMY4, 0.15);
@@ -537,8 +537,11 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 		modelPos.y = 0;
 		modelPos.x = ((*it)->pos_y - 10);
 		modelPos.z = (((*it)->pos_x - 10));
-		if ((*it)->model == ENEMY1)
-			modelPos.z += 0.5;
+		// if ((*it)->type == ENEMY1) {
+			modelPos.z += 0.01;
+			// modelPos.x += 0.5;
+
+		// }
 		Model = Matrix::model_matrix(modelPos, modelDir, \
 			globject::_object[(*it)->model]._zoom);
 		glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
