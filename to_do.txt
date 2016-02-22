@@ -1,7 +1,8 @@
 sortie de programme:
 
 BUG:
-
+	fix enchainement map coop
+	fix arena 3 players
 LOGIC:
 
 CONFIG:
