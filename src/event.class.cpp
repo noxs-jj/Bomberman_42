@@ -331,13 +331,13 @@ void	Event::init( int ac, char **av ) {
         throw std::exception();
     }
     main_event->joystick->load_config();
+    main_event->save_config->load_level();
     main_event->mode_menu = true;
     main_event->menu->init();
     main_event->menu->introstart = false;
     main_event->soundrender->load_files();
     main_event->soundrender->playSound("startup");
     main_event->menu->main_loop();
-    main_event->save_config->load_level();
 }
 
 void	Event::exit_free( void ) {	// free here

@@ -129,6 +129,7 @@ void	Joystick::save_default_config( void ) {
 	this->config[2] = 0;
 	this->config[3] = 0;
 	this->config[4] = 0;
+	set_key();
 }
 
 void Joystick::load_config( void ) {

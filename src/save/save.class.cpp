@@ -24,6 +24,7 @@ Save::Save() {
 Save::~Save() {}
 
 void Save::save_level(int level) {
+	main_event->save_level_mode = level;
 	static const char num[] = "abcdefghijklmnopqrstuvwxyz0123456789";
 	if (level < 1)
 	level = 1;
