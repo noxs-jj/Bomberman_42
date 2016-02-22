@@ -91,6 +91,8 @@ void    SoundRender::load_files(void) {
             && this->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")
             && this->loadMusic("victory_final", "assets/sound/victory_finalfantasy.wav")
             && this->loadMusic("music", "assets/sound/bgm.wav")
+            && this->loadMusic("music_2", "assets/sound/music_2-5-8.wav")
+            && this->loadMusic("music_boss", "assets/sound/music_3-6-9.wav")
             && this->loadMusic("ps1", "assets/sound/ps1.wav")
         )) {
         this->w_error(FUNC + "loadsound error");

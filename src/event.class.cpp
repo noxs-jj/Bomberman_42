@@ -107,7 +107,7 @@ void	Event::make_new_game( int new_level ) {
 		this->actual_level += new_level;
 		if (this->actual_level > 9)
 			this->actual_level = 1;
-			main_event->save_config->save_level(this->actual_level);
+		main_event->save_config->save_level(this->actual_level);
 		if (this->gen_level == false && main_event->coop > 0) {
 			sprintf(map_name, "assets/map/story/story_coop_%d.ntm", main_event->actual_level);
 			this->map = Mapparser::map_from_file(map_name);
@@ -119,6 +119,12 @@ void	Event::make_new_game( int new_level ) {
 		else {
 			gen_level_campaign(this->actual_level, this->actual_level % 3, this->coop);
 		}
+        if (1 == this->actual_level || 4 == this->actual_level || 7 == this->actual_level)
+            main_event->soundrender->playMusic("music");
+        else if (2 == this->actual_level || 5 == this->actual_level || 8 == this->actual_level)
+            main_event->soundrender->playMusic("music_2");
+        else if (3 == this->actual_level || 6 == this->actual_level || 9 == this->actual_level)
+            main_event->soundrender->playMusic("music_boss");
 	}
 	// main_event->print_map(); // DEBUGG
 }

@@ -159,7 +159,7 @@ void    Gamelauncher::run_arena_2() {
     main_event->w_log("MENU_MULTIPLAYER + MENU_ARENA_2P + LAUNCH ");
     main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_2P + LAUNCH ");
     main_event->soundrender->stopMusic();
-    main_event->soundrender->playSound("dogsout_long");
+    main_event->soundrender->playMusic("music_boss");
     main_event->draw_winner_multi = -1;
     main_event->draw_winner_campaign = -1;
     main_event->draw_lose_campaign = -1;
@@ -177,7 +177,7 @@ void    Gamelauncher::run_arena_3() {
     main_event->w_log("MENU_MULTIPLAYER + MENU_ARENA_3P + LAUNCH ");
     main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_2P + LAUNCH ");
     main_event->soundrender->stopMusic();
-    main_event->soundrender->playSound("dogsout_long");
+    main_event->soundrender->playMusic("music_boss");
     main_event->draw_winner_multi = -1;
     main_event->draw_winner_campaign = -1;
     main_event->draw_lose_campaign = -1;
@@ -194,7 +194,7 @@ void    Gamelauncher::run_arena_4() {
     main_event->w_log("MENU_MULTIPLAYER + MENU_ARENA_4P + LAUNCH ");
     main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_2P + LAUNCH ");
     main_event->soundrender->stopMusic();
-    main_event->soundrender->playSound("dogsout_long");
+    main_event->soundrender->playMusic("music_boss");
     main_event->draw_winner_multi = -1;
     main_event->draw_winner_campaign = -1;
     main_event->draw_lose_campaign = -1;
@@ -212,7 +212,7 @@ void    Gamelauncher::run_arena_5() {
     main_event->w_log("MENU_MULTIPLAYER + MENU_ARENA_5P + LAUNCH ");
     main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_2P + LAUNCH ");
     main_event->soundrender->stopMusic();
-    main_event->soundrender->playSound("dogsout_long");
+    main_event->soundrender->playMusic("music_boss");
     main_event->draw_winner_multi = -1;
     main_event->draw_winner_campaign = -1;
     main_event->draw_lose_campaign = -1;
