@@ -59,8 +59,6 @@ void globject::load_bmp() {
     {
         name = "texture";
         path ="assets/render/textures/";
-        if (globject::space)
-            path = "assets/render/spacestextures/";
         path += parser._texture[i];
         SDL_Surface *imp = IMG_Load(path.c_str());
         if (imp == NULL) 		{
