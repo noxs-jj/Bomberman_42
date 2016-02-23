@@ -97,7 +97,15 @@ int    Ia::must_move_to( Entity *it ) {
 }
 
 bool    Ia::play_enemy(Enemy *it) {
-  if ((*it).dir == ((*it).dir = Ia::must_move_to(static_cast<Entity*>(it)))) {
+  int move = (*it).dir = Ia::must_move_to(static_cast<Entity*>(it));
+
+  if (move != DIR_LEFT && move != DIR_RIGHT) {
+    (*it).pos_x = trunc((*it).pos_x) + 0.5f;
+  }
+  else {
+    (*it).pos_y = trunc((*it).pos_y) + 0.5f;
+  }
+  if ((*it).dir == move) {
     if ((*it).memory > 400) {
       if (!(*it).friend_zone((*it).pos_x, (*it).pos_y)) {
         (*it).put_bomb (
@@ -121,14 +129,22 @@ bool    Ia::play_enemy(Enemy *it) {
 bool    Ia::play_boss(Boss *it, int time) {
   std::list<Entity *>::iterator heros = main_event->char_list.begin();
   std::list<Entity *>::iterator end = main_event->char_list.end();
-
   (void)time;
+
   while (heros != end) {
     if ((*heros)->type == PLAYER) {
-      if ((*it).dir == ((*it).dir = Ia::must_move_to(
+      if ((*it).dir == ((*it).dir = Ia::must_move_to (
         static_cast<Entity*>(it)
       ))) {
-        if (time % 50 == 1) {
+        if (time % 50 == 1) {      
+          int move = (*it).dir = Ia::must_move_to(static_cast<Entity*>(it));
+
+          if (move != DIR_LEFT && move != DIR_RIGHT) {
+            (*it).pos_x = trunc((*it).pos_x) + 0.5f;
+          }
+          else {
+            (*it).pos_y = trunc((*it).pos_y) + 0.5f;
+          }
           main_event->char_list.push_back(Factory::create_enemy (
             ENEMY,
             (*heros)->pos_x,
