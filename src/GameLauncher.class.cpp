@@ -186,6 +186,7 @@ void    Gamelauncher::run_arena_3() {
     main_event->multi = 0;
     main_event->arena = 3;  // 3 players in game
     main_event->intro_map = false;
+    main_event->mode_menu = false; // desactive menu render
     main_event->make_new_game(0);
     main_event->game_playing = true; // activate active partie
 }

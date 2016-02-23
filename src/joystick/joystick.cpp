@@ -365,28 +365,34 @@ void Joystick::read_key(int mode) {
         else if (event.type == SDL_JOYBUTTONDOWN) {
             switch (event.cbutton.button) {
                 case 3:     if (false == main_event->menu->introstart) {
-                                main_event->menu->introstart = true;
-                                main_event->mode_menu = true;
-                            }
-                            else if (main_event->draw_winner_multi >= 0
-                                    || main_event->draw_winner_campaign >= 0
-                                    || main_event->draw_lose_campaign >= 0
-                                    || main_event->draw_end_campaign >= 0) {
-                                main_event->draw_winner_multi = -1;
-                                main_event->draw_winner_campaign = -1;
-                                main_event->draw_lose_campaign = -1;
-                                main_event->draw_end_campaign = -1;
-                                main_event->mode_menu = true;
-                                if (main_event->game_playing == true) {
-                                    main_event->game_playing = false;
-                                    main_event->free_game();
-                                    main_event->menu->menu_selected = BIG_MENU;
-                                    main_event->menu->detail_menu_selected = MENU_CAMPAIGN;
-                                }
-                            }
-                            else
-                                main_event->menu->change_menu();
-                            break;
+                                        main_event->menu->introstart = true;
+                                        main_event->mode_menu = true;
+                                    }
+                                    else if (main_event->draw_winner_multi >= 0
+                                            || main_event->draw_winner_campaign >= 0
+                                            || main_event->draw_lose_campaign >= 0
+                                            || main_event->draw_end_campaign >= 0) {
+                                        main_event->draw_winner_multi = -1;
+                                        // main_event->draw_winner_campaign = -1;
+                                        main_event->draw_lose_campaign = -1;
+                                        main_event->draw_end_campaign = -1;
+                                        main_event->mode_menu = true;
+                                        if (main_event->game_playing == true) {
+                                            main_event->game_playing = false;
+                                            main_event->free_game();
+                                            main_event->menu->menu_selected = BIG_MENU;
+                                            main_event->menu->detail_menu_selected = MENU_CAMPAIGN;
+                                        }
+																				if (main_event->draw_winner_campaign >= 0) {
+																					main_event->draw_winner_campaign = -1;
+																					main_event->make_new_game(0);
+	                                        main_event->mode_menu = false;
+	                                        main_event->game_playing = true;
+																				}
+                                    }
+                                    else
+                                        main_event->menu->change_menu();
+                                    break;
 
                 case 2:     main_event->menu->change_menu_back(); break;
                 case 0:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
