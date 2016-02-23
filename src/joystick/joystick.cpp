@@ -14,6 +14,7 @@
 #include <save.class.hpp>
 #include <event.class.hpp>
 #include <Menu.class.hpp>
+#include <map_event.class.hpp>
 
 Joystick::Joystick(void) {
 	this->config[0] = 1;
@@ -275,7 +276,6 @@ void Joystick::read_key(int mode) {
     if (mode == 0){
     while (SDL_PollEvent(&event) && main_event->event_running == true) {
         if (event.type == SDL_KEYDOWN) {
-            // std::cout << "(event).key.keysym.sym " << (event).key.keysym.sym << std::endl;
             switch((event).key.keysym.sym) {
                 case SDLK_ESCAPE:   main_event->exit_free(); break;
 
@@ -357,6 +357,9 @@ void Joystick::read_key(int mode) {
                                       i++;
                                     }
                                     break;
+
+                case SDLK_n:        Map_event::init_clock_at_game_start(); break;
+                case SDLK_m:        break;
 
                 default:            break;
             }
@@ -470,6 +473,9 @@ void Joystick::read_key(int mode) {
                                     case SDLK_k:                main_event->save_config->fill_info_config();
                                                                 main_event->save_config->print_config_debugg();
                                                                 break;
+
+                                case SDLK_n:        Map_event::init_clock_at_game_start(); break;
+                                case SDLK_m:        break;
 
 									case SDLK_RETURN:   if (false == main_event->menu->introstart) {
 				            main_event->menu->introstart = true;

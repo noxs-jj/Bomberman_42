@@ -1,15 +1,9 @@
-sortie de programme:
-
 BUG:
-	fix enchainement map coop
-	fix arena 3 players
 LOGIC:
-
 CONFIG:
-
-RENDER::
-
+RENDER:
 IA:
-    - Une IA scripter speciale pour les boss ? 4 modeles dispo maintenant
-
 SOUND:
+
+MULTI (OPTIONNEL):
+    - finit map_event, au bout des deux minutes reserrer la map, avec cube toute les 0.5 seconde

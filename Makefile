@@ -63,7 +63,8 @@ HEAD = includes/bomb.class.hpp \
                 includes/bonus.class.hpp \
                 includes/wall.class.hpp \
 				includes/factory.class.hpp \
-                includes/save.class.hpp
+				includes/save.class.hpp \
+                includes/map_event.class.hpp
 
 SRC = src/entity/bomb.class.cpp \
                 src/entity/boss.class.cpp \
@@ -78,7 +79,8 @@ SRC = src/entity/bomb.class.cpp \
                 src/ia/ia.class.cpp \
                 src/joystick/joystick.cpp \
                 src/main.cpp \
-                src/map/mapparser.class.cpp \
+				src/map/mapparser.class.cpp \
+                src/map/map_event.class.cpp \
                 src/menu/Menu.class.cpp \
                 src/render/globject.class.cpp \
                 src/render/Matrix.cpp \

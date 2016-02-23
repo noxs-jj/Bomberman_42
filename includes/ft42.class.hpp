@@ -30,6 +30,7 @@
 # include <stdlib.h>
 # include <string>
 # include <time.h>
+# include <ctime>
 # include <unistd.h>
 # include <vector>
 
