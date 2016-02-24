@@ -15,17 +15,27 @@
 
 # include <ft42.class.hpp>
 
+# define WARM_UP_1 120
+# define WARN_UP_2 120
+
 class Map_event : public ft42 {
 public:
-    static time_t  game_start;
-    static time_t  after_two_minutes;
-    static time_t  after_three_minutes;
-    char           in_string[128] = {0};
+    static time_t   game_start;
+    static time_t   after_two_minutes;
+    static time_t   after_three_minutes;
+    static time_t   time_last_event;
+    static int      last_y;
+    static int      last_x;
+    static int      barrage_iterator;
+    char            in_string[128] = {0};
 
     Map_event();
     virtual ~Map_event();
 
     static void     init_clock_at_game_start();
+    static void     check_warm_up();
+    static void     add_one_wall_to_map();
+    static void     put_barrage_on_slop(int y, int x);
 
 };
 

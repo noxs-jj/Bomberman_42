@@ -16,6 +16,7 @@
 #include <ia.class.hpp>
 #include <joystick.hpp>
 #include <save.class.hpp>
+#include <map_event.class.hpp>
 
 Event *	main_event = Factory::create_event(); // GLOBAL
 
@@ -60,8 +61,10 @@ int		main( int ac, char **av ) {
                 break;
             main_event->dec_timer();
             time = clock();
-            if (false == main_event->mode_menu)
+            if (false == main_event->mode_menu) {
+                Map_event::check_warm_up();
                 main_event->render->render_all(main_event->map, main_event->char_list, NULL);
+            }
             else
                 main_event->menu->main_loop();
         }
