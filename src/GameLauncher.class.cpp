@@ -154,7 +154,6 @@ void    Gamelauncher::run_multi_5() {
     main_event->mode_menu = false; // desactive menu render
     main_event->make_new_game(0);
     main_event->game_playing = true; // activate active partie
-    Map_event::init_clock_at_game_start();
 }
 
 void    Gamelauncher::run_arena_2() {

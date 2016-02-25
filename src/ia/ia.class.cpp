@@ -77,11 +77,7 @@ int    Ia::must_move_to( Entity *it ) {
             return (DIR_UP + max[1]);
         }
         else {
-            (*it).put_bomb (
-                BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
-                (*it).bomb_model, (*it).blast_radius,
-                (*it).id
-            );
+            main_event->ia_bomb ((*it).id);
             return ((*it).dir);
         }
     }
@@ -108,11 +104,7 @@ bool    Ia::play_enemy(Enemy *it) {
   if ((*it).dir == move) {
     if ((*it).memory > 400) {
       if (!(*it).friend_zone((*it).pos_x, (*it).pos_y)) {
-        (*it).put_bomb (
-          BOMB_SEC_3, (*it).pos_x, (*it).pos_y,
-          (*it).bomb_model, (*it).blast_radius,
-          (*it).id
-        );
+        main_event->ia_bomb ((*it).id);
       }
     }
     if ((*it).memory < 410) {
@@ -136,7 +128,7 @@ bool    Ia::play_boss(Boss *it, int time) {
       if ((*it).dir == ((*it).dir = Ia::must_move_to (
         static_cast<Entity*>(it)
       ))) {
-        if (time % 50 == 1) {      
+        if (time % 50 == 1) {
           int move = (*it).dir = Ia::must_move_to(static_cast<Entity*>(it));
 
           if (move != DIR_LEFT && move != DIR_RIGHT) {

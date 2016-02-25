@@ -15,7 +15,7 @@
 
 # include <ft42.class.hpp>
 
-# define WARM_UP_1 120
+# define WARM_UP_1 90
 # define WARN_UP_2 120
 
 class Map_event : public ft42 {
@@ -27,6 +27,7 @@ public:
     static int      last_y;
     static int      last_x;
     static int      barrage_iterator;
+    static clock_t  time_last_demi_second;
     char            in_string[128] = {0};
 
     Map_event();

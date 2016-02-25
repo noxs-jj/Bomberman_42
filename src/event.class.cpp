@@ -20,6 +20,7 @@
 #include <enemy.class.hpp>
 #include <boss.class.hpp>
 #include <soundrender.class.hpp>
+#include <map_event.class.hpp>
 #include <Menu.class.hpp>
 #include <mapparser.class.hpp>
 #include <globject.class.hpp> // pour la variable mapX_size
@@ -126,6 +127,7 @@ void	Event::make_new_game( int new_level ) {
         else if (3 == this->actual_level || 6 == this->actual_level || 9 == this->actual_level)
             main_event->soundrender->playMusic("music_boss");
 	}
+    Map_event::init_clock_at_game_start();
 	// main_event->print_map(); // DEBUGG
 }
 
