@@ -65,21 +65,68 @@ void    Map_event::check_warm_up() {
 }
 
 void    Map_event::add_one_wall_to_map() {
-    std::cout << "deb 0" << std::endl;
-    if (Map_event::last_y == 1) {
-        std::cout << "deb 1" << std::endl;
-        if (Map_event::last_x < globject::mapX_size) {
-            Map_event::last_x++;
-            if (Map_event::last_x >= globject::mapX_size) {
-                std::cout << "deb 2" << std::endl;
-                Map_event::last_y++;
-                Map_event::last_x = 0;
-            }
-            std::cout << "Map_event::last_x " << Map_event::last_x << "  |  Map_event::last_y " << Map_event::last_y << std::endl;
-            Map_event::put_barrage_on_slop(Map_event::last_y, Map_event::last_x);
-        }
+    if ((Map_event::barrage_iterator >= 0 && Map_event::barrage_iterator <= 17) \
+        || (Map_event::barrage_iterator >= 68 && Map_event::barrage_iterator <= 83) \
+        || (Map_event::barrage_iterator >= 128 && Map_event::barrage_iterator <= 141) \
+        || (Map_event::barrage_iterator >= 180 && Map_event::barrage_iterator <= 191)
+        ) {
+
+        Map_event::last_x++;
+
+        Map_event::put_barrage_on_slop(Map_event::last_y, Map_event::last_x);
+        Map_event::barrage_iterator++;
     }
+    else if ((Map_event::barrage_iterator >= 18 && Map_event::barrage_iterator <= 34) \
+        || (Map_event::barrage_iterator >= 84 && Map_event::barrage_iterator <= 98) \
+        || (Map_event::barrage_iterator >= 142 && Map_event::barrage_iterator <= 154) \
+        || (Map_event::barrage_iterator >= 192 && Map_event::barrage_iterator <= 202)
+        ) {
+
+        Map_event::last_y++;
+
+        Map_event::put_barrage_on_slop(Map_event::last_y, Map_event::last_x);
+        Map_event::barrage_iterator++;
+    }
+    else if ((Map_event::barrage_iterator >= 35 && Map_event::barrage_iterator <= 51) \
+        || (Map_event::barrage_iterator >= 99 && Map_event::barrage_iterator <= 113) \
+        || (Map_event::barrage_iterator >= 155 && Map_event::barrage_iterator <= 167) \
+        || (Map_event::barrage_iterator >= 203 && Map_event::barrage_iterator <= 213)
+        ) {
+        Map_event::last_x--;
+        Map_event::put_barrage_on_slop(Map_event::last_y, Map_event::last_x);
+        Map_event::barrage_iterator++;
+    }
+    else if ((Map_event::barrage_iterator >= 52 && Map_event::barrage_iterator <= 67) \
+        || (Map_event::barrage_iterator >= 114 && Map_event::barrage_iterator <= 127) \
+        || (Map_event::barrage_iterator >= 168 && Map_event::barrage_iterator <= 179) \
+        || (Map_event::barrage_iterator >= 214 && Map_event::barrage_iterator <= 222)
+        ) {
+        Map_event::last_y--;
+
+        Map_event::put_barrage_on_slop(Map_event::last_y, Map_event::last_x);
+        Map_event::barrage_iterator++;
+    }
+    std::cout << "Map_event::last_x " << Map_event::last_x;
+    std::cout << "  |  Map_event::last_y " << Map_event::last_y;
+    std::cout << "  |  Map_event::barrage_iterator " << Map_event::barrage_iterator << std::endl;
 }
+
+// void    Map_event::add_one_wall_to_map() {
+//     std::cout << "deb 0" << std::endl;
+//     if (Map_event::last_y == 1) {
+//         std::cout << "deb 1" << std::endl;
+//         if (Map_event::last_x < globject::mapX_size) {
+//             Map_event::last_x++;
+//             if (Map_event::last_x >= globject::mapX_size) {
+//                 std::cout << "deb 2" << std::endl;
+//                 Map_event::last_y++;
+//                 Map_event::last_x = 0;
+//             }
+//             std::cout << "Map_event::last_x " << Map_event::last_x << "  |  Map_event::last_y " << Map_event::last_y << std::endl;
+//             Map_event::put_barrage_on_slop(Map_event::last_y, Map_event::last_x);
+//         }
+//     }
+// }
 
 void    Map_event::put_barrage_on_slop(int y, int x) {
     std::cout << "deb 3" << std::endl;
