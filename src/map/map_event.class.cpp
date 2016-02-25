@@ -54,14 +54,15 @@ void    Map_event::check_warm_up() {
         time_t  current_demi_second = clock();
 
         // if (current >= Map_event::after_three_minutes && current - Map_event::time_last_event >= 1) {
-        if (current >= Map_event::after_three_minutes && current_demi_second - Map_event::time_last_demi_second >= 250000) {
+        if (current >= Map_event::after_three_minutes && current_demi_second - Map_event::time_last_demi_second >= 125000) {
             if (current == Map_event::after_three_minutes) {
                 main_event->soundrender->stopMusic();
+                main_event->soundrender->stopSounds();
                 main_event->soundrender->playSound("warm_up_2");
             }
             Map_event::time_last_event = current;
             Map_event::time_last_demi_second = current_demi_second;
-            Map_event::add_one_wall_to_map();
+            Map_event::add_one_barrage_die_to_map();
 
             // std::cout << ">= 3 min " << current;
             // std::cout << "  |  demiSecond " << current_demi_second << std::endl;
@@ -72,14 +73,14 @@ void    Map_event::check_warm_up() {
                 main_event->soundrender->playMusic("warm_up_1");
             Map_event::time_last_event = current;
             Map_event::time_last_demi_second = current_demi_second;
-            Map_event::add_one_wall_to_map();
+            Map_event::add_one_barrage_to_map();
             // std::cout << ">= 2 min" << current;
             // std::cout << "  |  demiSecond " << current_demi_second << std::endl;
         }
     }
 }
 
-void    Map_event::add_one_wall_to_map() {
+void    Map_event::add_one_barrage_to_map() {
     if ((Map_event::barrage_iterator >= 0 && Map_event::barrage_iterator <= 17) \
         || (Map_event::barrage_iterator >= 68 && Map_event::barrage_iterator <= 83) \
         || (Map_event::barrage_iterator >= 128 && Map_event::barrage_iterator <= 141) \
@@ -110,7 +111,7 @@ void    Map_event::add_one_wall_to_map() {
     else if ((Map_event::barrage_iterator >= 52 && Map_event::barrage_iterator <= 67) \
         || (Map_event::barrage_iterator >= 114 && Map_event::barrage_iterator <= 127) \
         || (Map_event::barrage_iterator >= 168 && Map_event::barrage_iterator <= 179) \
-        || (Map_event::barrage_iterator >= 214 && Map_event::barrage_iterator <= 222)
+        || (Map_event::barrage_iterator >= 214 && Map_event::barrage_iterator <= 223)
         ) {
             Map_event::last_y--;
             Map_event::put_barrage_on_slop(Map_event::last_y, Map_event::last_x);
@@ -121,8 +122,74 @@ void    Map_event::add_one_wall_to_map() {
     // std::cout << "  |  Map_event::barrage_iterator " << Map_event::barrage_iterator << std::endl;
 }
 
+void    Map_event::add_one_barrage_die_to_map() {
+    if ((Map_event::barrage_iterator >= 224 && Map_event::barrage_iterator <= 233) \
+        || (Map_event::barrage_iterator >= 260 && Map_event::barrage_iterator <= 267) \
+        || (Map_event::barrage_iterator >= 288 && Map_event::barrage_iterator <= 293) \
+        || (Map_event::barrage_iterator >= 308 && Map_event::barrage_iterator <= 311)
+        ) {
+            Map_event::last_y++;
+            Map_event::put_barrage_die_on_slop(Map_event::last_y, Map_event::last_x);
+            Map_event::barrage_iterator++;
+    }
+    else if ((Map_event::barrage_iterator >= 234 && Map_event::barrage_iterator <= 242) \
+        || (Map_event::barrage_iterator >= 268 && Map_event::barrage_iterator <= 274) \
+        || (Map_event::barrage_iterator >= 294 && Map_event::barrage_iterator <= 298) \
+        || (Map_event::barrage_iterator >= 312 && Map_event::barrage_iterator <= 314)
+        ) {
+            Map_event::last_x--;
+            Map_event::put_barrage_die_on_slop(Map_event::last_y, Map_event::last_x);
+            Map_event::barrage_iterator++;
+    }
+    else if ((Map_event::barrage_iterator >= 243 && Map_event::barrage_iterator <= 251) \
+        || (Map_event::barrage_iterator >= 275 && Map_event::barrage_iterator <= 281) \
+        || (Map_event::barrage_iterator >= 299 && Map_event::barrage_iterator <= 303) \
+        || (Map_event::barrage_iterator >= 315 && Map_event::barrage_iterator <= 317)
+        ) {
+            Map_event::last_y--;
+            Map_event::put_barrage_die_on_slop(Map_event::last_y, Map_event::last_x);
+            Map_event::barrage_iterator++;
+    }
+    else if ((Map_event::barrage_iterator >= 252 && Map_event::barrage_iterator <= 259) \
+        || (Map_event::barrage_iterator >= 282 && Map_event::barrage_iterator <= 287) \
+        || (Map_event::barrage_iterator >= 304 && Map_event::barrage_iterator <= 307) \
+        || (Map_event::barrage_iterator >= 318 && Map_event::barrage_iterator <= 319)
+        ) {
+            Map_event::last_x++;
+            Map_event::put_barrage_die_on_slop(Map_event::last_y, Map_event::last_x);
+            Map_event::barrage_iterator++;
+    }
+    // std::cout << "Map_event::last_x " << Map_event::last_x;
+    // std::cout << "  |  Map_event::last_y " << Map_event::last_y;
+    // std::cout << "  |  Map_event::barrage_iterator " << Map_event::barrage_iterator << std::endl;
+}
+
 void    Map_event::put_barrage_on_slop(int y, int x) {
     delete main_event->map[y][x];
     main_event->map[y][x] = NULL;
-    main_event->map[y][x] = static_cast<Entity*>( Factory::create_wall(WALL_INDESTRUCTIBLE, x, y, WALL_INDESTRUCTIBLE) );
+    main_event->map[y][x] = static_cast<Entity*>( Factory::create_wall(WALL_BARRAGE, x, y, WALL_BARRAGE) );
+}
+
+void    Map_event::put_barrage_die_on_slop(int y, int x) {
+    delete main_event->map[y][x];
+    main_event->map[y][x] = NULL;
+    main_event->map[y][x] = static_cast<Entity*>( Factory::create_wall(WALL_BARRAGE_DIE, x, y, WALL_BARRAGE_DIE) );
+}
+
+void    Map_event::debugg_change_timer_lunch_warmup_1() {
+    Map_event::last_y = 1;
+    Map_event::last_x = 0;
+    Map_event::barrage_iterator = 0;
+    Map_event::game_start = time(0);
+    Map_event::after_two_minutes = Map_event::game_start; // + 2 minutes
+    Map_event::after_three_minutes = Map_event::game_start + 6000;
+}
+
+void    Map_event::debugg_change_timer_lunch_warmup_2() {
+    Map_event::last_y = 4;
+    Map_event::last_x = 14;
+    Map_event::barrage_iterator = 224;
+    Map_event::game_start = time(0);
+    Map_event::after_two_minutes = Map_event::game_start + 6000; // + 2 minutes
+    Map_event::after_three_minutes = Map_event::game_start;
 }

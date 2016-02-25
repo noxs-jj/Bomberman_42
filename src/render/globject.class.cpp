@@ -247,6 +247,9 @@ void        globject::init(float sizeX, float sizeY) {
     globject::load_shaders();
 
     /* load Models */
+    globject("assets/render/models/cube_barrage_die.obj", WALL_BARRAGE_DIE, 1);
+    globject("assets/render/models/cube_barrage.obj", WALL_BARRAGE, 1);
+    globject("assets/render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
     globject("assets/render/models/cube.obj", WALL_HP_1, 1);
     globject("assets/render/models/cube1.obj", WALL_HP_2, 1);
     globject("assets/render/models/cube2.obj", WALL_HP_3, 1);
@@ -257,7 +260,6 @@ void        globject::init(float sizeX, float sizeY) {
     globject("assets/render/bonus_item/bomb_change.obj", BONUS_CHANGE, 1); // BONUS_CHANGE
     globject("assets/render/bonus_item/bomb_remote.obj", BONUS_REMOTE_BOMB, 1); // BONUS_REMOTE_BOMB
     globject("assets/render/bonus_item/move_speed_up.obj", BONUS_SPEED_UP, 1); // BONUS_SPEED_UP
-    globject("assets/render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
     globject("assets/render/models/Bomberman/Bomberman1.obj", PLAYER1, 0.03);
     globject("assets/render/models/Bomberman/Bomberman2.obj", PLAYER2, 0.03);
     globject("assets/render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);

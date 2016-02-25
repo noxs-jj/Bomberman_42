@@ -142,6 +142,8 @@ enum STATUS {
 	BOMB_SEC_2,		// Avant Explosion
 	BOMB_SEC_3,		// Avant Explosion
 
+    WALL_BARRAGE_DIE,
+    WALL_BARRAGE,
 	WALL_INDESTRUCTIBLE,
 	WALL_HP_1,		// va tombe prochaine explosion
 	WALL_HP_2,

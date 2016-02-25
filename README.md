@@ -41,7 +41,8 @@ Key | Joystick | Keyboard1 | Keyboard2
 - Une fois une partie campaing lance, revenir au menu principal et appuyer sur '1' pour passer au niveau suivant
 - Au lancement du jeux, au menu principal (sans partie en cours) appuyer sur '2' pour lancer la maps tests/test1.ntm
 - Une fois une partie lancer en Multi, revenir au menu et appuyer sur '3' pour activer toutes les bombes, puissance max, et remote bomb illimtite
-
+- InGame MULTI or ARENA push 'n' to launch map_event_1
+- InGame MULTI or ARENA push '2' to launch map_event_2
 
 ## Credits
 Whois @42born2code | Jobs

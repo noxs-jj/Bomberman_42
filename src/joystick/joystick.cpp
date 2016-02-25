@@ -358,9 +358,6 @@ void Joystick::read_key(int mode) {
                                     }
                                     break;
 
-                case SDLK_n:        Map_event::init_clock_at_game_start(); break;
-                case SDLK_m:        break;
-
                 default:            break;
             }
         }
@@ -452,50 +449,47 @@ void Joystick::read_key(int mode) {
       while (SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYDOWN) {
                 switch((event).key.keysym.sym) {
-    							case SDLK_ESCAPE:   main_event->exit_free();
-    																	break;
+                    case SDLK_ESCAPE:       main_event->exit_free(); break;
+                    case SDLK_KP_5:         this->arr_key_keyboard[1]->key_up = 1; break;
+                    case SDLK_KP_8:         this->arr_key_keyboard[1]->key_down = 1; break;
+                    case SDLK_KP_6:         this->arr_key_keyboard[1]->key_right = 1; break;
+                    case SDLK_KP_4:         this->arr_key_keyboard[1]->key_left = 1; break;
+                    case SDLK_KP_PLUS:      main_event->player_bomb(main_event->config_keyboard[1]); break;
+                    case SDLK_KP_MINUS:     main_event->remote_put(main_event->config_keyboard[1]); break;
+                    case SDLK_KP_MULTIPLY:  main_event->remote_detonate(main_event->config_keyboard[1]); break;
+                    case SDLK_s:            this->arr_key_keyboard[0]->key_up = 1; break;
+                    case SDLK_w:            this->arr_key_keyboard[0]->key_down = 1; break;
+                    case SDLK_d:            this->arr_key_keyboard[0]->key_right = 1; break;
+                    case SDLK_a:            this->arr_key_keyboard[0]->key_left = 1; break;
+                    case SDLK_c:            main_event->player_bomb(main_event->config_keyboard[0]); break;
+                    case SDLK_v:            main_event->remote_put(main_event->config_keyboard[0]); break;
+                    case SDLK_b:            main_event->remote_detonate(main_event->config_keyboard[0]); break;
+                    case SDLK_n:            Map_event::debugg_change_timer_lunch_warmup_1(); break;
+                    case SDLK_m:            Map_event::debugg_change_timer_lunch_warmup_2(); break;
 
-    							case SDLK_KP_5:     this->arr_key_keyboard[1]->key_up = 1; break;
-    							case SDLK_KP_8:     this->arr_key_keyboard[1]->key_down = 1; break;
-    							case SDLK_KP_6:    	this->arr_key_keyboard[1]->key_right = 1; break;
-    							case SDLK_KP_4:     this->arr_key_keyboard[1]->key_left = 1; break;
-									case SDLK_KP_PLUS: 			main_event->player_bomb(main_event->config_keyboard[1]); break;
-									case SDLK_KP_MINUS: 		main_event->remote_put(main_event->config_keyboard[1]); break;
-									case SDLK_KP_MULTIPLY: 	main_event->remote_detonate(main_event->config_keyboard[1]); break;
+                    case SDLK_k:            main_event->save_config->fill_info_config();
+                                            main_event->save_config->print_config_debugg();
+                                            break;
 
-    							case SDLK_s:     		this->arr_key_keyboard[0]->key_up = 1; break;
-    							case SDLK_w:       	this->arr_key_keyboard[0]->key_down = 1; break;
-    							case SDLK_d:    		this->arr_key_keyboard[0]->key_right = 1; break;
-    							case SDLK_a:     		this->arr_key_keyboard[0]->key_left = 1; break;
-									case SDLK_c: 				main_event->player_bomb(main_event->config_keyboard[0]); break;
-									case SDLK_v: 				main_event->remote_put(main_event->config_keyboard[0]); break;
-									case SDLK_b: 				main_event->remote_detonate(main_event->config_keyboard[0]); break;
-                                    case SDLK_k:                main_event->save_config->fill_info_config();
-                                                                main_event->save_config->print_config_debugg();
-                                                                break;
+                    case SDLK_RETURN:   if (false == main_event->menu->introstart) {
+                                            main_event->menu->introstart = true;
+                                            main_event->mode_menu = true;
+                                            if (main_event->game_playing == true) {
+                                                main_event->game_playing = false;
+                                                main_event->free_game();
+                                            }
+                                        }
+                                        break;
 
-                                case SDLK_n:        Map_event::init_clock_at_game_start(); break;
-                                case SDLK_m:        break;
+                    case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
+                                            main_event->mode_menu = false;
+                                        else if (main_event->game_playing == true)
+                                            main_event->mode_menu = true;
+                                        break;
 
-									case SDLK_RETURN:   if (false == main_event->menu->introstart) {
-				            main_event->menu->introstart = true;
-				            main_event->mode_menu = true;
-										if (main_event->game_playing == true) {
-											main_event->game_playing = false;
-											main_event->free_game();
-										}
-				          }
-									break;
-
-    							case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
-    																		main_event->mode_menu = false;
-    																	else if (main_event->game_playing == true)
-    																		main_event->mode_menu = true;
-    																	break;
-
-    							default: break;
-    						}
-    				}
+                    default: break;
+                }
+            }
             // JOYSTICK BUTTON
             else if (event.type == SDL_JOYBUTTONDOWN) {
 

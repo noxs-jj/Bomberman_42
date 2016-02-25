@@ -15,8 +15,8 @@
 
 # include <ft42.class.hpp>
 
-# define WARM_UP_1 90
-# define WARN_UP_2 150
+# define WARM_UP_1 60
+# define WARN_UP_2 90
 
 class Map_event : public ft42 {
 public:
@@ -35,8 +35,12 @@ public:
 
     static void     init_clock_at_game_start();
     static void     check_warm_up();
-    static void     add_one_wall_to_map();
+    static void     add_one_barrage_to_map();
+    static void     add_one_barrage_die_to_map();
     static void     put_barrage_on_slop(int y, int x);
+    static void     put_barrage_die_on_slop(int y, int x);
+    static void     debugg_change_timer_lunch_warmup_1();
+    static void     debugg_change_timer_lunch_warmup_2();
 
 };
 
