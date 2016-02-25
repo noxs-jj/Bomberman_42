@@ -86,6 +86,7 @@ void    SoundRender::load_files(void) {
             && this->loadSound("powerup", "assets/sound/ITEM_GET.wav")
             && this->loadSound("danger", "assets/sound/B_A040.wav")
             && this->loadSound("special", "assets/sound/B_SPECIAL.wav")
+            && this->loadSound("warm_up_2", "assets/sound/MLG_Horns_Sound_Effect.wav")
             // music
             && this->loadMusic("victory", "assets/sound/victory.wav")
             && this->loadMusic("victory_multiplayer", "assets/sound/victory_multiplayer.wav")
@@ -94,6 +95,7 @@ void    SoundRender::load_files(void) {
             && this->loadMusic("music_2", "assets/sound/music_2-5-8.wav")
             && this->loadMusic("music_boss", "assets/sound/music_3-6-9.wav")
             && this->loadMusic("ps1", "assets/sound/ps1.wav")
+            && this->loadMusic("warm_up_1", "assets/sound/Super_Mario_Bros-Overworld-Time_Running_Out.wav")
         )) {
         this->w_error(FUNC + "loadsound error");
         throw std::exception();

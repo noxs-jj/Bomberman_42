@@ -15,6 +15,7 @@
 #include <event.class.hpp>
 #include <entity.class.hpp>
 #include <wall.class.hpp>
+#include <soundrender.class.hpp>
 
 time_t  Map_event::game_start = 0;
 time_t  Map_event::after_two_minutes = 0;
@@ -54,14 +55,21 @@ void    Map_event::check_warm_up() {
 
         // if (current >= Map_event::after_three_minutes && current - Map_event::time_last_event >= 1) {
         if (current >= Map_event::after_three_minutes && current_demi_second - Map_event::time_last_demi_second >= 250000) {
+            if (current == Map_event::after_three_minutes) {
+                main_event->soundrender->stopMusic();
+                main_event->soundrender->playSound("warm_up_2");
+            }
             Map_event::time_last_event = current;
             Map_event::time_last_demi_second = current_demi_second;
             Map_event::add_one_wall_to_map();
+
             // std::cout << ">= 3 min " << current;
             // std::cout << "  |  demiSecond " << current_demi_second << std::endl;
         }
         // else if (current >= Map_event::after_two_minutes && current - Map_event::time_last_event >= 1) {
         else if (current >= Map_event::after_two_minutes && current_demi_second - Map_event::time_last_demi_second >= 250000) {
+            if (current == Map_event::after_two_minutes)
+                main_event->soundrender->playMusic("warm_up_1");
             Map_event::time_last_event = current;
             Map_event::time_last_demi_second = current_demi_second;
             Map_event::add_one_wall_to_map();
