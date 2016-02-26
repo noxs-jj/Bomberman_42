@@ -58,15 +58,14 @@ void 	Event::free_game( void ) {
     // std::free(this->map);
     // FREE MAP ON MAPPARSER
 
-    main_event->soundrender->stopMusic();
-    main_event->soundrender->stopSounds();
+    // main_event->soundrender->stopMusic();
+    // main_event->soundrender->stopSounds();
 
     std::list<Entity *>::iterator it = main_event->char_list.begin();
     std::list<Entity *>::iterator end = main_event->char_list.end();
     while (it != end) {
         delete *it;
         main_event->char_list.erase(it); // delete this ?
-        std::cout << "FUITE PROBABLE" << std::endl;
         it = main_event->char_list.begin();
         end = main_event->char_list.end();
     }
