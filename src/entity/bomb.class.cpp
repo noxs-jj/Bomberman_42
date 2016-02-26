@@ -152,6 +152,7 @@ void	Bomb::add_bomb_nbr(int id) {
 }
 
 void Bomb::suppr_remote_lst( void ) {
+    Entity *tmp = NULL;
 
 	std::list<Entity *>::iterator it = main_event->char_list.begin();
 	std::list<Entity *>::iterator end = main_event->char_list.end();
@@ -162,6 +163,8 @@ void Bomb::suppr_remote_lst( void ) {
 			std::list<Entity *>::iterator endd = (*it)->remote_lst.end();
 			while (itt != endd) {
 				if ((*itt)->id == this->id) {
+                    tmp = *itt;
+                    delete tmp;
 					(*it)->remote_lst.erase(itt);
 					return ;
 				}

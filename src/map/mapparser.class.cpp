@@ -19,8 +19,11 @@
 #include <enemy.class.hpp>
 #include <boss.class.hpp>
 #include <globject.class.hpp>
+#include <event.class.hpp>
 
 Entity ***      Mapparser::map_from_file( char *map_path ) {
+    if (NULL != main_event->map)
+        Mapparser::free_old_map();
   Entity ***    tmp = Mapparser::map_alloc();
   Entity *      elem = NULL;
   std::fstream  file;
@@ -175,6 +178,21 @@ Entity ***  Mapparser::map_alloc() { // return map 2d without entity
     }
 
   return new_map;
+}
+
+void        Mapparser::free_old_map() {
+    int y = 0;
+    int x = 0;
+
+    while (y < globject::mapY_size - 1) {
+        x = 0;
+        if (NULL != main_event->map[y])
+            std::free( main_event->map[y]);
+        y++;
+    }
+    if (NULL != main_event->map)
+        std::free(main_event->map);
+    main_event->map = NULL;
 }
 
 void         Mapparser::get_error() const {

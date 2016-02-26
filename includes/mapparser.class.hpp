@@ -63,6 +63,7 @@ public:
     static Entity ***   map_from_file( char *map_path );
     static Entity ***   map_alloc();
     static Entity *     get_entity_from_map( std::string & casemap, float x, float y);
+    static void         free_old_map();
 
 };
 

@@ -65,9 +65,6 @@ Entity & Entity::operator=( Entity const & rhs ) {
 }
 
 int		Entity::check_move( float x, float y ) {
-	// if (this->type == ENEMY)
-		// std::cout << " x: " << (int)x << " float x " << x << " y: " << (int)y << " float y " << y << std::endl;
-
   if (main_event->map[(int)y][(int)x] == NULL)
       return EMPTY;
 	if (main_event->map[(int)y][(int)x]->type == EMPTY)
@@ -192,8 +189,6 @@ void	Entity::move( int dir ) {
 		x += 0.08f;
 	else
 		frame = 0;
-	// if (this->type == ENEMY)
-		// std::cout << "empty= " << EMPTY << " ret: " << ret << " x: " << x + this->pos_x << " y: " << y + this->pos_y << std::endl;
 	if (check_coord_exist(x * 4 + this->pos_x, y * 4 + this->pos_y) == false)
 		return ;
 	ret = check_move(x * 4 + this->pos_x, y * 4 + this->pos_y);
@@ -203,8 +198,7 @@ void	Entity::move( int dir ) {
 		this->dir = dir;
 		this->pos_x = x + this->pos_x;
 		this->pos_y = y + this->pos_y;
-		if (ret == BONUS)
-		{
+		if (ret == BONUS) {
 			static_cast<Bonus*>(main_event->map[(int)this->pos_y][(int)this->pos_x])->affect(this);
 			if (main_event->map[(int)this->pos_y][(int)this->pos_x]->type == BONUS) {
 				delete main_event->map[(int)this->pos_y][(int)this->pos_x];
@@ -264,9 +258,13 @@ void	Entity::die( void ) {
 	if (this->type == PLAYER && main_event->multi > 0 && count_entity(PLAYER) == 2) {
 		std::list<Entity *>::iterator it = main_event->char_list.begin();
 		std::list<Entity *>::iterator end = main_event->char_list.end();
+        Entity * tmp = NULL;
 		while (it != end) {
 			if (this->id == (*it)->id) {
+                tmp = *it;
+                delete tmp;
 				main_event->char_list.erase(it); // delete this ?
+                std::cout << "fuite 4" << std::endl;
 				main_event->to_die_entity = true;
 				it = main_event->char_list.begin();
 				end = main_event->char_list.end();
@@ -284,12 +282,16 @@ void	Entity::die( void ) {
 		if (main_event->coop == true || (main_event->multi <= 0 && main_event->arena <= 0))
 			globject::spin(this->pos_x, this->pos_y);
 		main_event->game_ended = 150;
+        Entity * tmp = NULL;
 
 		std::list<Entity *>::iterator it = main_event->char_list.begin();
 		std::list<Entity *>::iterator end = main_event->char_list.end();
 		while (it != end) {
 			if (this->id == (*it)->id) {
+                tmp = *it;
+                delete tmp;
 				main_event->char_list.erase(it); // delete this ?
+                std::cout << "fuite 2" << std::endl;
 				main_event->to_die_entity = true;
 				it = main_event->char_list.begin();
 			}
@@ -304,9 +306,13 @@ void	Entity::die( void ) {
 	else {
 		std::list<Entity *>::iterator it = main_event->char_list.begin();
 		std::list<Entity *>::iterator end = main_event->char_list.end();
+        Entity * tmp = NULL;
 		while (it != end) {
 			if (this->id == (*it)->id) {
+                tmp = *it;
+                delete tmp;
 				main_event->char_list.erase(it); // delete this ?
+                std::cout << "fuite 3" << std::endl;
 				main_event->to_die_entity = true;
 				it = main_event->char_list.begin();
 			}
