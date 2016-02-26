@@ -56,6 +56,7 @@ void 	Event::free_game( void ) {
 	// 	y++;
 	// }
     // std::free(this->map);
+
     // FREE MAP ON MAPPARSER
 
     // main_event->soundrender->stopMusic();

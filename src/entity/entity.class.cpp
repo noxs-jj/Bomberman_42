@@ -258,13 +258,11 @@ void	Entity::die( void ) {
 	if (this->type == PLAYER && main_event->multi > 0 && count_entity(PLAYER) == 2) {
 		std::list<Entity *>::iterator it = main_event->char_list.begin();
 		std::list<Entity *>::iterator end = main_event->char_list.end();
-        Entity * tmp = NULL;
 		while (it != end) {
 			if (this->id == (*it)->id) {
-                tmp = *it;
-                delete tmp;
+                delete *it;
 				main_event->char_list.erase(it); // delete this ?
-                std::cout << "fuite 4" << std::endl;
+                // std::cout << "fuite 4" << std::endl;
 				main_event->to_die_entity = true;
 				it = main_event->char_list.begin();
 				end = main_event->char_list.end();
@@ -282,16 +280,14 @@ void	Entity::die( void ) {
 		if (main_event->coop == true || (main_event->multi <= 0 && main_event->arena <= 0))
 			globject::spin(this->pos_x, this->pos_y);
 		main_event->game_ended = 150;
-        Entity * tmp = NULL;
 
 		std::list<Entity *>::iterator it = main_event->char_list.begin();
 		std::list<Entity *>::iterator end = main_event->char_list.end();
 		while (it != end) {
 			if (this->id == (*it)->id) {
-                tmp = *it;
-                delete tmp;
+                delete *it;
 				main_event->char_list.erase(it); // delete this ?
-                std::cout << "fuite 2" << std::endl;
+                // std::cout << "fuite 2" << std::endl;
 				main_event->to_die_entity = true;
 				it = main_event->char_list.begin();
 			}
@@ -301,18 +297,15 @@ void	Entity::die( void ) {
 		main_event->draw_lose_campaign = 1;
 		main_event->game_ended = 150;
 
-
 	}
 	else {
 		std::list<Entity *>::iterator it = main_event->char_list.begin();
 		std::list<Entity *>::iterator end = main_event->char_list.end();
-        Entity * tmp = NULL;
 		while (it != end) {
 			if (this->id == (*it)->id) {
-                tmp = *it;
-                delete tmp;
+                delete *it;
 				main_event->char_list.erase(it); // delete this ?
-                std::cout << "fuite 3" << std::endl;
+                // std::cout << "fuite 3" << std::endl;
 				main_event->to_die_entity = true;
 				it = main_event->char_list.begin();
 			}

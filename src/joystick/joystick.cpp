@@ -50,7 +50,7 @@ Joystick & Joystick::operator=( Joystick const & rhs ) {
 void Joystick::init_joystick() {
 	if (main_event->menu->joystick_number > 0) {
 		this->manette1 = SDL_JoystickOpen(0);
-		if (this->manette1 < 0) {
+		if (this->manette1 == NULL) {
 			this->w_error("Could not open joystick 1 ");
             this->w_error(SDL_GetError());
 			throw std::exception();
@@ -58,7 +58,7 @@ void Joystick::init_joystick() {
 	}
 	if (main_event->menu->joystick_number > 1) {
 		this->manette2 = SDL_JoystickOpen(1);
-		if (this->manette2 < 0) {
+		if (this->manette2 == NULL) {
 			this->w_error("Could not open joystick 2 ");
             this->w_error(SDL_GetError());
 			throw std::exception();
@@ -66,7 +66,7 @@ void Joystick::init_joystick() {
  	}
 	if (main_event->menu->joystick_number > 2) {
 		this->manette3 = SDL_JoystickOpen(2);
-		if (this->manette3 < 0) {
+		if (this->manette3 == NULL) {
 			this->w_error("Could not open joystick 3 ");
             this->w_error(SDL_GetError());
 			throw std::exception();
@@ -74,7 +74,7 @@ void Joystick::init_joystick() {
  	}
 	if (main_event->menu->joystick_number > 3) {
 		this->manette4 = SDL_JoystickOpen(3);
-		if (this->manette4 < 0) {
+		if (this->manette4 == NULL) {
 			this->w_error("Could not open joystick 4 ");
             this->w_error(SDL_GetError());
 			throw std::exception();
@@ -82,7 +82,7 @@ void Joystick::init_joystick() {
  	}
 	if (main_event->menu->joystick_number > 4) {
 		this->manette5 = SDL_JoystickOpen(4);
-		if (this->manette5 < 0) {
+		if (this->manette5 == NULL) {
 			this->w_error("Could not open joystick 5 ");
             this->w_error(SDL_GetError());
 			throw std::exception();

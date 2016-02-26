@@ -184,7 +184,7 @@ void        Mapparser::free_old_map() {
     int y = 0;
     int x = 0;
 
-    while (y < globject::mapY_size - 1) {
+    while (y < globject::mapY_size) {
         x = 0;
         if (NULL != main_event->map[y])
             std::free( main_event->map[y]);
