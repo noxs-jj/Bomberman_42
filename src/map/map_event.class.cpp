@@ -176,6 +176,19 @@ void    Map_event::kill_entity_list(int y, int x) {
     (void)x;
     (void)y;
     // Do kill player, enemy, boss here
+    std::list<Entity *>::iterator it = main_event->char_list.begin();
+	std::list<Entity *>::iterator end = main_event->char_list.end();
+
+	while (it != end) {
+        if ((int)x == (int)((*it)->pos_x)
+            && (int)y == (int)((*it)->pos_y)) {
+            (*it)->die();
+            it = main_event->char_list.begin();
+            end = main_event->char_list.end();
+        }
+        if (it != end)
+            it++;
+    }
 }
 
         // Warm up 1 time + WARN_UP_1
