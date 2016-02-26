@@ -37,14 +37,9 @@ void    Map_event::init_clock_at_game_start() {
     Map_event::last_y = 1;
     Map_event::last_x = 0;
     Map_event::barrage_iterator = 0;
-
-    // std::cout << "Map_event::game_start ctime = " << ctime(&Map_event::game_start) << std::endl;
-    // std::cout << "Map_event::game_start = " << Map_event::game_start << std::endl;
-    // std::cout << "Map_event::game_start + 2 min = " << Map_event::after_two_minutes << std::endl;
-    // std::cout << "Map_event::game_start + 3 min = " << Map_event::after_three_minutes << std::endl;
-    // std::cout << "(CLOCKS_PER_SEC / 2) = " << (CLOCKS_PER_SEC / 2) << std::endl;
 }
 
+        // Warm up 1 time + WARN_UP_1
 void    Map_event::check_warm_up() {
     if (0 == Map_event::game_start)
         return;
@@ -53,7 +48,13 @@ void    Map_event::check_warm_up() {
         time_t  current = time(0);
         time_t  current_demi_second = clock();
 
-        // if (current >= Map_event::after_three_minutes && current - Map_event::time_last_event >= 1) {
+        // Set new position for warmup 2 when warmup 1 done
+        if (224 == barrage_iterator) {
+            Map_event::last_y = 4;
+            Map_event::last_x = 14;
+        }
+
+        // Warm up 2 time + WARN_UP_2
         if (current >= Map_event::after_three_minutes && current_demi_second - Map_event::time_last_demi_second >= 125000) {
             if (current == Map_event::after_three_minutes) {
                 main_event->soundrender->stopMusic();
@@ -63,23 +64,19 @@ void    Map_event::check_warm_up() {
             Map_event::time_last_event = current;
             Map_event::time_last_demi_second = current_demi_second;
             Map_event::add_one_barrage_die_to_map();
-
-            // std::cout << ">= 3 min " << current;
-            // std::cout << "  |  demiSecond " << current_demi_second << std::endl;
         }
-        // else if (current >= Map_event::after_two_minutes && current - Map_event::time_last_event >= 1) {
+        // Warm up 1 time + WARN_UP_1
         else if (current >= Map_event::after_two_minutes && current_demi_second - Map_event::time_last_demi_second >= 250000) {
             if (current == Map_event::after_two_minutes)
                 main_event->soundrender->playMusic("warm_up_1");
             Map_event::time_last_event = current;
             Map_event::time_last_demi_second = current_demi_second;
             Map_event::add_one_barrage_to_map();
-            // std::cout << ">= 2 min" << current;
-            // std::cout << "  |  demiSecond " << current_demi_second << std::endl;
         }
     }
 }
 
+        // Warm up 1 time + WARN_UP_1
 void    Map_event::add_one_barrage_to_map() {
     if ((Map_event::barrage_iterator >= 0 && Map_event::barrage_iterator <= 17) \
         || (Map_event::barrage_iterator >= 68 && Map_event::barrage_iterator <= 83) \
@@ -117,11 +114,9 @@ void    Map_event::add_one_barrage_to_map() {
             Map_event::put_barrage_on_slop(Map_event::last_y, Map_event::last_x);
             Map_event::barrage_iterator++;
     }
-    // std::cout << "Map_event::last_x " << Map_event::last_x;
-    // std::cout << "  |  Map_event::last_y " << Map_event::last_y;
-    // std::cout << "  |  Map_event::barrage_iterator " << Map_event::barrage_iterator << std::endl;
 }
 
+        // Warm up 2 time + WARN_UP_2
 void    Map_event::add_one_barrage_die_to_map() {
     if ((Map_event::barrage_iterator >= 224 && Map_event::barrage_iterator <= 233) \
         || (Map_event::barrage_iterator >= 260 && Map_event::barrage_iterator <= 267) \
@@ -159,23 +154,31 @@ void    Map_event::add_one_barrage_die_to_map() {
             Map_event::put_barrage_die_on_slop(Map_event::last_y, Map_event::last_x);
             Map_event::barrage_iterator++;
     }
-    // std::cout << "Map_event::last_x " << Map_event::last_x;
-    // std::cout << "  |  Map_event::last_y " << Map_event::last_y;
-    // std::cout << "  |  Map_event::barrage_iterator " << Map_event::barrage_iterator << std::endl;
 }
 
+        // Warm up 2 time + WARN_UP_2
 void    Map_event::put_barrage_on_slop(int y, int x) {
     delete main_event->map[y][x];
     main_event->map[y][x] = NULL;
     main_event->map[y][x] = static_cast<Entity*>( Factory::create_wall(WALL_BARRAGE, x, y, WALL_BARRAGE) );
+    Map_event::kill_entity_list(y, x);
 }
 
+        // Warm up 2 time + WARN_UP_2
 void    Map_event::put_barrage_die_on_slop(int y, int x) {
     delete main_event->map[y][x];
     main_event->map[y][x] = NULL;
     main_event->map[y][x] = static_cast<Entity*>( Factory::create_wall(WALL_BARRAGE_DIE, x, y, WALL_BARRAGE_DIE) );
+    Map_event::kill_entity_list(y, x);
 }
 
+void    Map_event::kill_entity_list(int y, int x) {
+    (void)x;
+    (void)y;
+    // Do kill player, enemy, boss here
+}
+
+        // Warm up 1 time + WARN_UP_1
 void    Map_event::debugg_change_timer_lunch_warmup_1() {
     Map_event::last_y = 1;
     Map_event::last_x = 0;
@@ -185,6 +188,7 @@ void    Map_event::debugg_change_timer_lunch_warmup_1() {
     Map_event::after_three_minutes = Map_event::game_start + 6000;
 }
 
+        // Warm up 2 time + WARN_UP_2
 void    Map_event::debugg_change_timer_lunch_warmup_2() {
     Map_event::last_y = 4;
     Map_event::last_x = 14;

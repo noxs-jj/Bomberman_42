@@ -16,7 +16,7 @@
 # include <ft42.class.hpp>
 
 # define WARM_UP_1 60
-# define WARN_UP_2 90
+# define WARN_UP_2 120
 
 class Map_event : public ft42 {
 public:
@@ -41,6 +41,7 @@ public:
     static void     put_barrage_die_on_slop(int y, int x);
     static void     debugg_change_timer_lunch_warmup_1();
     static void     debugg_change_timer_lunch_warmup_2();
+    static void     kill_entity_list(int y, int x);
 
 };
 
