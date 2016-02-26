@@ -35,6 +35,8 @@ public:
     static void run_arena_4();
     static void run_arena_5();
 
+    static void retry_previous_game();
+
 private:
     Gamelauncher( Gamelauncher const & src ) = delete;
     Gamelauncher & operator=( Gamelauncher const & rhs ) = delete;

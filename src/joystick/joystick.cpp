@@ -15,6 +15,7 @@
 #include <event.class.hpp>
 #include <Menu.class.hpp>
 #include <map_event.class.hpp>
+#include <GameLauncher.class.hpp>
 
 Joystick::Joystick(void) {
 	this->config[0] = 1;
@@ -273,6 +274,7 @@ void Joystick::read_key(int mode) {
 	SDL_Event			event;
 	int					i = 0;
 
+    // IN MENU
     if (mode == 0){
     while (SDL_PollEvent(&event) && main_event->event_running == true) {
         if (event.type == SDL_KEYDOWN) {
@@ -303,12 +305,12 @@ void Joystick::read_key(int mode) {
                                             main_event->menu->menu_selected = BIG_MENU;
                                             main_event->menu->detail_menu_selected = MENU_CAMPAIGN;
                                         }
-																				if (main_event->draw_winner_campaign >= 0) {
-																					main_event->draw_winner_campaign = -1;
-																					main_event->make_new_game(0);
-	                                        main_event->mode_menu = false;
-	                                        main_event->game_playing = true;
-																				}
+                                        if (main_event->draw_winner_campaign >= 0) {
+                                            main_event->draw_winner_campaign = -1;
+                                            main_event->make_new_game(0);
+                                            main_event->mode_menu = false;
+                                            main_event->game_playing = true;
+                                        }
                                     }
                                     else
                                         main_event->menu->change_menu();
@@ -383,35 +385,37 @@ void Joystick::read_key(int mode) {
                                             main_event->menu->menu_selected = BIG_MENU;
                                             main_event->menu->detail_menu_selected = MENU_CAMPAIGN;
                                         }
-																				if (main_event->draw_winner_campaign >= 0) {
-																					main_event->draw_winner_campaign = -1;
-																					main_event->make_new_game(0);
-	                                        main_event->mode_menu = false;
-	                                        main_event->game_playing = true;
-																				}
+                                        if (main_event->draw_winner_campaign >= 0) {
+                                            main_event->draw_winner_campaign = -1;
+                                            main_event->make_new_game(0);
+                                            main_event->mode_menu = false;
+                                            main_event->game_playing = true;
+                                        }
                                     }
                                     else
                                         main_event->menu->change_menu();
                                     break;
 
                 case 2:     main_event->menu->change_menu_back(); break;
-                case 0:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 1:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 4:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 5:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 6:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 7:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 0:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 1:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+
+                case 4:     Gamelauncher::retry_previous_game(); break;
+
+                // case 5:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 6:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 7:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
 
                 case 9:     if (true == main_event->mode_menu && main_event->game_playing == true)
                                 main_event->mode_menu = false;
                             else if (main_event->game_playing == true)
-                            main_event->mode_menu = true;
+                                main_event->mode_menu = true;
                             break;
 
-                case 8:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 10:    fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 11:    fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 12:    fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 8:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 10:    fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 11:    fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 12:    fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 default: break;
               }
         }
@@ -445,6 +449,7 @@ void Joystick::read_key(int mode) {
         }
       }
     }
+    //In GAME
     else {
       while (SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYDOWN) {
@@ -495,13 +500,13 @@ void Joystick::read_key(int mode) {
 
               switch (event.cbutton.button) {
                 case 3:   main_event->player_bomb(main_event->config[event.jbutton.which]); break;
-                case 0:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 0:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 2:   main_event->remote_put(main_event->config[event.jbutton.which]); break;
                 case 1:   main_event->remote_detonate(main_event->config[event.jbutton.which]); break;
-                case 4:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 5:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 7:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 4:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 5:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 7:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 case 9:   if ((main_event->multi > 0 || main_event->arena > 0) \
 					 		&& main_event->live_player[main_event->config[event.jbutton.which] - PLAYER1] == true) {
 								if (true == main_event->mode_menu && main_event->game_playing == true)
@@ -525,9 +530,9 @@ void Joystick::read_key(int mode) {
 									}
 								}
 								break;
-                case 10:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 11:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                case 12:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 10:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 11:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                // case 12:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
                 default: break;
               }
             }

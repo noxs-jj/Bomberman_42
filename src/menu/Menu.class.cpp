@@ -25,7 +25,9 @@ void	Menu::winner_multi() {
 		main_event->soundrender->stopMusic();
 		main_event->soundrender->playMusic("victory_multiplayer");
 	}
-	print_surface(this->winner[main_event->draw_winner_multi - 1], this->winner[main_event->draw_winner_multi - 1], 400, 400, 0);
+    print_surface(this->winner[main_event->draw_winner_multi - 1], this->winner[main_event->draw_winner_multi - 1], 400, 400, 0);
+    print_surface(this->winner_push_to_retry_previous, this->winner_push_to_retry_previous, 200, 550, 0);
+	print_surface(this->winner_push_to_go_menu, this->winner_push_to_go_menu, 300, 700, 0);
 }
 
 void	Menu::winner_campaign() {
@@ -45,7 +47,11 @@ void	Menu::lose_campaign() {
 		main_event->soundrender->stopMusic();
 		main_event->soundrender->playSound("lose");
 	}
-	print_surface(this->lose_campaign_txt, this->lose_campaign_txt, 400, 400, 0);
+	print_surface(this->lose_campaign_txt, this->lose_campaign_txt, 500, 400, 0);
+    print_surface(this->winner_push_to_go_menu, this->winner_push_to_go_menu, 300, 700, 0);
+    if (main_event->multi >= 2 || main_event->arena >= 2) {
+        print_surface(this->winner_push_to_retry_previous, this->winner_push_to_retry_previous, 200, 550, 0);
+    }
 }
 
 void	Menu::end_campaign() {
@@ -608,6 +614,8 @@ void Menu::init() {
     this->lose_campaign_txt = TTF_RenderText_Blended(this->SansPosterBold, "You Lose !", this->red);
     this->winner_campaign_txt = TTF_RenderText_Blended(this->SansPosterBold, "You win ! Next level...", this->red);
     this->winner_game_txt = TTF_RenderText_Blended(this->SansPosterBold, "You win the game !", this->red);
+    this->winner_push_to_retry_previous = TTF_RenderText_Blended(this->SansPosterBold, "Push   'left trigger'   to retry", this->white);
+    this->winner_push_to_go_menu = TTF_RenderText_Blended(this->SansPosterBold, "Push   'Y'   to go menu", this->white);
 
     // Sound Config
     this->str_config_sound = TTF_RenderText_Blended(this->SansPosterBold, "Sound Config", this->white);
@@ -740,6 +748,9 @@ Menu::~Menu() {
     SDL_FreeSurface(this->winner[2]);
     SDL_FreeSurface(this->winner[3]);
     SDL_FreeSurface(this->winner[4]);
+
+    SDL_FreeSurface(this->winner_push_to_retry_previous);
+    SDL_FreeSurface(this->winner_push_to_go_menu);
 
     std::free(this->winner);
 }

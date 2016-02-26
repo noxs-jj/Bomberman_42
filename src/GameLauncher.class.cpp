@@ -228,6 +228,25 @@ void    Gamelauncher::run_arena_5() {
     main_event->game_playing = true; // activate active partie
 }
 
+void    Gamelauncher::retry_previous_game() {
+    if (5 == main_event->multi)
+        Gamelauncher::run_multi_5();
+    else if (4 == main_event->multi)
+        Gamelauncher::run_multi_4();
+    else if (3 == main_event->multi)
+        Gamelauncher::run_multi_3();
+    else if (2 == main_event->multi)
+        Gamelauncher::run_multi_2();
+    else if (5 == main_event->arena)
+        Gamelauncher::run_arena_5();
+    else if (4 == main_event->arena)
+        Gamelauncher::run_arena_4();
+    else if (3 == main_event->arena)
+        Gamelauncher::run_arena_3();
+    else if (2 == main_event->arena)
+        Gamelauncher::run_arena_2();
+}
+
 Gamelauncher::Gamelauncher() {}
 
 Gamelauncher::~Gamelauncher() {}

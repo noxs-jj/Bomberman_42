@@ -170,6 +170,8 @@ public:
     SDL_Surface *   lose_campaign_txt;
     SDL_Surface *   winner_campaign_txt;
     SDL_Surface *   winner_game_txt;
+    SDL_Surface *   winner_push_to_retry_previous;
+    SDL_Surface *   winner_push_to_go_menu;
     SDL_Surface **  winner;
 
     bool            musicIsPlaying = false;     // pour fixer le probleme de la musique
