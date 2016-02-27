@@ -159,14 +159,27 @@ int         Mapparser::valid_map( char const *map_path ) {
 }
 
 Entity ***  Mapparser::map_alloc() { // return map 2d without entity
-  int         y = 0;
-  Entity ***  new_map = NULL;
+    int         y = 0;
+    Entity ***  new_map = NULL;
 
-  new_map = (Entity ***)std::malloc(sizeof(Entity **) * globject::mapY_size);
+// TO DELETE SI SEGFAULT
+    // if (main_event->map != NULL) {
+    //     while (y < globject::mapY_size) {
+    //         std::free(main_event->map[y]);
+    //         main_event->map[y] = NULL;
+    //         y++;
+    //     }
+    //     std::free(main_event->map);
+    //     main_event->map = NULL;
+    // }
+/////////////////////
+
+    new_map = (Entity ***)std::malloc(sizeof(Entity **) * globject::mapY_size);
     if (new_map == NULL) {
         main_event->w_error("Mapparser::map_alloc() new_map Allocation error");
         throw std::exception();
     }
+    y = 0;
     while (y < globject::mapY_size) {
         new_map[y] = NULL;
         new_map[y] = (Entity **)std::malloc(sizeof(Entity *) * globject::mapX_size);

@@ -65,11 +65,6 @@ void 	Event::free_game( void ) {
         end = main_event->char_list.end();
     }
     main_event->char_list.clear();
-
-	while (this->char_list.empty() == false) {
-		this->char_list.pop_front();
-        std::cout << "FUITE PROBABLE" << std::endl;
-	}
 // FUITE END
 }
 
