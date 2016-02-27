@@ -30,6 +30,7 @@ public:
     float                   frame;
     int                     speed;
     int                     blast_radius;
+    long long int           time_creation;
     float                   zoom_m;
     int                     bomb_nbr = 1;
     bool                    kick_bomb = false;

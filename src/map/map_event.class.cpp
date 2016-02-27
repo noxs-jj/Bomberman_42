@@ -161,6 +161,7 @@ void    Map_event::put_barrage_on_slop(int y, int x) {
     delete main_event->map[y][x];
     main_event->map[y][x] = NULL;
     main_event->map[y][x] = static_cast<Entity*>( Factory::create_wall(WALL_BARRAGE, x, y, WALL_BARRAGE) );
+    main_event->map[y][x]->time_creation  = clock();
     Map_event::kill_entity_list(y, x);
 }
 
@@ -169,6 +170,7 @@ void    Map_event::put_barrage_die_on_slop(int y, int x) {
     delete main_event->map[y][x];
     main_event->map[y][x] = NULL;
     main_event->map[y][x] = static_cast<Entity*>( Factory::create_wall(WALL_BARRAGE_DIE, x, y, WALL_BARRAGE_DIE) );
+    main_event->map[y][x]->time_creation  = clock();
     Map_event::kill_entity_list(y, x);
 }
 

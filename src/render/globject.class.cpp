@@ -520,6 +520,11 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 				zoomMul *= 1.0f - (1.0f / (static_cast<float> \
 					((dynamic_cast<Fire*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer))));
 			}
+            if (map[i + mapY_size / 2][j + mapX_size / 2]->model == WALL_BARRAGE || map[i + mapY_size / 2][j + mapX_size / 2]->model == WALL_BARRAGE_DIE)
+            {   
+                modelPos.y = 30.0 - (fmin((clock() - map[i + mapY_size / 2][j + mapX_size / 2]->time_creation) / 10000, 30));
+                std::cout << map[i + mapY_size / 2][j + mapX_size / 2]->time_creation<< std::endl;
+            }
 			Model = Matrix::model_matrix(modelPos, modelDir, \
 				globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model]._zoom * zoomMul);
 			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
