@@ -13,12 +13,15 @@
 # include <parser.class.hpp>
 
 Parser::Parser(void) {
+    // FUITE START
 	_vertex = new GLfloat[500000];
 	_text = new GLfloat[500000];
 	_finalVertex = new GLfloat[500000];
 	_finalText = new GLfloat[500000];
 	_textID = new GLfloat[500000];
 	_texture = new std::string[100];
+    // std::cout << "Parser::Parser(void)" << std::endl;
+    // FUITE END
 	_textSize = 0;
 	_textIDSize = 0;
 	_vertexSize = 0;
@@ -32,7 +35,9 @@ Parser::Parser(std::string path) {
 	parse(path, 0);
 }
 
-Parser::~Parser() {}
+Parser::~Parser() {
+    // std::cout << "Parser::~Parser() DESTRUCT" << std::endl;
+}
 
 void	Parser::parse(std::string path, int neg) {
 	/*
@@ -41,7 +46,8 @@ void	Parser::parse(std::string path, int neg) {
 	_finalVertex = new GLfloat[100000];
 	_finalText = new GLfloat[100000];
 	_textID = new GLfloat[100000];
-	_texture = new std::string[100];*/
+	_texture = new std::string[100];
+    */
 	_textSize = 0;
 	_textIDSize = 0;
 	_vertexSize = 0;

@@ -44,24 +44,18 @@ Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
 Event::~Event( void ) {}
 
 void 	Event::free_game( void ) {
-	// int x, y = 0;
-    //
-	// while (y < globject::mapY_size) {
-	// 	x = 0;
-	// 	while (x < globject::mapX_size) {
-	// 		delete this->map[y][x];
-	// 		x++;
-	// 	}
-    //     std::free(this->map[y]);
-	// 	y++;
-	// }
-    // std::free(this->map);
+	int x, y = 0;
 
-    // FREE MAP ON MAPPARSER
+	while (y < globject::mapY_size) {
+		x = 0;
+		while (x < globject::mapX_size) {
+			delete this->map[y][x];
+			x++;
+		}
+		y++;
+	}
 
-    // main_event->soundrender->stopMusic();
-    // main_event->soundrender->stopSounds();
-
+// FUITE START
     std::list<Entity *>::iterator it = main_event->char_list.begin();
     std::list<Entity *>::iterator end = main_event->char_list.end();
     while (it != end) {
@@ -70,11 +64,13 @@ void 	Event::free_game( void ) {
         it = main_event->char_list.begin();
         end = main_event->char_list.end();
     }
+    main_event->char_list.clear();
 
-	// while (this->char_list.empty() == false) {
-	// 	this->char_list.pop_front();
-    //     std::cout << "FUITE PROBABLE" << std::endl;
-	// }
+	while (this->char_list.empty() == false) {
+		this->char_list.pop_front();
+        std::cout << "FUITE PROBABLE" << std::endl;
+	}
+// FUITE END
 }
 
 void	Event::make_new_game( int new_level ) {

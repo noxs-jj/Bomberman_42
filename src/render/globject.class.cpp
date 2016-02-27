@@ -592,6 +592,9 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader) {
 	fshaderid = glCreateShader(GL_FRAGMENT_SHADER);
 	buff = filetobuff(vertexshader);
 	glShaderSource(vshaderid, 1, (const char **)(&buff), NULL);
+    // FUITE START
+    delete buff;
+    // FUITE END
 	glCompileShader(vshaderid);
 
 	glGetShaderiv(vshaderid, GL_COMPILE_STATUS, &Result);
@@ -600,6 +603,9 @@ GLuint      globject::loadshaders(char *fragshader, char *vertexshader) {
 
 	buff = filetobuff(fragshader);
 	glShaderSource(fshaderid, 1, (const char **)(&buff), NULL);
+    // FUITE START
+    delete buff;
+    // FUITE END
 	glCompileShader(fshaderid);
 
 	glGetShaderiv(fshaderid, GL_COMPILE_STATUS, &Result);
