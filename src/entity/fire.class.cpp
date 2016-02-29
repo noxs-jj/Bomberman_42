@@ -11,12 +11,14 @@
 // ************************************************************************** //
 
 #include <fire.class.hpp>
+#include <particle.class.hpp>
 
 Fire::~Fire( void ) {}
 
 Fire::Fire( float x, float y, int status, int model ) : Entity( FIRE, x, y, status, model ) {
 	this->model = model;
 	this->timer = 40;
+    Particle::boom(50, y, x, 0);
 }
 
 Fire::Fire( Fire const & src ) {

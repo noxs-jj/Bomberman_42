@@ -19,6 +19,7 @@ Wall::~Wall( void ) {}
 Wall::Wall( float x, float y, int status, int model ) : Entity( WALL, x, y, status, model ) {
 
 	this->model = model;
+    
 }
 
 Wall::Wall( Wall const & src ) {

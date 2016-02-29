@@ -64,7 +64,8 @@ HEAD = includes/bomb.class.hpp \
                 includes/wall.class.hpp \
 				includes/factory.class.hpp \
 				includes/save.class.hpp \
-                includes/map_event.class.hpp
+                includes/map_event.class.hpp \
+		includes/particle.class.hpp \
 
 SRC = src/entity/bomb.class.cpp \
                 src/entity/boss.class.cpp \
@@ -88,7 +89,8 @@ SRC = src/entity/bomb.class.cpp \
                 src/sound/soundrender.class.cpp \
                 src/entity/bonus.class.cpp \
                 src/factory.class.cpp \
-                src/save/save.class.cpp
+                src/save/save.class.cpp \
+		src/entity/particle.class.cpp \
 
 OBJ := $(SRC:.cpp=.cpp.o)
 
