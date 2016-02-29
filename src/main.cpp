@@ -14,6 +14,7 @@
 #include <list>
 #include <Menu.class.hpp>
 #include <ia.class.hpp>
+#include <wall.class.hpp>
 #include <joystick.hpp>
 #include <save.class.hpp>
 #include <map_event.class.hpp>
@@ -60,6 +61,7 @@ int		main( int ac, char **av ) {
             if (main_event->event_running == false)
                 break;
             main_event->dec_timer();
+            Wall::delete_wall_destoyed();
             time = clock();
             if (false == main_event->mode_menu) {
                 Map_event::check_warm_up();

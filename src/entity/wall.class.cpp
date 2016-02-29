@@ -11,15 +11,18 @@
 // ************************************************************************** //
 
 #include <wall.class.hpp>
+#include <bomb.class.hpp>
+#include <globject.class.hpp>
+#include <event.class.hpp>
+#include <factory.class.hpp>
 
 Wall::Wall( void ) {}
 
 Wall::~Wall( void ) {}
 
 Wall::Wall( float x, float y, int status, int model ) : Entity( WALL, x, y, status, model ) {
-
 	this->model = model;
-    
+    this->to_destroy = false;
 }
 
 Wall::Wall( Wall const & src ) {
@@ -48,4 +51,28 @@ Wall & Wall::operator=( Wall const & rhs ) {
         this->autoincrement = rhs.autoincrement;
     }
     return *this;
+}
+
+void    Wall::delete_wall_destoyed() {
+    int y = 0,
+        x = 0;
+
+        while (y < globject::mapY_size) {
+            x = 0;
+            while (x < globject::mapX_size) {
+                if (NULL != main_event->map[y][x] \
+                        && WALL == main_event->map[y][x]->type \
+    && true == reinterpret_cast<Wall*>(main_event->map[y][x])->to_destroy) {
+
+                    delete main_event->map[y][x];
+                    main_event->map[y][x] = NULL;
+                    if ((rand() % 20) <= 8)
+        				Bomb::add_bonus(x, y);
+        			else
+        				main_event->map[y][x] = Factory::create_empty(x, y);
+                }
+                x++;
+            }
+            y++;
+        }
 }

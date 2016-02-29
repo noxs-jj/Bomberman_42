@@ -28,14 +28,14 @@ public:
     Bomb & operator=( Bomb const & rhs );
     virtual ~Bomb( void );
 
-    void    detonate( void );
-    int     blast_case(int y, int x);
-    void    bomb_timer( void );
-    void    damage_entity(int x, int y );
-    void    add_bomb_nbr(int id);
-    void    add_bonus(int x, int y);
-    void    push_bomb();
-    void    suppr_remote_lst( void );
+    void            detonate( void );
+    int             blast_case(int y, int x);
+    void            bomb_timer( void );
+    void            damage_entity(int x, int y );
+    void            add_bomb_nbr(int id);
+    void            push_bomb();
+    void            suppr_remote_lst( void );
+    static void     add_bonus(int x, int y);
 
 private:
     Bomb( void );
