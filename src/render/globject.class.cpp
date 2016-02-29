@@ -14,7 +14,7 @@
 #include <bomb.class.hpp>
 #include <fire.class.hpp>
 #include <save.class.hpp>
-
+#include <particle.class.hpp>
 globject            globject::_object[100];
 SDL_Window          *globject::_displayWindow;
 SDL_Renderer        *globject::_displayRenderer;
@@ -251,9 +251,12 @@ void        globject::init(float sizeX, float sizeY) {
     globject("assets/render/models/cube_barrage.obj", WALL_BARRAGE, 1);
     globject("assets/render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
     globject("assets/render/models/cube.obj", WALL_HP_1, 1);
+   
     globject("assets/render/models/cube1.obj", WALL_HP_2, 1);
     globject("assets/render/models/cube2.obj", WALL_HP_3, 1);
     globject("assets/render/models/cube_floor.obj", FLOOR, 1);
+    globject("assets/render/models/particle_test.obj", PARTICLE, 0.05);
+    globject("assets/render/models/particleA.obj", PARTICLEA, 0.05);
     globject("assets/render/bonus_item/bomb_fire_up.obj", BONUS_POWER_UP, 1); // BONUS_POWER_UP
     globject("assets/render/bonus_item/bomb_plus_one.obj", BONUS_PLUS_ONE, 1); // BONUS_PLUS_ONE
     globject("assets/render/bonus_item/bomb_kick.obj", BONUS_KICK, 1); // BONUS_KICK
@@ -291,7 +294,6 @@ void        globject::init(float sizeX, float sizeY) {
     globject::_modelMatID = glGetUniformLocation(_progid, "M");
     globject::_keyFrameID = glGetUniformLocation(_progid, "keyframe");
     globject::_legPos = glGetUniformLocation(_progid, "leg_pos");
-
 }
 
 t_point		set_dir(int d) {
@@ -423,6 +425,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	static float					prog = 0.01;
 	std::list<Entity*>::iterator	it;
 	std::list<Entity*>::iterator	ite;
+    std::list<Particle*>::iterator    itP;
+    std::list<Particle*>::iterator    iteP;
 
 	zoom = 1;
 	o += 0.003;
@@ -523,7 +527,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
             if (map[i + mapY_size / 2][j + mapX_size / 2]->model == WALL_BARRAGE || map[i + mapY_size / 2][j + mapX_size / 2]->model == WALL_BARRAGE_DIE)
             {   
                 modelPos.y = 30.0 - (fmin((clock() - map[i + mapY_size / 2][j + mapX_size / 2]->time_creation) / 10000, 30));
-                std::cout << map[i + mapY_size / 2][j + mapX_size / 2]->time_creation<< std::endl;
+              //  std::cout << map[i + mapY_size / 2][j + mapX_size / 2]->time_creation<< std::endl;
             }
 			Model = Matrix::model_matrix(modelPos, modelDir, \
 				globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model]._zoom * zoomMul);
@@ -556,6 +560,32 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 		it++;
 	}
 
+    itP = Particle::list->begin();
+    iteP = Particle::list->end();
+
+    while (itP != iteP) {
+        //(*itP)->model = PARTICLE;
+        modelDir.x = -1;
+        modelDir.z = 0;
+        modelDir.y = 0;
+        //modelDir = set_dir((*itP)->dir);
+        modelPos.y = 0;
+        modelPos.x = ((*itP)->pos_y - 10);
+        modelPos.z = (((*itP)->pos_x - 10));
+        modelPos.z += 0.01;
+        modelPos.z = (*itP)->pos_y - 10;
+        modelPos.y = ((*itP)->pos_z);
+        modelPos.x = ((*itP)->pos_x - 10);
+        Model = Matrix::model_matrix(modelPos, modelDir, \
+            globject::_object[(*itP)->model]._zoom);
+        glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
+        glUniform1f(globject::_keyFrameID, 0);
+        glUniform1f(globject::_legPos, 0);
+        globject::_object[(*itP)->model].render(0);
+
+        itP++;
+    }
+    Particle::update_all();
 	SDL_GL_SwapWindow(globject::_displayWindow);
 }
 
