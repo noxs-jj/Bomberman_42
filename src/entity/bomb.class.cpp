@@ -11,6 +11,7 @@
 // ************************************************************************** //
 
 #include <bomb.class.hpp>
+#include <wall.class.hpp>
 #include <fire.class.hpp>
 #include <bonus.class.hpp>
 #include <soundrender.class.hpp>
@@ -93,21 +94,16 @@ void Bomb::add_bonus(int x, int y) {
 
 int		Bomb::blast_case(int y, int x) {
 	if (main_event->map[y][x]->type == WALL && WALL_INDESTRUCTIBLE != main_event->map[y][x]->status) {
-		if (main_event->map[y][x]->status == WALL_HP_4)
+		if (main_event->map[y][x]->status == WALL_HP_4) {
 			main_event->map[y][x]->status = WALL_HP_3;
-		else if (main_event->map[y][x]->status == WALL_HP_3)
+        }
+		else if (main_event->map[y][x]->status == WALL_HP_3) {
 			main_event->map[y][x]->status = WALL_HP_2;
+        }
 		else if (main_event->map[y][x]->status == WALL_HP_2)
 			main_event->map[y][x]->status = WALL_HP_1;
 		else if (main_event->map[y][x]->status == WALL_HP_1) {
-			delete main_event->map[y][x];
-            main_event->map[y][x] = NULL;
-			if ((rand() % 20) <= 8){
-            // ;
-				this->add_bonus(x, y);
-            }
-			else
-				main_event->map[y][x] = Factory::create_empty(x, y);
+            reinterpret_cast<Wall*>(main_event->map[y][x])->to_destroy = true;
 		}
 	}
 	else if (main_event->map[y][x]->type == BOMB)
