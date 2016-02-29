@@ -8,10 +8,10 @@ v  0.0  0.0  0.0   v1 = back lower left (origin)
 v  0.0  0.0  1.0   v2 = front lower left
 v  0.0  1.0  0.0   v3 = back upper left
 v  0.0  1.0  1.0   v4 = front upper left
-v  1.0  0.0  0.0   v5 = back lower right
-v  1.0  0.0  1.0   v6 = front lower right
-v  1.0  1.0  0.0   v7 = back upper right
-v  1.0  1.0  1.0   v8 = front upper right
+v  0.5  0.0  0.0   v5 = back lower right
+v  0.5  0.0  1.0   v6 = front lower right
+v  0.5  1.0  0.0   v7 = back upper right
+v  0.5  1.0  1.0   v8 = front upper right
 
 vn  0.0  0.0  1.0
 vn  0.0  0.0 -1.0
