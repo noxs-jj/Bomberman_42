@@ -251,7 +251,7 @@ void        globject::init(float sizeX, float sizeY) {
     globject("assets/render/models/cube_barrage.obj", WALL_BARRAGE, 1);
     globject("assets/render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
     globject("assets/render/models/cube.obj", WALL_HP_1, 1);
-   
+
     globject("assets/render/models/cube1.obj", WALL_HP_2, 1);
     globject("assets/render/models/cube2.obj", WALL_HP_3, 1);
     globject("assets/render/models/cube_floor.obj", FLOOR, 1);
@@ -527,11 +527,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
             if (map[i + mapY_size / 2][j + mapX_size / 2]->model == WALL_BARRAGE || map[i + mapY_size / 2][j + mapX_size / 2]->model == WALL_BARRAGE_DIE)
             {
                 modelPos.y = 30.0 - (fmin((clock() - map[i + mapY_size / 2][j + mapX_size / 2]->time_creation) / 10000, 30));
-<<<<<<< HEAD
                 // std::cout << map[i + mapY_size / 2][j + mapX_size / 2]->time_creation<< std::endl;
-=======
-              //  std::cout << map[i + mapY_size / 2][j + mapX_size / 2]->time_creation<< std::endl;
->>>>>>> bb914e7d2697e5f8f78e880b0e889b2dabb6c700
             }
 			Model = Matrix::model_matrix(modelPos, modelDir, \
 				globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model]._zoom * zoomMul);

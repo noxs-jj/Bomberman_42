@@ -1,14 +1,15 @@
 # include <particle.class.hpp>
 # include <ctime>
-	
+
 	std::list<Particle*>* Particle::list = new std::list<Particle*>;
 
 	Particle::Particle( float x, float y, float z, int status, int _model ) : Entity(status, x, y, status, _model)
 	{
+        float r;
+        float e;
+
 		this->model = _model;
 		cycle = 0;
-		float r;
-		float e;
 		pos_z = z;
 		r = rand();
 		r /= RAND_MAX;
@@ -112,5 +113,5 @@
 			else
 				itP++;
 		}
-		std::cout << list->size() << std::endl;
+		// std::cout << list->size() << std::endl;
 	}

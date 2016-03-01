@@ -14,6 +14,7 @@
 #include <event.class.hpp>
 #include <soundrender.class.hpp>
 #include <map_event.class.hpp>
+#include <joystick.hpp>
 
 void  Gamelauncher::intro_lauch_game() {
     main_event->w_log("INTRO LAUNCH BINAIRE");

@@ -273,6 +273,8 @@ void Joystick::read_key(int mode) {
     SDL_Event   event;
     int         i = 0;
 
+    Joystick::intro_read_key();
+
     // IN MENU
     if (mode == 0){
         while (SDL_PollEvent(&event) && main_event->event_running == true) {
@@ -284,10 +286,8 @@ void Joystick::read_key(int mode) {
                     case SDLK_RIGHT:    main_event->menu->move_menu_hor(); break;
                     case SDLK_LEFT:     main_event->menu->move_menu_hor(); break;
 
-                    case SDLK_RETURN:   if (false == main_event->menu->introstart) {
-                                            main_event->menu->introstart = true;
-                                            main_event->mode_menu = true;
-                                        }
+                    case SDLK_RETURN:   if (false == main_event->menu->introstart)
+                                            Joystick::intro_pass();
                                         else if (main_event->draw_winner_multi >= 0
                                                 || main_event->draw_winner_campaign >= 0
                                                 || main_event->draw_lose_campaign >= 0
@@ -645,7 +645,7 @@ void Joystick::read_key(int mode) {
         main_event->player_move(main_event->config[4], DIR_BOTTOM);
   }
 
-void Joystick::refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move) {
+void    Joystick::refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move) {
     key->key_up = 0;
     key->key_down = 0;
     key->key_left = 0;
@@ -660,7 +660,7 @@ void Joystick::refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move) {
         key->key_down = 1;
 }
 
-void Joystick::refresh_all_dir_joystick() {
+void    Joystick::refresh_all_dir_joystick() {
 	Sint16 x_move, y_move;
 
     if (this->manette1 != NULL) {
@@ -690,7 +690,7 @@ void Joystick::refresh_all_dir_joystick() {
     }
 }
 
-void Joystick::change_dir_joystick(t_key *key, int dir) {
+void    Joystick::change_dir_joystick(t_key *key, int dir) {
     key->key_up = 0;
     key->key_down = 0;
     key->key_left = 0;
@@ -703,4 +703,27 @@ void Joystick::change_dir_joystick(t_key *key, int dir) {
         key->key_left = 1;
     if (dir == DIR_RIGHT)
         key->key_right = 1;
+}
+
+void    Joystick::intro_read_key() {
+    SDL_Event   event;
+
+    // IN INTRO
+    if (false == main_event->menu->introstart) {
+        while (SDL_PollEvent(&event) && main_event->event_running == true) {
+            if (event.type == SDL_KEYDOWN) {
+                if ((event).key.keysym.sym == SDLK_ESCAPE)
+                    main_event->exit_free();
+                else
+                    Joystick::intro_pass();
+            }
+            else if (event.type == SDL_JOYBUTTONDOWN)
+                Joystick::intro_pass();
+        }
+    }
+}
+
+void    Joystick::intro_pass() {
+    main_event->menu->introstart = true;
+    main_event->mode_menu = true;
 }

@@ -31,17 +31,19 @@ public:
     Joystick(void);
     virtual ~Joystick( void );
 
-    void    read_key(int mode);
-    void    change_dir_joystick(t_key *key, int dir);
-    void    load_config( void );
-    void    save_config( void );
-    void    save_default_config( void );
-    void    set_key_config();
-    void    set_key();
-    void    init_joystick();
-		void 		reset_key_pressed();
-		void 		refresh_all_dir_joystick();
-		void 		refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move);
+    void        read_key(int mode);
+    void        change_dir_joystick(t_key *key, int dir);
+    void        load_config( void );
+    void        save_config( void );
+    void        save_default_config( void );
+    void        set_key_config();
+    void        set_key();
+    void        init_joystick();
+    void        reset_key_pressed();
+    void        refresh_all_dir_joystick();
+    void        refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move);
+    static void intro_read_key();
+    static void intro_pass();
 
 private:
     Joystick( Joystick const & src );
