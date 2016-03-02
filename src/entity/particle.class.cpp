@@ -57,12 +57,12 @@
 		{
 			if (this->model == WALL_HP_1)
 			{
-				if (main_event->map[(int)pos_y][(int)pos_x]->type == EMPTY && vely + pos_z < 1)
+				if (main_event->map[(int)pos_y][(int)pos_x]->type == EMPTY && vely + pos_z <= 0)
 				{
 					this->lifetime = 1;
 					Particle::boom(50, (int)pos_x, (int)pos_y,  0);
 				}
-				else if (vely + pos_z <= 2)
+				else if (vely + pos_z <= 1)
 				{
 					this->lifetime = 1;
 					Particle::boom(50, (int)pos_x, (int)pos_y, 0);

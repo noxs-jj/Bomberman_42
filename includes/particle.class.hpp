@@ -3,7 +3,7 @@
 
 # include <list>
 # include <entity.class.hpp>
-# define N_PARTICLES 1000
+# define N_PARTICLES 500
 // #include <event.class.hpp>
 
 class Entity;
