@@ -15,6 +15,7 @@
 #include <fire.class.hpp>
 #include <bonus.class.hpp>
 #include <soundrender.class.hpp>
+#include <particle.class.hpp>
 
 Bomb::~Bomb( void ) {}
 
@@ -94,6 +95,7 @@ void Bomb::add_bonus(int x, int y) {
 
 int		Bomb::blast_case(int y, int x) {
 	if (main_event->map[y][x]->type == WALL && WALL_INDESTRUCTIBLE != main_event->map[y][x]->status) {
+		
 		if (main_event->map[y][x]->status == WALL_HP_4) {
 			main_event->map[y][x]->status = WALL_HP_3;
         }
@@ -103,6 +105,7 @@ int		Bomb::blast_case(int y, int x) {
 		else if (main_event->map[y][x]->status == WALL_HP_2)
 			main_event->map[y][x]->status = WALL_HP_1;
 		else if (main_event->map[y][x]->status == WALL_HP_1) {
+			Particle::obstacle(y + 1, x + 1, 2 ,y - this->pos_y, 6, x - this->pos_x, WALL_HP_1);
             reinterpret_cast<Wall*>(main_event->map[y][x])->to_destroy = true;
 		}
 	}

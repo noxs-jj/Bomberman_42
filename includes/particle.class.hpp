@@ -3,6 +3,7 @@
 
 # include <list>
 # include <entity.class.hpp>
+# define N_PARTICLES 1000
 // #include <event.class.hpp>
 
 class Entity;
@@ -21,9 +22,11 @@ public:
 
 	static void update_all();
 	static void boom(float n, float x, float y, float z);
+	static void obstacle(float x, float y, float z, float velx, float vely, float velz, int model);
+	int cycle;
 
 private:
-	int cycle;
+
 	long long int lifetime;
 	float velx;
 	float vely;

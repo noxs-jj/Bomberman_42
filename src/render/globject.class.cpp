@@ -252,11 +252,13 @@ void        globject::init(float sizeX, float sizeY) {
     globject("assets/render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
     globject("assets/render/models/cube.obj", WALL_HP_1, 1);
 
+
+
     globject("assets/render/models/cube1.obj", WALL_HP_2, 1);
     globject("assets/render/models/cube2.obj", WALL_HP_3, 1);
     globject("assets/render/models/cube_floor.obj", FLOOR, 1);
     globject("assets/render/models/particle_test.obj", PARTICLE, 0.05);
-    globject("assets/render/models/particleA.obj", PARTICLEA, 0.05);
+    globject("assets/render/models/particleA.obj", PARTICLEA, 0.08);
     globject("assets/render/bonus_item/bomb_fire_up.obj", BONUS_POWER_UP, 1); // BONUS_POWER_UP
     globject("assets/render/bonus_item/bomb_plus_one.obj", BONUS_PLUS_ONE, 1); // BONUS_PLUS_ONE
     globject("assets/render/bonus_item/bomb_kick.obj", BONUS_KICK, 1); // BONUS_KICK
@@ -286,6 +288,7 @@ void        globject::init(float sizeX, float sizeY) {
     globject("assets/render/models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
     globject("assets/render/models/menu.obj", MENU, 1);
 
+globject("assets/render/models/cube.obj", PARTICLEB, 0.1);
     /* Load Uniform Variable */
     glProgramUniformMatrix4fv(_progid, \
         glGetUniformLocation(_progid, "P"), 1, GL_FALSE, \

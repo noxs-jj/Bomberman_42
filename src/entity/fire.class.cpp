@@ -15,7 +15,7 @@
 
 Fire::~Fire( void ) {}
 
-Fire::Fire( float x, float y, int status, int model ) : Entity( FIRE, x, y, status, model ) {
+Fire::Fire( float x, float y, int status, int model ) : Entity( FIRE, x, y, status, BOSS_C ) {
 	this->model = model;
 	this->timer = 40;
     Particle::boom(50, y, x, 0);
