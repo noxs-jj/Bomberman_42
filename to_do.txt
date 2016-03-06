@@ -1,9 +1,0 @@
-BUG:
-LOGIC:
-CONFIG:
-RENDER:
-IA:
-SOUND:
-
-MULTI (OPTIONNEL):
-    - finit map_event, au bout des deux minutes reserrer la map, avec cube toute les 0.5 seconde
