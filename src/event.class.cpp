@@ -266,7 +266,6 @@ void	Event::gen_level_campaign(int level, int boss, bool coop) {
 		tmpx = 2 + (rand() % (globject::mapX_size - 4));
 		tmpy = 2 + (rand() % (globject::mapY_size - 4));
 		if (check_coord(0, (float)tmpx, (float)tmpy) == true) {
-			printf("yes\n");
 			if (boss == 1)
 				this->char_list.push_back(Factory::create_boss(0, (float)tmpx, (float)tmpy, BOSS_A, BOSS_A)); // change model
 			else

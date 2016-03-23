@@ -15,6 +15,7 @@
 #include <event.class.hpp>
 #include <entity.class.hpp>
 #include <wall.class.hpp>
+#include <bomb.class.hpp>
 #include <soundrender.class.hpp>
 
 time_t  Map_event::game_start = 0;
@@ -158,6 +159,10 @@ void    Map_event::add_one_barrage_die_to_map() {
 
         // Warm up 2 time + WARN_UP_2
 void    Map_event::put_barrage_on_slop(int y, int x) {
+    if (main_event->map[y][x]->type == BOMB) {
+      Bomb *tmp = reinterpret_cast<Bomb*>(main_event->map[y][x]);
+      tmp->add_bomb_nbr(tmp->creator_id);
+    }
     delete main_event->map[y][x];
     main_event->map[y][x] = NULL;
     main_event->map[y][x] = static_cast<Entity*>( Factory::create_wall(WALL_BARRAGE, x, y, WALL_BARRAGE) );
@@ -167,6 +172,10 @@ void    Map_event::put_barrage_on_slop(int y, int x) {
 
         // Warm up 2 time + WARN_UP_2
 void    Map_event::put_barrage_die_on_slop(int y, int x) {
+  if (main_event->map[y][x]->type == BOMB) {
+    Bomb *tmp = reinterpret_cast<Bomb*>(main_event->map[y][x]);
+    tmp->add_bomb_nbr(tmp->creator_id);
+  }
     delete main_event->map[y][x];
     main_event->map[y][x] = NULL;
     main_event->map[y][x] = static_cast<Entity*>( Factory::create_wall(WALL_BARRAGE_DIE, x, y, WALL_BARRAGE_DIE) );
