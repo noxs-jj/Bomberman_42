@@ -270,6 +270,11 @@ void        globject::init(float sizeX, float sizeY) {
     globject("assets/render/models/Bomberman/Bomberman3.obj", PLAYER3, 0.03);
     globject("assets/render/models/Bomberman/Bomberman4.obj", PLAYER4, 0.03);
     globject("assets/render/models/Bomberman/Bomberman5.obj", PLAYER5, 0.03);
+    globject("assets/render/models/Bomberman/Bomberman6.obj", PLAYER6, 0.03);
+    globject("assets/render/models/Bomberman/Bomberman7.obj", PLAYER7, 0.03);
+    globject("assets/render/models/Bomberman/Bomberman8.obj", PLAYER8, 0.03);
+    globject("assets/render/models/Bomberman/Bomberman9.obj", PLAYER9, 0.03);
+    globject("assets/render/models/Bomberman/Bomberman10.obj", PLAYER10, 0.03);
     globject("assets/render/enemy/BearGrizzly/ENEMY_Bear_Grizzly1.obj", ENEMY1, 0.19);
     globject("assets/render/enemy/Andlar/Andlar.obj", ENEMY2, 0.04);
     globject("assets/render/enemy/Angol/Angol.obj", ENEMY3, 0.04);

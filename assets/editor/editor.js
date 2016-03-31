@@ -41,8 +41,8 @@ document.body.onload = function () {
         return x;
     }
 
-    var mapSizeX = 50;
-    var mapSizeY = 50;
+    var mapSizeX = 35;
+    var mapSizeY = 35;
     var tileMap = create2dArray(mapSizeX, mapSizeY);
     var currentChoice = 1;
     var tileSize = 20;
