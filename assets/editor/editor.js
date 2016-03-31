@@ -41,11 +41,11 @@ document.body.onload = function () {
         return x;
     }
 
-    var mapSizeX = 30;
-    var mapSizeY = 30;
+    var mapSizeX = 50;
+    var mapSizeY = 50;
     var tileMap = create2dArray(mapSizeX, mapSizeY);
     var currentChoice = 1;
-    var tileSize = 24;
+    var tileSize = 20;
 
     context.canvas.width = 1600;
     context.canvas.height = 1200;
@@ -199,7 +199,7 @@ document.body.onload = function () {
         }
     });
 
-    loadMap();
+    // loadMap();
     updateMapCode();
     (function animloop(){
         requestAnimationFrame(animloop);
