@@ -509,8 +509,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 			modelPos.y = 0;
 			modelPos.x = i;
 			modelPos.z = j;
-			modelPos.x = map[i + mapY_size / 2][j + mapX_size / 2]->pos_y - 10;
-			modelPos.z = map[i + mapY_size / 2][j + mapX_size / 2]->pos_x - 10;
+			modelPos.x = map[i + mapY_size / 2][j + mapX_size / 2]->pos_y - mapY_size / 2;
+			modelPos.z = map[i + mapY_size / 2][j + mapX_size / 2]->pos_x - mapX_size / 2;
 
 			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == -1) { // <<<<<<< Cette ligne SEGFAULT
 				continue ;
@@ -553,8 +553,8 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 		modelDir.y = 0;
 		modelDir = set_dir((*it)->dir);
 		modelPos.y = 0;
-		modelPos.x = ((*it)->pos_y - 10);
-		modelPos.z = (((*it)->pos_x - 10));
+		modelPos.x = ((*it)->pos_y - mapY_size / 2);
+		modelPos.z = (((*it)->pos_x - mapX_size / 2));
 		// if ((*it)->type == ENEMY1) {
 			modelPos.z += 0.01;
 			// modelPos.x += 0.5;

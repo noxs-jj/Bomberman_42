@@ -77,7 +77,12 @@ void	Event::make_new_game( int new_level ) {
 	this->live_player[1] = true;
 	this->live_player[2] = true;
 	this->live_player[3] = true;
-	this->live_player[4] = true;
+    this->live_player[4] = true;
+    this->live_player[5] = true;
+    this->live_player[6] = true;
+    this->live_player[7] = true;
+    this->live_player[8] = true;
+	this->live_player[9] = true;
 
 	if (this->game_playing == true) {
 		this->free_game();

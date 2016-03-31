@@ -55,11 +55,15 @@ Joystick & Joystick::operator=( Joystick const & rhs ) {
 void Joystick::init_joystick() {
 	int number = 0;
 	this->manettes = (SDL_Joystick **)std::malloc(sizeof(SDL_Joystick *) * 10);
+    if (NULL == this->manettes){
+        this->w_error("Joystick::init_joystick()  this->manettes Malloc error");
+        throw std::exception();
+    }
 
 	while (number < main_event->menu->joystick_number) {
 		this->manettes[number] = SDL_JoystickOpen(number);
 		if (this->manettes[number] == NULL) {
-			this->w_error("Could not open joystick ");
+			this->w_error("Could not open joystick");
             this->w_error(SDL_GetError());
 			throw std::exception();
 		}
@@ -527,6 +531,7 @@ void Joystick::read_key(int mode) {
                 }
             }
             else if (event.type == SDL_JOYAXISMOTION) {
+                std::cout << "key" << std::endl;
                 if( event.jaxis.axis == 0) {
                     if (event.jaxis.value > 3200)
                         change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_RIGHT);

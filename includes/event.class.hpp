@@ -69,7 +69,7 @@ public:
 	bool					to_die_entity = false;
 	Joystick *				joystick = NULL;
     Save *                  save_config = NULL;
-	bool					live_player[5];
+	bool					live_player[10];
     SDL_DisplayMode         sdl_display_mode_info;
     bool                    full_screen = false;
     int                     actual_resolution = RESOLUTION_NOT_SET;
