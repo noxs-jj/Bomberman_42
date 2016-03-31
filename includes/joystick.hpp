@@ -19,14 +19,12 @@ class Joystick : public ft42 {
 public:
     int                timer;
     int                test = 0;
-    SDL_Joystick *     manette1 = NULL;
-    SDL_Joystick *     manette2 = NULL;
-    SDL_Joystick *     manette3 = NULL;
-    SDL_Joystick *     manette4 = NULL;
-    SDL_Joystick *     manette5 = NULL;
-    int                config[5]; // 0: controller, 1: keyboard
+
+    SDL_Joystick **      manettes;
+
+    int                config[10]; // 0: controller, 1: keyboard
     t_key *            arr_key_keyboard[5];
-    t_key *            arr_key_controller[5];
+    t_key *            arr_key_controller[10];
 
     Joystick(void);
     virtual ~Joystick( void );

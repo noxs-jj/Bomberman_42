@@ -330,7 +330,7 @@ void	Event::print_map( void ) {
 }
 
 void	Event::init( int ac, char **av ) {
-    main_event->w_log("Event Init");
+  main_event->w_log("Event Init");
 	this->ac = ac;
 	this->av = av;
 	parse_command(ac, av);

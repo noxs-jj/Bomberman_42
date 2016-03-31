@@ -23,6 +23,11 @@ Joystick::Joystick(void) {
 	this->config[2] = 0;
 	this->config[3] = 0;
 	this->config[4] = 0;
+	this->config[5] = 0;
+	this->config[6] = 0;
+	this->config[7] = 0;
+	this->config[8] = 0;
+	this->config[9] = 0;
 }
 
 Joystick::~Joystick(void) {}
@@ -32,14 +37,14 @@ Joystick::Joystick( Joystick const & src ) {
 }
 
 Joystick & Joystick::operator=( Joystick const & rhs ) {
+	int number = 0;
     if (this != &rhs) {
         this->timer = rhs.timer;
         this->test = rhs.test;
-        this->manette1 = rhs.manette1;
-        this->manette2 = rhs.manette2;
-        this->manette3 = rhs.manette3;
-        this->manette4 = rhs.manette4;
-        this->manette5 = rhs.manette5;
+				while (number < 10) {
+					this->manettes[number] = rhs.manettes[number];
+					number++;
+				}
         std::memcpy(this->config, rhs.config, sizeof(this->config));
         std::memcpy(this->arr_key_keyboard, rhs.arr_key_keyboard, sizeof(this->arr_key_keyboard));
         std::memcpy(this->arr_key_controller, rhs.arr_key_controller, sizeof(this->arr_key_controller));
@@ -48,46 +53,22 @@ Joystick & Joystick::operator=( Joystick const & rhs ) {
 }
 
 void Joystick::init_joystick() {
-	if (main_event->menu->joystick_number > 0) {
-		this->manette1 = SDL_JoystickOpen(0);
-		if (this->manette1 == NULL) {
-			this->w_error("Could not open joystick 1 ");
+	int number = 0;
+	this->manettes = (SDL_Joystick **)std::malloc(sizeof(SDL_Joystick *) * 10);
+
+	while (number < main_event->menu->joystick_number) {
+		this->manettes[number] = SDL_JoystickOpen(number);
+		if (this->manettes[number] == NULL) {
+			this->w_error("Could not open joystick ");
             this->w_error(SDL_GetError());
 			throw std::exception();
 		}
+		number++;
 	}
-	if (main_event->menu->joystick_number > 1) {
-		this->manette2 = SDL_JoystickOpen(1);
-		if (this->manette2 == NULL) {
-			this->w_error("Could not open joystick 2 ");
-            this->w_error(SDL_GetError());
-			throw std::exception();
-		}
- 	}
-	if (main_event->menu->joystick_number > 2) {
-		this->manette3 = SDL_JoystickOpen(2);
-		if (this->manette3 == NULL) {
-			this->w_error("Could not open joystick 3 ");
-            this->w_error(SDL_GetError());
-			throw std::exception();
-		}
- 	}
-	if (main_event->menu->joystick_number > 3) {
-		this->manette4 = SDL_JoystickOpen(3);
-		if (this->manette4 == NULL) {
-			this->w_error("Could not open joystick 4 ");
-            this->w_error(SDL_GetError());
-			throw std::exception();
-		}
- 	}
-	if (main_event->menu->joystick_number > 4) {
-		this->manette5 = SDL_JoystickOpen(4);
-		if (this->manette5 == NULL) {
-			this->w_error("Could not open joystick 5 ");
-            this->w_error(SDL_GetError());
-			throw std::exception();
-		}
- 	}
+	while (number < 10) {
+		this->manettes[number] = NULL;
+		number++;
+	}
 }
 
 void Joystick::reset_key_pressed() {
@@ -98,6 +79,10 @@ void Joystick::reset_key_pressed() {
         this->arr_key_keyboard[i]->key_down = 0;
         this->arr_key_keyboard[i]->key_left = 0;
         this->arr_key_keyboard[i]->key_right = 0;
+        i++;
+	}
+	i = 0;
+	while (i < 10) {
         this->arr_key_controller[i]->key_up = 0;
         this->arr_key_controller[i]->key_down = 0;
         this->arr_key_controller[i]->key_left = 0;
@@ -131,6 +116,11 @@ void	Joystick::save_default_config( void ) {
 	this->config[2] = 0;
 	this->config[3] = 0;
 	this->config[4] = 0;
+	this->config[5] = 0;
+	this->config[6] = 0;
+	this->config[7] = 0;
+	this->config[8] = 0;
+	this->config[9] = 0;
 	set_key();
 }
 
@@ -162,6 +152,11 @@ void Joystick::load_config( void ) {
 	this->config[2] = buff[4] - '0';
 	this->config[3] = buff[6] - '0';
 	this->config[4] = buff[8] - '0';
+	this->config[5] = 0;
+	this->config[6] = 0;
+	this->config[7] = 0;
+	this->config[8] = 0;
+	this->config[9] = 0;
 	fclose(stream);
 
 	int i = 0, tmp = 0;
@@ -184,25 +179,37 @@ void Joystick::set_key() {
     static t_key   key2 = {0, 0, 0, 0}; // key for p2 (keyboard)
     static t_key   key3 = {0, 0, 0, 0};
     static t_key   key4 = {0, 0, 0, 0};
-    static t_key   key5 = {0, 0, 0, 0};
+		static t_key   key5 = {0, 0, 0, 0};
+
 
     static t_key   ckey = {0, 0, 0, 0};
     static t_key   ckey2 = {0, 0, 0, 0}; // key for p2 (controller)
     static t_key   ckey3 = {0, 0, 0, 0};
     static t_key   ckey4 = {0, 0, 0, 0};
-    static t_key   ckey5 = {0, 0, 0, 0};
+		static t_key   ckey5 = {0, 0, 0, 0};
+
+		static t_key   ckey6 = {0, 0, 0, 0};
+		static t_key   ckey7 = {0, 0, 0, 0};
+		static t_key   ckey8 = {0, 0, 0, 0};
+		static t_key   ckey9 = {0, 0, 0, 0};
+    static t_key   ckey10 = {0, 0, 0, 0};
 
     this->arr_key_keyboard[0] = &key;
     this->arr_key_keyboard[1] = &key2;
     this->arr_key_keyboard[2] = &key3;
     this->arr_key_keyboard[3] = &key4;
-    this->arr_key_keyboard[4] = &key5;
+		this->arr_key_keyboard[4] = &key5;
 
     this->arr_key_controller[0] = &ckey;
     this->arr_key_controller[1] = &ckey2;
     this->arr_key_controller[2] = &ckey3;
     this->arr_key_controller[3] = &ckey4;
-    this->arr_key_controller[4] = &ckey5;
+		this->arr_key_controller[4] = &ckey5;
+		this->arr_key_controller[5] = &ckey6;
+		this->arr_key_controller[6] = &ckey7;
+		this->arr_key_controller[7] = &ckey8;
+		this->arr_key_controller[8] = &ckey9;
+    this->arr_key_controller[9] = &ckey10;
     set_key_config();
 }
 
@@ -221,52 +228,28 @@ void Joystick::set_key_config() {
 	main_event->config[2] = -1;
 	main_event->config[3] = -1;
 	main_event->config[4] = -1;
+	main_event->config[5] = -1;
+	main_event->config[6] = -1;
+	main_event->config[7] = -1;
+	main_event->config[8] = -1;
+	main_event->config[9] = -1;
 
-	if (this->config[0] == 0) {
+	while (i < 5) {
+		if (this->config[i] == 0) {
+			main_event->config[nbr] = PLAYER1 + i;
+			nbr++;
+		}
+		else {
+			main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
+			nbr_keyboard++;
+		}
+		i++;
+	}
+	while (i < 10) {
 		main_event->config[nbr] = PLAYER1 + i;
 		nbr++;
+		i++;
 	}
-	else {
-		main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
-		nbr_keyboard++;
-	}
-	i++;
-	if (this->config[1] == 0) {
-		main_event->config[nbr] = PLAYER1 + i;
-		nbr++;
-	}
-	else {
-		main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
-		nbr_keyboard++;
-	}
-	i++;
-	if (this->config[2] == 0) {
-		main_event->config[nbr] = PLAYER1 + i;
-		nbr++;
-	}
-	else {
-		main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
-		nbr_keyboard++;
-	}
-	i++;
-	if (this->config[3] == 0) {
-		main_event->config[nbr] = PLAYER1 + i;
-		nbr++;
-	}
-	else {
-		main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
-		nbr_keyboard++;
-	}
-	i++;
-	if (this->config[4] == 0) {
-		main_event->config[nbr] = PLAYER1 + i;
-		nbr++;
-	}
-	else {
-		main_event->config_keyboard[nbr_keyboard] = PLAYER1 + i;
-		nbr_keyboard++;
-	}
-
 }
 
 void Joystick::read_key(int mode) {
@@ -581,68 +564,30 @@ void Joystick::read_key(int mode) {
         }
     }
     this->refresh_all_dir_joystick();
-    if (this->arr_key_keyboard[0]->key_right)
-        main_event->player_move(main_event->config_keyboard[0], DIR_RIGHT);
-    if (this->arr_key_keyboard[0]->key_left)
-        main_event->player_move(main_event->config_keyboard[0], DIR_LEFT);
-    if (this->arr_key_keyboard[0]->key_up)
-        main_event->player_move(main_event->config_keyboard[0], DIR_UP);
-    if (this->arr_key_keyboard[0]->key_down)
-        main_event->player_move(main_event->config_keyboard[0], DIR_BOTTOM);
-
-    if (this->arr_key_keyboard[1]->key_right)
-        main_event->player_move(main_event->config_keyboard[1], DIR_RIGHT);
-    if (this->arr_key_keyboard[1]->key_left)
-        main_event->player_move(main_event->config_keyboard[1], DIR_LEFT);
-    if (this->arr_key_keyboard[1]->key_up)
-        main_event->player_move(main_event->config_keyboard[1], DIR_UP);
-    if (this->arr_key_keyboard[1]->key_down)
-        main_event->player_move(main_event->config_keyboard[1], DIR_BOTTOM);
-
-    if (this->arr_key_controller[0]->key_right)
-        main_event->player_move(main_event->config[0], DIR_RIGHT);
-    if (this->arr_key_controller[0]->key_left)
-        main_event->player_move(main_event->config[0], DIR_LEFT);
-    if (this->arr_key_controller[0]->key_up)
-        main_event->player_move(main_event->config[0], DIR_UP);
-    if (this->arr_key_controller[0]->key_down)
-        main_event->player_move(main_event->config[0], DIR_BOTTOM);
-
-    if (this->arr_key_controller[1]->key_right)
-        main_event->player_move(main_event->config[1], DIR_RIGHT);
-    if (this->arr_key_controller[1]->key_left)
-        main_event->player_move(main_event->config[1], DIR_LEFT);
-    if (this->arr_key_controller[1]->key_up)
-        main_event->player_move(main_event->config[1], DIR_UP);
-    if (this->arr_key_controller[1]->key_down)
-        main_event->player_move(main_event->config[1], DIR_BOTTOM);
-
-    if (this->arr_key_controller[2]->key_right)
-        main_event->player_move(main_event->config[2], DIR_RIGHT);
-    if (this->arr_key_controller[2]->key_left)
-        main_event->player_move(main_event->config[2], DIR_LEFT);
-    if (this->arr_key_controller[2]->key_up)
-        main_event->player_move(main_event->config[2], DIR_UP);
-    if (this->arr_key_controller[2]->key_down)
-        main_event->player_move(main_event->config[2], DIR_BOTTOM);
-
-    if (this->arr_key_controller[3]->key_right)
-        main_event->player_move(main_event->config[3], DIR_RIGHT);
-    if (this->arr_key_controller[3]->key_left)
-        main_event->player_move(main_event->config[3], DIR_LEFT);
-    if (this->arr_key_controller[3]->key_up)
-        main_event->player_move(main_event->config[3], DIR_UP);
-    if (this->arr_key_controller[3]->key_down)
-        main_event->player_move(main_event->config[3], DIR_BOTTOM);
-
-    if (this->arr_key_controller[4]->key_right)
-        main_event->player_move(main_event->config[4], DIR_RIGHT);
-    if (this->arr_key_controller[4]->key_left)
-        main_event->player_move(main_event->config[4], DIR_LEFT);
-    if (this->arr_key_controller[4]->key_up)
-        main_event->player_move(main_event->config[4], DIR_UP);
-    if (this->arr_key_controller[4]->key_down)
-        main_event->player_move(main_event->config[4], DIR_BOTTOM);
+		int number = 0;
+		while (number < 2) {
+			if (this->arr_key_keyboard[number]->key_right)
+	        main_event->player_move(main_event->config_keyboard[number], DIR_RIGHT);
+	    if (this->arr_key_keyboard[number]->key_left)
+	        main_event->player_move(main_event->config_keyboard[number], DIR_LEFT);
+	    if (this->arr_key_keyboard[number]->key_up)
+	        main_event->player_move(main_event->config_keyboard[number], DIR_UP);
+	    if (this->arr_key_keyboard[number]->key_down)
+	        main_event->player_move(main_event->config_keyboard[number], DIR_BOTTOM);
+			number++;
+		}
+		number = 0;
+		while (number < 10) {
+			if (this->arr_key_controller[number]->key_right)
+	        main_event->player_move(main_event->config[number], DIR_RIGHT);
+	    if (this->arr_key_controller[number]->key_left)
+	        main_event->player_move(main_event->config[number], DIR_LEFT);
+	    if (this->arr_key_controller[number]->key_up)
+	        main_event->player_move(main_event->config[number], DIR_UP);
+	    if (this->arr_key_controller[number]->key_down)
+	        main_event->player_move(main_event->config[number], DIR_BOTTOM);
+			number++;
+		}
   }
 
 void    Joystick::refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move) {
@@ -662,32 +607,16 @@ void    Joystick::refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move)
 
 void    Joystick::refresh_all_dir_joystick() {
 	Sint16 x_move, y_move;
+	int number = 0;
 
-    if (this->manette1 != NULL) {
-        x_move = SDL_JoystickGetAxis(this->manette1, 0);
-        y_move = SDL_JoystickGetAxis(this->manette1, 1);
-        refresh_dir_joystick(this->arr_key_controller[0], x_move, y_move);
+	while (number < 10) {
+		if (this->manettes[number] != NULL) {
+        x_move = SDL_JoystickGetAxis(this->manettes[number], 0);
+        y_move = SDL_JoystickGetAxis(this->manettes[number], 1);
+        refresh_dir_joystick(this->arr_key_controller[number], x_move, y_move);
     }
-    if (this->manette2 != NULL) {
-        x_move = SDL_JoystickGetAxis(this->manette2, 0);
-        y_move = SDL_JoystickGetAxis(this->manette2, 1);
-        refresh_dir_joystick(this->arr_key_controller[1], x_move, y_move);
-    }
-    if (this->manette3 != NULL) {
-        x_move = SDL_JoystickGetAxis(this->manette3, 0);
-        y_move = SDL_JoystickGetAxis(this->manette3, 1);
-        refresh_dir_joystick(this->arr_key_controller[2], x_move, y_move);
-    }
-    if (this->manette4 != NULL) {
-        x_move = SDL_JoystickGetAxis(this->manette4, 0);
-        y_move = SDL_JoystickGetAxis(this->manette4, 1);
-        refresh_dir_joystick(this->arr_key_controller[3], x_move, y_move);
-    }
-    if (this->manette5 != NULL) {
-        x_move = SDL_JoystickGetAxis(this->manette5, 0);
-        y_move = SDL_JoystickGetAxis(this->manette5, 1);
-        refresh_dir_joystick(this->arr_key_controller[4], x_move, y_move);
-    }
+		number++;
+	}
 }
 
 void    Joystick::change_dir_joystick(t_key *key, int dir) {
