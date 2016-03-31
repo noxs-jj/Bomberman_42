@@ -57,6 +57,8 @@ int		main( int ac, char **av ) {
                 continue;
             }
             main_event->joystick->read_key(1);
+						if (main_event->event_running == false)
+							break;
             ia_play->start(time);
             if (main_event->event_running == false)
                 break;

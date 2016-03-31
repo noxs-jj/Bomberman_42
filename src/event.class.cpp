@@ -351,6 +351,8 @@ void	Event::init( int ac, char **av ) {
 }
 
 void	Event::exit_free( void ) {	// free here
+  if (this->event_running == false)
+    return;
 	this->event_running = false;
 	// FREE menu
 	if (NULL != this->menu) {
