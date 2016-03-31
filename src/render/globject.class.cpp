@@ -62,7 +62,7 @@ void globject::load_bmp() {
         path += parser._texture[i];
         SDL_Surface *imp = IMG_Load(path.c_str());
         if (imp == NULL) 		{
-            std::cerr << "FAILFAIL" << std::endl;
+            std::cerr << "FAILFAIL " << path << std::endl;
             throw std::exception() ;
         }
         glGenTextures(1, &(_textID[i]));
@@ -252,9 +252,6 @@ void        globject::init(float sizeX, float sizeY) {
     globject("assets/render/models/cube_barrage.obj", WALL_BARRAGE, 1);
     globject("assets/render/models/rock.obj", WALL_INDESTRUCTIBLE, 1);
     globject("assets/render/models/cube.obj", WALL_HP_1, 1);
-
-
-
     globject("assets/render/models/cube1.obj", WALL_HP_2, 1);
     globject("assets/render/models/cube2.obj", WALL_HP_3, 1);
     globject("assets/render/models/cube_floor.obj", FLOOR, 1);
@@ -294,7 +291,7 @@ void        globject::init(float sizeX, float sizeY) {
     globject("assets/render/models/FireBurst/FireBurst2.obj", FIRE_2, 0.5);
     globject("assets/render/models/menu.obj", MENU, 1);
 
-globject("assets/render/models/cube.obj", PARTICLEB, 0.1);
+    globject("assets/render/models/cube.obj", PARTICLEB, 0.1);
     /* Load Uniform Variable */
     glProgramUniformMatrix4fv(_progid, \
         glGetUniformLocation(_progid, "P"), 1, GL_FALSE, \
