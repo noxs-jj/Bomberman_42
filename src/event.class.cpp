@@ -100,7 +100,6 @@ void	Event::make_new_game( int new_level ) {
 		this->map = Mapparser::map_from_file(map_name);
 		return ;
 	}
-  std::cout << "blabla" << std::endl;
 
 	if (this->multi > 0) {
 		if (this->gen_level == false) {
