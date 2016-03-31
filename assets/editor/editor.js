@@ -41,13 +41,14 @@ document.body.onload = function () {
         return x;
     }
 
-    var mapSize = 20;
-    var tileMap = create2dArray(mapSize, mapSize);
+    var mapSizeX = 30;
+    var mapSizeY = 30;
+    var tileMap = create2dArray(mapSizeX, mapSizeY);
     var currentChoice = 1;
     var tileSize = 24;
 
-    context.canvas.width = 1280;
-    context.canvas.height = 800;
+    context.canvas.width = 2000;
+    context.canvas.height = 1500;
 
     var mapViewMargin = {
         x: context.canvas.width * 1 / 4 ,
@@ -67,8 +68,8 @@ document.body.onload = function () {
     };
 
     var drawMap = function () {
-        for (var y = 0; y < mapSize; y++) {
-            for (var x = 0; x < mapSize; x++) {
+        for (var y = 0; y < mapSizeY; y++) {
+            for (var x = 0; x < mapSizeX; x++) {
                 var e = tileMap[x][y] || tiles[0];
                 context.fillStyle = e.color;
                 context.fillRect(
@@ -125,16 +126,16 @@ document.body.onload = function () {
     });
 
 
-    for (var y = 0; y < mapSize; y++) {
-        for (var x = 0; x < mapSize; x++) {
+    for (var y = 0; y < mapSizeY; y++) {
+        for (var x = 0; x < mapSizeX; x++) {
             tileMap[x][y] = tiles[0];
         }
     }
     var safeBorders = function () {
-        for (var y = 0; y < mapSize; y++) {
-            for (var x = 0; x < mapSize; x++) {
-                if (x == 0 || x == mapSize - 1
-                 || y == 0 || y == mapSize - 1)
+        for (var y = 0; y < mapSizeY; y++) {
+            for (var x = 0; x < mapSizeX; x++) {
+                if (x == 0 || x == mapSizeX - 1
+                 || y == 0 || y == mapSizeY - 1)
                     tileMap[x][y] = tiles[1];
             }
         }
@@ -159,14 +160,14 @@ document.body.onload = function () {
         var outputDiv = document.querySelector('div#output pre');
         var tmp = "";
 
-        tmp += "x: " + mapSize + "\n";
-        tmp += "y: " + mapSize + "\n";
+        tmp += "x: " + mapSizeX + "\n";
+        tmp += "y: " + mapSizeY + "\n";
         tmp += "<-- MAP -->" + "\n";
-        for (var y = 0; y < mapSize; y++) {
-            for (var x = 0; x < mapSize; x++) {
+        for (var y = 0; y < mapSizeY; y++) {
+            for (var x = 0; x < mapSizeX; x++) {
                 var e = tileMap[x][y] || tiles[0];
                 tmp += e.string_value;
-                if (x != mapSize - 1)
+                if (x != mapSizeX - 1)
                     tmp += ' ';
                 localStorage.map
             }

@@ -28,8 +28,8 @@ GLfloat             globject::spinx;
 GLfloat             globject::spinz;
 int                 globject::doIspin;
 int                 globject::space = 0; //Change the graphical envirronnement.
-int                 globject::mapX_size = 20;
-int                 globject::mapY_size = 20;
+int                 globject::mapX_size = 35;
+int                 globject::mapY_size = 25;
 
 globject::globject(void) {}
 
