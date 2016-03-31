@@ -47,8 +47,8 @@ document.body.onload = function () {
     var currentChoice = 1;
     var tileSize = 24;
 
-    context.canvas.width = 2000;
-    context.canvas.height = 1500;
+    context.canvas.width = 1600;
+    context.canvas.height = 1200;
 
     var mapViewMargin = {
         x: context.canvas.width * 1 / 4 ,
