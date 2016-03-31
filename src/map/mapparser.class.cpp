@@ -100,6 +100,11 @@ Entity *    Mapparser::get_entity_from_map( std::string & casemap, float x, floa
         case PLAYER3:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER3) );
         case PLAYER4:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER4) );
         case PLAYER5:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER5) );
+        case PLAYER6:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER6) );
+        case PLAYER7:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER7) );
+        case PLAYER8:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER8) );
+        case PLAYER9:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER9) );
+        case PLAYER10:               return static_cast<Entity*>( Factory::create_player( PLAYER, x, y, PLAYER10) );
         case BONUS_POWER_UP:        return static_cast<Entity*>( Factory::create_player( BONUS, x, y, BONUS_POWER_UP) );
         case BONUS_PLUS_ONE:        return static_cast<Entity*>( Factory::create_player( BONUS, x, y, BONUS_PLUS_ONE) );
         case BONUS_KICK:            return static_cast<Entity*>( Factory::create_player( BONUS, x, y, BONUS_KICK) );

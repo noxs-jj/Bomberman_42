@@ -71,6 +71,7 @@ void globject::load_bmp() {
             || (_ID >= PLAYER && _ID <= PLAYER4) \
             || (_ID >= BOMB_DEFAULT && _ID <= BOMB_WIND) \
             || (_ID >= ENEMY && _ID <= ENEMY5) \
+						|| (_ID >= PLAYER6 && _ID <= PLAYER10) \
             || _ID == MENU \
             || (globject::space && _ID == MAX_ENUM))) {
             # ifdef linux
@@ -379,7 +380,7 @@ void        globject::update_key() {
 }
 
 GLfloat     globject::get_leg_pos(int model) {
-	if (model >= PLAYER && model <= PLAYER5)
+	if (model >= PLAYER && model <= PLAYER10)
 		return (10);
 	if (model == ENEMY1)
 		return (1);

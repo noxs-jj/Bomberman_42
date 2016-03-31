@@ -38,6 +38,7 @@ enum MENU_SELECTED {
     MENU_MULTI_3P,
     MENU_MULTI_4P,
     MENU_MULTI_5P,
+    MENU_MULTI_10P,
     MENU_MULTI_RETURN,
     MENU_CONFIG_PLAYER1,
     MENU_CONFIG_PLAYER2,
@@ -110,6 +111,8 @@ public:
     SDL_Surface *   str_4players_selected;
     SDL_Surface *   str_5players;
     SDL_Surface *   str_5players_selected;
+    SDL_Surface *   str_10players;
+    SDL_Surface *   str_10players_selected;
     SDL_Surface *   str_config;
     SDL_Surface *   str_config_selected;
     SDL_Surface *   str_arcade;

@@ -29,6 +29,7 @@ public:
     static void run_multi_3();
     static void run_multi_4();
     static void run_multi_5();
+    static void run_multi_10();
 
     static void run_arena_2();
     static void run_arena_3();

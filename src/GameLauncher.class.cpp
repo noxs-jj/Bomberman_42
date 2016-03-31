@@ -157,6 +157,23 @@ void    Gamelauncher::run_multi_5() {
     main_event->game_playing = true; // activate active partie
 }
 
+void    Gamelauncher::run_multi_10() {
+    main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_10P + LAUNCH ");
+    main_event->soundrender->stopMusic();
+    main_event->soundrender->playSound("dogsout_long");
+    main_event->draw_winner_multi = -1;
+    main_event->draw_winner_campaign = -1;
+    main_event->draw_lose_campaign = -1;
+    main_event->draw_end_campaign = -1;
+    main_event->coop = 0;
+    main_event->multi = 10; // 4 players in game
+    main_event->arena = 0;
+    main_event->intro_map = false;
+    main_event->mode_menu = false; // desactive menu render
+    main_event->make_new_game(0);
+    main_event->game_playing = true; // activate active partie
+}
+
 void    Gamelauncher::run_arena_2() {
     main_event->w_log("MENU_MULTIPLAYER + MENU_ARENA_2P + LAUNCH ");
     main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_2P + LAUNCH ");

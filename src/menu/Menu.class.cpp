@@ -83,8 +83,9 @@ void	Menu::multiplayer() {
     print_surface(this->str_2players, this->str_2players_selected, 400, 400, MENU_MULTI_2P);
     print_surface(this->str_3players, this->str_3players_selected, 400, 500, MENU_MULTI_3P);
     print_surface(this->str_4players, this->str_4players_selected, 400, 600, MENU_MULTI_4P);
-    print_surface(this->str_5players, this->str_5players_selected, 400, 700, MENU_MULTI_5P);
-    print_surface(this->str_return, this->str_return_selected, 400, 800, MENU_MULTI_RETURN);
+		print_surface(this->str_5players, this->str_5players_selected, 400, 700, MENU_MULTI_5P);
+    print_surface(this->str_10players, this->str_10players_selected, 400, 800, MENU_MULTI_10P);
+    print_surface(this->str_return, this->str_return_selected, 400, 900, MENU_MULTI_RETURN);
 }
 
 void    Menu::config_sound() {
@@ -500,6 +501,8 @@ void  Menu::change_menu() {
         this->detail_menu_selected = MENU_CONFIG_VIDEO_MODE;
         this->menu_selected = CONFIG_VIDEO;
     }
+		else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_10P )
+        Gamelauncher::run_multi_10(); // Multiplayer 4 Players Launcher game
     else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_5P )
         Gamelauncher::run_multi_5(); // Multiplayer 4 Players Launcher game
     else if ( this->menu_selected == MULTIPLAYER && this->detail_menu_selected == MENU_MULTI_4P )
@@ -581,8 +584,10 @@ void Menu::init() {
     this->str_3players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 3 Players <<", this->red);
     this->str_4players = TTF_RenderText_Blended(this->SansPosterBold, "4 Players", this->white);
     this->str_4players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 4 Players <<", this->red);
-    this->str_5players = TTF_RenderText_Blended(this->SansPosterBold, "5 Players", this->white);
+		this->str_5players = TTF_RenderText_Blended(this->SansPosterBold, "5 Players", this->white);
     this->str_5players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 5 Players <<", this->red);
+		this->str_10players = TTF_RenderText_Blended(this->SansPosterBold, "10 Players", this->white);
+    this->str_10players_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> 10 Players <<", this->red);
     this->str_multiplayer = TTF_RenderText_Blended(this->SansPosterBold, "Multi Players", this->white);
     this->str_multiplayer_selected = TTF_RenderText_Blended(this->SansPosterBold, ">> Multi Players <<", this->red);
     this->str_config = TTF_RenderText_Blended(this->SansPosterBold, "Controller Config", this->white);
