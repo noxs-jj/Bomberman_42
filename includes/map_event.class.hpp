@@ -15,8 +15,8 @@
 
 # include <ft42.class.hpp>
 
-# define WARM_UP_1 60
-# define WARN_UP_2 127
+# define WARM_UP_1 6000000
+# define WARN_UP_2 12700000
 
 class Map_event : public ft42 {
 public:

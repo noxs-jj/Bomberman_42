@@ -70,6 +70,8 @@ std::string		ft42::logTime( std::string const & sentence ) {
 bool		ft42::check_coord_exist( int x, int y ) {
 	if (x >= 0 && x < globject::mapX_size && y >= 0 && y < globject::mapY_size)
 		return true;
+    std::cout << x << " " << y << std::endl;
+
 	return false;
 }
 

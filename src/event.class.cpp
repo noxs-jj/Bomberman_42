@@ -324,7 +324,21 @@ void	Event::print_map( void ) {
 	while (y < globject::mapY_size) {
 		x = 0;
 		while (x < globject::mapX_size) {
-			std::cout << this->map[y][x]->type << " ";
+
+
+            std::list<Entity *>::iterator it = main_event->char_list.begin();
+        	std::list<Entity *>::iterator end = main_event->char_list.end();
+            bool test = false;
+        	while (it != end) {
+        		if ((int)(*it)->pos_x == (int)x && (int)(*it)->pos_y == (int)y && (*it)->type == PLAYER) {
+        			std::cout << (*it)->model << " ";
+                    test = true;
+        			}
+
+        		it++;
+        	}
+            if (test == false )
+			         std::cout << this->map[y][x]->model << " ";
 			x++;
 		}
 		std::cout << std::endl;

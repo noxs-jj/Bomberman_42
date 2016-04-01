@@ -28,8 +28,8 @@ GLfloat             globject::spinx;
 GLfloat             globject::spinz;
 int                 globject::doIspin;
 int                 globject::space = 0; //Change the graphical envirronnement.
-int                 globject::mapX_size = 35;
-int                 globject::mapY_size = 25;
+int                 globject::mapX_size = 36;
+int                 globject::mapY_size = 26;
 
 globject::globject(void) {}
 
@@ -460,7 +460,7 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	}
 	viewPos.x = 0;
 	viewPos.y = 0;
-	viewPos.z = -38;
+viewPos.z = -40;
 	if (doIspin) {
 		viewDir.x = 1.57;
 		viewDir.y += prog;
@@ -579,9 +579,10 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
         modelPos.x = ((*itP)->pos_y - 10);
         modelPos.z = (((*itP)->pos_x - 10));
         modelPos.z += 0.01;
-        modelPos.z = (*itP)->pos_y - 10;
+
+        modelPos.z = (*itP)->pos_y - mapX_size / 2;
         modelPos.y = ((*itP)->pos_z);
-        modelPos.x = ((*itP)->pos_x - 10);
+        modelPos.x = ((*itP)->pos_x - mapY_size / 2);
         Model = Matrix::model_matrix(modelPos, modelDir, \
             globject::_object[(*itP)->model]._zoom);
         glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);

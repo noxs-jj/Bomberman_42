@@ -54,9 +54,9 @@
 
 # define LOG_PATH	"log/debugg.log"
 
-# define SIZE 19
-# define MAP_Y_SIZE 20
-# define MAP_X_SIZE 20
+// # define SIZE 19
+// # define MAP_Y_SIZE 20
+// # define MAP_X_SIZE 20
 # define BLAST_SIZE 3 // default = 0 (blast = 2 + BLAST_SIZE)
 // #define KAMIKAZE // ia became not nice
 

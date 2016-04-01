@@ -95,7 +95,7 @@ void Bomb::add_bonus(int x, int y) {
 
 int		Bomb::blast_case(int y, int x) {
 	if (main_event->map[y][x]->type == WALL && WALL_INDESTRUCTIBLE != main_event->map[y][x]->status) {
-		
+
 		if (main_event->map[y][x]->status == WALL_HP_4) {
 			main_event->map[y][x]->status = WALL_HP_3;
         }
@@ -184,17 +184,15 @@ void	Bomb::detonate( void ) {
 	main_event->map[(int)this->pos_y][(int)this->pos_x] = Factory::create_empty((int)this->pos_x, (int)this->pos_y);
 	this->damage_entity((int)this->pos_x ,(int)this->pos_y);
 	while (i <= this->blast_radius) {
-		if (dir[0] == 0 && check_coord_exist((int)(this->pos_y - i), (int)(this->pos_x)) == true)
-			dir[0] = blast_case((int)(this->pos_y - i), (int)this->pos_x);
-
-		if (dir[1] == 0 && check_coord_exist((int)(this->pos_y + i), (int)(this->pos_x)) == true)
-			dir[1] = blast_case((int)(this->pos_y + i), (int)this->pos_x);
-
+		if (dir[0] == 0 && check_coord_exist((int)(this->pos_x), (int)(this->pos_y - 1)) == true)
+            dir[0] = blast_case((int)(this->pos_y - i), (int)this->pos_x);
+		if (dir[1] == 0 && check_coord_exist((int)(this->pos_x), (int)(this->pos_y + i)) == true)
+            dir[1] = blast_case((int)(this->pos_y + i), (int)this->pos_x);
 		if (dir[2] == 0 && check_coord_exist((int)(this->pos_x - i), (int)(this->pos_y)) == true)
-			dir[2] = blast_case((int)this->pos_y, (int)(this->pos_x - i));
+            dir[2] = blast_case((int)this->pos_y, (int)(this->pos_x - i));
 
 		if (dir[3] == 0 && check_coord_exist((int)(this->pos_x + i), (int)(this->pos_y)) == true)
-			dir[3] = blast_case((int)this->pos_y, (int)(this->pos_x + i));
+            dir[3] = blast_case((int)this->pos_y, (int)(this->pos_x + i));
 
 		i++;
 	}

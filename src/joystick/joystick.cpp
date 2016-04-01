@@ -456,6 +456,7 @@ void Joystick::read_key(int mode) {
                     case SDLK_b:            main_event->remote_detonate(main_event->config_keyboard[0]); break;
                     case SDLK_n:            Map_event::debugg_change_timer_lunch_warmup_1(); break;
                     case SDLK_m:            Map_event::debugg_change_timer_lunch_warmup_2(); break;
+                    case SDLK_z:            main_event->print_map();
 
                     case SDLK_k:            main_event->save_config->fill_info_config();
                                             main_event->save_config->print_config_debugg();
@@ -531,7 +532,6 @@ void Joystick::read_key(int mode) {
                 }
             }
             else if (event.type == SDL_JOYAXISMOTION) {
-                std::cout << "key" << std::endl;
                 if( event.jaxis.axis == 0) {
                     if (event.jaxis.value > 3200)
                         change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_RIGHT);
