@@ -2,4 +2,3 @@
 - retry "left triger" ne fonctionne pas sur map 10 joueur (voir game launcher)
 - CPU le jeux rame bc a 10 joueur avec les particule (voir calcule carte graphique ?)
 - SEGFAULT en fin de game avec echap pas de rapport precis
-- Refaire les maps pour 26 x 36
