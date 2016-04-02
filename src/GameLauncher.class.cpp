@@ -247,7 +247,9 @@ void    Gamelauncher::run_arena_5() {
 }
 
 void    Gamelauncher::retry_previous_game() {
-    if (5 == main_event->multi)
+    if (10 == main_event->multi)
+        Gamelauncher::run_multi_10();
+    else if (5 == main_event->multi)
         Gamelauncher::run_multi_5();
     else if (4 == main_event->multi)
         Gamelauncher::run_multi_4();

@@ -29,6 +29,7 @@ Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
     this->map = NULL;
     this->gen_level = false;
     this->option_arcade = false;
+    this->option_particle = true;
     this->option_resolution = RESOLUTION_NOT_SET;
     this->actual_resolution = RESOLUTION_NOT_SET;
     this->full_screen = false;
@@ -162,38 +163,40 @@ void Event::cheat_stats( void ) {
 
 
 void	Event::parse_command(int ac, char **av) {
-	int	i = 0;
+    int	i = 0;
 
-	while ( i < ac ) {
-		if (strcmp(av[i], "-log") == 0)
-			ft42::logg = true;
-		else if (strcmp(av[i], "-gen") == 0)
-			this->gen_level = true;
-		else if (strcmp(av[i], "-arcade") == 0)
-			this->option_arcade = true;
-		else if (strcmp(av[i], "-kamikaze") == 0)
-			this->option_ia_kamikaze = true;
-		else if (strcmp(av[i], "-2560") == 0) {
-			this->option_resolution = RESOLUTION_2560;
+    while ( i < ac ) {
+        if (strcmp(av[i], "-log") == 0)
+            ft42::logg = true;
+        else if (strcmp(av[i], "-gen") == 0)
+            this->gen_level = true;
+        else if (strcmp(av[i], "-noparticle") == 0)
+            this->option_particle = false;
+        else if (strcmp(av[i], "-arcade") == 0)
+            this->option_arcade = true;
+        else if (strcmp(av[i], "-kamikaze") == 0)
+            this->option_ia_kamikaze = true;
+        else if (strcmp(av[i], "-2560") == 0) {
+            this->option_resolution = RESOLUTION_2560;
             this->actual_resolution = RESOLUTION_2560;
         }
-		else if (strcmp(av[i], "-1920") == 0) {
-			this->option_resolution = RESOLUTION_1920;
+        else if (strcmp(av[i], "-1920") == 0) {
+            this->option_resolution = RESOLUTION_1920;
             this->actual_resolution = RESOLUTION_1920;
         }
-		else if (strcmp(av[i], "-1600") == 0) {
-			this->option_resolution = RESOLUTION_1600;
+        else if (strcmp(av[i], "-1600") == 0) {
+            this->option_resolution = RESOLUTION_1600;
             this->actual_resolution = RESOLUTION_1600;
         }
         else if (strcmp(av[i], "-1280") == 0) {
             this->option_resolution = RESOLUTION_1280;
             this->actual_resolution = RESOLUTION_1280;
         }
-		else if (strcmp(av[i], "-800") == 0) {
-			this->option_resolution = RESOLUTION_800;
+        else if (strcmp(av[i], "-800") == 0) {
+            this->option_resolution = RESOLUTION_800;
             this->actual_resolution = RESOLUTION_800;
         }
-		i++;
+        i++;
 	}
     if (this->option_resolution == RESOLUTION_NOT_SET) {
         this->option_resolution = main_event->save_config->global_config.windowed_width;

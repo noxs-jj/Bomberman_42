@@ -37,6 +37,13 @@ Key | Joystick | Keyboard1 | Keyboard2
 **Bomb remote** | Button 2 | V | -
 **Activate remote bombs** | Button 1 | B | *
 
+## Command line option_arcade
+    -gen (generate random map solo/coop/multi/arena)
+    -noparticle (removes particles)
+    -arcade (can't exist game from joystick, only from 'echap' key)
+    -log (log events on log/debugg.log)
+    -kamikaze (IA becomes kmikaze)
+
 ## Developers
 - Une fois une partie campaing lance, revenir au menu principal et appuyer sur '1' pour passer au niveau suivant
 - Au lancement du jeux, au menu principal (sans partie en cours) appuyer sur '2' pour lancer la maps tests/test1.ntm

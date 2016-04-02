@@ -1,4 +1,2 @@
 - manque 1 slots au 2eme WARN_UP_2
-- retry "left triger" ne fonctionne pas sur map 10 joueur (voir game launcher)
-- CPU le jeux rame bc a 10 joueur avec les particule (voir calcule carte graphique ?)
 - SEGFAULT en fin de game avec echap pas de rapport precis

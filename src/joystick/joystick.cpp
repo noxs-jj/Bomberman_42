@@ -183,36 +183,35 @@ void Joystick::set_key() {
     static t_key   key2 = {0, 0, 0, 0}; // key for p2 (keyboard)
     static t_key   key3 = {0, 0, 0, 0};
     static t_key   key4 = {0, 0, 0, 0};
-		static t_key   key5 = {0, 0, 0, 0};
-
+    static t_key   key5 = {0, 0, 0, 0};
 
     static t_key   ckey = {0, 0, 0, 0};
     static t_key   ckey2 = {0, 0, 0, 0}; // key for p2 (controller)
     static t_key   ckey3 = {0, 0, 0, 0};
     static t_key   ckey4 = {0, 0, 0, 0};
-		static t_key   ckey5 = {0, 0, 0, 0};
+    static t_key   ckey5 = {0, 0, 0, 0};
 
-		static t_key   ckey6 = {0, 0, 0, 0};
-		static t_key   ckey7 = {0, 0, 0, 0};
-		static t_key   ckey8 = {0, 0, 0, 0};
-		static t_key   ckey9 = {0, 0, 0, 0};
+    static t_key   ckey6 = {0, 0, 0, 0};
+    static t_key   ckey7 = {0, 0, 0, 0};
+    static t_key   ckey8 = {0, 0, 0, 0};
+    static t_key   ckey9 = {0, 0, 0, 0};
     static t_key   ckey10 = {0, 0, 0, 0};
 
     this->arr_key_keyboard[0] = &key;
     this->arr_key_keyboard[1] = &key2;
     this->arr_key_keyboard[2] = &key3;
     this->arr_key_keyboard[3] = &key4;
-		this->arr_key_keyboard[4] = &key5;
+	this->arr_key_keyboard[4] = &key5;
 
     this->arr_key_controller[0] = &ckey;
     this->arr_key_controller[1] = &ckey2;
     this->arr_key_controller[2] = &ckey3;
     this->arr_key_controller[3] = &ckey4;
-		this->arr_key_controller[4] = &ckey5;
-		this->arr_key_controller[5] = &ckey6;
-		this->arr_key_controller[6] = &ckey7;
-		this->arr_key_controller[7] = &ckey8;
-		this->arr_key_controller[8] = &ckey9;
+    this->arr_key_controller[4] = &ckey5;
+    this->arr_key_controller[5] = &ckey6;
+    this->arr_key_controller[6] = &ckey7;
+    this->arr_key_controller[7] = &ckey8;
+    this->arr_key_controller[8] = &ckey9;
     this->arr_key_controller[9] = &ckey10;
     set_key_config();
 }

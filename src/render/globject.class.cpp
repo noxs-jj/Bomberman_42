@@ -460,15 +460,15 @@ void		globject::render_all(Entity ***map, std::list<Entity*> players, SDL_Surfac
 	}
 	viewPos.x = 0;
 	viewPos.y = 0;
-viewPos.z = -40;
+    viewPos.z = -40;
 	if (doIspin) {
-		viewDir.x = 1.57;
-		viewDir.y += prog;
-		viewPos.x -= spinx;
-		viewPos.y -= spinz;
-		viewPos.z += prog;
-		if (prog < 25)
-			prog+= 0.36;
+        viewDir.x = 1.57;
+        viewDir.y += prog;
+        viewPos.x -= spinx;
+        viewPos.y -= spinz;
+        viewPos.z += prog;
+        if (prog < 25)
+        prog+= 0.36;
 	}
 	else
 		prog = 0;
@@ -494,105 +494,103 @@ viewPos.z = -40;
 		}
 	}
 
-	for (int i = -mapY_size / 2; i <  mapY_size / 2; i++) {
-		for (int j = -mapX_size / 2; j < mapX_size / 2; j++) {
+    for (int i = -mapY_size / 2; i <  mapY_size / 2; i++) {
+        for (int j = -mapX_size / 2; j < mapX_size / 2; j++) {
             if (map[i + mapY_size / 2][j + mapX_size / 2] == NULL)
                 continue ;
 
-			zoomMul = 1;
-			modelDir.x = 1;
-			modelDir.z = 0;
-			modelDir.y = 0;
-			modelPos.y = 0;
-			modelPos.x = i;
-			modelPos.z = j;
-			modelPos.x = map[i + mapY_size / 2][j + mapX_size / 2]->pos_y - mapY_size / 2;
-			modelPos.z = map[i + mapY_size / 2][j + mapX_size / 2]->pos_x - mapX_size / 2;
+            zoomMul = 1;
+            modelDir.x = 1;
+            modelDir.z = 0;
+            modelDir.y = 0;
+            modelPos.y = 0;
+            modelPos.x = i;
+            modelPos.z = j;
+            modelPos.x = map[i + mapY_size / 2][j + mapX_size / 2]->pos_y - mapY_size / 2;
+            modelPos.z = map[i + mapY_size / 2][j + mapX_size / 2]->pos_x - mapX_size / 2;
 
-			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == -1) { // <<<<<<< Cette ligne SEGFAULT
-				continue ;
+            if (map[i + mapY_size / 2][j + mapX_size / 2]->model == -1) { // <<<<<<< Cette ligne SEGFAULT
+                continue ;
             }
 
-			if (map[i + mapY_size / 2][j + mapX_size / 2]->model >= WALL_HP_1 \
-					&& map[i + mapY_size / 2][j + mapX_size / 2]->model <= WALL_HP_4) {
-				map[i + mapY_size / 2][j + mapX_size / 2]->model = \
-				            map[i + mapY_size / 2][j + mapX_size / 2]->status;
+            if (map[i + mapY_size / 2][j + mapX_size / 2]->model >= WALL_HP_1 \
+                && map[i + mapY_size / 2][j + mapX_size / 2]->model <= WALL_HP_4) {
+                map[i + mapY_size / 2][j + mapX_size / 2]->model = map[i + mapY_size / 2][j + mapX_size / 2]->status;
             }
 
-			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == BOMB) {
-				if (!(a % (1 + (dynamic_cast<Bomb*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer) / 2))) {
-					zoomMul *= 1 + 3.0f / (static_cast<float> \
-						((dynamic_cast<Bomb*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer)));
-				}
-			}
+            if (map[i + mapY_size / 2][j + mapX_size / 2]->model == BOMB) {
+                if (!(a % (1 + (dynamic_cast<Bomb*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer) / 2))) {
+                    zoomMul *= 1 + 3.0f / (static_cast<float>((dynamic_cast<Bomb*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer)));
+                }
+            }
 
-			if (map[i + mapY_size / 2][j + mapX_size / 2]->model == FIRE_2) {
-				zoomMul *= 1.0f - (1.0f / (static_cast<float> \
-					((dynamic_cast<Fire*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer))));
-			}
-            if (map[i + mapY_size / 2][j + mapX_size / 2]->model == WALL_BARRAGE || map[i + mapY_size / 2][j + mapX_size / 2]->model == WALL_BARRAGE_DIE)
-            {
+            if (map[i + mapY_size / 2][j + mapX_size / 2]->model == FIRE_2) {
+                zoomMul *= 1.0f - (1.0f / (static_cast<float> ((dynamic_cast<Fire*>(map[i + mapY_size / 2][j + mapX_size / 2])->timer))));
+            }
+            if (map[i + mapY_size / 2][j + mapX_size / 2]->model == WALL_BARRAGE || map[i + mapY_size / 2][j + mapX_size / 2]->model == WALL_BARRAGE_DIE){
                 modelPos.y = 30.0 - (fmin((clock() - map[i + mapY_size / 2][j + mapX_size / 2]->time_creation) / 10000, 30));
                 // std::cout << map[i + mapY_size / 2][j + mapX_size / 2]->time_creation<< std::endl;
             }
-			Model = Matrix::model_matrix(modelPos, modelDir, \
-				globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model]._zoom * zoomMul);
-			glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-			globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model].render(0);
-		}
-	}
+            Model = Matrix::model_matrix(modelPos, modelDir, globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model]._zoom * zoomMul);
+            glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
+            globject::_object[map[i + mapY_size / 2][j + mapX_size / 2]->model].render(0);
+        }
+    }
 
-	it = players.begin();
-	ite = players.end();
-	while (it != ite) {
-		modelDir.x = -1;
-		modelDir.z = 0;
-		modelDir.y = 0;
-		modelDir = set_dir((*it)->dir);
-		modelPos.y = 0;
-		modelPos.x = ((*it)->pos_y - mapY_size / 2);
-		modelPos.z = (((*it)->pos_x - mapX_size / 2));
-		// if ((*it)->type == ENEMY1) {
-			modelPos.z += 0.01;
-			// modelPos.x += 0.5;
+    it = players.begin();
+    ite = players.end();
 
-		// }
-		Model = Matrix::model_matrix(modelPos, modelDir, \
-			globject::_object[(*it)->model]._zoom);
-		glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-		glUniform1f(globject::_keyFrameID, (*it)->frame);
-		glUniform1f(globject::_legPos, get_leg_pos((*it)->model));
-		globject::_object[(*it)->model].render(0);
-		it++;
-	}
-
-    itP = Particle::list->begin();
-    iteP = Particle::list->end();
-
-    while (itP != iteP) {
-        //(*itP)->model = PARTICLE;
+    while (it != ite) {
         modelDir.x = -1;
         modelDir.z = 0;
         modelDir.y = 0;
-        //modelDir = set_dir((*itP)->dir);
+        modelDir = set_dir((*it)->dir);
         modelPos.y = 0;
-        modelPos.x = ((*itP)->pos_y - 10);
-        modelPos.z = (((*itP)->pos_x - 10));
+        modelPos.x = ((*it)->pos_y - mapY_size / 2);
+        modelPos.z = (((*it)->pos_x - mapX_size / 2));
+        // if ((*it)->type == ENEMY1) {
         modelPos.z += 0.01;
-
-        modelPos.z = (*itP)->pos_y - mapX_size / 2;
-        modelPos.y = ((*itP)->pos_z);
-        modelPos.x = ((*itP)->pos_x - mapY_size / 2);
+        // modelPos.x += 0.5;
+        // }
         Model = Matrix::model_matrix(modelPos, modelDir, \
-            globject::_object[(*itP)->model]._zoom);
+            globject::_object[(*it)->model]._zoom);
         glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
-        glUniform1f(globject::_keyFrameID, 0);
-        glUniform1f(globject::_legPos, 0);
-        globject::_object[(*itP)->model].render(0);
+        glUniform1f(globject::_keyFrameID, (*it)->frame);
+        glUniform1f(globject::_legPos, get_leg_pos((*it)->model));
+        globject::_object[(*it)->model].render(0);
+        it++;
+	}
 
-        itP++;
+    if (true == main_event->option_particle) {
+        itP = Particle::list->begin();
+        iteP = Particle::list->end();
+
+        while (itP != iteP) {
+            //(*itP)->model = PARTICLE;
+            modelDir.x = -1;
+            modelDir.z = 0;
+            modelDir.y = 0;
+            //modelDir = set_dir((*itP)->dir);
+            modelPos.y = 0;
+            modelPos.x = ((*itP)->pos_y - 10);
+            modelPos.z = (((*itP)->pos_x - 10));
+            modelPos.z += 0.01;
+
+            modelPos.z = (*itP)->pos_y - mapX_size / 2;
+            modelPos.y = ((*itP)->pos_z);
+            modelPos.x = ((*itP)->pos_x - mapY_size / 2);
+            Model = Matrix::model_matrix(modelPos, modelDir, \
+                globject::_object[(*itP)->model]._zoom);
+            glUniformMatrix4fv(globject::_modelMatID, 1, GL_FALSE, Model._matrix);
+            glUniform1f(globject::_keyFrameID, 0);
+            glUniform1f(globject::_legPos, 0);
+            globject::_object[(*itP)->model].render(0);
+
+            itP++;
+        }
+        Particle::update_all();
     }
-    Particle::update_all();
+
 	SDL_GL_SwapWindow(globject::_displayWindow);
 }
 

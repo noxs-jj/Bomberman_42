@@ -43,6 +43,7 @@ public:
 	bool					option_arcade;
 	int						option_resolution;
 	bool					option_ia_kamikaze;
+    bool                    option_particle;
 	bool					coop; // false si campaign
 	int 					actual_level;
 	int 					save_level = 1;
