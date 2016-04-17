@@ -71,7 +71,7 @@ void    Map_event::check_warm_up() {
             Map_event::time_last_event = current;
             Map_event::time_last_demi_second = current_demi_second;
             // Map_event::add_one_barrage_die_to_map();
-            if (Map_event::barrage_x != 11 ||  Map_event::barrage_y != 13)
+            if (Map_event::barrage_x != 11 ||  Map_event::barrage_y != 14)
               Map_event::add_second_barrage_map();
         }
         // Warm up 1 time + WARN_UP_1

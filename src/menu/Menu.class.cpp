@@ -663,7 +663,7 @@ void Menu::init() {
     this->str_option_disable = TTF_RenderText_Blended(this->SansPosterBold, "OPTION DISABLED", this->white);
     this->str_option_disable_selected = TTF_RenderText_Blended(this->SansPosterBold, "! OPTION DISABLED !", this->red);
 
-	this->winner = (SDL_Surface **)std::malloc(sizeof(SDL_Surface *) * 5);
+	this->winner = (SDL_Surface **)std::malloc(sizeof(SDL_Surface *) * 10);
 	if (NULL == this->winner) {
 		this->w_error("Menu::init winner allocation error");
 		throw std::exception();
@@ -672,7 +672,12 @@ void Menu::init() {
 	this->winner[1] = TTF_RenderText_Blended(this->SansPosterBold, "Player 2 Victory", this->blue);
 	this->winner[2] = TTF_RenderText_Blended(this->SansPosterBold, "Player 3 Victory", this->blue);
 	this->winner[3] = TTF_RenderText_Blended(this->SansPosterBold, "Player 4 Victory", this->blue);
-	this->winner[4] = TTF_RenderText_Blended(this->SansPosterBold, "Player 5 Victory", this->blue);
+    this->winner[4] = TTF_RenderText_Blended(this->SansPosterBold, "Player 5 Victory", this->blue);
+    this->winner[5] = TTF_RenderText_Blended(this->SansPosterBold, "Player 6 Victory", this->blue);
+    this->winner[6] = TTF_RenderText_Blended(this->SansPosterBold, "Player 7 Victory", this->blue);
+    this->winner[7] = TTF_RenderText_Blended(this->SansPosterBold, "Player 8 Victory", this->blue);
+    this->winner[8] = TTF_RenderText_Blended(this->SansPosterBold, "Player 9 Victory", this->blue);
+	this->winner[9] = TTF_RenderText_Blended(this->SansPosterBold, "Player 10 Victory", this->blue);
 }
 
 Menu::~Menu() {
@@ -753,6 +758,11 @@ Menu::~Menu() {
     SDL_FreeSurface(this->winner[2]);
     SDL_FreeSurface(this->winner[3]);
     SDL_FreeSurface(this->winner[4]);
+    SDL_FreeSurface(this->winner[5]);
+    SDL_FreeSurface(this->winner[6]);
+    SDL_FreeSurface(this->winner[7]);
+    SDL_FreeSurface(this->winner[8]);
+    SDL_FreeSurface(this->winner[9]);
 
     SDL_FreeSurface(this->winner_push_to_retry_previous);
     SDL_FreeSurface(this->winner_push_to_go_menu);
