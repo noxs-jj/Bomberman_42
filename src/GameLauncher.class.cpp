@@ -160,7 +160,7 @@ void    Gamelauncher::run_multi_5() {
 void    Gamelauncher::run_multi_10() {
     main_event->w_log("MENU_MULTIPLAYER + MENU_MULTI_10P + LAUNCH ");
     main_event->soundrender->stopMusic();
-    main_event->soundrender->playSound("dogsout_long");
+    //main_event->soundrender->playSound("dogsout_long");
     main_event->draw_winner_multi = -1;
     main_event->draw_winner_campaign = -1;
     main_event->draw_lose_campaign = -1;
