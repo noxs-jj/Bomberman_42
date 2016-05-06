@@ -1,7 +1,7 @@
 # Bomberman Group Project @42Born2code
 [![Build Status](https://travis-ci.org/noxsnono/Bomberman_42.svg?branch=master)](https://travis-ci.org/noxsnono/Bomberman_42)
 
-[![Screen Shot](https://raw.githubusercontent.com/noxsnono/Bomberman_42/master/assets/zzzzOthers/bomberman_animated.gif)](http://www.dailymotion.com/video/x3vo7j6)
+[![Screen Shot](https://raw.githubusercontent.com/noxsnono/Bomberman_42/master/assets/zzzzOthers/bomberman_animated.gif)](http://www.dailymotion.com/video/x48re9e_bomberman-42-born2code-kamo-con-maker-faire-paris-2016_school)
 
 ## Requierements, Install
 
