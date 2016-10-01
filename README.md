@@ -39,7 +39,7 @@ Key | Joystick | Keyboard1 | Keyboard2
 
 ## Command line option_arcade
     -gen (generate random map solo/coop/multi/arena)
-    -noparticle (removes particles)
+    -particle (add particles, SEGFAULT detected be carefull)
     -arcade (can't exist game from joystick, only from 'echap' key)
     -log (log events on log/debugg.log)
     -kamikaze (IA becomes kmikaze)

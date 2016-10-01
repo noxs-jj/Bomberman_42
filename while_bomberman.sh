@@ -1,1 +1,4 @@
-while sleep 2; do ~/bomberman_42/bomberman -arcade; done
+#/bin/bash
+APP_REPO_ABSOLUTE_PATH=$(dirname $(readlink -f $0))
+
+while sleep 2; do $APP_REPO_ABSOLUTE_PATH/bomberman -arcade; done

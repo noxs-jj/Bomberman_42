@@ -29,7 +29,7 @@ Event::Event( void ) : run(true), coop(false), actual_level(1), multi(2) {
     this->map = NULL;
     this->gen_level = false;
     this->option_arcade = false;
-    this->option_particle = true;
+    this->option_particle = false;
     this->option_resolution = RESOLUTION_NOT_SET;
     this->actual_resolution = RESOLUTION_NOT_SET;
     this->full_screen = false;
@@ -72,17 +72,16 @@ void 	Event::free_game( void ) {
 void	Event::make_new_game( int new_level ) {
 	char map_name[64] = {0};
 
-
 	this->joystick->reset_key_pressed();
 	this->live_player[0] = true;
 	this->live_player[1] = true;
 	this->live_player[2] = true;
 	this->live_player[3] = true;
-    this->live_player[4] = true;
-    this->live_player[5] = true;
-    this->live_player[6] = true;
-    this->live_player[7] = true;
-    this->live_player[8] = true;
+  this->live_player[4] = true;
+  this->live_player[5] = true;
+  this->live_player[6] = true;
+  this->live_player[7] = true;
+  this->live_player[8] = true;
 	this->live_player[9] = true;
 
 	if (this->game_playing == true) {
@@ -170,8 +169,8 @@ void	Event::parse_command(int ac, char **av) {
             ft42::logg = true;
         else if (strcmp(av[i], "-gen") == 0)
             this->gen_level = true;
-        else if (strcmp(av[i], "-noparticle") == 0)
-            this->option_particle = false;
+        else if (strcmp(av[i], "-particle") == 0)
+            this->option_particle = true;
         else if (strcmp(av[i], "-arcade") == 0)
             this->option_arcade = true;
         else if (strcmp(av[i], "-kamikaze") == 0)

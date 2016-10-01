@@ -62,10 +62,10 @@ HEAD = includes/bomb.class.hpp \
                 includes/soundrender.class.hpp \
                 includes/bonus.class.hpp \
                 includes/wall.class.hpp \
-				includes/factory.class.hpp \
-				includes/save.class.hpp \
+								includes/factory.class.hpp \
+								includes/save.class.hpp \
                 includes/map_event.class.hpp \
-		includes/particle.class.hpp \
+								includes/particle.class.hpp \
 
 SRC = src/entity/bomb.class.cpp \
                 src/entity/boss.class.cpp \
