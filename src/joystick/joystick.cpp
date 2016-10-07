@@ -364,21 +364,21 @@ void Joystick::read_key(int mode) {
         }
     }
     this->refresh_all_dir_joystick();
-		int number = 0;
-		while (number < 2) {
-			if (this->arr_key_keyboard[number]->key_right)
-	        main_event->player_move(main_event->config_keyboard[number], DIR_RIGHT);
+	int number = 0;
+	while (number < 2) {
+		if (this->arr_key_keyboard[number]->key_right)
+           main_event->player_move(main_event->config_keyboard[number], DIR_RIGHT);
 	    if (this->arr_key_keyboard[number]->key_left)
 	        main_event->player_move(main_event->config_keyboard[number], DIR_LEFT);
 	    if (this->arr_key_keyboard[number]->key_up)
 	        main_event->player_move(main_event->config_keyboard[number], DIR_UP);
 	    if (this->arr_key_keyboard[number]->key_down)
 	        main_event->player_move(main_event->config_keyboard[number], DIR_BOTTOM);
-			number++;
-		}
-		number = 0;
-		while (number < 10) {
-			if (this->arr_key_controller[number]->key_right)
+		number++;
+	}
+	number = 0;
+	while (number < 10) {
+		if (this->arr_key_controller[number]->key_right)
 	        main_event->player_move(main_event->config[number], DIR_RIGHT);
 	    if (this->arr_key_controller[number]->key_left)
 	        main_event->player_move(main_event->config[number], DIR_LEFT);
@@ -386,8 +386,8 @@ void Joystick::read_key(int mode) {
 	        main_event->player_move(main_event->config[number], DIR_UP);
 	    if (this->arr_key_controller[number]->key_down)
 	        main_event->player_move(main_event->config[number], DIR_BOTTOM);
-			number++;
-		}
+		number++;
+	}
   }
 
 void    Joystick::refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move) {
@@ -411,10 +411,16 @@ void    Joystick::refresh_all_dir_joystick() {
 
 	while (number < 10) {
 		if (this->manettes[number] != NULL) {
-        x_move = SDL_JoystickGetAxis(this->manettes[number], 0);
-        y_move = SDL_JoystickGetAxis(this->manettes[number], 1);
-        refresh_dir_joystick(this->arr_key_controller[number], x_move, y_move);
-    }
+            # ifdef linux
+                x_move = SDL_JoystickGetAxis(this->manettes[number], 0);
+                y_move = SDL_JoystickGetAxis(this->manettes[number], 1);
+            # endif
+            # ifdef __APPLE__
+                x_move = SDL_JoystickGetAxis(this->manettes[number], 3);
+                y_move = SDL_JoystickGetAxis(this->manettes[number], 4);
+            # endif
+            refresh_dir_joystick(this->arr_key_controller[number], x_move, y_move);
+        }
 		number++;
 	}
 }
@@ -461,7 +467,6 @@ void    Joystick::in_menu_SDLK_RETURN() {
         || main_event->draw_end_campaign >= 0) {
 
         main_event->draw_winner_multi = -1;
-        // main_event->draw_winner_campaign = -1;
         main_event->draw_lose_campaign = -1;
         main_event->draw_end_campaign = -1;
         main_event->mode_menu = true;
@@ -579,7 +584,6 @@ void    Joystick::in_menu_controller_9() {
 }
 
 void    Joystick::in_menu_controller_axis_motion(SDL_Event &event) {
-    // fprintf(stdout, "\n\nSDL_JOYAXISMOTION[%d] event.jaxis.axis[%d] event.jaxis.value[%d]\n\n", SDL_JOYAXISMOTION, event.jaxis.axis , event.jaxis.value);
     if(event.jaxis.axis == 3 || event.jaxis.axis == 0) {
         if (event.jaxis.value > 3200)
             main_event->menu->move_menu_hor();
@@ -596,7 +600,6 @@ void    Joystick::in_menu_controller_axis_motion(SDL_Event &event) {
 }
 
 void    Joystick::in_menu_controller_hat_motion(SDL_Event &event) {
-    // std::cout << "----------------SDL_JOYHATMOTION" << std::endl;
     if (0 == event.jhat.hat && 0 != event.jhat.value) {
         switch (event.jhat.value) {
             case SDL_HAT_UP:        main_event->menu->move_menu_ver(-1); break;
@@ -661,8 +664,6 @@ void    Joystick::in_game_controller_8() {
 }
 
 void    Joystick::in_game_controller_hat_motion(SDL_Event &event) {
-    fprintf(stdout, "\n\n    SDL_JOYHATMOTION[%d] event.jaxis.axis[%d] event.jaxis.value[%d] event.jhat.value[%d]\n\n", SDL_JOYHATMOTION, event.jaxis.axis , event.jaxis.value, event.jhat.value);
-    fprintf(stdout, "joystick[%d] bjhatvalue[%d]\n", event.jbutton.which, event.jhat.value);
     switch (event.jhat.value) {
         case SDL_HAT_UP:        this->change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_UP); break;
         case SDL_HAT_LEFT:      this->change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_LEFT); break;
@@ -674,27 +675,31 @@ void    Joystick::in_game_controller_hat_motion(SDL_Event &event) {
 }
 
 void    Joystick::in_game_controller_axis_motion(SDL_Event &event) {
-    fprintf(stdout, "\n\n----SDL_JOYAXISMOTION[%d] event.jaxis.axis[%d] event.jaxis.value[%d]\n\n", SDL_JOYAXISMOTION, event.jaxis.axis , event.jaxis.value);
     if( event.jaxis.axis == 3 || event.jaxis.axis == 0 ) {
-        if (event.jaxis.value > 3200)
+        if (event.jaxis.value > 3200) {
             this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_RIGHT);
-        else if (event.jaxis.value < -3200)
+        }
+        else if (event.jaxis.value < -3200) {
             this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_LEFT);
-        else
+        }
+        else {
             this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], -1);
+        }
         /* Left-right movement code goes here */
     }
 
     if( event.jaxis.axis == 4 || event.jaxis.axis == 1 ) {
-        if (event.jaxis.value > 3200)
+        if (event.jaxis.value > 3200) {
             this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_BOTTOM);
-        else if (event.jaxis.value < -3200)
+        }
+        else if (event.jaxis.value < -3200) {
             this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_UP);
-        else
+        }
+        else {
             this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], -1);
+        }
             /* Up-Down movement code goes here */
     }
-    // std::cout << "hello" << std::endl;
 }
 
 void    Joystick::intro_pass() {

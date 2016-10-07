@@ -65,7 +65,7 @@ HEAD = includes/bomb.class.hpp \
         includes/factory.class.hpp \
         includes/save.class.hpp \
         includes/map_event.class.hpp \
-        includes/particle.class.hpp \
+        includes/particle.class.hpp
 
 SRC = src/entity/bomb.class.cpp \
         src/entity/boss.class.cpp \
@@ -90,46 +90,46 @@ SRC = src/entity/bomb.class.cpp \
         src/entity/bonus.class.cpp \
         src/factory.class.cpp \
         src/save/save.class.cpp \
-        src/entity/particle.class.cpp \
+        src/entity/particle.class.cpp
 
 OBJ := $(SRC:.cpp=.cpp.o)
 
 default: all
 
 %.cpp.o: %.cpp $(HEAD)
-    @$(CXX) $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) -c $< -o $@
+	@$(CXX) $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-    $(COMMAND)
+	$(COMMAND)
 
 $(ASSETS_PATH):
-    tar -jxf $(ASSETS_TAR)
+	tar -jxf $(ASSETS_TAR)
 
 $(ASSETS_TAR):
-    curl $(ASSETS_URL) > $(ASSETS_TAR)
+	curl $(ASSETS_URL) > $(ASSETS_TAR)
 
 all: $(ASSETS_TAR) $(ASSETS_PATH) $(NAME)
-    @echo "./bomberman"
+	@echo "./bomberman"
 
 clean:
-    @rm -rf $(OBJ)
+	@rm -rf $(OBJ)
 
 fclean: clean
-    @rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean all
 
 man:
-    MANPATH=./man/ man bomberman
+	MANPATH=./man/ man bomberman
 
 soundtest:
-    $(CXX) src/ft42.class.cpp src/soundrender.class.cpp $(CFLAGS) \
-    $(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) \
-    `sdl2-config --libs` `sdl2-config --cflags` -lSDL2_mixer "tests/soundrender.test.cpp" -lpthread
+	$(CXX) src/ft42.class.cpp src/soundrender.class.cpp $(CFLAGS) \
+	$(INCLUDE) $(SDL_INCLUDE) $(CFLAGS) \
+	`sdl2-config --libs` `sdl2-config --cflags` -lSDL2_mixer "tests/soundrender.test.cpp" -lpthread
 
 sdltest:
-    $(CXX) $(CFLAGS) -stdlib=libc++ -o testsdl2 test/test_sdl2.cpp \
-    -framework opengl `sdl2-config --libs` `sdl2-config --cflags`
+	$(CXX) $(CFLAGS) -stdlib=libc++ -o testsdl2 test/test_sdl2.cpp \
+	-framework opengl `sdl2-config --libs` `sdl2-config --cflags`
 
 .PHONY: all clean fclean re soundtest sdltest
 .SILENT: $(CXX) $(NAME) $(CFLAGS) $(INCLUDE) $(SDL_INCLUDE) $(SDL_LIB) $(HEAD) $(SRC) $(OBJ) %.cpp.o all $(NAME) man clean fclean re soundtest sdltest
