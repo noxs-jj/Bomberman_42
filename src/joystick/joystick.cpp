@@ -18,23 +18,21 @@
 #include <GameLauncher.class.hpp>
 
 Joystick::Joystick(void) {
-	this->config[0] = 1;
-	this->config[1] = 1;
-	this->config[2] = 0;
-	this->config[3] = 0;
-	this->config[4] = 0;
-	this->config[5] = 0;
-	this->config[6] = 0;
-	this->config[7] = 0;
-	this->config[8] = 0;
-	this->config[9] = 0;
+    this->config[0] = 1;
+    this->config[1] = 1;
+    this->config[2] = 0;
+    this->config[3] = 0;
+    this->config[4] = 0;
+    this->config[5] = 0;
+    this->config[6] = 0;
+    this->config[7] = 0;
+    this->config[8] = 0;
+    this->config[9] = 0;
 }
 
 Joystick::~Joystick(void) {}
 
-Joystick::Joystick( Joystick const & src ) {
-    *this = src;
-}
+Joystick::Joystick( Joystick const & src ) { *this = src; }
 
 Joystick & Joystick::operator=( Joystick const & rhs ) {
 	int number = 0;
@@ -53,19 +51,19 @@ Joystick & Joystick::operator=( Joystick const & rhs ) {
 }
 
 void Joystick::init_joystick() {
-	int number = 0;
-	this->manettes = (SDL_Joystick **)std::malloc(sizeof(SDL_Joystick *) * 10);
+    int number = 0;
+
+    this->manettes = (SDL_Joystick **)std::malloc(sizeof(SDL_Joystick *) * 10);
     if (NULL == this->manettes){
         this->w_error("Joystick::init_joystick()  this->manettes Malloc error");
         throw std::exception();
     }
-
 	while (number < main_event->menu->joystick_number) {
 		this->manettes[number] = SDL_JoystickOpen(number);
 		if (this->manettes[number] == NULL) {
-			this->w_error("Could not open joystick");
+            this->w_error("Could not open joystick");
             this->w_error(SDL_GetError());
-			throw std::exception();
+            throw std::exception();
 		}
 		number++;
 	}
@@ -101,7 +99,6 @@ void	Joystick::save_config( void ) {
 
 	if ((stream = fopen(CONFIG_FILE, "w")) == NULL)
 		return ;
-	sprintf(buf, "%d,%d,%d,%d,%d", this->config[0], this->config[1], this->config[2], this->config[3], this->config[4]);
 	fputs(buf, stream);
 	fclose(stream);
 	set_key_config();
@@ -257,13 +254,12 @@ void Joystick::set_key_config() {
 
 void Joystick::read_key(int mode) {
     SDL_Event   event;
-    int         i = 0;
 
     Joystick::intro_read_key();
-
     // IN MENU
     if (mode == 0){
         while (SDL_PollEvent(&event) && main_event->event_running == true) {
+            // KEYBOARD BUTTON
             if (event.type == SDL_KEYDOWN) {
                 switch((event).key.keysym.sym) {
                     case SDLK_ESCAPE:   main_event->exit_free(); break;
@@ -271,169 +267,38 @@ void Joystick::read_key(int mode) {
                     case SDLK_UP:       main_event->menu->move_menu_ver(-1); break;
                     case SDLK_RIGHT:    main_event->menu->move_menu_hor(); break;
                     case SDLK_LEFT:     main_event->menu->move_menu_hor(); break;
-
-                    case SDLK_RETURN:   if (false == main_event->menu->introstart)
-                                            Joystick::intro_pass();
-                                        else if (main_event->draw_winner_multi >= 0
-                                                || main_event->draw_winner_campaign >= 0
-                                                || main_event->draw_lose_campaign >= 0
-                                                || main_event->draw_end_campaign >= 0) {
-                                            main_event->draw_winner_multi = -1;
-                                            // main_event->draw_winner_campaign = -1;
-                                            main_event->draw_lose_campaign = -1;
-                                            main_event->draw_end_campaign = -1;
-                                            main_event->mode_menu = true;
-                                            if (main_event->game_playing == true) {
-                                                main_event->game_playing = false;
-                                                main_event->free_game();
-                                                main_event->menu->menu_selected = BIG_MENU;
-                                                main_event->menu->detail_menu_selected = MENU_CAMPAIGN;
-                                            }
-                                            if (main_event->draw_winner_campaign >= 0) {
-                                                main_event->draw_winner_campaign = -1;
-                                                main_event->make_new_game(0);
-                                                main_event->mode_menu = false;
-                                                main_event->game_playing = true;
-                                            }
-                                        }
-                                        else
-                                            main_event->menu->change_menu();
-                                        break;
-
-                    case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
-                                            main_event->mode_menu = false;
-                                        else if (main_event->game_playing == true)
-                                            main_event->mode_menu = true;
-                                        break;
-
-                    case SDLK_1:        if (main_event->menu->menu_selected == BIG_MENU
-                                                && main_event->game_playing == true
-                                                && main_event->multi == 0 && main_event->arena == 0) {
-                                            main_event->draw_winner_multi = -1;
-                                            main_event->draw_winner_campaign = -1;
-                                            main_event->draw_lose_campaign = -1;
-                                            main_event->draw_end_campaign = -1;
-                                            main_event->mode_menu = false;
-                                            main_event->make_new_game(1);
-                                            main_event->game_playing = true;
-                                        }
-                                        break;
-
-                    case SDLK_2:        if (main_event->menu->menu_selected == BIG_MENU
-                                                && main_event->game_playing == false) {
-                                            this->test = 1;
-                                            main_event->make_new_game(0);
-                                            main_event->mode_menu = false;
-                                            main_event->game_playing = true;
-                                            this->test = 0;
-                                        }
-                                        break;
-
-                    case SDLK_3:        if (main_event->menu->menu_selected == BIG_MENU
-                                                && main_event->game_playing == true) {
-                                            main_event->cheat_stats();
-                                        }
-                                        break;
-
+                    case SDLK_RETURN:   this->in_menu_SDLK_RETURN(); break;
                     case SDLK_c:        std::cout << "SDL_NumJoysticks(void) " << SDL_NumJoysticks() << std::endl;
-                    case SDLK_k:        main_event->save_config->fill_info_config();
-                                        main_event->save_config->print_config_debugg();
-                                        break;
-
-                    case SDLK_u:        main_event->save_config->save_global_config_to_file();
-                                        while ( i < SDL_NumJoysticks() ) {
-                                            printf("    %s\n", SDL_GameControllerNameForIndex(i) );
-                                            i++;
-                                        } break;
-
+                    case SDLK_p:        this->in_menu_SDLK_p(); break;
+                    case SDLK_k:        this->in_menu_SDLK_k();
+                    case SDLK_u:        this->in_menu_SDLK_u();
+                    case SDLK_1:        this->in_menu_SDLK_1(); break;
+                    case SDLK_2:        this->in_menu_SDLK_2(); break;
+                    case SDLK_3:        this->in_menu_SDLK_3(); break;
                     default:            break;
                 }
             }
             // JOYSTICK BUTTON
             else if (event.type == SDL_JOYBUTTONDOWN) {
                 switch (event.cbutton.button) {
-                    case 3:     if (false == main_event->menu->introstart) {
-                                    main_event->menu->introstart = true;
-                                    main_event->mode_menu = true;
-                                }
-                                else if (main_event->draw_winner_multi >= 0
-                                        || main_event->draw_winner_campaign >= 0
-                                        || main_event->draw_lose_campaign >= 0
-                                        || main_event->draw_end_campaign >= 0) {
-                                    main_event->draw_winner_multi = -1;
-                                    // main_event->draw_winner_campaign = -1;
-                                    main_event->draw_lose_campaign = -1;
-                                    main_event->draw_end_campaign = -1;
-                                    main_event->mode_menu = true;
-                                    if (main_event->game_playing == true) {
-                                        main_event->game_playing = false;
-                                        main_event->free_game();
-                                        main_event->menu->menu_selected = BIG_MENU;
-                                        main_event->menu->detail_menu_selected = MENU_CAMPAIGN;
-                                    }
-                                    if (main_event->draw_winner_campaign >= 0) {
-                                        main_event->draw_winner_campaign = -1;
-                                        main_event->make_new_game(0);
-                                        main_event->mode_menu = false;
-                                        main_event->game_playing = true;
-                                    }
-                                }
-                                else
-                                    main_event->menu->change_menu();
-                                break;
-
+                    case 3:     this->in_menu_controller_3(); break;
                     case 2:     main_event->menu->change_menu_back(); break;
                     case 4:     Gamelauncher::retry_previous_game(); break;
-
-                    case 9:     if (true == main_event->mode_menu && main_event->game_playing == true)
-                                    main_event->mode_menu = false;
-                                else if (main_event->game_playing == true)
-                                    main_event->mode_menu = true;
-                                break;
-
-                    // case 0:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 1:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 5:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 6:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 7:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 8:     fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 10:    fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 11:    fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 12:    fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                    case 9:     this->in_menu_controller_9(); break;
                     default: break;
                   }
             }
-            else if (event.type == SDL_JOYAXISMOTION) {
-                if( event.jaxis.axis == 0) {
-                    if (event.jaxis.value > 3200)
-                        main_event->menu->move_menu_hor();
-                    else if (event.jaxis.value < -3200)
-                        main_event->menu->move_menu_hor();
-                }
-
-                if( event.jaxis.axis == 1) {
-                    if (event.jaxis.value > 3200)
-                        main_event->menu->move_menu_ver(1);
-                    else if (event.jaxis.value < -3200)
-                        main_event->menu->move_menu_ver(-1);
-                }
-    		}
             // JOYSTICK CROIX DIRECTIONNEL
+            else if (event.type == SDL_JOYAXISMOTION) {
+                this->in_menu_controller_axis_motion(event);
+    		}
+            // CROSS HAT DIR
             else if (event.type == SDL_JOYHATMOTION || event.type == 1536) {
-                if (0 == event.jhat.hat && 0 != event.jhat.value) {
-                    switch (event.jhat.value) {
-                        case SDL_HAT_UP:        main_event->menu->move_menu_ver(-1); break;
-                        case SDL_HAT_LEFT:      main_event->menu->move_menu_hor(); break;
-                        case SDL_HAT_DOWN:      main_event->menu->move_menu_ver(1); break;
-                        case SDL_HAT_RIGHT:     main_event->menu->move_menu_hor(); break;
-                        case SDL_HAT_CENTERED:  fprintf(stdout, "joystick[%d] CENTERED state[%d]\n", event.jbutton.which, event.jhat.hat); break;
-                        default:                break;
-                    }
-                }
+                this->in_menu_controller_hat_motion(event);
             }
         }
     }
-    //In GA				ME
+    //In GAME
     else {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYDOWN) {
@@ -456,26 +321,9 @@ void Joystick::read_key(int mode) {
                     case SDLK_n:            Map_event::debugg_change_timer_lunch_warmup_1(); break;
                     case SDLK_m:            Map_event::debugg_change_timer_lunch_warmup_2(); break;
                     case SDLK_z:            main_event->print_map();
-
-                    case SDLK_k:            main_event->save_config->fill_info_config();
-                                            main_event->save_config->print_config_debugg();
-                                            break;
-
-                    case SDLK_RETURN:   if (false == main_event->menu->introstart) {
-                                            main_event->menu->introstart = true;
-                                            main_event->mode_menu = true;
-                                            if (main_event->game_playing == true) {
-                                                main_event->game_playing = false;
-                                                main_event->free_game();
-                                            }
-                                        } break;
-
-                    case SDLK_p:        if (true == main_event->mode_menu && main_event->game_playing == true)
-                                            main_event->mode_menu = false;
-                                        else if (main_event->game_playing == true)
-                                            main_event->mode_menu = true;
-                                        break;
-
+                    case SDLK_RETURN:       this->in_game_SDLK_RETURN(); break;
+                    case SDLK_k:            this->in_game_SDLK_k(); break;
+                    case SDLK_p:            this->in_game_SDLK_p(); break;
                     default: break;
                 }
             }
@@ -485,72 +333,18 @@ void Joystick::read_key(int mode) {
                     case 3:   main_event->player_bomb(main_event->config[event.jbutton.which]); break;
                     case 2:   main_event->remote_put(main_event->config[event.jbutton.which]); break;
                     case 1:   main_event->remote_detonate(main_event->config[event.jbutton.which]); break;
-
-                    case 9:     if ((main_event->multi > 0 || main_event->arena > 0) \
-                                    && main_event->live_player[main_event->config[event.jbutton.which] - PLAYER1] == true) {
-                                    if (true == main_event->mode_menu && main_event->game_playing == true)
-                                        main_event->mode_menu = false;
-                                    else if (main_event->game_playing == true)
-                                        main_event->mode_menu = true;
-                                }
-                                else if (main_event->multi == 0 && main_event->arena == 0) {
-                                    if (true == main_event->mode_menu && main_event->game_playing == true)
-                                        main_event->mode_menu = false;
-                                    else if (main_event->game_playing == true)
-                                        main_event->mode_menu = true;
-                                } break;
-
-                    case 8:     if (false == main_event->menu->introstart) {
-                                    main_event->menu->introstart = true;
-                                    main_event->mode_menu = true;
-                                    if (main_event->game_playing == true) {
-                                        main_event->game_playing = false;
-                                        main_event->free_game();
-                                    }
-                                } break;
-                    // case 4:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 5:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 6:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 7:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 0:   fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 10:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 11:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
-                    // case 12:  fprintf(stdout, "joystick[%d] button[%d] state[%d]\n", event.jbutton.which, event.jbutton.button, event.jbutton.state); break;
+                    case 9:   this->in_game_controller_9(event); break;
+                    case 8:   this->in_game_controller_8(); break;
                     default: break;
               }
             }
             // JOYSTICK CROIX DIRECTIONNEL
             else if (event.type == SDL_JOYHATMOTION) {
-                switch (event.jhat.value) {
-                    case SDL_HAT_UP:        change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_UP); break;
-                    case SDL_HAT_LEFT:      change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_LEFT); break;
-                    case SDL_HAT_DOWN:      change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_BOTTOM); break;
-                    case SDL_HAT_RIGHT:     change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_RIGHT); break;
-                    case SDL_HAT_CENTERED:  change_dir_joystick(this->arr_key_controller[event.jbutton.which], -1); break;
-                    default:                break;
-                }
+                this->in_game_controller_hat_motion(event);
             }
+            // CROSS HAT DIR
             else if (event.type == SDL_JOYAXISMOTION) {
-                if( event.jaxis.axis == 0) {
-                    if (event.jaxis.value > 3200)
-                        change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_RIGHT);
-                    else if (event.jaxis.value < -3200)
-                        change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_LEFT);
-                    else
-                        change_dir_joystick(this->arr_key_controller[event.jaxis.which], -1);
-                    /* Left-right movement code goes here */
-                }
-
-                if( event.jaxis.axis == 1) {
-                    if (event.jaxis.value > 3200)
-                        change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_BOTTOM);
-                    else if (event.jaxis.value < -3200)
-                        change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_UP);
-                    else
-                        change_dir_joystick(this->arr_key_controller[event.jaxis.which], -1);
-                        /* Up-Down movement code goes here */
-                }
-                // std::cout << "hello" << std::endl;
+                this->in_game_controller_axis_motion(event);
             }
             if (event.type == SDL_KEYUP) {
                 switch((event).key.keysym.sym) {
@@ -568,21 +362,21 @@ void Joystick::read_key(int mode) {
         }
     }
     this->refresh_all_dir_joystick();
-		int number = 0;
-		while (number < 2) {
-			if (this->arr_key_keyboard[number]->key_right)
-	        main_event->player_move(main_event->config_keyboard[number], DIR_RIGHT);
+	int number = 0;
+	while (number < 2) {
+		if (this->arr_key_keyboard[number]->key_right)
+           main_event->player_move(main_event->config_keyboard[number], DIR_RIGHT);
 	    if (this->arr_key_keyboard[number]->key_left)
 	        main_event->player_move(main_event->config_keyboard[number], DIR_LEFT);
 	    if (this->arr_key_keyboard[number]->key_up)
 	        main_event->player_move(main_event->config_keyboard[number], DIR_UP);
 	    if (this->arr_key_keyboard[number]->key_down)
 	        main_event->player_move(main_event->config_keyboard[number], DIR_BOTTOM);
-			number++;
-		}
-		number = 0;
-		while (number < 10) {
-			if (this->arr_key_controller[number]->key_right)
+		number++;
+	}
+	number = 0;
+	while (number < 10) {
+		if (this->arr_key_controller[number]->key_right)
 	        main_event->player_move(main_event->config[number], DIR_RIGHT);
 	    if (this->arr_key_controller[number]->key_left)
 	        main_event->player_move(main_event->config[number], DIR_LEFT);
@@ -590,8 +384,8 @@ void Joystick::read_key(int mode) {
 	        main_event->player_move(main_event->config[number], DIR_UP);
 	    if (this->arr_key_controller[number]->key_down)
 	        main_event->player_move(main_event->config[number], DIR_BOTTOM);
-			number++;
-		}
+		number++;
+	}
   }
 
 void    Joystick::refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move) {
@@ -615,10 +409,16 @@ void    Joystick::refresh_all_dir_joystick() {
 
 	while (number < 10) {
 		if (this->manettes[number] != NULL) {
-        x_move = SDL_JoystickGetAxis(this->manettes[number], 0);
-        y_move = SDL_JoystickGetAxis(this->manettes[number], 1);
-        refresh_dir_joystick(this->arr_key_controller[number], x_move, y_move);
-    }
+            # ifdef linux
+                x_move = SDL_JoystickGetAxis(this->manettes[number], 0);
+                y_move = SDL_JoystickGetAxis(this->manettes[number], 1);
+            # endif
+            # ifdef __APPLE__
+                x_move = SDL_JoystickGetAxis(this->manettes[number], 3);
+                y_move = SDL_JoystickGetAxis(this->manettes[number], 4);
+            # endif
+            refresh_dir_joystick(this->arr_key_controller[number], x_move, y_move);
+        }
 		number++;
 	}
 }
@@ -653,6 +453,250 @@ void    Joystick::intro_read_key() {
             else if (event.type == SDL_JOYBUTTONDOWN)
                 Joystick::intro_pass();
         }
+    }
+}
+
+void    Joystick::in_menu_SDLK_RETURN() {
+    if (false == main_event->menu->introstart)
+        Joystick::intro_pass();
+    else if (main_event->draw_winner_multi >= 0
+        || main_event->draw_winner_campaign >= 0
+        || main_event->draw_lose_campaign >= 0
+        || main_event->draw_end_campaign >= 0) {
+
+        main_event->draw_winner_multi = -1;
+        main_event->draw_lose_campaign = -1;
+        main_event->draw_end_campaign = -1;
+        main_event->mode_menu = true;
+        if (main_event->game_playing == true) {
+            main_event->game_playing = false;
+            main_event->free_game();
+            main_event->menu->menu_selected = BIG_MENU;
+            main_event->menu->detail_menu_selected = MENU_CAMPAIGN;
+        }
+        if (main_event->draw_winner_campaign >= 0) {
+            main_event->draw_winner_campaign = -1;
+            main_event->make_new_game(0);
+            main_event->mode_menu = false;
+            main_event->game_playing = true;
+        }
+    }
+    else
+        main_event->menu->change_menu();
+}
+
+void    Joystick::in_menu_SDLK_p() {
+    if (true == main_event->mode_menu && main_event->game_playing == true)
+        main_event->mode_menu = false;
+    else if (main_event->game_playing == true)
+        main_event->mode_menu = true;
+}
+
+void    Joystick::in_menu_SDLK_k() {
+    main_event->save_config->fill_info_config();
+    main_event->save_config->print_config_debugg();
+}
+
+void    Joystick::in_menu_SDLK_u() {
+    int i = 0;
+
+    main_event->save_config->save_global_config_to_file();
+    while ( i < SDL_NumJoysticks() ) {
+        printf("    %s\n", SDL_GameControllerNameForIndex(i) );
+        i++;
+    }
+}
+
+void    Joystick::in_menu_SDLK_1() {
+    if (main_event->menu->menu_selected == BIG_MENU
+        && main_event->game_playing == true
+        && main_event->multi == 0 && main_event->arena == 0) {
+
+        main_event->draw_winner_multi = -1;
+        main_event->draw_winner_campaign = -1;
+        main_event->draw_lose_campaign = -1;
+        main_event->draw_end_campaign = -1;
+        main_event->mode_menu = false;
+        main_event->make_new_game(1);
+        main_event->game_playing = true;
+    }
+}
+
+void    Joystick::in_menu_SDLK_2() {
+    if (main_event->menu->menu_selected == BIG_MENU
+        && main_event->game_playing == false) {
+
+        this->test = 1;
+        main_event->make_new_game(0);
+        main_event->mode_menu = false;
+        main_event->game_playing = true;
+        this->test = 0;
+    }
+}
+
+void    Joystick::in_menu_SDLK_3() {
+    if (main_event->menu->menu_selected == BIG_MENU
+        && main_event->game_playing == true) {
+
+        main_event->cheat_stats();
+    }
+}
+
+void    Joystick::in_menu_controller_3() {
+    if (false == main_event->menu->introstart) {
+        main_event->menu->introstart = true;
+        main_event->mode_menu = true;
+    }
+    else if (main_event->draw_winner_multi >= 0
+        || main_event->draw_winner_campaign >= 0
+        || main_event->draw_lose_campaign >= 0
+        || main_event->draw_end_campaign >= 0) {
+
+        main_event->draw_winner_multi = -1;
+        // main_event->draw_winner_campaign = -1;
+        main_event->draw_lose_campaign = -1;
+        main_event->draw_end_campaign = -1;
+        main_event->mode_menu = true;
+        if (main_event->game_playing == true) {
+            main_event->game_playing = false;
+            main_event->free_game();
+            main_event->menu->menu_selected = BIG_MENU;
+            main_event->menu->detail_menu_selected = MENU_CAMPAIGN;
+        }
+        if (main_event->draw_winner_campaign >= 0) {
+            main_event->draw_winner_campaign = -1;
+            main_event->make_new_game(0);
+            main_event->mode_menu = false;
+            main_event->game_playing = true;
+        }
+    }
+    else
+        main_event->menu->change_menu();
+}
+
+void    Joystick::in_menu_controller_9() {
+    if (true == main_event->mode_menu && main_event->game_playing == true)
+        main_event->mode_menu = false;
+    else if (main_event->game_playing == true)
+        main_event->mode_menu = true;
+}
+
+void    Joystick::in_menu_controller_axis_motion(SDL_Event &event) {
+    if(event.jaxis.axis == 3 || event.jaxis.axis == 0) {
+        if (event.jaxis.value > 3200)
+            main_event->menu->move_menu_hor();
+        else if (event.jaxis.value < -3200)
+            main_event->menu->move_menu_hor();
+    }
+
+    if( event.jaxis.axis == 4 || event.jaxis.axis == 1) {
+        if (event.jaxis.value > 3200)
+            main_event->menu->move_menu_ver(1);
+        else if (event.jaxis.value < -3200)
+            main_event->menu->move_menu_ver(-1);
+    }
+}
+
+void    Joystick::in_menu_controller_hat_motion(SDL_Event &event) {
+    if (0 == event.jhat.hat && 0 != event.jhat.value) {
+        switch (event.jhat.value) {
+            case SDL_HAT_UP:        main_event->menu->move_menu_ver(-1); break;
+            case SDL_HAT_LEFT:      main_event->menu->move_menu_hor(); break;
+            case SDL_HAT_DOWN:      main_event->menu->move_menu_ver(1); break;
+            case SDL_HAT_RIGHT:     main_event->menu->move_menu_hor(); break;
+            case SDL_HAT_CENTERED:  fprintf(stdout, "joystick[%d] CENTERED state[%d]\n", event.jbutton.which, event.jhat.hat); break;
+            default:                break;
+        }
+    }
+}
+
+void    Joystick::in_game_SDLK_RETURN() {
+    if (false == main_event->menu->introstart) {
+        main_event->menu->introstart = true;
+        main_event->mode_menu = true;
+        if (main_event->game_playing == true) {
+            main_event->game_playing = false;
+            main_event->free_game();
+        }
+    }
+}
+
+void    Joystick::in_game_SDLK_k() {
+    main_event->save_config->fill_info_config();
+    main_event->save_config->print_config_debugg();
+}
+
+void    Joystick::in_game_SDLK_p() {
+    if (true == main_event->mode_menu && main_event->game_playing == true)
+        main_event->mode_menu = false;
+    else if (main_event->game_playing == true)
+        main_event->mode_menu = true;
+}
+
+void    Joystick::in_game_controller_9(SDL_Event &event) {
+    if ((main_event->multi > 0 || main_event->arena > 0)
+        && main_event->live_player[main_event->config[event.jbutton.which] - PLAYER1] == true) {
+
+        if (true == main_event->mode_menu && main_event->game_playing == true)
+            main_event->mode_menu = false;
+        else if (main_event->game_playing == true)
+            main_event->mode_menu = true;
+    }
+    else if (main_event->multi == 0 && main_event->arena == 0) {
+        if (true == main_event->mode_menu && main_event->game_playing == true)
+            main_event->mode_menu = false;
+        else if (main_event->game_playing == true)
+            main_event->mode_menu = true;
+    }
+}
+
+void    Joystick::in_game_controller_8() {
+    if (false == main_event->menu->introstart) {
+        main_event->menu->introstart = true;
+        main_event->mode_menu = true;
+        if (main_event->game_playing == true) {
+            main_event->game_playing = false;
+            main_event->free_game();
+        }
+    }
+}
+
+void    Joystick::in_game_controller_hat_motion(SDL_Event &event) {
+    switch (event.jhat.value) {
+        case SDL_HAT_UP:        this->change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_UP); break;
+        case SDL_HAT_LEFT:      this->change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_LEFT); break;
+        case SDL_HAT_DOWN:      this->change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_BOTTOM); break;
+        case SDL_HAT_RIGHT:     this->change_dir_joystick(this->arr_key_controller[event.jbutton.which], DIR_RIGHT); break;
+        case SDL_HAT_CENTERED:  this->change_dir_joystick(this->arr_key_controller[event.jbutton.which], -1); break;
+        default:                break;
+    }
+}
+
+void    Joystick::in_game_controller_axis_motion(SDL_Event &event) {
+    if( event.jaxis.axis == 3 || event.jaxis.axis == 0 ) {
+        if (event.jaxis.value > 3200) {
+            this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_RIGHT);
+        }
+        else if (event.jaxis.value < -3200) {
+            this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_LEFT);
+        }
+        else {
+            this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], -1);
+        }
+        /* Left-right movement code goes here */
+    }
+
+    if( event.jaxis.axis == 4 || event.jaxis.axis == 1 ) {
+        if (event.jaxis.value > 3200) {
+            this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_BOTTOM);
+        }
+        else if (event.jaxis.value < -3200) {
+            this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], DIR_UP);
+        }
+        else {
+            this->change_dir_joystick(this->arr_key_controller[event.jaxis.which], -1);
+        }
+            /* Up-Down movement code goes here */
     }
 }
 

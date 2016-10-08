@@ -12,7 +12,7 @@
 
 PLATFORM := $(shell uname)
 
-# Mac --	brew install wget sdl2 sdl2_image sdl2_mixer sdl2_ttf
+# Mac -- brew install wget sdl2 sdl2_image sdl2_mixer sdl2_ttf
 ifeq "$(PLATFORM)" "Darwin"
     GLUT = -framework Appkit -framework OpenGL
     COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
@@ -21,7 +21,7 @@ endif
 # Linux -- apt-get install libsdl2-dev libsdl2-gfx-dev freeglut3 freeglut3-dev
 # libsdl2-image-dev libsdl2-mixer-dev glee-dev libgles2-mesa-dev
 # freeglut3 freeglut3-dev libglew-dev libglu1-mesa libglu1-mesa-dev
-#libgl1-mesa-glx libglfw3-dev
+# libgl1-mesa-glx libglfw3-dev
 ifeq "$(PLATFORM)" "Linux"
     GLUT = -lGL -lGLU -lglut -lSDL2 -lSDL2main -lGLEW
     COMMAND = $(CXX) $(CFLAGS) $(SDL_LIB) $(GLUT) $(OBJ) -o $(NAME)
@@ -39,58 +39,58 @@ CFLAGS =        -std=gnu++11 -Wall -Wextra -Werror -pedantic -g
 
 INCLUDE =       -I includes/ -I rc_lib/rc_math/
 
-SDL_INCLUDE =   `sdl2-config --cflags` -I $(HOME)/.brew/include/SDL
+SDL_INCLUDE =   `sdl2-config --cflags` -I $(HOME)/homebrew/include/SDL
 SDL_LIB =       `sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 HEAD = includes/bomb.class.hpp \
-                includes/boss.class.hpp \
-                includes/enemy.class.hpp \
-                includes/entity.class.hpp \
-                includes/event.class.hpp \
-                includes/fire.class.hpp \
-                includes/ft42.class.hpp \
-                includes/GameLauncher.class.hpp \
-                includes/globject.class.hpp \
-                includes/ia.class.hpp \
-                includes/joystick.hpp \
-                includes/main.hpp \
-                includes/mapparser.class.hpp \
-                includes/Matrix.hpp \
-                includes/Menu.class.hpp \
-                includes/parser.class.hpp \
-                includes/player.class.hpp \
-                includes/soundrender.class.hpp \
-                includes/bonus.class.hpp \
-                includes/wall.class.hpp \
-								includes/factory.class.hpp \
-								includes/save.class.hpp \
-                includes/map_event.class.hpp \
-								includes/particle.class.hpp \
+        includes/boss.class.hpp \
+        includes/enemy.class.hpp \
+        includes/entity.class.hpp \
+        includes/event.class.hpp \
+        includes/fire.class.hpp \
+        includes/ft42.class.hpp \
+        includes/GameLauncher.class.hpp \
+        includes/globject.class.hpp \
+        includes/ia.class.hpp \
+        includes/joystick.hpp \
+        includes/main.hpp \
+        includes/mapparser.class.hpp \
+        includes/Matrix.hpp \
+        includes/Menu.class.hpp \
+        includes/parser.class.hpp \
+        includes/player.class.hpp \
+        includes/soundrender.class.hpp \
+        includes/bonus.class.hpp \
+        includes/wall.class.hpp \
+        includes/factory.class.hpp \
+        includes/save.class.hpp \
+        includes/map_event.class.hpp \
+        includes/particle.class.hpp
 
 SRC = src/entity/bomb.class.cpp \
-                src/entity/boss.class.cpp \
-                src/entity/enemy.class.cpp \
-                src/entity/entity.class.cpp \
-                src/entity/fire.class.cpp \
-                src/entity/player.class.cpp \
-                src/entity/wall.class.cpp \
-                src/event.class.cpp \
-                src/ft42.class.cpp \
-                src/GameLauncher.class.cpp \
-                src/ia/ia.class.cpp \
-                src/joystick/joystick.cpp \
-                src/main.cpp \
-				src/map/mapparser.class.cpp \
-                src/map/map_event.class.cpp \
-                src/menu/Menu.class.cpp \
-                src/render/globject.class.cpp \
-                src/render/Matrix.cpp \
-                src/render/parser.class.cpp \
-                src/sound/soundrender.class.cpp \
-                src/entity/bonus.class.cpp \
-                src/factory.class.cpp \
-                src/save/save.class.cpp \
-		src/entity/particle.class.cpp \
+        src/entity/boss.class.cpp \
+        src/entity/enemy.class.cpp \
+        src/entity/entity.class.cpp \
+        src/entity/fire.class.cpp \
+        src/entity/player.class.cpp \
+        src/entity/wall.class.cpp \
+        src/event.class.cpp \
+        src/ft42.class.cpp \
+        src/GameLauncher.class.cpp \
+        src/ia/ia.class.cpp \
+        src/joystick/joystick.cpp \
+        src/main.cpp \
+        src/map/mapparser.class.cpp \
+        src/map/map_event.class.cpp \
+        src/menu/Menu.class.cpp \
+        src/render/globject.class.cpp \
+        src/render/Matrix.cpp \
+        src/render/parser.class.cpp \
+        src/sound/soundrender.class.cpp \
+        src/entity/bonus.class.cpp \
+        src/factory.class.cpp \
+        src/save/save.class.cpp \
+        src/entity/particle.class.cpp
 
 OBJ := $(SRC:.cpp=.cpp.o)
 
