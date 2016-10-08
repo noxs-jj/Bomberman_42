@@ -17,14 +17,14 @@
 
 class Joystick : public ft42 {
 public:
-    int                timer;
-    int                test = 0;
+    int                 timer;
+    int                 test = 0;
 
-    SDL_Joystick **      manettes;
+    SDL_Joystick **     manettes;
 
-    int                config[10]; // 0: controller, 1: keyboard
-    t_key *            arr_key_keyboard[5];
-    t_key *            arr_key_controller[10];
+    int                 config[10]; // 0: controller, 1: keyboard
+    t_key *             arr_key_keyboard[5];
+    t_key *             arr_key_controller[10];
 
     Joystick(void);
     virtual ~Joystick( void );
@@ -42,6 +42,24 @@ public:
     void        refresh_dir_joystick(t_key *key, Sint16 x_move, Sint16 y_move);
     static void intro_read_key();
     static void intro_pass();
+    void        in_menu_SDLK_RETURN();
+    void        in_menu_SDLK_p();
+    void        in_menu_SDLK_k();
+    void        in_menu_SDLK_u();
+    void        in_menu_SDLK_1();
+    void        in_menu_SDLK_2();
+    void        in_menu_SDLK_3();
+    void        in_menu_controller_3();
+    void        in_menu_controller_9();
+    void        in_menu_controller_axis_motion(SDL_Event &event);
+    void        in_menu_controller_hat_motion(SDL_Event &event);
+    void        in_game_SDLK_RETURN();
+    void        in_game_SDLK_k();
+    void        in_game_SDLK_p();
+    void        in_game_controller_8();
+    void        in_game_controller_9(SDL_Event &event);
+    void        in_game_controller_axis_motion(SDL_Event &event);
+    void        in_game_controller_hat_motion(SDL_Event &event);
 
 private:
     Joystick( Joystick const & src );
