@@ -99,7 +99,6 @@ void	Joystick::save_config( void ) {
 
 	if ((stream = fopen(CONFIG_FILE, "w")) == NULL)
 		return ;
-	sprintf(buf, "%d,%d,%d,%d,%d", this->config[0], this->config[1], this->config[2], this->config[3], this->config[4]);
 	fputs(buf, stream);
 	fclose(stream);
 	set_key_config();
@@ -302,7 +301,6 @@ void Joystick::read_key(int mode) {
     //In GAME
     else {
         while (SDL_PollEvent(&event)) {
-            fprintf(stdout, "joystick[%d] type[%d] button[%d] state[%d]\n", event.jbutton.which, event.type, event.jbutton.button, event.jbutton.state);
             if (event.type == SDL_KEYDOWN) {
                 switch((event).key.keysym.sym) {
                     case SDLK_ESCAPE:       main_event->exit_free(); break;
