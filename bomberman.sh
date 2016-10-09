@@ -1,1 +1,4 @@
-bash -l -c "cd /home/noxsnono/bomberman_42/ && ~/bomberman_42/bomberman"
+#/bin/bash
+APP_REPO_ABSOLUTE_PATH=$(dirname $(readlink -f $0))
+
+bash -l -c "cd $APP_REPO_ABSOLUTE_PATH && $APP_REPO_ABSOLUTE_PATH/bomberman"

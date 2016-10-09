@@ -1,2 +1,1 @@
 - manque 1 slots au 2eme WARN_UP_2
-- SEGFAULT en fin de game avec echap pas de rapport precis
