@@ -21,7 +21,7 @@ Fire::Fire( float x, float y, int status, int model ) : Entity( FIRE, x, y, stat
     Particle::boom(50, y, x, 0);
 }
 
-Fire::Fire( Fire const & src ) {
+Fire::Fire( Fire const & src ) : Entity(src.type, src.pos_x, src.pos_y, src.status, src.model) {
     *this = src;
 }
 Fire & Fire::operator=( Fire const & rhs ) {

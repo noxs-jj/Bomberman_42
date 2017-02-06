@@ -16,25 +16,23 @@
 #include <bonus.class.hpp>
 #include <globject.class.hpp>
 #include <save.class.hpp>
-
 #include <iostream>
 #include <vector>
 
-int		Entity::autoincrement = 5;
+int Entity::autoincrement = 5;
 
 Entity::Entity(void) {}
 
 Entity::~Entity( void ) {}
 
-Entity::Entity( int type, float x, float y, int status, int model ) : type(type), pos_x(x),
-															pos_y(y), status(status), zoom_m(1) {
-	if (type == PLAYER)
-		this->id = model - PLAYER1;
-	else {
-		Entity::autoincrement++;
-		this->id = Entity::autoincrement;
-	}
-	// this->remote_lst.clear();
+Entity::Entity( int type, float x, float y, int status, int model ) :
+        type(type), pos_x(x), pos_y(y), status(status), zoom_m(1) {
+    if (type == PLAYER)
+        this->id = model - PLAYER1;
+    else {
+        Entity::autoincrement++;
+        this->id = Entity::autoincrement;
+    }
 }
 
 Entity::Entity( Entity const & src ) {
@@ -65,43 +63,42 @@ Entity & Entity::operator=( Entity const & rhs ) {
 }
 
 int		Entity::check_move( float x, float y ) {
-  if (main_event->map[(int)y][(int)x] == NULL)
-      return EMPTY;
-	if (main_event->map[(int)y][(int)x]->type == EMPTY)
-		return EMPTY;
-	else if (main_event->map[(int)y][(int)x]->type == BOMB
-			&& !((int)this->pos_y == (int)y && (int)this->pos_x == (int)x))
-		return BOMB;
-	else if (main_event->map[(int)y][(int)x]->type == BOMB
-			&& ((int)this->pos_y == (int)y && (int)this->pos_x == (int)x))
-		return EMPTY;
-	else if (main_event->map[(int)y][(int)x]->type == FIRE)
-		return FIRE;
-	else if (main_event->map[(int)y][(int)x]->type == BONUS)
-		return BONUS;
-	return WALL;
+    if (main_event->map[(int)y][(int)x] == NULL)
+        return EMPTY;
+    if (main_event->map[(int)y][(int)x]->type == EMPTY)
+        return EMPTY;
+    else if (main_event->map[(int)y][(int)x]->type == BOMB
+            && !((int)this->pos_y == (int)y && (int)this->pos_x == (int)x))
+        return BOMB;
+    else if (main_event->map[(int)y][(int)x]->type == BOMB
+            && ((int)this->pos_y == (int)y && (int)this->pos_x == (int)x))
+        return EMPTY;
+    else if (main_event->map[(int)y][(int)x]->type == FIRE)
+        return FIRE;
+    else if (main_event->map[(int)y][(int)x]->type == BONUS)
+        return BONUS;
+    return WALL;
 }
 
 bool Entity::friend_zone( float x, float y ) {
-	std::list<Entity *>::iterator it = main_event->char_list.begin();
-	std::list<Entity *>::iterator end = main_event->char_list.end();
+    std::list<Entity *>::iterator it = main_event->char_list.begin();
+    std::list<Entity *>::iterator end = main_event->char_list.end();
 
-	while (it != end) {
-		if ((int)x -3 < (int)((*it)->pos_x)
-		&&  (int)y -3 < (int)((*it)->pos_y)
-		&&  (int)((*it)->pos_x) < (int)x +3
-		&&  (int)((*it)->pos_y) < (int)y +3
-		) {
-	    if ((*it)->type == PLAYER) {
-				return (false);
-			}
-			else if ((*it)->type == ENEMY
-			||  (*it)->type == ENEMY) {
-				return (true);
-			}
-		}
-    it++;
-  }
+    while (it != end) {
+        if ((int)x -3 < (int)((*it)->pos_x)
+                &&  (int)y -3 < (int)((*it)->pos_y)
+                &&  (int)((*it)->pos_x) < (int)x +3
+                &&  (int)((*it)->pos_y) < (int)y +3) {
+            if ((*it)->type == PLAYER) {
+                return (false);
+            }
+            else if ((*it)->type == ENEMY
+                ||  (*it)->type == ENEMY) {
+                return (true);
+            }
+        }
+        it++;
+    }
 	return (false);
 }
 

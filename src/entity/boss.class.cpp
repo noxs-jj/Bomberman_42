@@ -25,7 +25,7 @@ Boss::Boss( float x, float y, int status, int name, int model ) : Entity( BOSS, 
 }
 
 
-Boss::Boss( Boss const & src ) {
+Boss::Boss( Boss const & src ) : Entity(src.type, src.pos_x, src.pos_y, src.status, src.model) {
     *this = src;
 }
 

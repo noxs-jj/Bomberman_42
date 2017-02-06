@@ -125,9 +125,8 @@ bool    Ia::play_boss(Boss *it, int time) {
 
   while (heros != end) {
     if ((*heros)->type == PLAYER) {
-      if ((*it).dir == ((*it).dir = Ia::must_move_to (
-        static_cast<Entity*>(it)
-      ))) {
+        (*it).dir = Ia::must_move_to ( static_cast<Entity*>(it) );
+      if ((*it).dir == (*it).dir) {
         if (time % 50 == 1) {
           int move = (*it).dir = Ia::must_move_to(static_cast<Entity*>(it));
 
@@ -143,8 +142,6 @@ bool    Ia::play_boss(Boss *it, int time) {
             (*heros)->pos_y,
             ENEMY1
           ));
-          /*ENEMY, (*heros)->pos_x, (*heros)->pos_y,
-          ENEMY, (*heros)->blast_radius*/
         }
       }
       (*it).move((*it).dir);

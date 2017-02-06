@@ -24,7 +24,7 @@ Player::Player( float x, float y, int status, int model ) : Entity( PLAYER, x, y
 }
 
 
-Player::Player( Player const & src ) {
+Player::Player( Player const & src ) : Entity(src.type, src.pos_x, src.pos_y, src.status, src.model) {
     *this = src;
 }
 

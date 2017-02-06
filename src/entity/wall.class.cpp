@@ -25,7 +25,7 @@ Wall::Wall( float x, float y, int status, int model ) : Entity( WALL, x, y, stat
     this->to_destroy = false;
 }
 
-Wall::Wall( Wall const & src ) {
+Wall::Wall( Wall const & src ) : Entity(src.type, src.pos_x, src.pos_y, src.status, src.model) {
     *this = src;
 }
 

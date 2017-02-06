@@ -20,7 +20,7 @@ Bonus::Bonus( float x, float y, int status, int model ) : Entity( BONUS, x, y, s
 	this->model = model;
 }
 
-Bonus::Bonus( Bonus const & src ) {
+Bonus::Bonus( Bonus const & src ) : Entity(src.type, src.pos_x, src.pos_y, src.status, src.model) {
     *this = src;
 }
 

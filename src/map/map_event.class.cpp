@@ -55,12 +55,6 @@ void    Map_event::check_warm_up() {
         time_t  current = time(0);
         time_t  current_demi_second = clock();
 
-        // Set new position for warmup 2 when warmup 1 done
-        // if (224 == barrage_iterator) {
-        //     Map_event::last_y = 4;
-        //     Map_event::last_x = 14;
-        // }
-
         // Warm up 2 time + WARN_UP_2
         if (current >= Map_event::after_three_minutes && current_demi_second - Map_event::time_last_demi_second >= 111000) {
             if (current == Map_event::after_three_minutes) {
@@ -72,7 +66,7 @@ void    Map_event::check_warm_up() {
             Map_event::time_last_demi_second = current_demi_second;
             // Map_event::add_one_barrage_die_to_map();
             if (Map_event::barrage_x != 11 ||  Map_event::barrage_y != 14)
-              Map_event::add_second_barrage_map();
+                Map_event::add_second_barrage_map();
         }
         // Warm up 1 time + WARN_UP_1
         else if (current >= Map_event::after_two_minutes && current_demi_second - Map_event::time_last_demi_second >= 113421) { // 250000
@@ -82,143 +76,71 @@ void    Map_event::check_warm_up() {
             Map_event::time_last_demi_second = current_demi_second;
             // Map_event::add_one_barrage_to_map();
             if (Map_event::barrage_x != 6 ||  Map_event::barrage_y != 7)
-              Map_event::add_first_barrage_map();
-            // else
-            //     Map_event::time_last_demi_second = 125000;
+                Map_event::add_first_barrage_map();
         }
     }
 }
 
 void    Map_event::add_first_barrage_map() {
-  if (Map_event::first_barrage == false) {
-    Map_event::first_barrage = true;
-    Map_event::barrage_x = 1;
-    Map_event::barrage_y = 1;
+    if (Map_event::first_barrage == false) {
+        Map_event::first_barrage = true;
+        Map_event::barrage_x = 1;
+        Map_event::barrage_y = 1;
+        barrage_iterator++;
+        Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
+    }
+    else {
+        if ((globject::mapX_size - 1 != Map_event::barrage_x + 1 && main_event->map[Map_event::barrage_y][Map_event::barrage_x + 1]->status != WALL_BARRAGE)
+        && (main_event->map[Map_event::barrage_y - 1][Map_event::barrage_x]->status == WALL_BARRAGE || 1 == Map_event::barrage_y)) {
+            Map_event::barrage_x++;
+            Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
+        }
+        else if ((globject::mapX_size - 1 == Map_event::barrage_x + 1 || main_event->map[Map_event::barrage_y][Map_event::barrage_x + 1]->status == WALL_BARRAGE)
+        && (globject::mapY_size - 1 != Map_event::barrage_y + 1 && main_event->map[Map_event::barrage_y + 1][Map_event::barrage_x]->status != WALL_BARRAGE)) {
+            Map_event::barrage_y++;
+            Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
+        }
+        else if (0 != Map_event::barrage_x - 1 && main_event->map[Map_event::barrage_y][Map_event::barrage_x - 1]->status != WALL_BARRAGE) {
+            Map_event::barrage_x--;
+            Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
+        }
+        else if (0 != Map_event::barrage_y - 1 && main_event->map[Map_event::barrage_y - 1][Map_event::barrage_x]->status != WALL_BARRAGE) {
+            Map_event::barrage_y--;
+            Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
+        }
+    }
     barrage_iterator++;
-    Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-  }
-  else {
-    if ((globject::mapX_size - 1 != Map_event::barrage_x + 1 && main_event->map[Map_event::barrage_y][Map_event::barrage_x + 1]->status != WALL_BARRAGE)
-      && (main_event->map[Map_event::barrage_y - 1][Map_event::barrage_x]->status == WALL_BARRAGE || 1 == Map_event::barrage_y)) {
-      Map_event::barrage_x++;
-      Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-    }
-    else if ((globject::mapX_size - 1 == Map_event::barrage_x + 1 || main_event->map[Map_event::barrage_y][Map_event::barrage_x + 1]->status == WALL_BARRAGE)
-      && (globject::mapY_size - 1 != Map_event::barrage_y + 1 && main_event->map[Map_event::barrage_y + 1][Map_event::barrage_x]->status != WALL_BARRAGE)) {
-      Map_event::barrage_y++;
-      Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-    }
-    else if (0 != Map_event::barrage_x - 1 && main_event->map[Map_event::barrage_y][Map_event::barrage_x - 1]->status != WALL_BARRAGE) {
-      Map_event::barrage_x--;
-      Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-    }
-    else if (0 != Map_event::barrage_y - 1 && main_event->map[Map_event::barrage_y - 1][Map_event::barrage_x]->status != WALL_BARRAGE) {
-      Map_event::barrage_y--;
-      Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-    }
-  }
-  barrage_iterator++;
 
 }
 
 void    Map_event::add_second_barrage_map() {
-  if (main_event->map[Map_event::barrage_y + 1][Map_event::barrage_x]->status != WALL_BARRAGE
-    && main_event->map[Map_event::barrage_y][Map_event::barrage_x - 1]->status == WALL_BARRAGE) {
-    Map_event::barrage_y++;
-    Map_event::put_barrage_die_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-  }
-  else if (main_event->map[Map_event::barrage_y + 1][Map_event::barrage_x]->status == WALL_BARRAGE
-    && main_event->map[Map_event::barrage_y][Map_event::barrage_x + 1]->status != WALL_BARRAGE) {
-    Map_event::barrage_x++;
-    Map_event::put_barrage_die_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-  }
-  else if (main_event->map[Map_event::barrage_y][Map_event::barrage_x + 1]->status == WALL_BARRAGE
-    && main_event->map[Map_event::barrage_y - 1][Map_event::barrage_x]->status != WALL_BARRAGE) {
-    Map_event::barrage_y--;
-    Map_event::put_barrage_die_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-  }
-  else if (main_event->map[Map_event::barrage_y - 1][Map_event::barrage_x]->status == WALL_BARRAGE
-    && main_event->map[Map_event::barrage_y][Map_event::barrage_x - 1]->status != WALL_BARRAGE) {
-    Map_event::barrage_x--;
-    Map_event::put_barrage_die_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-  }
+    if (main_event->map[Map_event::barrage_y + 1][Map_event::barrage_x]->status != WALL_BARRAGE
+            && main_event->map[Map_event::barrage_y][Map_event::barrage_x - 1]->status == WALL_BARRAGE) {
+        Map_event::barrage_y++;
+        Map_event::put_barrage_die_on_slop(Map_event::barrage_y, Map_event::barrage_x);
+    }
+    else if (main_event->map[Map_event::barrage_y + 1][Map_event::barrage_x]->status == WALL_BARRAGE
+            && main_event->map[Map_event::barrage_y][Map_event::barrage_x + 1]->status != WALL_BARRAGE) {
+        Map_event::barrage_x++;
+        Map_event::put_barrage_die_on_slop(Map_event::barrage_y, Map_event::barrage_x);
+    }
+    else if (main_event->map[Map_event::barrage_y][Map_event::barrage_x + 1]->status == WALL_BARRAGE
+            && main_event->map[Map_event::barrage_y - 1][Map_event::barrage_x]->status != WALL_BARRAGE) {
+        Map_event::barrage_y--;
+        Map_event::put_barrage_die_on_slop(Map_event::barrage_y, Map_event::barrage_x);
+    }
+    else if (main_event->map[Map_event::barrage_y - 1][Map_event::barrage_x]->status == WALL_BARRAGE
+            && main_event->map[Map_event::barrage_y][Map_event::barrage_x - 1]->status != WALL_BARRAGE) {
+        Map_event::barrage_x--;
+        Map_event::put_barrage_die_on_slop(Map_event::barrage_y, Map_event::barrage_x);
+    }
 }
-
-        // Warm up 1 time + WARN_UP_1
-// void    Map_event::add_one_barrage_to_map() {
-//   if (Map_event::second_barrage == false) {
-//     Map_event::second_barrage = true;
-//     Map_event::barrage_x++;
-//     Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-//   }
-//   else {
-//     // && main_event->map[y][x]->status == WALL_INDESTRUCTIBLE && Map_event::barrage_x + 1 < globject::mapX_size)
-//     if ((globject::mapX_size - 1 != Map_event::barrage_x + 1 && main_event->map[Map_event::barrage_y][Map_event::barrage_x + 1]->status != WALL_BARRAGE)
-//       && (main_event->map[Map_event::barrage_y - 1][Map_event::barrage_x]->status == WALL_BARRAGE || 1 == Map_event::barrage_y)) {
-//       Map_event::barrage_x++;
-//       Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-//     }
-//     else if ((globject::mapX_size - 1 == Map_event::barrage_x + 1 || main_event->map[Map_event::barrage_y][Map_event::barrage_x + 1]->status == WALL_BARRAGE)
-//       && (globject::mapY_size - 1 != Map_event::barrage_y + 1 && main_event->map[Map_event::barrage_y + 1][Map_event::barrage_x]->status != WALL_BARRAGE)) {
-//       Map_event::barrage_y++;
-//       Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-//     }
-//     else if (0 != Map_event::barrage_x - 1 && main_event->map[Map_event::barrage_y][Map_event::barrage_x - 1]->status != WALL_BARRAGE) {
-//       Map_event::barrage_x--;
-//       Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-//     }
-//     else if (0 != Map_event::barrage_y - 1 && main_event->map[Map_event::barrage_y - 1][Map_event::barrage_x]->status != WALL_BARRAGE) {
-//       Map_event::barrage_y--;
-//       Map_event::put_barrage_on_slop(Map_event::barrage_y, Map_event::barrage_x);
-//     }
-//   }
-//   }
-
-//         // Warm up 2 time + WARN_UP_2
-// void    Map_event::add_one_barrage_die_to_map() {
-//     if ((Map_event::barrage_iterator >= 224 && Map_event::barrage_iterator <= 233) \
-//         || (Map_event::barrage_iterator >= 260 && Map_event::barrage_iterator <= 267) \
-//         || (Map_event::barrage_iterator >= 288 && Map_event::barrage_iterator <= 293) \
-//         || (Map_event::barrage_iterator >= 308 && Map_event::barrage_iterator <= 311)
-//         ) {
-//             Map_event::last_y++;
-//             Map_event::put_barrage_die_on_slop(Map_event::last_y, Map_event::last_x);
-//             Map_event::barrage_iterator++;
-//     }
-//     else if ((Map_event::barrage_iterator >= 234 && Map_event::barrage_iterator <= 242) \
-//         || (Map_event::barrage_iterator >= 268 && Map_event::barrage_iterator <= 274) \
-//         || (Map_event::barrage_iterator >= 294 && Map_event::barrage_iterator <= 298) \
-//         || (Map_event::barrage_iterator >= 312 && Map_event::barrage_iterator <= 314)
-//         ) {
-//             Map_event::last_x--;
-//             Map_event::put_barrage_die_on_slop(Map_event::last_y, Map_event::last_x);
-//             Map_event::barrage_iterator++;
-//     }
-//     else if ((Map_event::barrage_iterator >= 243 && Map_event::barrage_iterator <= 251) \
-//         || (Map_event::barrage_iterator >= 275 && Map_event::barrage_iterator <= 281) \
-//         || (Map_event::barrage_iterator >= 299 && Map_event::barrage_iterator <= 303) \
-//         || (Map_event::barrage_iterator >= 315 && Map_event::barrage_iterator <= 317)
-//         ) {
-//             Map_event::last_y--;
-//             Map_event::put_barrage_die_on_slop(Map_event::last_y, Map_event::last_x);
-//             Map_event::barrage_iterator++;
-//     }
-//     else if ((Map_event::barrage_iterator >= 252 && Map_event::barrage_iterator <= 259) \
-//         || (Map_event::barrage_iterator >= 282 && Map_event::barrage_iterator <= 287) \
-//         || (Map_event::barrage_iterator >= 304 && Map_event::barrage_iterator <= 307) \
-//         || (Map_event::barrage_iterator >= 318 && Map_event::barrage_iterator <= 319)
-//         ) {
-//             Map_event::last_x++;
-//             Map_event::put_barrage_die_on_slop(Map_event::last_y, Map_event::last_x);
-//             Map_event::barrage_iterator++;
-//     }
-// }
 
         // Warm up 2 time + WARN_UP_2
 void    Map_event::put_barrage_on_slop(int y, int x) {
     if (main_event->map[y][x]->type == BOMB) {
-      Bomb *tmp = reinterpret_cast<Bomb*>(main_event->map[y][x]);
-      tmp->add_bomb_nbr(tmp->creator_id);
+        Bomb *tmp = reinterpret_cast<Bomb*>(main_event->map[y][x]);
+        tmp->add_bomb_nbr(tmp->creator_id);
     }
     delete main_event->map[y][x];
     main_event->map[y][x] = NULL;
@@ -229,10 +151,10 @@ void    Map_event::put_barrage_on_slop(int y, int x) {
 
         // Warm up 2 time + WARN_UP_2
 void    Map_event::put_barrage_die_on_slop(int y, int x) {
-  if (main_event->map[y][x]->type == BOMB) {
-    Bomb *tmp = reinterpret_cast<Bomb*>(main_event->map[y][x]);
-    tmp->add_bomb_nbr(tmp->creator_id);
-  }
+    if (main_event->map[y][x]->type == BOMB) {
+        Bomb *tmp = reinterpret_cast<Bomb*>(main_event->map[y][x]);
+        tmp->add_bomb_nbr(tmp->creator_id);
+    }
     delete main_event->map[y][x];
     main_event->map[y][x] = NULL;
     main_event->map[y][x] = static_cast<Entity*>( Factory::create_wall(WALL_BARRAGE, x, y, WALL_BARRAGE_DIE) );

@@ -25,7 +25,7 @@ Bomb::Bomb( float x, float y, int status, int model, int id ) : Entity( BOMB, x,
 	this->timer = 180;
 }
 
-Bomb::Bomb( Bomb const & src ) {
+Bomb::Bomb( Bomb const & src ) : Entity(src.type, src.pos_x, src.pos_y, src.status, src.model) {
     *this = src;
 }
 

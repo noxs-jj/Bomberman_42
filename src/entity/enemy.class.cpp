@@ -16,7 +16,6 @@ Enemy::~Enemy( void ) {}
 
 Enemy::Enemy( float x, float y, int status, int model ) : Entity( ENEMY, x, y, status, model ) {
 	this->memory = 0;
-
 	this->frame = 0;
 	this->speed = 1;
 	this->dir = DIR_UP;
@@ -24,7 +23,7 @@ Enemy::Enemy( float x, float y, int status, int model ) : Entity( ENEMY, x, y, s
 	this->model = model;
 }
 
-Enemy::Enemy( Enemy const & src ) {
+Enemy::Enemy( Enemy const & src ) : Entity(src.type, src.pos_x, src.pos_y, src.status, src.model) {
     *this = src;
 }
 

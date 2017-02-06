@@ -1,14 +1,14 @@
-## ************************************************************************** ##
-##   24 Bomb                                                                  ##
-##   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   ##
-##   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   ##
-##   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     ##
-##   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        ##
-##   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           ##
-##   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             ##
-##   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       ##
-##                                                                            ##
-## ************************************************************************** ##
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rcargou <rcargou@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#              #
+#    Updated: 2017/02/06 14:08:10 by jmoiroux         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 PLATFORM := $(shell uname)
 
@@ -35,14 +35,14 @@ ASSETS_PATH =   assets
 ASSETS_TAR =    bomberman_assets.tar.bz2
 ASSETS_URL =    files.noxs.net/24bomb/bomberman_assets.tar.bz2
 
-CFLAGS =        -std=gnu++11 -Wall -Wextra -Werror -pedantic -g
+CFLAGS =        -std=gnu++11 -Wall -Wextra -Werror -pedantic -g -o3
 
 INCLUDE =       -I includes/ -I rc_lib/rc_math/
 
 SDL_INCLUDE =   `sdl2-config --cflags` -I $(HOME)/homebrew/include/SDL
 SDL_LIB =       `sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
-HEAD = includes/bomb.class.hpp \
+HEAD =  includes/bomb.class.hpp \
         includes/boss.class.hpp \
         includes/enemy.class.hpp \
         includes/entity.class.hpp \
@@ -67,7 +67,7 @@ HEAD = includes/bomb.class.hpp \
         includes/map_event.class.hpp \
         includes/particle.class.hpp
 
-SRC = src/entity/bomb.class.cpp \
+SRC =   src/entity/bomb.class.cpp \
         src/entity/boss.class.cpp \
         src/entity/enemy.class.cpp \
         src/entity/entity.class.cpp \

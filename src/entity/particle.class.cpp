@@ -1,3 +1,15 @@
+// ************************************************************************** //
+//   24 Bomb                                                                  //
+//   By: rcargou <rcargou@student.42.fr>                  :::      ::::::::   //
+//   By: nmohamed <nmohamed@student.42.fr>              :+:      :+:    :+:   //
+//   By: adjivas <adjivas@student.42.fr>              +:+ +:+         +:+     //
+//   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        //
+//   By: jmoiroux <jmoiroux@student.42.fr>        +#+#+#+#+#+   +#+           //
+//   Created: 2015/10/16 17:03:20 by rcargou           #+#    #+#             //
+//   Updated: 2015/10/27 14:00:02 by rcargou          ###   ########.fr       //
+//                                                                            //
+// ************************************************************************** //
+
 # include <particle.class.hpp>
 # include <ctime>
 # include <fire.class.hpp>
@@ -27,7 +39,7 @@
 		lifetime = rand() / 10000000;
 	}
 
-	Particle::Particle( Particle const & src )
+	Particle::Particle( Particle const & src ) : Entity(src.type, src.pos_x, src.pos_y, src.status, src.model)
 	{
 		*this = src;
 	}
@@ -67,7 +79,7 @@
 					this->lifetime = 1;
 					Particle::boom(50, (int)pos_x, (int)pos_y, 0);
 				}
-				
+
 			}
 			if (main_event->map[(int)pos_y][(int)pos_x]->type != EMPTY)
 			{
