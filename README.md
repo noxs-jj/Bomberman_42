@@ -26,6 +26,7 @@ export MANPATH=$(manpath):bomberman/man
 ```
 
 ### Windows (Not Supported)
+Contributor we need you !!!
 
 ## How to Play (Binding)
 Key | Joystick | Keyboard1 | Keyboard2
